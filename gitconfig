@@ -1,0 +1,44 @@
+[user]
+	name = Kros Dai
+	email = kros@dai.sg
+	signingkey = 8B33065403823D9C
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[alias]
+	st = status
+	br = branch -a
+	ci = commit -v -S
+	co = checkout
+[core]
+	editor = vi
+[merge]
+	summary = true
+[i18n]
+	commitencoding = UTF-8
+[diff "word"]
+	textconv = strings
+[credential]
+	helper = osxkeychain
+[push]
+	default = simple
+[http]
+	postBuffer = 524288000
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process
+[commit]
+	gpgsign = true
+[pull]
+    rebase = false
+[pager]
+     diff = diff-so-fancy | less --tabs=1,5 -RFX
+     show = diff-so-fancy | less --tabs=1,5 -RFX
+[init]
+	defaultBranch = main

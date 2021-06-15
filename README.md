@@ -1,2 +1,2 @@
 # dotfiles
-My personal `dotfiles` repo
+Kros Dai's personal `dotfiles` repo

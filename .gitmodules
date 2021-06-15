@@ -1,0 +1,20 @@
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot
+	ignore = dirty
+[submodule "oh-my-zsh"]
+	path = oh-my-zsh
+    url = https://github.com/robbyrussell/oh-my-zsh
+    ignore = dirty
+[submodule "antigen"]
+	path = antigen
+    url = https://github.com/zsh-users/antigen
+[submodule "zsh-syntax-highlighting"]
+	path = zsh-syntax-highlighting
+    url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "tmux/plugins/tpm"]
+	path = tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
+[submodule "fzf"]
+	path = fzf
+	url = https://github.com/junegunn/fzf

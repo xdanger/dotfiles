@@ -1,0 +1,32 @@
+- defaults:
+    link:
+      relink: true
+      force: true
+      relative: true
+    clean:
+      force: false
+
+- clean:
+    ~/:
+    ~/.config:
+      recursive: true
+
+- link:
+    ~/.gemrc:
+    ~/.gitconfig:
+    ~/.htoprc:
+    ~/.tmux.conf:
+    ~/.tmux:
+    ~/.vim:
+    ~/.vimrc:
+    ~/.zshrc:
+
+#- shell:
+
+- create:
+    - ~/.vim/undo-history
+
+- shell:
+  - brew update && brew upgrade && brew install nodejs bat prettyping htop diff-so-fancy ncdu tldr ack ag fortune ponysay csvkit noti entr youtube-dl fzf
+  - [git submodule update --init --recursive, Installing submodules]
+  - ./fzf/install --bin
