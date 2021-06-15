@@ -6,11 +6,6 @@
     clean:
       force: false
 
-- clean:
-    ~/:
-    ~/.config:
-      recursive: true
-
 - link:
     ~/.gemrc:
     ~/.gitconfig:
