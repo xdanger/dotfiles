@@ -98,7 +98,7 @@ export DOTFILES="$HOME/.dotfiles"
 [ -d "$PATH:$HOME/.rvm/bin" ] && export PATH="$PATH:$HOME/.rvm/bin"
 # other envs
 [ -f "$DOTFILES/zshrc.`uname`" ] && source "$DOTFILES/zshrc.`uname`"
-[ -f "$DOTFILES/local/envs.rc" ]   && source $DOTFILES/local/envs.rc
+[ -f "$DOTFILES-local/envs.sh" ]   && source "$DOTFILES-local/envs.sh"
 
 autoload -U promptinit; promptinit; prompt pure
 
