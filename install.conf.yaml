@@ -22,6 +22,6 @@
     - ~/.vim/undo-history
 
 - shell:
-  - brew update && brew upgrade && brew install nodejs bat prettyping htop diff-so-fancy ncdu tldr ack ag fortune ponysay csvkit noti entr youtube-dl
   - [git submodule update --init --recursive, Installing submodules]
   - ./fzf/install --bin
+ #- brew update && brew upgrade && brew install nodejs bat prettyping htop diff-so-fancy ncdu tldr ack ag fortune ponysay csvkit noti entr youtube-dl
