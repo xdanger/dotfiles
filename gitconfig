@@ -2,43 +2,55 @@
 	name = Kros Dai
 	email = kros@dai.sg
 	signingkey = 8B33065403823D9C
-[color]
-	diff = auto
-	status = auto
-	branch = auto
 [alias]
 	st = status
 	br = branch -a
 	ci = commit -v -S
 	co = checkout
+[init]
+	defaultBranch = main
+[pull]
+    rebase = false
 [core]
 	editor = vi
+	pager = diff-so-fancy | less --tabs=4 -RFX
+[commit]
+	gpgsign = true
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = 11
+	frag = magenta bold
+	func = 146 bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
+[interactive]
+	diffFilter = diff-so-fancy --patch
+[diff "word"]
+	textconv = strings
 [merge]
 	summary = true
 [i18n]
 	commitencoding = UTF-8
-[diff "word"]
-	textconv = strings
-[credential]
-	helper = osxkeychain
 [push]
 	default = simple
 [http]
 	postBuffer = 524288000
-[filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	required = true
 	process = git-lfs filter-process
-[commit]
-	gpgsign = true
-[pull]
-    rebase = false
-[pager]
-     diff = diff-so-fancy | less --tabs=1,5 -RFX
-     show = diff-so-fancy | less --tabs=1,5 -RFX
-[init]
-	defaultBranch = main
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
