@@ -112,6 +112,7 @@ setopt shwordsplit # 把带空格的字符串中的空格当做数组的分隔�
 [ -f "$DOTFILES_DIR/zshrc.`uname`" ] && source "$DOTFILES_DIR/zshrc.`uname`"
 [ -f "$HOME/.local/envs.sh" ]   && source "$HOME/.local/envs.sh"
 
+fpath+=$DOTFILES_DIR/pure
 autoload -U promptinit; promptinit; prompt pure
 
 source "$DOTFILES_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
