@@ -1,7 +1,21 @@
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# SOURCE="${BASH_SOURCE[0]}"
+# while [ -L "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+#   DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+#   SOURCE="$(readlink "$SOURCE")"
+#   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+# done
+# DOTFILES_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+
+SOURCE=${(%):-%N}
+while [ -h "$SOURCE" ]; do
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+DOTFILES_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 # Path to your oh-my-zsh installation.
-export ZSH=~/.dotfiles/oh-my-zsh
+export ZSH=$DOTFILES_DIR/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -85,22 +99,20 @@ export LANG=en_US.UTF-8
 
 setopt shwordsplit # 把带空格的字符串中的空格当做数组的分隔符
 
-export DOTFILES="$HOME/.dotfiles"
-
 # antigen
-[ -d "$DOTFILES/antigen" ] && source ~/.dotfiles/antigen/antigen.zsh
+[ -d "$DOTFILES_DIR/antigen" ] && source $DOTFILES_DIR/antigen/antigen.zsh
 # fzf
-[ -d "$DOTFILES/fzf" ] && export PATH="$PATH:~/.dotfiles/fzf/bin" \
-  && source "$DOTFILES/fzf/shell/completion.zsh" 2> /dev/null \
-  && source "$DOTFILES/fzf/shell/key-bindings.zsh" \
+[ -d "$DOTFILES_DIR/fzf" ] && export PATH="$PATH:$DOTFILES_DIR/fzf/bin" \
+  && source "$DOTFILES_DIR/fzf/shell/completion.zsh" 2> /dev/null \
+  && source "$DOTFILES_DIR/fzf/shell/key-bindings.zsh" \
   && export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(atom {})+abort'"
 # rvm
 [ -d "$PATH:$HOME/.rvm/bin" ] && export PATH="$PATH:$HOME/.rvm/bin"
 # other envs
-[ -f "$DOTFILES/zshrc.`uname`" ] && source "$DOTFILES/zshrc.`uname`"
+[ -f "$DOTFILES_DIR/zshrc.`uname`" ] && source "$DOTFILES_DIR/zshrc.`uname`"
 [ -f "$HOME/.local/envs.sh" ]   && source "$HOME/.local/envs.sh"
 
 autoload -U promptinit; promptinit; prompt pure
 
-source "$DOTFILES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$DOTFILES/iterm2_shell_integration.zsh"
+source "$DOTFILES_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$DOTFILES_DIR/iterm2_shell_integration.zsh"
