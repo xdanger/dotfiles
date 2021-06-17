@@ -1,1 +1,3 @@
 /local
+/bin/diff-so-fancy
+/bin/lib/DiffHighlight.pm
