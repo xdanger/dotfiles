@@ -1,21 +1,23 @@
-# SOURCE="${BASH_SOURCE[0]}"
-# while [ -L "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-#   DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
-#   SOURCE="$(readlink "$SOURCE")"
-#   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-# done
-# DOTFILES_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
-
+# First of all, get absolute realpath of this dotfiles repo
+# The following block is for zsh
 SOURCE=${(%):-%N}
 while [ -h "$SOURCE" ]; do
   DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
   SOURCE="$(readlink "$SOURCE")"
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
-DOTFILES_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+DOTFILES="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+# The following block is for bash
+# SOURCE="${BASH_SOURCE[0]}"
+# while [ -L "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
+#   DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+#   SOURCE="$(readlink "$SOURCE")"
+#   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+# done
+# DOTFILES="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 
 # Path to your oh-my-zsh installation.
-export ZSH=$DOTFILES_DIR/oh-my-zsh
+export ZSH=$DOTFILES/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -23,6 +25,9 @@ export ZSH=$DOTFILES_DIR/oh-my-zsh
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="kennethreitz"
 ZSH_THEME=""
+# Set theme to [pure](https://github.com/sindresorhus/pure)
+fpath+=$DOTFILES/pure
+autoload -U promptinit; promptinit; prompt pure
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -66,7 +71,7 @@ HIST_STAMPS="yyyy/mm/dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(osx ruby rake rails bundler node)
+plugins=(osx git ruby rake rails bundler node gcloud)
 
 # User configuration
 
@@ -76,46 +81,44 @@ source $ZSH/oh-my-zsh.sh
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vi'
+else
+  export EDITOR='vim'
+fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch `uname -m`"
 
 # ssh
-# export SSH_KEY_PATH="~/.ssh/dsa_id"
+# export SSH_KEY_PATH="~/.ssh/id_rsa"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-setopt shwordsplit # 把带空格的字符串中的空格当做数组的分隔符
+# 更兼容 bash，把带空格的字符串中的空格当做数组的分隔符
+setopt shwordsplit
 
 # antigen
-[ -d "$DOTFILES_DIR/antigen" ] && source $DOTFILES_DIR/antigen/antigen.zsh
+[ -d "$DOTFILES/antigen" ] && source $DOTFILES/antigen/antigen.zsh
 # fzf
-[ -d "$DOTFILES_DIR/fzf" ] && export PATH="$PATH:$DOTFILES_DIR/fzf/bin" \
-  && source "$DOTFILES_DIR/fzf/shell/completion.zsh" 2> /dev/null \
-  && source "$DOTFILES_DIR/fzf/shell/key-bindings.zsh" \
+[ -d "$DOTFILES/fzf" ] && path+=("$DOTFILES/fzf/bin") \
+  && source "$DOTFILES/fzf/shell/completion.zsh" 2> /dev/null \
+  && source "$DOTFILES/fzf/shell/key-bindings.zsh" \
   && export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(atom {})+abort'"
 # rvm
-[ -d "$HOME/.rvm/bin" ] && PATH="$PATH:$HOME/.rvm/bin"
+[ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
 # other envs
-[ -f "$DOTFILES_DIR/zshrc.`uname`" ] && source "$DOTFILES_DIR/zshrc.`uname`"
-[ -f "$HOME/.local/envs.sh" ]   && source "$HOME/.local/envs.sh"
+[ -f "$DOTFILES/zshrc.`uname`" ] && source "$DOTFILES/zshrc.`uname`"
+[ -f "$HOME/.dotlocal/envs.sh" ]   && source "$HOME/.dotlocal/envs.sh"
 # add ./bin to $PATH
-export PATH="$DOTFILES_DIR/bin:$PATH"
+path=("$DOTFILES/bin" $path)
 
-fpath+=$DOTFILES_DIR/pure
-autoload -U promptinit; promptinit; prompt pure
+command -v bat &>/dev/null           && alias cat='bat --paging never'
+command -v prettyping &>/dev/null    && alias ping='prettyping --nolegend'
+command -v htop &>/dev/null          && alias top='sudo htop'
+command -v diff-so-fancy &>/dev/null && alias diff='diff-so-fancy'
+command -v ncdu &>/dev/null          && alias du='ncdu --color dark -rr -x'
+command -v tldr &>/dev/null          && alias help='tldr'
+command -v youtube-dl &>/dev/null    && alias youtube-dl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' --write-sub --sub-lang 'zh-CN,zh-Hans,zh-TW,zh-Hant,en' --convert-subs 'srt' -o '%(uploader)s/%(playlist)s/%(playlist_index)03d.%(title)s.%(id)s.%(ext)s'"
+command -v jira &>/dev/null          && eval "$(jira --completion-script-bash)"
 
-source "$DOTFILES_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$DOTFILES_DIR/iterm2_shell_integration.zsh"
+source "$DOTFILES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$DOTFILES/iterm2_shell_integration.zsh"
