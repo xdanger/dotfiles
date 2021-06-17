@@ -105,12 +105,12 @@ PATH+=$DOTFILES_DIR/bin
 # antigen
 [ -d "$DOTFILES_DIR/antigen" ] && source $DOTFILES_DIR/antigen/antigen.zsh
 # fzf
-[ -d "$DOTFILES_DIR/fzf" ] && export PATH+="$DOTFILES_DIR/fzf/bin" \
+[ -d "$DOTFILES_DIR/fzf" ] && PATH+="$DOTFILES_DIR/fzf/bin" \
   && source "$DOTFILES_DIR/fzf/shell/completion.zsh" 2> /dev/null \
   && source "$DOTFILES_DIR/fzf/shell/key-bindings.zsh" \
   && export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(atom {})+abort'"
 # rvm
-[ -d "$HOME/.rvm/bin" ] && export PATH+="$HOME/.rvm/bin"
+[ -d "$HOME/.rvm/bin" ] && PATH+="$HOME/.rvm/bin"
 # other envs
 [ -f "$DOTFILES_DIR/zshrc.`uname`" ] && source "$DOTFILES_DIR/zshrc.`uname`"
 [ -f "$HOME/.local/envs.sh" ]   && source "$HOME/.local/envs.sh"
