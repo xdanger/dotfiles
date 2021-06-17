@@ -99,15 +99,18 @@ export LANG=en_US.UTF-8
 
 setopt shwordsplit # 把带空格的字符串中的空格当做数组的分隔符
 
+# add ./bin to $PATH
+PATH+=$DOTFILES_DIR/bin
+
 # antigen
 [ -d "$DOTFILES_DIR/antigen" ] && source $DOTFILES_DIR/antigen/antigen.zsh
 # fzf
-[ -d "$DOTFILES_DIR/fzf" ] && export PATH="$PATH:$DOTFILES_DIR/fzf/bin" \
+[ -d "$DOTFILES_DIR/fzf" ] && export PATH+="$DOTFILES_DIR/fzf/bin" \
   && source "$DOTFILES_DIR/fzf/shell/completion.zsh" 2> /dev/null \
   && source "$DOTFILES_DIR/fzf/shell/key-bindings.zsh" \
   && export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(atom {})+abort'"
 # rvm
-[ -d "$PATH:$HOME/.rvm/bin" ] && export PATH="$PATH:$HOME/.rvm/bin"
+[ -d "$HOME/.rvm/bin" ] && export PATH+="$HOME/.rvm/bin"
 # other envs
 [ -f "$DOTFILES_DIR/zshrc.`uname`" ] && source "$DOTFILES_DIR/zshrc.`uname`"
 [ -f "$HOME/.local/envs.sh" ]   && source "$HOME/.local/envs.sh"
