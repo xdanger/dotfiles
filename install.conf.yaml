@@ -10,10 +10,10 @@
     ~/.gemrc:
     ~/.gitconfig:
     ~/.htoprc:
-    ~/.tmux.conf:
+    ~/.tmux.conf: "tmux/tmux.conf"
     ~/.tmux:
     ~/.vim:
-    ~/.vimrc:
+    ~/.vimrc: "vim/vimrc"
     ~/.zshrc:
 
 #- shell:
