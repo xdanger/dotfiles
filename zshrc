@@ -106,7 +106,7 @@ setopt shwordsplit
 # rvm
 [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
 # other envs
-[ -f "$DOTFILES/zshrc.`uname`" ] && source "$DOTFILES/zshrc.`uname`"
+[ -f "$DOTFILES/os.`uname`.zsh" ] && source "$DOTFILES/os.`uname`.zsh"
 [ -f "$DOTFILES/../.dotlocal/envs.zsh" ]   && source "$DOTFILES/../.dotlocal/envs.zsh"
 # add ./bin to $PATH
 path=("$DOTFILES/bin" $path)
