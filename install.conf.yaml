@@ -7,9 +7,9 @@
       force: false
 
 - link:
-    ~/.gemrc:
+    ~/.gemrc: "ruby/gemrc"
     ~/.gitconfig: "git/gitconfig"
-    ~/.htoprc:
+    ~/.htoprc: "util/htoprc"
     ~/.tmux.conf: "tmux/tmux.conf"
     ~/.tmux:
     ~/.vim:
