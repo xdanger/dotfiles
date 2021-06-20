@@ -3,11 +3,11 @@
 	url = https://github.com/anishathalye/dotbot.git
 	ignore = dirty
 [submodule "oh-my-zsh"]
-	path = oh-my-zsh
+	path = zsh/oh-my-zsh
     url = https://github.com/robbyrussell/oh-my-zsh.git
     ignore = dirty
 [submodule "antigen"]
-	path = antigen
+	path = zsh/antigen
     url = https://github.com/zsh-users/antigen.git
 [submodule "zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
@@ -19,7 +19,7 @@
 	path = fzf
 	url = https://github.com/junegunn/fzf.git
 [submodule "pure"]
-	path = pure
+	path = zsh/pure
 	url = https://github.com/sindresorhus/pure.git
 [submodule "diff-so-fancy"]
 	path = diff-so-fancy

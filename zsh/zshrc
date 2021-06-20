@@ -17,8 +17,10 @@ export DOTFILES="$( cd -P "$( dirname "$SOURCE" )/$RELATE_TO_DOTFILES" && pwd )"
 # done
 # DOTFILES="$( cd -P "$( dirname "$SOURCE" )/$RELATE_TO_DOTFILES" >/dev/null 2>&1 && pwd )"
 
+export ZDOTDIR="$DOTFILES/zsh"
+
 # Path to your oh-my-zsh installation.
-export ZSH=$DOTFILES/oh-my-zsh
+export ZSH=$ZDOTDIR/oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -27,7 +29,7 @@ export ZSH=$DOTFILES/oh-my-zsh
 #ZSH_THEME="kennethreitz"
 ZSH_THEME=""
 # Set theme to [pure](https://github.com/sindresorhus/pure)
-fpath+=$DOTFILES/pure
+fpath+=$ZDOTDIR/pure
 autoload -U promptinit; promptinit; prompt pure
 
 # Uncomment the following line to use case-sensitive completion.
@@ -98,7 +100,7 @@ export ARCHFLAGS="-arch `uname -m`"
 setopt shwordsplit
 
 # antigen
-[ -d "$DOTFILES/antigen" ] && source $DOTFILES/antigen/antigen.zsh
+[ -d "$ZDOTDIR/antigen" ] && source $ZDOTDIR/antigen/antigen.zsh
 # fzf
 [ -d "$DOTFILES/fzf" ] && path+=("$DOTFILES/fzf/bin") \
   && source "$DOTFILES/fzf/shell/completion.zsh" 2> /dev/null \
@@ -108,8 +110,8 @@ setopt shwordsplit
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 # [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
 # other envs
-[ -f "$DOTFILES/os.`uname`.zsh" ] && source "$DOTFILES/os.`uname`.zsh"
-[ -f "$DOTFILES/../.dotlocal/envs.zsh" ]   && source "$DOTFILES/../.dotlocal/envs.zsh"
+[ -f "$ZDOTDIR/os.`uname`.zsh" ] && source "$ZDOTDIR/os.`uname`.zsh"
+[ -f "$ZDOTDIR/../.dotlocal/envs.zsh" ]   && source "$ZDOTDIR/../.dotlocal/envs.zsh"
 # add ./bin to $PATH
 path=("$DOTFILES/bin" $path)
 
@@ -122,5 +124,5 @@ command -v tldr &>/dev/null          && alias help='tldr'
 command -v youtube-dl &>/dev/null    && alias youtube-dl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' --write-sub --sub-lang 'zh-CN,zh-Hans,zh-TW,zh-Hant,en' --convert-subs 'srt' -o '%(uploader)s/%(playlist)s/%(playlist_index)03d.%(title)s.%(id)s.%(ext)s'"
 command -v jira &>/dev/null          && eval "$(jira --completion-script-bash)"
 
-source "$DOTFILES/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$DOTFILES/zsh/iterm2_shell_integration.zsh"
+source "$ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$ZDOTDIR/iterm2_shell_integration.zsh"
