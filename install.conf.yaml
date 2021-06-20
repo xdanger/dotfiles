@@ -8,13 +8,15 @@
 
 - link:
     ~/.gemrc:
-    ~/.gitconfig:
+    ~/.gitconfig: "git/gitconfig"
     ~/.htoprc:
     ~/.tmux.conf: "tmux/tmux.conf"
     ~/.tmux:
     ~/.vim:
     ~/.vimrc: "vim/vimrc"
-    ~/.zshrc:
+    ~/.zshenv: "zsh/zshenv"
+    ~/.zlogin: "zsh/zlogin"
+    ~/.zshrc: "zsh/zshrc"
 
 #- shell:
 

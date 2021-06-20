@@ -1,3 +1,4 @@
+RELATE_TO_DOTFILES=".."
 # First of all, get absolute realpath of this dotfiles repo
 # The following block is for zsh
 SOURCE=${(%):-%N}
@@ -6,7 +7,7 @@ while [ -h "$SOURCE" ]; do
   SOURCE="$(readlink "$SOURCE")"
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
-DOTFILES="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+export DOTFILES="$( cd -P "$( dirname "$SOURCE" )/$RELATE_TO_DOTFILES" && pwd )"
 # The following block is for bash
 # SOURCE="${BASH_SOURCE[0]}"
 # while [ -L "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
@@ -14,7 +15,7 @@ DOTFILES="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 #   SOURCE="$(readlink "$SOURCE")"
 #   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
 # done
-# DOTFILES="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
+# DOTFILES="$( cd -P "$( dirname "$SOURCE" )/$RELATE_TO_DOTFILES" >/dev/null 2>&1 && pwd )"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$DOTFILES/oh-my-zsh
@@ -121,5 +122,5 @@ command -v tldr &>/dev/null          && alias help='tldr'
 command -v youtube-dl &>/dev/null    && alias youtube-dl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' --write-sub --sub-lang 'zh-CN,zh-Hans,zh-TW,zh-Hant,en' --convert-subs 'srt' -o '%(uploader)s/%(playlist)s/%(playlist_index)03d.%(title)s.%(id)s.%(ext)s'"
 command -v jira &>/dev/null          && eval "$(jira --completion-script-bash)"
 
-source "$DOTFILES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$DOTFILES/iterm2_shell_integration.zsh"
+source "$DOTFILES/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$DOTFILES/zsh/iterm2_shell_integration.zsh"
