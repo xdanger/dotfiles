@@ -104,7 +104,8 @@ setopt shwordsplit
   && source "$DOTFILES/fzf/shell/key-bindings.zsh" \
   && export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(atom {})+abort'"
 # rvm
-[ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+# [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
 # other envs
 [ -f "$DOTFILES/os.`uname`.zsh" ] && source "$DOTFILES/os.`uname`.zsh"
 [ -f "$DOTFILES/../.dotlocal/envs.zsh" ]   && source "$DOTFILES/../.dotlocal/envs.zsh"
