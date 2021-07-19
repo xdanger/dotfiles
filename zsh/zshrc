@@ -27,7 +27,7 @@ export ZSH=$ZDOTDIR/oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="kennethreitz"
-ZSH_THEME=""
+ZSH_THEME="kennethreitz" # disable oh-my-zsh to use
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -87,7 +87,8 @@ path=("$DOTFILES/bin" $path)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(osx git tmux ruby rake rails bundler node gcloud)
+plugins=(osx tmux git ruby rake rails bundler node gcloud)
+# Do not enable the following (incompatible to Pure) plugins: vi-mode, virtualenv.
 
 # User configuration
 
@@ -95,7 +96,7 @@ ZSH_TMUX_AUTOSTART="false"
 ZSH_TMUX_ITERM2="false"
 # Set theme to [pure](https://github.com/sindresorhus/pure)
 fpath+=$ZDOTDIR/pure
-autoload -U promptinit; promptinit; prompt pure
+# autoload -U promptinit; promptinit; prompt pure
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
