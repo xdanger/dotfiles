@@ -16,5 +16,5 @@ call plug#end()
 
 source $HOME/.vim/basic.vim
 source $HOME/.vim/filetypes.vim
-source $HOME/.vim/new-moon.vim
-
+source $HOME/.vim/colors/new-moon.vim
+" source $HOME/.vim/colors/base16-taptap.vim
