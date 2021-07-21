@@ -16,5 +16,6 @@ call plug#end()
 
 source $HOME/.vim/basic.vim
 source $HOME/.vim/filetypes.vim
+" let base16colorspace=256  " Access colors present in 256 colorspace
 source $HOME/.vim/colors/new-moon.vim
 " source $HOME/.vim/colors/base16-taptap.vim
