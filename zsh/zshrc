@@ -87,7 +87,7 @@ path=("$DOTFILES/bin" $path)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(osx tmux git ruby rake rails bundler node gcloud)
+plugins=(macos tmux git ruby rake rails bundler node gcloud)
 # Do not enable the following (incompatible to Pure) plugins: vi-mode, virtualenv.
 
 # User configuration
