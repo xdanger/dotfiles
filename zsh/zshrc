@@ -118,6 +118,7 @@ export ARCHFLAGS="-arch `uname -m`"
 # 更兼容 bash，把带空格的字符串中的空格当做数组的分隔符
 setopt shwordsplit
 
+command -v rsync &>/dev/null         && alias rsync="rsync --exclude '.DS_Store'"
 command -v bat &>/dev/null           && alias cat='bat --paging never'
 command -v prettyping &>/dev/null    && alias ping='prettyping --nolegend'
 command -v htop &>/dev/null          && alias top='sudo htop'
