@@ -17,7 +17,9 @@ if `command -v gcloud &>/dev/null`; then
   source "$GOOGLE_CLOUD_SDK_HOME/path.zsh.inc" && source "$GOOGLE_CLOUD_SDK_HOME/completion.zsh.inc"
 fi
 
-[ -d /opt/bin ] && path=("/opt/bin" $path)
+# Ruby
+[ -d "$HOMEBREW/opt/ruby" ] && path=("$HOMEBREW/opt/ruby/bin" $path)
+[ -d "/opt/bin" ] && path=("/opt/bin" $path)
 
 # Matalab
 [ -f /Applications/MATLAB_R2019a.app/bin/matlab ] && alias matlab-cli='/Applications/MATLAB_R2019a.app/bin/matlab -nodisplay -nosplash -nodesktop'
