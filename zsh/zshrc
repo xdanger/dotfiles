@@ -119,6 +119,7 @@ export ARCHFLAGS="-arch `uname -m`"
 setopt shwordsplit
 
 command -v rsync &>/dev/null         && alias rsync="rsync --exclude '.DS_Store'"
+command -v rclone &>/dev/null        && alias rclone="rclone --filter-from $DOTFILES/rclone/filter-list.txt"
 command -v bat &>/dev/null           && alias cat='bat --paging never'
 command -v prettyping &>/dev/null    && alias ping='prettyping --nolegend'
 command -v htop &>/dev/null          && alias top='sudo htop'
