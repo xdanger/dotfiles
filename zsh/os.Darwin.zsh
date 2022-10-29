@@ -12,7 +12,7 @@ manpath+=("$HOMEBREW/man")
 
 # Google Cloud Platform
 if `command -v gcloud &>/dev/null`; then
-  export CLOUDSDK_PYTHON="$HOMEBREW/opt/python@3.8/bin/python3"
+  export CLOUDSDK_PYTHON="$HOMEBREW/bin/python3"
   export GOOGLE_CLOUD_SDK_HOME="$HOMEBREW/Caskroom/google-cloud-sdk/latest/google-cloud-sdk"
   source "$GOOGLE_CLOUD_SDK_HOME/path.zsh.inc" && source "$GOOGLE_CLOUD_SDK_HOME/completion.zsh.inc"
 fi
