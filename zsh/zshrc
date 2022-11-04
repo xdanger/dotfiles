@@ -126,6 +126,7 @@ command -v htop &>/dev/null          && alias top='sudo htop'
 command -v diff-so-fancy &>/dev/null && alias diff='diff-so-fancy'
 command -v ncdu &>/dev/null          && alias du='ncdu --color dark -rr -x'
 command -v tldr &>/dev/null          && alias help='tldr'
+command -v podman &> /dev/null       && alias docker='podman'
 command -v jira &>/dev/null          && eval "$(jira --completion-script-bash)"
 if [ `command -v aria2c` ]; then
   extargs="-ci --external-downloader aria2c --external-downloader-args '-s16 -x16 -k 4M' -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' --write-sub --sub-lang 'zh-CN,zh-Hans,zh-TW,zh-Hant,en' --convert-subs 'srt' -o '%(uploader)s/%(playlist)s/%(playlist_index)03d.%(title)s.%(id)s.%(ext)s'"
