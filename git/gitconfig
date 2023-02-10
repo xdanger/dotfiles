@@ -1,7 +1,13 @@
 [user]
 	name = Kros Dai
 	email = kros@dai.sg
-	signingkey = 8B33065403823D9C
+    signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCb2h0pM/uUFbrB+D128Ob1DhOMdD5O356/1HbtiGgDgXv1CAEDAD6GFZjbNH9+598dmozAW65ANdkPCuG2mQ5njbExvcE+MTeTct7v2Mpi+DQo7TsSZ6bYNJJzYHGF42I59BaLn1qpyjoLtXWzesFcwkFUBwSpOT+Tg8sh/WUrUO2SazaFIdfAe0LtTJdO6L+UN6mpTe3AfrWhXCKmYmvevApmY2hm+hiYzKQ3p55zupmdEJE7MhCakMEgk554x6M+rQJ4Fyugaw4CQ8h7H4XyV5k2gI3cCKbRkywJQlk5zLoGPkoC/xmu6F5ZwWLS5NVzixhaFgdSSbl2L9/+l1gchXVLylvVlqOamRR2iit4ltuxrQ4IqpFWWiZqil4r8BEwo18uvhnaCJaIcvh/NvFsQlgq7QlMos5Icp+1A2DTMI5+Tx790hZsyCq0Btp6WhqSqYAXWFWTbwkWxzlNA1B88QZkYTdg1xh/WQbxKPhR1MgqEwaloBAqVohRhb1kQXTxYeL4w0hbmTQp8oju/sGplZE4haZ9fRBlU83K2IR5fmfPgusgUz57G5fdIuTRac5vJtnJ5oRDtvVUIkBpofFayn3vej8srjJBEkdUqxZ+k7EVwWmUX0zDYrSGjvGsn5L/nSipMjMJianfmsCn+gsTjdeCFvpaMSnkpmgD2fAbTQ==
+[gpg]
+  format = ssh
+[gpg "ssh"]
+  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+[commit]
+  gpgsign = true
 [alias]
 	st = status
 	br = branch -a
@@ -15,8 +21,6 @@
 	editor = vi
 	pager = diff-so-fancy | less --tabs=4 -RFX
 	excludesfile = ~/.gitignore_global
-[commit]
-	gpgsign = true
 [color]
 	diff = auto
 	status = auto
