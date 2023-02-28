@@ -21,6 +21,9 @@ fi
 [ -d "$HOMEBREW/opt/ruby" ] && path=("$HOMEBREW/opt/ruby/bin" $path)
 [ -d "/opt/bin" ] && path=("/opt/bin" $path)
 
+# Rust
+[ -d "$HOME/.cargo/bin" ] && path=("$HOME/.cargo/bin" $path)
+
 # Matalab
 [ -f /Applications/MATLAB_R2019a.app/bin/matlab ] && alias matlab-cli='/Applications/MATLAB_R2019a.app/bin/matlab -nodisplay -nosplash -nodesktop'
 
