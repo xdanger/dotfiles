@@ -79,7 +79,7 @@ HIST_STAMPS="yyyy/mm/dd"
 # [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
 # other envs
 [ -f "$ZDOTDIR/os.`uname`.zsh" ] && source "$ZDOTDIR/os.`uname`.zsh"
-[ -f "$ZDOTDIR/../.dotlocal/envs.zsh" ] && source "$ZDOTDIR/../.dotlocal/envs.zsh"
+[ -f "$ZDOTDIR/../../.dotlocal/envs.zsh" ] && source "$ZDOTDIR/../../.dotlocal/envs.zsh"
 # add ./bin to $PATH
 path=("$DOTFILES/bin" $path)
 

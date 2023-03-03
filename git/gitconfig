@@ -1,66 +1,63 @@
 [user]
-	name = Kros Dai
-	email = kros@dai.sg
-    signingkey = ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCb2h0pM/uUFbrB+D128Ob1DhOMdD5O356/1HbtiGgDgXv1CAEDAD6GFZjbNH9+598dmozAW65ANdkPCuG2mQ5njbExvcE+MTeTct7v2Mpi+DQo7TsSZ6bYNJJzYHGF42I59BaLn1qpyjoLtXWzesFcwkFUBwSpOT+Tg8sh/WUrUO2SazaFIdfAe0LtTJdO6L+UN6mpTe3AfrWhXCKmYmvevApmY2hm+hiYzKQ3p55zupmdEJE7MhCakMEgk554x6M+rQJ4Fyugaw4CQ8h7H4XyV5k2gI3cCKbRkywJQlk5zLoGPkoC/xmu6F5ZwWLS5NVzixhaFgdSSbl2L9/+l1gchXVLylvVlqOamRR2iit4ltuxrQ4IqpFWWiZqil4r8BEwo18uvhnaCJaIcvh/NvFsQlgq7QlMos5Icp+1A2DTMI5+Tx790hZsyCq0Btp6WhqSqYAXWFWTbwkWxzlNA1B88QZkYTdg1xh/WQbxKPhR1MgqEwaloBAqVohRhb1kQXTxYeL4w0hbmTQp8oju/sGplZE4haZ9fRBlU83K2IR5fmfPgusgUz57G5fdIuTRac5vJtnJ5oRDtvVUIkBpofFayn3vej8srjJBEkdUqxZ+k7EVwWmUX0zDYrSGjvGsn5L/nSipMjMJianfmsCn+gsTjdeCFvpaMSnkpmgD2fAbTQ==
+    name = Kros Dai
+    email = kros@dai.sg
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQTzEIrjphfjlF5f/vWKaKBNPXN2WafTjyYBIWp6fbZ
 [gpg]
-  format = ssh
-[gpg "ssh"]
-  program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+    format = ssh
 [commit]
-  gpgsign = true
+    gpgsign = true
 [alias]
-	st = status
-	br = branch -a
-	ci = commit -v -S
-	co = checkout
+    st = status
+    br = branch -a
+    ci = commit -v -S
+    co = checkout
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [pull]
     rebase = false
 [core]
-	editor = vi
-	pager = diff-so-fancy | less --tabs=4 -RFX
-	excludesfile = ~/.gitignore_global
+    editor = vi
+    pager = diff-so-fancy | less --tabs=4 -RFX
+    excludesfile = ~/.gitignore_global
 [color]
-	diff = auto
-	status = auto
-	branch = auto
-	ui = true
+    diff = auto
+    status = auto
+    branch = auto
+    ui = true
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
 [color "diff"]
-	meta = 11
-	frag = magenta bold
-	func = 146 bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+    meta = 11
+    frag = magenta bold
+    func = 146 bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
 [interactive]
-	diffFilter = diff-so-fancy --patch
+    diffFilter = diff-so-fancy --patch
 [diff "word"]
-	textconv = strings
+    textconv = strings
 [merge]
-	summary = true
+    summary = true
 [i18n]
-	commitencoding = UTF-8
+    commitencoding = UTF-8
 [push]
-	default = simple
+    default = simple
 [http]
-	postBuffer = 524288000
+    postBuffer = 524288000
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	required = true
-	process = git-lfs filter-process
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    required = true
+    process = git-lfs filter-process
 [filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
+    clean = git-media-clean %f
+    smudge = git-media-smudge %f
 [credential]
-	helper = /usr/local/share/gcm-core/git-credential-manager
+    helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://dev.azure.com"]
-	useHttpPath = true
-
+    useHttpPath = true
