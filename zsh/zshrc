@@ -124,7 +124,7 @@ command -v bat &>/dev/null           && alias cat='bat --paging never'
 command -v prettyping &>/dev/null    && alias ping='prettyping --nolegend'
 command -v htop &>/dev/null          && alias top='sudo htop'
 command -v diff-so-fancy &>/dev/null && alias diff='diff-so-fancy'
-command -v ncdu &>/dev/null          && alias du='ncdu --color dark -rr -x'
+# command -v ncdu &>/dev/null          && alias du='ncdu --color dark -rr -x'
 command -v tldr &>/dev/null          && alias help='tldr'
 command -v podman &> /dev/null       && alias docker='podman'
 command -v jira &>/dev/null          && eval "$(jira --completion-script-bash)"
