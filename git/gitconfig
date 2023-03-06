@@ -6,6 +6,8 @@
     format = ssh
 [commit]
     gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/verified_signers
 [alias]
     st = status
     br = branch -a
@@ -17,7 +19,7 @@
     rebase = false
 [core]
     editor = vi
-    excludesfile = ~/.gitignore_global
+    excludesfile = ~/.config/git/ignore
 [color]
     diff = auto
     status = auto

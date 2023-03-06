@@ -6,10 +6,15 @@
     clean:
       force: false
 
+- create:
+    - ~/.vim/undo-history
+    - ~/.config/git
+
 - link:
     ~/.gemrc: "ruby/gemrc"
     ~/.gitconfig: "git/gitconfig"
-    ~/.gitignore_global: "git/gitignore_global"
+    ~/.config/git/ignore: "git/gitignore"
+    ~/.config/git/verified_signers: "git/verified_signers"
     ~/.htoprc: "util/htoprc"
     ~/.tmux.conf: "tmux/tmux.conf"
     ~/.tmux:
@@ -18,11 +23,6 @@
     ~/.zshenv: "zsh/zshenv"
     ~/.zlogin: "zsh/zlogin"
     ~/.zshrc: "zsh/zshrc"
-
-#- shell:
-
-- create:
-    - ~/.vim/undo-history
 
 - shell:
     - git submodule update --init --recursive --force
