@@ -26,6 +26,7 @@
 
 - shell:
     - git submodule update --init --recursive --force
+    - $CODESPACES && ln -sf $PWD/git/gitconfig_codespaces ~/.gitconfig
     - ./fzf/install --bin
     - cp ./diff-so-fancy/diff-so-fancy ./bin/diff-so-fancy && cp ./diff-so-fancy/lib/* ./bin/lib/
     - clang -framework Carbon util/reset-input.m -o bin/reset-input
