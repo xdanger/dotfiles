@@ -44,6 +44,8 @@ export LDFLAGS="-L$HOMEBREW/opt/ruby/lib"
 export CPPFLAGS="-I$HOMEBREW/opt/ruby/include"
 export PKG_CONFIG_PATH="$HOMEBREW/opt/ruby/lib/pkgconfig"
 
+clang -framework Carbon util/reset-input.m -o bin/reset-input
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
