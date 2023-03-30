@@ -112,11 +112,9 @@ fi
 # Compilation flags
 export ARCHFLAGS="-arch `uname -m`"
 
-# ssh
-# export SSH_KEY_PATH="~/.ssh/id_rsa"
-
 # 更兼容 bash，把带空格的字符串中的空格当做数组的分隔符
-setopt shwordsplit
+# 不兼容 warp，注释掉一下
+# setopt shwordsplit
 
 command -v rsync &>/dev/null         && alias rsync="rsync --exclude '.DS_Store'"
 command -v rclone &>/dev/null        && alias rclone="rclone --filter-from $DOTFILES/rclone/filter-list.txt"
@@ -135,4 +133,6 @@ if [ `command -v aria2c` ]; then
 fi
 
 source "$ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-source "$ZDOTDIR/iterm2_shell_integration.zsh"
+if [[ $TERM_PROGRAM != "iTerm.app" ]]; then
+  source "$ZDOTDIR/iterm2_shell_integration.zsh"
+fi
