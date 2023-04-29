@@ -8,21 +8,28 @@ Homebrew is not found. Please install it by:
 EOF
 
 path=("$HOMEBREW/sbin" "$HOMEBREW/bin" $path)
+[ -d "/opt/bin" ] && path+=("/opt/bin")
 manpath+=("$HOMEBREW/man")
+
+for dir in "ruby" "openssl" "gettext" "texinfo" "flutter"; do
+    [ -d "$HOMEBREW/opt/$dir/bin" ] && path=("$HOMEBREW/opt/$dir/bin" $path)
+done
+# for dir in "coreutils/libexec/gnubin"; do
+#     [ -d "$HOMEBREW/opt/$dir" ] && path+="($HOMEBREW/opt/$dir)"
+# done
 
 # Google Cloud Platform
 if `command -v gcloud &>/dev/null`; then
   export CLOUDSDK_PYTHON="$HOMEBREW/bin/python3"
-  export GOOGLE_CLOUD_SDK_HOME="$HOMEBREW/Caskroom/google-cloud-sdk/latest/google-cloud-sdk"
+  export GOOGLE_CLOUD_SDK_HOME="$HOMEBREW/share/google-cloud-sdk"
   source "$GOOGLE_CLOUD_SDK_HOME/path.zsh.inc" && source "$GOOGLE_CLOUD_SDK_HOME/completion.zsh.inc"
 fi
 
-# Ruby
-[ -d "$HOMEBREW/opt/ruby" ] && path=("$HOMEBREW/opt/ruby/bin" $path)
-[ -d "/opt/bin" ] && path=("/opt/bin" $path)
+# Python
+# [ -d "$HOMEBREW/opt/python" ] && path=("$HOMEBREW/opt/python/bin" $path)
 
 # Rust
-[ -d "$HOME/.cargo/bin" ] && path=("$HOME/.cargo/bin" $path)
+[ -d "$HOME/.cargo/bin" ] && path+=("$HOME/.cargo/bin")
 
 # Matalab
 [ -f /Applications/MATLAB_R2019a.app/bin/matlab ] && alias matlab-cli='/Applications/MATLAB_R2019a.app/bin/matlab -nodisplay -nosplash -nodesktop'
@@ -35,9 +42,7 @@ fi
 # export GUILE_LOAD_COMPILED_PATH="$HOMEBREW/lib/guile/3.0/site-ccache"
 # export GUILE_SYSTEM_EXTENSIONS_PATH="$HOMEBREW/lib/guile/3.0/extensions"
 # export GUILE_TLS_CERTIFICATE_DIRECTORY="/usr/local/etc/gnutls/"
-# for dir in "ruby/bin" "openssl@1.1/bin" "coreutils/libexec/gnubin" "gettext/bin" "texinfo/bin" "flutter/bin"; do
-#     [ -d "$HOMEBREW/opt/$dir" ] && export PATH="$HOMEBREW/opt/$dir:$PATH"
-# done
+
 
 # Libraries & Flags
 export LDFLAGS="-L$HOMEBREW/opt/ruby/lib"
