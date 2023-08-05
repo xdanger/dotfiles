@@ -58,6 +58,8 @@
 [filter "media"]
     clean = git-media-clean %f
     smudge = git-media-smudge %f
+[credential "https://huggingface.co"]
+	provider = generic
 [credential]
 	helper = 
 	helper = /usr/local/share/gcm-core/git-credential-manager
