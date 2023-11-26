@@ -1,6 +1,6 @@
 [user]
-    name = Kros Dai
-    email = kros@dai.sg
+    name = Yunjie Dai
+    email = yunjie@dai.sg
     signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQTzEIrjphfjlF5f/vWKaKBNPXN2WafTjyYBIWp6fbZ
 [gpg]
     format = ssh
