@@ -35,7 +35,7 @@ fi
 [ -f /Applications/MATLAB_R2019a.app/bin/matlab ] && alias matlab-cli='/Applications/MATLAB_R2019a.app/bin/matlab -nodisplay -nosplash -nodesktop'
 
 # Java & Android SDK
-[ -d "/opt/jdk" ] && export JAVA_HOME="/opt/jdk" && path=("$JAVA_HOME/bin" $path)
+[ -d "$HOMEBREW/opt/openjdk" ] && export JAVA_HOME="$HOMEBREW/opt/openjdk" && path=("$JAVA_HOME/bin" $path)
 [ -d "/opt/android-sdk" ] && export ANDROID_SDK_ROOT="/opt/android-sdk" && export ANDROID_HOME=$ANDROID_SDK_ROOT
 
 # export GUILE_LOAD_PATH="$HOMEBREW/share/guile/site/3.0"
