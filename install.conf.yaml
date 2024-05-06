@@ -11,17 +11,18 @@
     - ~/.config/git
 
 - link:
-    ~/.gemrc: "ruby/gemrc"
-    ~/.gitconfig: "git/gitconfig"
     ~/.config/git/ignore: "git/gitignore"
     ~/.config/git/verified_signers: "git/verified_signers"
+    ~/.gemrc: "ruby/gemrc"
+    ~/.gitconfig: "git/gitconfig"
     ~/.htoprc: "util/htoprc"
     ~/.tmux.conf: "tmux/tmux.conf"
     ~/.tmux:
     ~/.vim:
     ~/.vimrc: "vim/vimrc"
-    ~/.zshenv: "zsh/zshenv"
     ~/.zlogin: "zsh/zlogin"
+    ~/.zprofile: "zsh/zprofile"
+    ~/.zshenv: "zsh/zshenv"
     ~/.zshrc: "zsh/zshrc"
 
 - shell:
