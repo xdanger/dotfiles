@@ -31,6 +31,9 @@ fi
 # Rust
 [ -d "$HOME/.cargo/bin" ] && path+=("$HOME/.cargo/bin")
 
+# `.zprofile`
+[ -f "$DOTFILES/zsh/zprofile" ] && source "$DOTFILES/zsh/zprofile"
+
 # Matalab
 [ -f /Applications/MATLAB_R2019a.app/bin/matlab ] && alias matlab-cli='/Applications/MATLAB_R2019a.app/bin/matlab -nodisplay -nosplash -nodesktop'
 
@@ -42,7 +45,6 @@ fi
 # export GUILE_LOAD_COMPILED_PATH="$HOMEBREW/lib/guile/3.0/site-ccache"
 # export GUILE_SYSTEM_EXTENSIONS_PATH="$HOMEBREW/lib/guile/3.0/extensions"
 # export GUILE_TLS_CERTIFICATE_DIRECTORY="/usr/local/etc/gnutls/"
-
 
 # Libraries & Flags
 export LDFLAGS="-L$HOMEBREW/opt/ruby/lib"
