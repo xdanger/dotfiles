@@ -1,6 +1,6 @@
 [user]
     name = Yunjie Dai
-    email = yunjie@dai.sg
+    email = xdanger@gmail.com
     signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQTzEIrjphfjlF5f/vWKaKBNPXN2WafTjyYBIWp6fbZ
 [gpg]
     format = ssh
