@@ -11,9 +11,6 @@ path=("$HOMEBREW/sbin" "$HOMEBREW/bin" $path)
 [ -d "/opt/bin" ] && path+=("/opt/bin")
 manpath+=("$HOMEBREW/man")
 
-for dir in "ruby" "openssl" "gettext" "texinfo" "flutter"; do
-    [ -d "$HOMEBREW/opt/$dir/bin" ] && path=("$HOMEBREW/opt/$dir/bin" $path)
-done
 # for dir in "coreutils/libexec/gnubin"; do
 #     [ -d "$HOMEBREW/opt/$dir" ] && path+="($HOMEBREW/opt/$dir)"
 # done
@@ -31,6 +28,17 @@ fi
 # Rust
 [ -d "$HOME/.cargo/bin" ] && path+=("$HOME/.cargo/bin")
 
+# Ruby
+export LDFLAGS="-L$HOMEBREW/opt/ruby/lib"
+export CPPFLAGS="-I$HOMEBREW/opt/ruby/include"
+export PKG_CONFIG_PATH="$HOMEBREW/opt/ruby/lib/pkgconfig"
+for dir in "ruby" "openssl" "gettext" "texinfo" "flutter"; do
+    [ -d "$HOMEBREW/opt/$dir/bin" ] && path=("$HOMEBREW/opt/$dir/bin" $path)
+done
+for pth in `ruby -e 'puts Gem.path'`; do
+  [ -d "$pth" ] && path=("$pth/bin" $path)
+done
+
 # `.zprofile`
 [ -f "$DOTFILES/zsh/zprofile" ] && source "$DOTFILES/zsh/zprofile"
 
@@ -46,10 +54,6 @@ fi
 # export GUILE_SYSTEM_EXTENSIONS_PATH="$HOMEBREW/lib/guile/3.0/extensions"
 # export GUILE_TLS_CERTIFICATE_DIRECTORY="/usr/local/etc/gnutls/"
 
-# Libraries & Flags
-export LDFLAGS="-L$HOMEBREW/opt/ruby/lib"
-export CPPFLAGS="-I$HOMEBREW/opt/ruby/include"
-export PKG_CONFIG_PATH="$HOMEBREW/opt/ruby/lib/pkgconfig"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
