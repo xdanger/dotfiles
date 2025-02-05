@@ -39,6 +39,14 @@ for pth in `ruby -e 'puts Gem.path'`; do
   [ -d "$pth" ] && path=("$pth/bin" $path)
 done
 
+# pnpm
+export PNPM_HOME="/Users/xdanger/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
 # `.zprofile`
 [ -f "$DOTFILES/zsh/zprofile" ] && source "$DOTFILES/zsh/zprofile"
 
