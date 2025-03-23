@@ -20,6 +20,7 @@
 [core]
     editor = vi
     excludesfile = ~/.config/git/ignore
+	pager = less -FRX
 [color]
     diff = auto
     status = auto

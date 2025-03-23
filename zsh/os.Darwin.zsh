@@ -50,6 +50,11 @@ esac
 # `.zprofile`
 [ -f "$DOTFILES/zsh/zprofile" ] && source "$DOTFILES/zsh/zprofile"
 
+# Cursor
+[ -d "/Applications/Cursor.app" ] && function cursor {
+    open -a "/Applications/Cursor.app" "$@"
+}
+
 # Matalab
 [ -f /Applications/MATLAB_R2019a.app/bin/matlab ] && alias matlab-cli='/Applications/MATLAB_R2019a.app/bin/matlab -nodisplay -nosplash -nodesktop'
 
