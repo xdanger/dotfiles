@@ -80,9 +80,7 @@ HIST_STAMPS="yyyy/mm/dd"
 # virtualenv
 [[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
 # bun completions
-[ -s "$HOME/.bun/_bun" ] && (source "$HOME/.bun/_bun" &&\
-  export BUN_INSTALL="$HOME/.bun" &&\
-  export PATH="$BUN_INSTALL/bin:$PATH")
+[ -s "$HOME/.bun/_bun" ] && (source "$HOME/.bun/_bun" && export BUN_INSTALL="$HOME/.bun" && export PATH="$BUN_INSTALL/bin:$PATH")
 # other envs
 [ -f "$ZDOTDIR/os.`uname`.zsh" ] && source "$ZDOTDIR/os.`uname`.zsh"
 [ -f "$ZDOTDIR/../../.dotlocal/envs.zsh" ] && source "$ZDOTDIR/../../.dotlocal/envs.zsh"

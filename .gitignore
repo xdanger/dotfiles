@@ -1,6 +1,6 @@
 /bin
 /local
 /vim/viminfo
-/zsh/.zcompdump-*
+/zsh/.zcompdump*
 /zsh/.zsh_history
 /zsh/.zsh_sessions
