@@ -11,6 +11,7 @@
     - ~/.config/git
 
 - link:
+    ~/.claude/CLAUDE.md: "claude/CLAUDE.md"
     ~/.config/git/ignore: "git/gitignore"
     ~/.config/git/verified_signers: "git/verified_signers"
     ~/.config/zed: "/Users/xdanger/Library/Mobile Documents/com~apple~CloudDocs/Documents/Configurations/Zed"
