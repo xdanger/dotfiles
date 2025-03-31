@@ -1,96 +1,118 @@
-# Standards
+# Project Standards
 
-## Git Commit Standards
+## Document Organization
 
-All commit messages MUST follow the [Conventional Commits](https://www.conventionalcommits.org/) specification with [gitmoji](https://gitmoji.dev/) prefix:
+### README Files
+
+- **Required in**: All component, module, feature, and utility directories
+- **Languages**: Maintain both English (`README.md`) and Chinese (`README.zh.md`) versions
+
+#### Required Sections
+
+1. **Purpose**: Brief description of directory contents (1-3 sentences)
+2. **Usage**: How to work with this component, including:
+   - Environment setup
+   - Installation/initialization
+   - Compilation/build steps
+   - How to use the component
+   - Testing procedures
+3. **Roadmap**: Items with status indicators:
+   - ✅ Complete
+   - 🔄 In progress
+   - ⏳ Planned
+   - ❌ Blocked
+   - 🔍 Under review
+4. **Next Steps**: Prioritized upcoming tasks/features
+
+## Content Standards
+
+### Git Commits
+
+#### Format
 
 ```plaintext
-<gitmoji> <type>[optional scope]: <description>
+<gitmoji> <type>[scope]: <English description> / <Chinese description>
 
-[optional body]
+[English details]
+[Chinese details]
 
-[optional footer(s)]
+Next steps / 下一步:
+
+- [Future task in English] / [对应的中文]
+- [Potential issue/consideration in English] / [对应的中文]
 ```
 
-**Types**:
+#### Types
 
-- `feat`: A new feature
-- `fix`: A bug fix
-- `docs`: Documentation only changes
-- `style`: Changes that do not affect the meaning of the code
-- `refactor`: A code change that neither fixes a bug nor adds a feature
-- `perf`: A code change that improves performance
-- `test`: Adding missing tests or correcting existing tests
-- `build`: Changes that affect the build system or external dependencies
-- `ci`: Changes to our CI configuration files and scripts
-- `chore`: Other changes that don't modify src or test files
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation
+- `style`: Formatting
+- `refactor`: Code restructuring
+- `perf`: Performance
+- `test`: Testing
+- `build`: Build system
+- `ci`: CI/CD
+- `chore`: Maintenance
 
-**Example**:
+#### Example
 
 ```plaintext
-📝 docs(readme): update installation instructions
+🔧 fix(auth): Fix token expiration calculation / 修复令牌过期计算
+
+Corrected the timestamp comparison logic to handle timezone differences.
+修正时间戳比较逻辑，以处理时区差异。
+
+Next steps / 下一步:
+
+- Add comprehensive timezone tests / 添加全面的时区测试
+- Consider persisting tokens with absolute expiry time / 考虑使用绝对过期时间存储令牌
+- Update documentation with timezone considerations / 更新文档以包含时区注意事项
+
 ```
 
-## Copywriting Standards
+### Chinese-English Text
 
-Following the [Chinese Copywriting Guidelines](https://github.com/sparanoid/chinese-copywriting-guidelines):
+Follow [Chinese Copywriting Guidelines](https://github.com/sparanoid/chinese-copywriting-guidelines) for all content:
 
-### Application Scope
+#### Key Rules
 
-All of the following content must comply with these copywriting guidelines:
+- Add spaces between Chinese and English:
+  - ✅ 使用 Markdown 格式
+  - ❌ 使用Markdown格式
 
-- Conversations with Claude
-- Output code (including comments)
-- Git commit messages
-- Documentation
-- User interface text
+- Add spaces between Chinese and numbers:
+  - ✅ 共发现 3 个问题
+  - ❌ 共发现3个问题
 
-### Spacing
+- Use full-width punctuation with Chinese:
+  - ✅ 请检查错误，然后重试。
+  - ❌ 请检查错误, 然后重试.
 
-- Add spaces between Chinese and English text
-  - ✔ 在 LeanCloud 上，数据存储是围绕 `AVObject` 进行的
-  - ❌ 在 LeanCloud 上，数据存储是围绕`AVObject`进行的
-- Add spaces between Chinese text and numbers
-  - ✔ 今天出去买菜花了 5000 元
-  - ❌ 今天出去买菜花了5000元
-- Add spaces between numbers and units
-  - ✔ 我家的光纤入屋宽带有 10 Gbps
-  - ❌ 我家的光纤入屋宽带有10Gbps
-  - ❌ No space needed for degrees/percentages (90°, 15%)
+- Use proper capitalization for technical terms:
+  - ✅ 使用 GitHub 账号
+  - ❌ 使用 github 账号
 
-### Punctuation
+## Formatting & Validation
 
-- Don't repeat punctuation marks
-- Use full-width Chinese punctuation for Chinese text
-  - ✔ 嗨！你知道嘛？今天前台的小妹跟我说「喵」了哎！
-  - ❌ 嗨! 你知道嘛? 今天前台的小妹跟我说 "喵" 了哎!
-- Use half-width punctuation for complete English sentences within Chinese text
-  - ✔ 乔布斯那句话是怎么说的？「Stay hungry, stay foolish.」
-  - ❌ 乔布斯那句话是怎么说的？「Stay hungry，stay foolish。」
+### Markdown Requirements
 
-### Numbers and Special Terms
-
-- Use half-width characters for numbers
-  - ✔ 这个蛋糕只卖 1000 元
-  - ❌ 这个蛋糕只卖 １０００ 元
-- Use correct capitalization for specialized terms
-  - ✔ 使用 GitHub 登录
-  - ❌ 使用 github 登录
-
-### AutoCorrect Linter
-
-To ensure compliance with these guidelines, use [AutoCorrect](https://github.com/huacnlee/autocorrect), a linter and formatter for Chinese copywriting.
-
-- Features:
-  - Automatically corrects spacing between CJK and Latin characters
-  - Fixes punctuation issues (fullwidth/halfwidth)
-  - Performs spellcheck for common terms
-  - Supports various file formats (Markdown, HTML, JavaScript, etc.)
-
-### Markdown formatting requirements
-
-- Lists must be surrounded by blank lines
-- No trailing spaces at end of lines
-- Files must end with a single newline character
+- No trailing spaces
+- Single newline at end of file
 - Consistent heading hierarchy
-- Proper indentation for lists and code blocks
+- Code blocks specify language
+- Lists surrounded by blank lines
+
+### Exceptions to Standard Rules
+
+- MD013: Line length limit not enforced
+- MD024: Allows multiple headings with same content
+- MD042: Empty links permitted
+- MD022: Headings without surrounding blank lines permitted
+- MD037: Spaces inside emphasis markers permitted
+
+### Validation
+
+- Chinese text: `bunx autocorrect --lint .`
+- Markdown: `bunx markdownlint-cli2 .`
+- Fix automatically: `bunx autocorrect --fix . && bunx markdownlint-cli2 --fix .`
