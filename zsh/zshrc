@@ -75,12 +75,14 @@ HIST_STAMPS="yyyy/mm/dd"
   && source "$DOTFILES/fzf/shell/key-bindings.zsh" \
   && export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(atom {})+abort'"
 # rvm
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 # [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
 # virtualenv
-[[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
+[ -d "$HOME/.local/bin" ] && path+=("$HOME/.local/bin")
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun" && export BUN_INSTALL="$HOME/.bun" && path+=("$BUN_INSTALL/bin")
+# claude
+[ -s "$HOME/.claude/local/claude" ] && alias claude="$HOME/.claude/local/claude"
 # other envs
 [ -f "$ZDOTDIR/os.`uname`.zsh" ] && source "$ZDOTDIR/os.`uname`.zsh"
 [ -f "$ZDOTDIR/../../.dotlocal/envs.zsh" ] && source "$ZDOTDIR/../../.dotlocal/envs.zsh"
