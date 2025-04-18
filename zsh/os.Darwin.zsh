@@ -15,6 +15,18 @@ manpath+=("$HOMEBREW/man")
 #     [ -d "$HOMEBREW/opt/$dir" ] && path+="($HOMEBREW/opt/$dir)"
 # done
 
+# `.zprofile`
+[ -f "$DOTFILES/zsh/zprofile" ] && source "$DOTFILES/zsh/zprofile"
+
+# Monokai Pro
+# if [ -d "$HOMEBREW/share/zsh-syntax-highlighting" ]; then
+#   ZSH_HIGHLIGHT_STYLES[path]=""
+#   ZSH_HIGHLIGHT_STYLES[path_pathseparator]=fg=black,bold
+#   ZSH_HIGHLIGHT_STYLES[path_prefix]=""
+#   source $DOTFILES/zsh/z-monokai
+#   source $HOMEBREW/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# fi
+
 # Google Cloud Platform
 if `command -v gcloud &>/dev/null`; then
   export CLOUDSDK_PYTHON="$HOMEBREW/bin/python3"
@@ -47,8 +59,10 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# `.zprofile`
-[ -f "$DOTFILES/zsh/zprofile" ] && source "$DOTFILES/zsh/zprofile"
+# Added by OrbStack: command-line tools and integration
+if [ -d "$HOME/.orbstack" ]; then
+  source "$HOME/.orbstack/shell/init.zsh" 2>/dev/null || :
+fi
 
 # Cursor
 [ -d "/Applications/Cursor.app" ] && function cursor {
