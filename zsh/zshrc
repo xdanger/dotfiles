@@ -67,6 +67,8 @@ HIST_STAMPS="yyyy/mm/dd"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# `.zprofile`
+[ -f "$DOTFILES/zsh/zprofile" ] && source "$DOTFILES/zsh/zprofile"
 # antigen
 [ -d "$ZDOTDIR/antigen" ] && source $ZDOTDIR/antigen/antigen.zsh
 # fzf
@@ -79,8 +81,19 @@ HIST_STAMPS="yyyy/mm/dd"
 # [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
 # virtualenv
 [ -d "$HOME/.local/bin" ] && path+=("$HOME/.local/bin")
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun" && export BUN_INSTALL="$HOME/.bun" && path+=("$BUN_INSTALL/bin")
+# Pytho installations by [uv](https://github.com/astral-sh/uv)
+[ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
+# nvm & node
+[ -f "$HOME/.nvm/nvm.sh" ] && export NVM_DIR="$HOME/.nvm" && \. "$NVM_DIR/nvm.sh"
+# bun
+if [ -d "$HOME/.bun" ]; then
+  export BUN_INSTALL="$HOME/.bun" && path+=("$BUN_INSTALL/bin")
+  # completion in macOS
+  [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+fi
+# Rust
+[ -d "$HOME/.cargo/bin" ] && \. "$HOME/.cargo/env"
+
 # claude
 [ -s "$HOME/.claude/local/claude" ] && alias claude="$HOME/.claude/local/claude"
 # other envs
@@ -141,4 +154,15 @@ fi
 source "$ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 if [[ $TERM_PROGRAM != "iTerm.app" ]]; then
   source "$ZDOTDIR/iterm2_shell_integration.zsh"
+fi
+
+# 判断是不是 WSL
+is_wsl() {
+  [[ -f "/proc/sys/fs/binfmt_misc/WSLInterop" ]] && return 0
+  [[ $(<"/proc/sys/kernel/osrelease") == *[Mm]icrosoft* ]] && return 0
+  [[ -n ${WSL_DISTRO_NAME:-} ]] && return 0
+  return 1
+}
+if is_wsl; then
+  alias ssh="ssh.exe"
 fi

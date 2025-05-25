@@ -6,8 +6,6 @@
     format = ssh
 [commit]
     gpgsign = true
-[gpg "ssh"]
-	allowedSignersFile = ~/.config/git/verified_signers
 [alias]
     st = status
     br = branch -a
@@ -17,28 +15,11 @@
     defaultBranch = main
 [pull]
     rebase = false
-[core]
-    editor = vi
-    excludesfile = ~/.config/git/ignore
-	pager = less -FRX
 [color]
     diff = auto
     status = auto
     branch = auto
     ui = true
-[color "diff-highlight"]
-    oldNormal = red bold
-    oldHighlight = red bold 52
-    newNormal = green bold
-    newHighlight = green bold 22
-[color "diff"]
-    meta = 11
-    frag = magenta bold
-    func = 146 bold
-    commit = yellow bold
-    old = red bold
-    new = green bold
-    whitespace = red reverse
 [interactive]
     diffFilter = diff-so-fancy --patch
 [diff "word"]
@@ -47,8 +28,6 @@
     summary = true
 [i18n]
     commitencoding = UTF-8
-[push]
-    default = simple
 [http]
     postBuffer = 524288000
 [filter "lfs"]
@@ -62,6 +41,6 @@
 [credential]
     helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://huggingface.co"]
-	provider = generic
+    provider = generic
 [credential "https://dev.azure.com"]
-	useHttpPath = true
+    useHttpPath = true
