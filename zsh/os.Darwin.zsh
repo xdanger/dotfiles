@@ -11,34 +11,12 @@ path=("$HOMEBREW/sbin" "$HOMEBREW/bin" $path)
 [ -d "/opt/bin" ] && path+=("/opt/bin")
 manpath+=("$HOMEBREW/man")
 
-# for dir in "coreutils/libexec/gnubin"; do
-#     [ -d "$HOMEBREW/opt/$dir" ] && path+="($HOMEBREW/opt/$dir)"
-# done
-
-# `.zprofile`
-[ -f "$DOTFILES/zsh/zprofile" ] && source "$DOTFILES/zsh/zprofile"
-
-# Monokai Pro
-# if [ -d "$HOMEBREW/share/zsh-syntax-highlighting" ]; then
-#   ZSH_HIGHLIGHT_STYLES[path]=""
-#   ZSH_HIGHLIGHT_STYLES[path_pathseparator]=fg=black,bold
-#   ZSH_HIGHLIGHT_STYLES[path_prefix]=""
-#   source $DOTFILES/zsh/z-monokai
-#   source $HOMEBREW/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# fi
-
 # Google Cloud Platform
 if `command -v gcloud &>/dev/null`; then
   export CLOUDSDK_PYTHON="$HOMEBREW/bin/python3"
   export GOOGLE_CLOUD_SDK_HOME="$HOMEBREW/share/google-cloud-sdk"
   source "$GOOGLE_CLOUD_SDK_HOME/path.zsh.inc" && source "$GOOGLE_CLOUD_SDK_HOME/completion.zsh.inc"
 fi
-
-# Python
-# [ -d "$HOMEBREW/opt/python" ] && path=("$HOMEBREW/opt/python/bin" $path)
-
-# Rust
-[ -d "$HOME/.cargo/bin" ] && path+=("$HOME/.cargo/bin")
 
 # Ruby
 export LDFLAGS="-L$HOMEBREW/opt/ruby/lib"
