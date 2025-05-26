@@ -159,10 +159,13 @@ fi
 # 判断是不是 WSL
 is_wsl() {
   [[ -f "/proc/sys/fs/binfmt_misc/WSLInterop" ]] && return 0
-  [[ $(<"/proc/sys/kernel/osrelease") == *[Mm]icrosoft* ]] && return 0
+  # [[ $(<"/proc/sys/kernel/osrelease") == *[Mm]icrosoft* ]] && return 0
   [[ -n ${WSL_DISTRO_NAME:-} ]] && return 0
   return 1
 }
 if is_wsl; then
   alias ssh="ssh.exe"
+  export WSL=true
+else
+  unset WSL
 fi
