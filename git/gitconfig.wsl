@@ -1,12 +1,15 @@
 [user]
     name = Yunjie Dai
     email = xdanger@gmail.com
+    signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQTzEIrjphfjlF5f/vWKaKBNPXN2WafTjyYBIWp6fbZ
 [core]
     sshCommand = "ssh.exe"
 [commit]
     gpgsign = true
+[gpg]
+    format = ssh
 [gpg "ssh"]
-	allowedSignersFile = ~/.config/git/verified_signers
+    allowedSignersFile = ~/.config/git/verified_signers
     program = "/mnt/c/Users/xdanger/AppData/Local/1Password/app/8/op-ssh-sign.exe"
 [alias]
     st = status

@@ -15,7 +15,7 @@
     ~/.claude/commands: "claude/commands"
     ~/.config/git/ignore: "git/gitignore"
     ~/.config/git/verified_signers: "git/verified_signers"
-    ~/.config/zed: "/Users/xdanger/Library/Mobile Documents/com~apple~CloudDocs/Documents/Configurations/Zed"
+    # ~/.config/zed: "/Users/xdanger/Library/Mobile Documents/com~apple~CloudDocs/Documents/Configurations/Zed"
     ~/.gemrc: "ruby/gemrc"
     ~/.gitconfig: "git/gitconfig"
     ~/.htoprc: "util/htoprc"
@@ -29,4 +29,6 @@
     ~/.zshrc: "zsh/zshrc"
 
 - shell:
-    - bash $PWD/script/post-install.bash
+    - command: bash $PWD/script/post-install.bash
+      stdout: true
+      stderr: true
