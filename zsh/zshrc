@@ -94,8 +94,6 @@ fi
 # Rust
 [ -d "$HOME/.cargo/bin" ] && \. "$HOME/.cargo/env"
 
-# claude
-[ -s "$HOME/.claude/local/claude" ] && alias claude="$HOME/.claude/local/claude"
 # other envs
 [ -f "$ZDOTDIR/os.`uname`.zsh" ] && source "$ZDOTDIR/os.`uname`.zsh"
 [ -f "$ZDOTDIR/../../.dotlocal/envs.zsh" ] && source "$ZDOTDIR/../../.dotlocal/envs.zsh"
@@ -169,3 +167,4 @@ if is_wsl; then
 else
   unset WSL
 fi
+
