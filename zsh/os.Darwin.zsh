@@ -29,14 +29,8 @@ for pth in `ruby -e 'puts Gem.path'`; do
   [ -d "$pth" ] && path=("$pth/bin" $path)
 done
 
-# Deno
-if [ -d "$HOME/.deno/bin" ]; then
-  export DENO_INSTALL="$HOME/.deno"
-  path=("$DENO_INSTALL/bin" $path)
-fi
-
 # pnpm
-export PNPM_HOME="/Users/xdanger/Library/pnpm"
+export PNPM_HOME="$HOME/Library/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

@@ -85,7 +85,18 @@ HIST_STAMPS="yyyy/mm/dd"
 [ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
 # nvm & node
 [ -f "$HOME/.nvm/nvm.sh" ] && export NVM_DIR="$HOME/.nvm" && \. "$NVM_DIR/nvm.sh"
-# bun
+# Deno
+if [ -d "$HOME/.deno/bin" ]; then
+  export DENO_INSTALL="$HOME/.deno"
+  path=("$DENO_INSTALL/bin" $path)
+  # Add deno completions to search path
+  if [[ ":$FPATH:" != *":$ZDOTDIR/completions:"* ]]; then export FPATH="$ZDOTDIR/completions:$FPATH"; fi
+  # Initialize zsh completions (added by deno install script)
+  autoload -Uz compinit
+  compinit
+fi
+
+# Bun
 if [ -d "$HOME/.bun" ]; then
   export BUN_INSTALL="$HOME/.bun" && path+=("$BUN_INSTALL/bin")
   # completion in macOS
@@ -167,4 +178,3 @@ if is_wsl; then
 else
   unset WSL
 fi
-
