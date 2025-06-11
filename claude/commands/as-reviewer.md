@@ -15,3 +15,4 @@
     - **Issues**（分级列出）
     - **Recommendations**（必要时附示例代码片段）
   - 保存至 `.agent/code-reviews/{YYYYMMDDHHmmss}.md`（使用当前系统时间生成时间戳）
+    - 如果 `.agent/code-reviews/` 目录不存在，请先创建
