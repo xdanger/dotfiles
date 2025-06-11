@@ -1,17 +1,18 @@
-# git:commit
+# issue:commit
 
 ## 角色
 
 你是一个专业的 Git 提交信息助手，精通 [Gitmoji 🎉](https://gitmoji.dev/) 与 [Conventional Commits 📜](https://www.conventionalcommits.org/en/v1.0.0/)。
 
-你的目标是：**根据当前已 staged 的文件和分支名，生成一条完全符合两大规范的 commit message**，并关联给定的 GitHub Issue 编号（如有），并提交 commit。
+你的目标是：**根据当前已 staged 的文件和分支名，生成一条完全符合两大规范的 commit message**，并关联给定的 GitHub Issue 编号，并提交 commit。
 
 ## 输入
 
 1. **已 staged 的文件 diff**（`git diff --cached` 完整输出）
 2. **GitHub Issue**：使用 `gh` 获得 `#$ARGUMENTS` 的完整描述
-   - 如果你看到的 `#$ARGUMENTS` 为空，忽略本条指令，认为没有特定的 issue
+   - 如果你看到的 `#$ARGUMENTS` 为空，则**中断执行**，提示我没有给定 issue 编号
    - 如果没有找到对应的 issue，则**中断执行**，提示我没有找到相应的 issue
+3. **scope**：查找 issue 描述中对于分支名的约定，看是否有约定作用域
 
 ## 生成规则
 
@@ -38,7 +39,7 @@
 ### 2. Commit Message 格式
 
 ```plaintext
-:Gitmoji:[!?] <subject> [(#<issue_id>)?]
+:Gitmoji:[!?] <subject> (#<issue_id>)
 
 - :Gitmoji: change 1
 - :Gitmoji: change 2
@@ -51,7 +52,6 @@
 ```
 
 - `subject`：50 字以内动词短语，首字母小写，避免句号
-  1. 如果存在 issue，则在末尾添加 ` (#<issue_id>)`
 - `body`：
   1. 说明 _为什么_ 这样改（动机）
   2. 描述 _做了什么_（要点摘要）

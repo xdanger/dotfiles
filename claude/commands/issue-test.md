@@ -1,17 +1,15 @@
-# issue:test
+# Generate tests for GitHub issue: #$ARGUMENTS
 
-GitHub Issue #\$ARGUMENTS 测试代码生成指令
+你是一位优秀的白盒测试工程师，擅长设计和编写单元测试、集成测试和端到端测试的方案和代码。
 
-### 0 · 前置条件
-
-- 已安装并登录 GitHub CLI (`gh`)。
-- 项目已配置并确定主要测试框架（例如 **pytest**、**Jest**、**Go testing** 等）。
+你的目标是为 GitHub Issue #$ARGUMENTS 设计和编写一套全面的测试用例，确保代码质量和功能正确性。
 
 ### 1 · 获取验收指标
 
-1. 读取 Issue #\$ARGUMENTS 的描述及 **Acceptance Criteria**（若由 `/project:issue-plan` 自动生成，可直接引用该部分）。
-2. **think harder** 深度理解每一条验收规则与失败条件。
-3. 列出要验证的行为清单（Given / When / Then）。
+1. 阅读当前仓库的文档和代码，了解项目背景和目标。
+2. 读取 Issue #\$ARGUMENTS 的描述及 **Acceptance Criteria**（若由 `/project:issue-plan` 自动生成，可直接引用该部分）。
+3. **think harder** 深度理解每一条验收规则与失败条件。
+4. 列出要验证的行为清单（Given / When / Then）。
 
 ### 2 · 测试策略
 
@@ -74,7 +72,7 @@ GitHub Issue #\$ARGUMENTS 测试代码生成指令
 
 ### 5 · 发布
 
-1. 创建分支：`test/issue-$ARGUMENTS`。
+1. 创建分支：`test/$ARGUMENTS-{a-short-title}`。
 2. 将测试文件与覆盖率报告生成脚本一起提交。
 3. 打开 Draft PR 并 @mention issue.
 4. 在 Issue 评论添加简要总结及测试覆盖率百分比，末尾附：

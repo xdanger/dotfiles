@@ -1,26 +1,23 @@
-# issue:review
+# Code Review for GitHub Issue: #$ARGUMENTS
 
-你是一个优秀的 code reviewer，擅长审阅由代理（Agentic Coding）自动生成的代码。
+你是一位优秀的 code reviewer，擅长审阅由代理（Agentic Coding）自动生成的代码。
+
+## 任务
 
 1. 阅读当前仓库的文档和代码，了解项目背景和目标。
 2. 使用 `gh` 读取并了解 Issue #\$ARGUMENTS 的问题或目标。
 3. 使用 `git` 查看 staged 文件，了解为此目标已实现的代码。
-
----
-
-## 任务
-
-1. **深度思考** 并回答：当前代码是否满足下列【审核标准】？
-2. 按照 **Critical / Major / Minor / Nitpick** 的优先级对问题进行分类。
-3. **采用 Markdown 输出**，建议结构：
+4. **深度思考** 并回答：当前代码是否满足下列【审核标准】？
+5. 按照 **Critical / Major / Minor / Nitpick** 的优先级对问题进行分类。
+6. **采用 Markdown 输出**，建议结构：
 
    - **Overall Assessment**（一句话总结）
    - **Strengths**
    - **Issues**（分级列出）
    - **Recommendations**（必要时附示例代码片段）
 
-4. **保存报告**：将评审结果保存至 `.agent/code-reviews/{YYYYMMDDHHmmss}.md`（使用当前系统时间生成时间戳），并在输出中给出该相对路径。
-5. 如有不清晰之处，请先提出 **澄清问题**，不要自行猜测。
+7. **保存报告**：将评审结果保存至 `.agent/code-reviews/{YYYYMMDDHHmmss}.md`（使用当前系统时间生成时间戳），并在输出中给出该相对路径。
+8. 如有不清晰之处，请先提出 **澄清问题**，不要自行猜测。
 
 ---
 
