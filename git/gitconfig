@@ -6,6 +6,8 @@
     format = ssh
 [commit]
     gpgsign = true
+[core]
+	pager = delta
 [alias]
     st = status
     br = branch -a
@@ -21,11 +23,11 @@
     branch = auto
     ui = true
 [interactive]
-    diffFilter = diff-so-fancy --patch
+	diffFilter = delta --color-only
 [diff "word"]
     textconv = strings
 [merge]
-    summary = true
+	conflictStyle = zdiff3
 [i18n]
     commitencoding = UTF-8
 [http]
@@ -44,3 +46,7 @@
     provider = generic
 [credential "https://dev.azure.com"]
     useHttpPath = true
+[worktree]
+	useRelativePaths = true
+[delta]
+	navigate = true
