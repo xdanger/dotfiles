@@ -1,6 +1,10 @@
 # ① 所有 zsh
 # 最小环境：PATH/LANG/EDITOR 等任何场景都需要的变量
 
+# reset $FPATH to remove /usr/local/share/zsh/site-functions
+typeset -U fpath
+fpath=(${fpath:#/usr/local/share/zsh/site-functions})
+
 RELATE_TO_DOTFILES=".."
 # First of all, get absolute realpath of this dotfiles repo
 # The following block is for zsh
@@ -46,8 +50,3 @@ fi
 # add ./bin to $PATH
 [ -d "$DOTFILES/bin" ] && path+=("$DOTFILES/bin")
 [ -d "/opt/bin" ] && path+=("/opt/bin")
-
-# Ensure interactive shells load .zshrc
-if [[ -o interactive && -f $ZDOTDIR/.zshrc ]]; then
-    source $ZDOTDIR/.zshrc
-fi

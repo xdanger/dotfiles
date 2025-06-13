@@ -122,7 +122,7 @@ fi
 
 # zsh-completions
 if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  fpath+=("$(brew --prefix)/share/zsh-completions")
   autoload -Uz compinit
   compinit
 fi
