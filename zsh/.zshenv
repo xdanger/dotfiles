@@ -22,29 +22,6 @@ export ZDOTDIR="$DOTFILES/zsh"
 # Set ZSH environment variable
 export ZSH="$ZDOTDIR/oh-my-zsh"
 
-# rvm
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
-# [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
-# virtualenv
-[ -d "$HOME/.local/bin" ] && path+=("$HOME/.local/bin")
-# Python installations by [uv](https://github.com/astral-sh/uv)
-[ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
-# nvm & node
-[ -f "$HOME/.nvm/nvm.sh" ] && export NVM_DIR="$HOME/.nvm" && \. "$NVM_DIR/nvm.sh"
-# Deno
-if [ -d "$HOME/.deno/bin" ]; then
-  export DENO_INSTALL="$HOME/.deno"
-  path=("$DENO_INSTALL/bin" $path)
-fi
-# Bun
-if [ -d "$HOME/.bun" ]; then
-  export BUN_INSTALL="$HOME/.bun" && path+=("$BUN_INSTALL/bin")
-  # completion in macOS
-  [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-fi
-# Rust
-[ -d "$HOME/.cargo/bin" ] && \. "$HOME/.cargo/env"
-
 # other envs
 [ -f "$ZDOTDIR/../../.dotlocal/envs.zsh" ] && source "$ZDOTDIR/../../.dotlocal/envs.zsh"
 # add ./bin to $PATH

@@ -6,7 +6,7 @@ Homebrew is not found. Please install it by:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 EOF
 
-path+=("$HOMEBREW/sbin" "$HOMEBREW/bin")
+path=("$HOMEBREW/sbin" "$HOMEBREW/bin" $path)
 manpath+=("$HOMEBREW/man")
 
 # Google Cloud Platform
