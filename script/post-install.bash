@@ -3,11 +3,6 @@ git submodule sync --recursive
 # 确保剩余子模块正常
 git submodule update --init --recursive
 
-# A command-line finder
-./fzf/install --bin
-# install diff-so-fancy
-cp ./diff-so-fancy/diff-so-fancy ./bin/diff-so-fancy && cp ./diff-so-fancy/lib/* ./bin/lib/
-
 # link ~/.gitconfig to gitconfig_codespaces in GitHub Codespaces
 [[ $CODESPACES == "true" ]] && ln -sf $PWD/git/gitconfig.codespaces ~/.gitconfig
 # link ~/.gitconfig to gitconfig.wsl in Windows Subsystem for Linux
@@ -15,9 +10,16 @@ cp ./diff-so-fancy/diff-so-fancy ./bin/diff-so-fancy && cp ./diff-so-fancy/lib/*
 
 # macOS
 if [[ `uname` == "Darwin" ]]; then
-  clang -framework Carbon util/reset-input.m -o bin/reset-input
+  # clang -framework Carbon util/reset-input.m -o bin/reset-input
   brew update && brew upgrade
-  brew install ack ag aria2 bat csvkit diff-so-fancy entr fortune git-delta gitkraken-cli glab \
+  brew install ack ag aria2 bat csvkit diff-so-fancy entr fortune fzf git-delta gitkraken-cli glab \
   htop ncdu noti ripgrep prettyping tldr yt-dlp font-im-writing-nerd-font font-droid-sans-mono-nerd-font
   # brew tap homebrew/cask-fonts && brew install -f font-fira-code
+else if [[ `uname` == "Linux" ]]; then
+    # Other Linux distributions
+    sudo apt update && sudo apt upgrade -y
+    sudo apt install -y ack ag aria2 bat csvkit diff-so-fancy entr fortune fzf git-delta gitkraken-cli glab \
+    htop ncdu noti ripgrep prettyping tldr yt-dlp
+else
+    # Unsupported OS
 fi
