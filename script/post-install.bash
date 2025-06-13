@@ -14,6 +14,7 @@ cp ./diff-so-fancy/diff-so-fancy ./bin/diff-so-fancy && cp ./diff-so-fancy/lib/*
 if [[ `uname` == "Darwin" ]]; then
   clang -framework Carbon util/reset-input.m -o bin/reset-input
   brew update && brew upgrade
-  brew install ack ag aria2 bat csvkit diff-so-fancy entr fortune git-delta gitkraken-cli glab htop ncdu noti ripgrep prettyping tldr yt-dlp
+  brew install ack ag aria2 bat csvkit diff-so-fancy entr fortune git-delta gitkraken-cli glab \
+  htop ncdu noti ripgrep prettyping tldr yt-dlp font-im-writing-nerd-font font-droid-sans-mono-nerd-font
   # brew tap homebrew/cask-fonts && brew install -f font-fira-code
 fi
