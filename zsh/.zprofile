@@ -2,4 +2,4 @@
 LOGINSHELL_INITED=1
 
 #
-[ -f "$ZDOTDIR/os.`uname`.zsh" ] && source "$ZDOTDIR/os.`uname`.zsh"
+[ -f "$ZDOTDIR/env.`uname`.zsh" ] && source "$ZDOTDIR/env.`uname`.zsh"

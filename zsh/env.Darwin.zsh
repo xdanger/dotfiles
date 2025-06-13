@@ -1,9 +1,10 @@
-if type brew &>/dev/null; then
-  export HOMEBREW=`brew --prefix`
-else
-  echo "Homebrew is not found.\n"
-  exit 1
-fi
+export HOMEBREW="/opt/homebrew"
+[ `uname -m` = "x86_64" ] && export HOMEBREW="/usr/local"
+
+[ -e "$HOMEBREW/bin/brew" ] || (cat <<EOF && exit 1)
+Homebrew is not found. Please install it by:
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+EOF
 
 path+=("$HOMEBREW/sbin" "$HOMEBREW/bin")
 manpath+=("$HOMEBREW/man")
