@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 RELATE_TO_DOTFILES=".."
 # First of all, get absolute realpath of this dotfiles repo
 # The following block is for zsh
@@ -21,13 +28,6 @@ export ZDOTDIR="$DOTFILES/zsh"
 
 # Path to your oh-my-zsh installation.
 export ZSH=$ZDOTDIR/oh-my-zsh
-
-# Set name of the theme to load.
-# Look in ~/.oh-my-zsh/themes/
-# Optionally, if you set this to "random", it'll load a random theme each
-# time that oh-my-zsh is loaded.
-#ZSH_THEME="kennethreitz"
-ZSH_THEME="kennethreitz" # disable oh-my-zsh to use
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -64,8 +64,13 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 HIST_STAMPS="yyyy/mm/dd"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+# 把 oh-my-zsh 的 custom 独立出来，避免嵌套
+export ZSH_CUSTOM="$ZDOTDIR/oh-my-custom"
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# To customize prompt, run `p10k configure` or edit $DOTFILES/zsh/p10k.zsh.
+[[ ! -f $DOTFILES/zsh/p10k.zsh ]] || source $DOTFILES/zsh/p10k.zsh
 
 # `.zprofile`
 [ -f "$DOTFILES/zsh/zprofile" ] && source "$DOTFILES/zsh/zprofile"

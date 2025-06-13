@@ -1,5 +1,8 @@
-# init git submodules
-git submodule update --init --recursive --force
+# 同步 .gitmodules 改动
+git submodule sync --recursive
+# 确保剩余子模块正常
+git submodule update --init --recursive
+
 # A command-line finder
 ./fzf/install --bin
 # install diff-so-fancy
