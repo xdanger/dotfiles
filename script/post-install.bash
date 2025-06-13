@@ -15,11 +15,10 @@ if [[ `uname` == "Darwin" ]]; then
   brew install ack ag aria2 bat csvkit diff-so-fancy entr fortune fzf git-delta gitkraken-cli glab \
   htop ncdu noti ripgrep prettyping tldr yt-dlp font-im-writing-nerd-font font-droid-sans-mono-nerd-font
   # brew tap homebrew/cask-fonts && brew install -f font-fira-code
-else if [[ `uname` == "Linux" ]]; then
-    # Other Linux distributions
-    sudo apt update && sudo apt upgrade -y
-    sudo apt install -y ack ag aria2 bat csvkit diff-so-fancy entr fortune fzf git-delta gitkraken-cli glab \
-    htop ncdu noti ripgrep prettyping tldr yt-dlp
-else
-    # Unsupported OS
+elif systemd-detect-virt --container --quiet; then
+  # do nothing in container
+elif [[ `uname` == "Linux" ]]; then
+  # Other Linux distributions
+  sudo apt update && sudo apt upgrade -y
+  sudo apt install -y ack bat fzf htop jq ripgrep prettyping tldr
 fi
