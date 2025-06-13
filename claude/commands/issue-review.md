@@ -38,6 +38,7 @@
 
 ### 3. 质量、可维护性与团队约定
 
+- **Not Overfitting**：代码实现是否为了通过测试而过度拟合？
 - **Code Style & Readability**：命名、注释、格式化是否通过 Linter/Formatter？
 - **Architectural Consistency**：是否违反既有 ADR 或技术栈？是否引入不必要的新框架？
 - **Docs & Metadata**：README、CLAUDE.md、接口文档等是否同步更新？
