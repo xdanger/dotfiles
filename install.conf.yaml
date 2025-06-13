@@ -22,10 +22,11 @@
     ~/.tmux:
     ~/.vim:
     ~/.vimrc: "vim/vimrc"
-    ~/.zlogin: "zsh/zlogin"
-    ~/.zprofile: "zsh/zprofile"
-    ~/.zshenv: "zsh/zshenv"
-    ~/.zshrc: "zsh/zshrc"
+    ~/.zshenv: "zsh/.zshenv" # ① 所有 zsh，最小环境：PATH/LANG/EDITOR 等任何场景都需要的变量。
+    ~/.zprofile: "zsh/.zprofile" # ② 登录 shell (`zsh -l`, SSH、终端登录)，会话初始化：`nvm/asdf`、SSH-agent、path_helper 等登录时才需要的设置。
+    ~/.zshrc: "zsh/.zshrc" # ③ 交互式 shell (`$-` 含 `i`)，Prompt / 主题 / alias / 补全插件，所有交互体验相关内容。
+    ~/.zlogin: "zsh/.zlogin" # ④ 登录 shell（在 ②③ 之后，只想在登录完成后再跑一次 的逻辑：打印欢迎横幅、启动 tmux、自动 attach screen 等。
+    ~/.zlogout: "zsh/.zlogout" # ⑤ 登录 shell 结束，清理：kill 代理、umount、history 收尾等。
 
 - shell:
     - command: bash $PWD/script/post-install.bash

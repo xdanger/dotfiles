@@ -1,14 +1,11 @@
-# export HOMEBREW_BOTTLE_DOMAIN="https://mirrors.ustc.edu.cn/homebrew-bottles"
-export HOMEBREW="/opt/homebrew"
-[ `uname -m` = "x86_64" ] && export HOMEBREW="/usr/local"
+if type brew &>/dev/null; then
+  export HOMEBREW=`brew --prefix`
+else
+  echo "Homebrew is not found.\n"
+  exit 1
+fi
 
-[ -e "$HOMEBREW/bin/brew" ] || (cat <<EOF && exit 1)
-Homebrew is not found. Please install it by:
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-EOF
-
-path=("$HOMEBREW/sbin" "$HOMEBREW/bin" $path)
-[ -d "/opt/bin" ] && path+=("/opt/bin")
+path+=("$HOMEBREW/sbin" "$HOMEBREW/bin")
 manpath+=("$HOMEBREW/man")
 
 # Google Cloud Platform
@@ -62,14 +59,14 @@ fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$("$HOMEBREW/anaconda3/bin/conda" 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/opt/homebrew/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOMEBREW/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOMEBREW/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/opt/homebrew/anaconda3/bin:$PATH"
+        export PATH="$HOMEBREW/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -87,3 +84,7 @@ function cdf() {
   # cd to Finder Directory
   cd "$(pfd)"
 }
+
+autoload -Uz compinit
+fpath+=("$(brew --prefix)/share/zsh/site-functions")
+compinit -i

@@ -5,30 +5,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-RELATE_TO_DOTFILES=".."
-# First of all, get absolute realpath of this dotfiles repo
-# The following block is for zsh
-SOURCE=${(%):-%N}
-while [ -h "$SOURCE" ]; do
-  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-  SOURCE="$(readlink "$SOURCE")"
-  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
-done
-export DOTFILES="$( cd -P "$( dirname "$SOURCE" )/$RELATE_TO_DOTFILES" && pwd )"
-# The following block is for bash
-# SOURCE="${BASH_SOURCE[0]}"
-# while [ -L "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
-#   DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
-#   SOURCE="$(readlink "$SOURCE")"
-#   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
-# done
-# DOTFILES="$( cd -P "$( dirname "$SOURCE" )/$RELATE_TO_DOTFILES" >/dev/null 2>&1 && pwd )"
-
-export ZDOTDIR="$DOTFILES/zsh"
-
-# Path to your oh-my-zsh installation.
-export ZSH=$ZDOTDIR/oh-my-zsh
-
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -71,56 +47,22 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # To customize prompt, run `p10k configure` or edit $DOTFILES/zsh/p10k.zsh.
 [[ ! -f $ZDOTDIR/p10k.zsh ]] || source $ZDOTDIR/p10k.zsh
-# `.zprofile`
-[ -f "$ZDOTDIR/zprofile" ] && source "$ZDOTDIR/zprofile"
+
 # antigen
 [ -d "$ZDOTDIR/antigen" ] && source $ZDOTDIR/antigen/antigen.zsh
-# rvm
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
-# [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
-# virtualenv
-[ -d "$HOME/.local/bin" ] && path+=("$HOME/.local/bin")
-# Pytho installations by [uv](https://github.com/astral-sh/uv)
-[ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
-# nvm & node
-[ -f "$HOME/.nvm/nvm.sh" ] && export NVM_DIR="$HOME/.nvm" && \. "$NVM_DIR/nvm.sh"
-# Deno
-if [ -d "$HOME/.deno/bin" ]; then
-  export DENO_INSTALL="$HOME/.deno"
-  path=("$DENO_INSTALL/bin" $path)
-  # Add deno completions to search path
-  if [[ ":$FPATH:" != *":$ZDOTDIR/completions:"* ]]; then export FPATH="$ZDOTDIR/completions:$FPATH"; fi
-  # Initialize zsh completions (added by deno install script)
-  autoload -Uz compinit
-  compinit
-fi
 
-# Bun
-if [ -d "$HOME/.bun" ]; then
-  export BUN_INSTALL="$HOME/.bun" && path+=("$BUN_INSTALL/bin")
-  # completion in macOS
-  [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-fi
-# Rust
-[ -d "$HOME/.cargo/bin" ] && \. "$HOME/.cargo/env"
-
-# other envs
-[ -f "$ZDOTDIR/os.`uname`.zsh" ] && source "$ZDOTDIR/os.`uname`.zsh"
-[ -f "$ZDOTDIR/../../.dotlocal/envs.zsh" ] && source "$ZDOTDIR/../../.dotlocal/envs.zsh"
-# add ./bin to $PATH
-path=("$DOTFILES/bin" $path)
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(macos tmux git ruby rake rails bundler node gcloud)
+plugins=(macos git bundler node gcloud)
 # Do not enable the following (incompatible to Pure) plugins: vi-mode, virtualenv.
 
 # User configuration
 
 ZSH_TMUX_AUTOSTART="false"
-ZSH_TMUX_ITERM2="false"
+ZSH_TMUX_ITERM2="true"
 # Set theme to [pure](https://github.com/sindresorhus/pure)
 fpath+=$ZDOTDIR/pure
 # autoload -U promptinit; promptinit; prompt pure
@@ -177,3 +119,11 @@ if is_wsl; then
 else
   unset WSL
 fi
+
+# zsh-completions
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  autoload -Uz compinit
+  compinit
+fi
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
