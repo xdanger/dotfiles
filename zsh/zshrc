@@ -70,17 +70,11 @@ export ZSH_CUSTOM="$ZDOTDIR/oh-my-custom"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # To customize prompt, run `p10k configure` or edit $DOTFILES/zsh/p10k.zsh.
-[[ ! -f $DOTFILES/zsh/p10k.zsh ]] || source $DOTFILES/zsh/p10k.zsh
-
+[[ ! -f $ZDOTDIR/p10k.zsh ]] || source $ZDOTDIR/p10k.zsh
 # `.zprofile`
-[ -f "$DOTFILES/zsh/zprofile" ] && source "$DOTFILES/zsh/zprofile"
+[ -f "$ZDOTDIR/zprofile" ] && source "$ZDOTDIR/zprofile"
 # antigen
 [ -d "$ZDOTDIR/antigen" ] && source $ZDOTDIR/antigen/antigen.zsh
-# fzf
-[ -d "$DOTFILES/fzf" ] && path+=("$DOTFILES/fzf/bin") \
-  && source "$DOTFILES/fzf/shell/completion.zsh" 2> /dev/null \
-  && source "$DOTFILES/fzf/shell/key-bindings.zsh" \
-  && export FZF_DEFAULT_OPTS="--bind='ctrl-o:execute(atom {})+abort'"
 # rvm
 [ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
 # [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
