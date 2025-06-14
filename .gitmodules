@@ -15,9 +15,6 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm.git
-[submodule "fzf"]
-	path = fzf
-	url = https://github.com/junegunn/fzf.git
 [submodule "pure"]
 	path = zsh/pure
 	url = https://github.com/sindresorhus/pure.git
