@@ -40,14 +40,6 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 HIST_STAMPS="yyyy/mm/dd"
 
-# 把 oh-my-zsh 的 custom 独立出来，避免嵌套
-export ZSH_CUSTOM="$ZDOTDIR/oh-my-custom"
-
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# To customize prompt, run `p10k configure` or edit $DOTFILES/zsh/p10k.zsh.
-[[ ! -f $ZDOTDIR/p10k.zsh ]] || source $ZDOTDIR/p10k.zsh
-
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
@@ -60,8 +52,14 @@ plugins=(macos git bundler node gcloud)
 ZSH_TMUX_AUTOSTART="false"
 ZSH_TMUX_ITERM2="true"
 # Set theme to [pure](https://github.com/sindresorhus/pure)
-fpath+=$ZDOTDIR/pure
+# fpath+=$ZDOTDIR/pure
 # autoload -U promptinit; promptinit; prompt pure
+# 把 oh-my-zsh 的 custom 独立出来，避免嵌套
+export ZSH_CUSTOM="$ZDOTDIR/oh-my-custom"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+# To customize prompt, run `p10k configure` or edit $DOTFILES/zsh/p10k.zsh.
+[[ ! -f $ZDOTDIR/p10k.zsh ]] || source $ZDOTDIR/p10k.zsh
+
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
