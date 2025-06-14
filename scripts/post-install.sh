@@ -1,6 +1,6 @@
-# 同步 .gitmodules 改动
+# ensure missing properties in `.git/config` will be "synced" by `.gitmodules`
 git submodule sync --recursive
-# 确保剩余子模块正常
+# ensure existing properties in `.git/config` will be "updated" from `.gitmodules`
 git submodule update --init --recursive
 
 # link ~/.gitconfig to gitconfig_codespaces in GitHub Codespaces
