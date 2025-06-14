@@ -29,6 +29,6 @@
     ~/.zlogout: "zsh/.zlogout" # ⑤ 登录 shell 结束，清理：kill 代理、umount、history 收尾等。
 
 - shell:
-    - command: bash $PWD/scripts/post-install.bash
+    - command: bash $PWD/scripts/post-install.sh
       stdout: true
       stderr: true
