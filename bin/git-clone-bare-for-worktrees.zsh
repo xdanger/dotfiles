@@ -2,6 +2,17 @@
 set -e
 set -o pipefail
 
+# Error handler
+trap 'error_handler $? $LINENO' ERR
+
+error_handler() {
+    local exit_code=$1
+    local line_number=$2
+    echo -e "\033[0;31m❌ Error: Script failed at line $line_number with exit code $exit_code\033[0m" >&2
+    echo -e "\033[0;31m❌ Please check the error messages above for details.\033[0m" >&2
+    exit $exit_code
+}
+
 # git-clone-bare-for-worktrees
 # ============================
 # A smart Git repository cloner optimized for worktree-based development workflows.
@@ -236,7 +247,7 @@ echo "Cloning repository as bare..."
 if [[ "$VERBOSE" == "true" ]]; then
     git clone --bare "$REPO_URL" .bare
 else
-    git clone --bare "$REPO_URL" .bare 2>&1 | grep -v "Cloning into"
+    git clone --bare "$REPO_URL" .bare 2>&1 | grep -v "Cloning into" || true
 fi
 
 # Create .git file pointing to .bare
