@@ -1,37 +1,96 @@
 #!/bin/zsh
 set -e
 set -o pipefail
+
+# git-clone-bare-for-worktrees
+# ============================
+# A smart Git repository cloner optimized for worktree-based development workflows.
 #
-# This script clones a bare repository for use with git worktrees.
-# Usage:
-#   - git-clone-bare-for-worktrees.zsh [-v|--verbose] [-V|--version] <repository-url> [branch-01] [branch-02 ...]
-#   - or put it in `.gitconfig` file as an alias:
-#     ```ini
-#     [alias]
-#         clone-bare-for-worktrees = "!zsh $DOTFILES/bin/git-clone-bare-for-worktrees.zsh"
-#     ```
-# For example:
-#   - `git-clone-bare-for-worktrees.zsh git@github.com:scope/hello-world.git` will clone the repository into `gh.scope.hello-world`
-#   - `git-clone-bare-for-worktrees.zsh https://gitlab.com/scope/HelloWorld` will clone the repository into `gl.scope.helloworld`
-# Rules:
-#   - make the scope and repo name lowercase
-#   - use domain abbreviations: github.com→gh, gitlab.com→gl, huggingface.ai→hg, bitbucket.org→bb, git.gametaptap.com→tt
-#   - for unknown domains, use the first two letters as abbreviation
-#   - ignore the `.git` suffix in the URL
-# The directory structure of `gh.scope.hello-world` will be:
-#   - `.bare/`: the bare repository
-#   - `.git`: a plain text file with has the content of "gitdir: ./.bare"
-#   - `main/`: a directory for worktrees, upstreamed to the `origin/main` or `origin/master` branch
-#     - leave a warning if the default branch is not `main` or `master`
-#   - other branches that passed as arguments will be created as additional worktrees
-#     - leave a warning if the given branch does not exist in the remote repository
-# Warning message should be:
-#   - in orange color
-#   - in stderr pipe
-#   - with a prefix "⚠️ "
-# Verbose message should be:
-#   - in stdout pipe
-#   - with a prefix "🔍 "
+# SYNOPSIS
+# --------
+# git-clone-bare-for-worktrees.zsh [-v|--verbose] [-V|--version] <repository-url> [branch-01] [branch-02 ...]
+#
+# DESCRIPTION
+# -----------
+# This script clones a Git repository as a bare repository and sets it up for efficient
+# worktree-based development. Instead of having multiple full clones, you get one bare
+# repository with lightweight worktrees for different branches.
+#
+# INSTALLATION
+# ------------
+# Add to your `.gitconfig` as an alias:
+#
+# Using git config command (recommended):
+# ```bash
+# git config --global alias.clone-bare-for-worktrees '!zsh $DOTFILES/bin/git-clone-bare-for-worktrees.zsh'
+# ```
+#
+# Or manually add to `.gitconfig`:
+# ```ini
+# [alias]
+#     clone-bare-for-worktrees = "!zsh $DOTFILES/bin/git-clone-bare-for-worktrees.zsh"
+# ```
+#
+# EXAMPLES
+# --------
+# - Clone with default branch only:
+#   git-clone-bare-for-worktrees git@github.com:scope/hello-world.git
+#   → Creates: gh.scope.hello-world/
+#
+# - Clone with additional branches:
+#   git-clone-bare-for-worktrees https://gitlab.com/scope/HelloWorld feature-x develop
+#   → Creates: gl.scope.helloworld/ with main/, feature-x/, and develop/ worktrees
+#
+# NAMING CONVENTIONS
+# ------------------
+# Repository URLs are converted to local directory names following these rules:
+# 1. Domain abbreviations:
+#    - github.com → gh
+#    - gitlab.com → gl
+#    - huggingface.ai → hg
+#    - bitbucket.org → bb
+#    - *.taptap.com → tt
+#    - Others → first 2 letters of domain
+# 2. Scope and repo names are converted to lowercase
+# 3. The `.git` suffix is ignored
+# 4. Format: {domain}.{scope}.{repo}
+#
+# DIRECTORY STRUCTURE
+# -------------------
+# gh.scope.hello-world/
+# ├── .bare/          # Bare repository (all Git objects)
+# ├── .git            # File containing "gitdir: ./.bare"
+# └── main/           # Worktree for default branch
+# └── [branch-name]/  # Additional worktrees (if specified)
+#
+# KEY CONFIGURATIONS
+# ------------------
+# The script applies three critical configurations:
+#
+# 1. Creates `.git` file with "gitdir: ./.bare"
+#    → Makes the root directory Git-aware for tools and scripts
+#
+# 2. Sets `worktree.useRelativePaths = true`
+#    → Ensures worktrees work correctly in containers (e.g., devcontainers)
+#    → Worktrees remain functional even if the absolute path changes
+#
+# 3. Sets `remote.origin.fetch = +refs/heads/*:refs/remotes/origin/*`
+#    → Enables fetching all remote branches (not just the current one)
+#    → Makes `git fetch`, `git pull`, and `git push` work as expected
+#
+# OUTPUT FORMAT
+# -------------
+# - Verbose messages: "🔍 {message}" to stdout (with -v flag)
+# - Warning messages: "⚠️  {message}" to stderr in orange color
+# - Warnings are shown when:
+#   - Default branch is not 'main' or 'master'
+#   - Requested branch doesn't exist in remote
+#
+# OPTIONS
+# -------
+# -v, --verbose    Enable detailed output
+# -V, --version    Display version information
+# -h, --help       Display help message
 
 # Script version
 VERSION="0.1.0"
@@ -182,6 +241,13 @@ fi
 
 # Create .git file pointing to .bare
 echo "gitdir: ./.bare" > .git
+
+# Configure the repository for worktree usage
+verbose "Configuring repository for worktree usage..."
+# Enable relative paths for worktrees (important for devcontainer compatibility)
+git config --local worktree.useRelativePaths true
+# Configure fetch to get all remote branches
+git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
 
 # Get the default branch name
 cd .bare
