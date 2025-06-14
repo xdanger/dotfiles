@@ -21,9 +21,6 @@
 [submodule "pure"]
 	path = zsh/pure
 	url = https://github.com/sindresorhus/pure.git
-[submodule "diff-so-fancy"]
-	path = diff-so-fancy
-	url = https://github.com/so-fancy/diff-so-fancy.git
 [submodule "powerlevel10k"]
 	path = zsh/oh-my-custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
