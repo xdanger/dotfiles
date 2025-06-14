@@ -24,7 +24,8 @@ fi
 # Rust
 [ -d "$HOME/.cargo/bin" ] && \. "$HOME/.cargo/env"
 
-[ -f "$ZDOTDIR/env.`uname`.zsh" ] && source "$ZDOTDIR/env.`uname`.zsh"
+uname=${(L)$(uname -s)}
+[ -f "$ZDOTDIR/env.$uname.zsh" ] && source "$ZDOTDIR/env.$uname.zsh"
 
 # reorder_path - 重新排序 $PATH 环境变量
 # 排序规则：

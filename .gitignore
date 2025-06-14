@@ -1,6 +1,5 @@
-/bin
-/local
 /vim/viminfo
+/vim/.netrwhist
 /zsh/.zcompdump*
 /zsh/.zsh_history
 /zsh/.zsh_sessions
