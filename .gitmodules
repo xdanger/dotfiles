@@ -6,9 +6,6 @@
 	path = zsh/oh-my-zsh
     url = https://github.com/robbyrussell/oh-my-zsh.git
     ignore = dirty
-[submodule "antigen"]
-	path = zsh/antigen
-    url = https://github.com/zsh-users/antigen.git
 [submodule "zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
     url = https://github.com/zsh-users/zsh-syntax-highlighting.git
