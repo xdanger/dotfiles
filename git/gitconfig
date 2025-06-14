@@ -13,6 +13,7 @@
     br = branch -a
     ci = commit -v -S
     co = checkout
+    clone-bare-for-worktrees = "!zsh $DOTFILES/bin/git-clone-bare-for-worktrees.zsh"
 [init]
     defaultBranch = main
 [pull]
