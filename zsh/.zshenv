@@ -14,7 +14,8 @@ while [ -h "$SOURCE" ]; do
   SOURCE="$(readlink "$SOURCE")"
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
-export DOTFILES="$( cd -P "$( dirname "$SOURCE" )/$RELATE_TO_DOTFILES" && pwd )"
+export DOTFILES
+DOTFILES="$( cd -P "$( dirname "$SOURCE" )/$RELATE_TO_DOTFILES" && pwd )"
 
 # The directory `.zshenv`, `.zprofile`, `.zshrc`, `.zlogin`, `.zlogout`
 # are used by zsh to load environment variables and configurations.
@@ -27,3 +28,5 @@ export ZSH="$ZDOTDIR/oh-my-zsh"
 # add ./bin to $PATH
 [ -d "$DOTFILES/bin" ] && path+=("$DOTFILES/bin")
 [ -d "/opt/bin" ] && path+=("/opt/bin")
+
+command -v go &>/dev/null && go env -w GOBIN=$HOME/.local/bin
