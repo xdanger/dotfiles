@@ -12,9 +12,6 @@
 [submodule "zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
     url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "tmux/plugins/tpm"]
-	path = tmux/plugins/tpm
-	url = https://github.com/tmux-plugins/tpm.git
 [submodule "pure"]
 	path = zsh/pure
 	url = https://github.com/sindresorhus/pure.git
