@@ -59,6 +59,9 @@ export ZSH_CUSTOM="$ZDOTDIR/oh-my-custom"
 ZSH_THEME="powerlevel10k/powerlevel10k"
 # To customize prompt, run `p10k configure` or edit $DOTFILES/zsh/p10k.zsh.
 [[ ! -f $ZDOTDIR/p10k.zsh ]] || source $ZDOTDIR/p10k.zsh
+# p10k 使用的 gitstatus 使用的 gitlib2 不支持 git 中 worktree 等 extentions 特性
+# see https://github.com/xdanger/dotfiles/issues/2
+POWERLEVEL9K_DISABLE_GITSTATUS=true
 
 source $ZSH/oh-my-zsh.sh
 
