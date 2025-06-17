@@ -21,18 +21,18 @@
 - **issue_id**：取自分支名中的数字部分，如 `1234`
 - **type**：遵循 Conventional Commits，从以下选项中选择一个：
 
-  | type     | 主要场景                              | Gitmoji                 |
-  | -------- | ------------------------------------- | ----------------------- |
-  | build    | 构建系统、依赖升级、DevContainer 变更 | `:construction:` 🚧     |
-  | ci       | 持续集成配置变更                      | `:green_heart:` 💚      |
-  | chore    | 杂项 / 工具脚本                       | `:wrench:` 🔧           |
-  | docs     | 仅文档                                | `:memo:` 📝             |
-  | feat     | 新功能 / 重要增强                     | `:sparkles:` ✨         |
-  | fix      | 修复缺陷                              | `:bug:` 🐛              |
-  | perf     | 性能优化                              | `:zap:` ⚡️             |
-  | refactor | 重构（不改变外部行为）                | `:recycle:` ♻️          |
-  | style    | 代码样式（不影响功能）                | `:art:` 🎨              |
-  | test     | 添加或修改测试                        | `:white_check_mark:` ✅ |
+  | type     | 主要场景                              | Gitmoji |
+  | -------- | ------------------------------------- | ------- |
+  | build    | 构建系统、依赖升级、DevContainer 变更 | 🚧      |
+  | ci       | 持续集成配置变更                      | 💚      |
+  | chore    | 杂项 / 工具脚本                       | 🔧      |
+  | docs     | 仅文档                                | 📝      |
+  | feat     | 新功能 / 重要增强                     | ✨      |
+  | fix      | 修复缺陷                              | 🐛      |
+  | perf     | 性能优化                              | ⚡️     |
+  | refactor | 重构（不改变外部行为）                | ♻️      |
+  | style    | 代码样式（不影响功能）                | 🎨      |
+  | test     | 添加或修改测试                        | ✅      |
 
 - **Gitmoji**：对应 type 的 Gitmoji 表情符号
 
