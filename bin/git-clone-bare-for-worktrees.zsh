@@ -1,18 +1,4 @@
 #!/bin/zsh
-set -e
-set -o pipefail
-
-# Error handler
-trap 'error_handler $? $LINENO' ERR
-
-error_handler() {
-    local exit_code=$1
-    local line_number=$2
-    echo -e "\033[0;31m❌ Error: Script failed at line $line_number with exit code $exit_code\033[0m" >&2
-    echo -e "\033[0;31m❌ Please check the error messages above for details.\033[0m" >&2
-    exit $exit_code
-}
-
 # git-clone-bare-for-worktrees
 # ============================
 # A smart Git repository cloner optimized for worktree-based development workflows.
@@ -103,8 +89,22 @@ error_handler() {
 # -V, --version    Display version information
 # -h, --help       Display help message
 
+set -e
+set -o pipefail
+
 # Script version
 VERSION="0.1.0"
+
+# Error handler
+trap 'error_handler $? $LINENO' ERR
+
+error_handler() {
+    local exit_code=$1
+    local line_number=$2
+    echo -e "\033[0;31m❌ Error: Script failed at line $line_number with exit code $exit_code\033[0m" >&2
+    echo -e "\033[0;31m❌ Please check the error messages above for details.\033[0m" >&2
+    exit $exit_code
+}
 
 # Color codes
 ORANGE='\033[0;33m'
@@ -173,16 +173,20 @@ fi
 
 # Parse the repository URL to extract domain, scope, and repo name
 verbose "Parsing URL: $REPO_URL"
-if [[ "$REPO_URL" =~ ^git@([^:]+):([^/]+)/([^.]+)(\.git)?$ ]]; then
+if [[ "$REPO_URL" =~ ^git@([^:]+):([^/]+)/(.+)$ ]]; then
     # SSH format: git@github.com:scope/repo.git
     DOMAIN="${match[1]}"
     SCOPE="${match[2]}"
     REPO_NAME="${match[3]}"
-elif [[ "$REPO_URL" =~ ^https?://([^/]+)/([^/]+)/([^/]+)(\.git)?$ ]]; then
+    # Remove .git suffix if present
+    REPO_NAME="${REPO_NAME%.git}"
+elif [[ "$REPO_URL" =~ ^https?://([^/]+)/([^/]+)/([^/]+)/?$ ]]; then
     # HTTPS format: https://github.com/scope/repo
     DOMAIN="${match[1]}"
     SCOPE="${match[2]}"
     REPO_NAME="${match[3]}"
+    # Remove .git suffix if present
+    REPO_NAME="${REPO_NAME%.git}"
 else
     echo "Error: Invalid repository URL format"
     echo "Expected formats:"
@@ -227,7 +231,7 @@ REPO_NAME_LOWER="${(L)REPO_NAME}"
 verbose "Scope: $SCOPE -> $SCOPE_LOWER (lowercase)"
 verbose "Repository name: $REPO_NAME -> $REPO_NAME_LOWER (lowercase)"
 
-# Create directory name: domain.scope.repo
+# Create directory name: domain.scope.repo (without .git suffix)
 DIR_NAME="${DOMAIN_ABBR}.${SCOPE_LOWER}.${REPO_NAME_LOWER}"
 verbose "Directory name: $DIR_NAME"
 
