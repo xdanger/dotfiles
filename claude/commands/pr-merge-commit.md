@@ -1,4 +1,4 @@
-# issue:commit
+# pr:merge:commit
 
 ## 角色
 
@@ -6,25 +6,19 @@
 
 ## 你的目标
 
-根据当前已 staged 的文件和分支名，生成一条 commit message：
+根据 GitHub PR `#$ARGUMENTS` 的信息，合并这条 PR 并创建一条：
 
-- 完全符合两大规范的 commit message
-- 关联给定的 GitHub Issue 编号
-- 提交 commit
+- 完全符合 Gitmoji 和 Conventional Commits 规范的 commit message
+- 能完整描述这次合并所做的修改
 
-## 输入
+## 可调用的命令
 
-1. **已 staged 的文件 diff**（`git diff --cached` 完整输出）
-2. **GitHub Issue**：使用 `gh` 获得 `#$ARGUMENTS` 的完整描述
-   - 如果你看到的 `#$ARGUMENTS` 为空，则**中断执行**，提示我没有给定 issue 编号
-   - 如果没有找到对应的 issue，则**中断执行**，提示我没有找到相应的 issue
-3. **scope**：查找 issue 描述中对于分支名的约定，看是否有约定作用域
+- `gh`：获取包括这条 PR 的 issues 的详细信息、获取 branch 和 tags 信息、合并 PR
+- `git`：获取当前已 staged 的文件 diff、branch 和 tags 信息、commits history
 
-## 生成规则
+## 基础信息
 
-### 1. 解析基础信息
-
-- **issue_id**：取自分支名中的数字部分，如 `1234`
+- **issue_id**：`#$ARGUMENTS`
 - **type**：遵循 Conventional Commits，从以下选项中选择一个：
 
   - `build`: 构建系统或依赖变更
@@ -116,56 +110,7 @@
   - `🦺`: Add or update code related to validation.
   - `✈️`: Improve offline support.
 
-- **scope**：查找 issue 描述中对于分支名的约定，看是否有约定作用域
-  - 如果没有明确作用域，则省略
-
-### 2. Commit Message 格式
-
-```plaintext
-<Gitmoji> <type>[(<scope>)?][!?]: <subject> (#<issue_id>)?
-
-- :Gitmoji: change 1
-- :Gitmoji: change 2
-- :Gitmoji: change 3
-...
-
-💥 BREAKING CHANGE:
-
-<breaking description in list> # 如果存在破坏性变更，否则省略
-```
-
-- `subject`：50 字以内动词短语，首字母小写，避免句号
-  1. 如果存在 issue，则在末尾添加 ` (#<issue_id>)`
-- `body`：
-  1. 说明 _为什么_ 这样改（动机）
-  2. 描述 _做了什么_（要点摘要）
-  3. 如有迁移/回滚步骤，请列清楚
-- `💥 BREAKING CHANGE:`：仅在不向后兼容时出现
-  1. 如果存在破坏性变更，则在第一行的 :Gitmoji: 后面添加 `!`
-
-### 3. 输出示例
-
-```plaintext
-✨ feat(auth)! 支持用户登录 (#1234)
-
-- ✨ 新增 POST /v1/login 接口
-- ✨ 引入 jwt 库生成 access token
-- ✅ 添加登录单元测试
-- 🔧 更新 devcontainer：安装 bunx & tsx 以便本地调试
-
-💥 BREAKING CHANGE:
-
-- 重命名 `AuthError` 为 `LoginError`，旧代码需同步替换
-```
-
-## 生成流程
-
-1. **读取 diff → 判断 `type` 和 `scope`**
-2. **选择对应 emoji**
-3. **撰写 subject**：用动词短语概括 _做了什么_
-4. **撰写 body**：若行数 < 5，可省略正文
-5. **发现破坏性改动**（删除接口、重命名字段等）→ 添加 `💥` 标记与 `BREAKING CHANGE` 段
-6. 返回 **唯一一条** commit message，严禁输出多条或解释性文字
+- **scope**：如果没有明确作用域，则省略
 
 ## 输出要求
 
