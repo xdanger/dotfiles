@@ -24,7 +24,7 @@
     branch = auto
     ui = true
 [interactive]
-	diffFilter = delta --color-only
+    diffFilter = delta --color-only
 [diff "word"]
     textconv = strings
 [merge]
@@ -41,8 +41,6 @@
 [filter "media"]
     clean = git-media-clean %f
     smudge = git-media-smudge %f
-[credential]
-    helper = /usr/local/share/gcm-core/git-credential-manager
 [credential "https://huggingface.co"]
     provider = generic
 [credential "https://dev.azure.com"]
@@ -51,3 +49,6 @@
 	useRelativePaths = true
 [delta]
 	navigate = true
+[credential]
+    helper = /usr/local/share/gcm-core/git-credential-manager
+
