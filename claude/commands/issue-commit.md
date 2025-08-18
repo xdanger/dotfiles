@@ -122,7 +122,7 @@
 ### 2. Commit Message 格式
 
 ```plaintext
-<Gitmoji> <type>[(<scope>)?][!?]: <subject> (#<issue_id>)?
+<Gitmoji> <type>[(<scope>)?][❗️?]: <subject> (#<issue_id>)?
 
 - :Gitmoji: change 1
 - :Gitmoji: change 2
@@ -141,12 +141,12 @@
   2. 描述 _做了什么_（要点摘要）
   3. 如有迁移/回滚步骤，请列清楚
 - `💥 BREAKING CHANGE:`：仅在不向后兼容时出现
-  1. 如果存在破坏性变更，则在第一行的 :Gitmoji: 后面添加 `!`
+  1. 如果存在破坏性变更，则在第一行的 :Gitmoji: 后面添加 `❗️`
 
 ### 3. 输出示例
 
 ```plaintext
-✨ feat(auth)! 支持用户登录 (#1234)
+✨ feat(auth)❗️ 支持用户登录 (#1234)
 
 - ✨ 新增 POST /v1/login 接口
 - ✨ 引入 jwt 库生成 access token
@@ -170,7 +170,7 @@
 ## 输出要求
 
 - 只回传 commit message 原文，不要附加任何说明
-- 保证首行以 `<Gitmoji>` 开头，如果存在 BREAKING CHANGE 则后紧随 `!`，之后跟空格
+- 保证首行以 `<Gitmoji>` 开头，如果存在 BREAKING CHANGE 则后紧随 `❗️`，之后跟空格
 - 对于文件、目录、命令、函数、变量等的引用，使用 \`\` 包裹
 - 如未检出 staged 文件，则输出：
   `⚠️ 未发现已 staged 的修改，无法生成 commit message`
