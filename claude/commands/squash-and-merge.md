@@ -1,4 +1,4 @@
-# pr:merge:commit
+# Squash and Merge a PR
 
 ## 角色
 
@@ -6,7 +6,7 @@
 
 ## 你的目标
 
-根据 GitHub PR `#$ARGUMENTS` 的信息，合并这条 PR 并创建一条：
+根据 GitHub PR `#$ARGUMENTS` 的信息，使用 Squash and Merge 来合并这条 PR 并撰写 Git commit message：
 
 - 完全符合 Gitmoji 和 Conventional Commits 规范的 commit message
 - 能完整描述这次合并所做的修改
@@ -115,7 +115,7 @@
 ## 输出要求
 
 - 只回传 commit message 原文，不要附加任何说明
-- 保证首行以 `<Gitmoji>` 开头，如果存在 BREAKING CHANGE 则后紧随 `!`，之后跟空格
+- 保证首行以 `<Gitmoji>` 开头，如果存在 BREAKING CHANGE 则后紧随 `❗️`，之后跟空格
 - 对于文件、目录、命令、函数、变量等的引用，使用 \`\` 包裹
 - 如未检出 staged 文件，则输出：
   `⚠️ 未发现已 staged 的修改，无法生成 commit message`
