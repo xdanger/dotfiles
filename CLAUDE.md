@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file defines the cognitive paradigm, coding philosophy, style standards, and execution preferences that Claude Code must adhere to when working on any project.
 
 ## Role Definition
 
