@@ -143,7 +143,6 @@ When seeing code, immediately perform three-layer judgment:
 - "These 10 lines can become 3 lines"
 - "Data structure is wrong, should be..."
 
-
 ## Language and Writing Standards
 
 ### Spacing Rules
@@ -258,3 +257,35 @@ gh pr merge <PR_NUMBER> --merge --delete-branch=false
 - Individual commits provide context for code review and debugging
 - Squashing loses granular commit messages and authorship information
 - Use squash/rebase only for specific cases (e.g., cleaning up messy feature branch history)
+
+## Code Quality and Linting
+
+### Linter Configuration Policy
+
+**NEVER modify ESLint configuration files (`eslint.config.mjs`) without explicit user approval:**
+
+- **DO NOT** add or change linter rule configurations
+- **DO NOT** disable or suppress linting errors/warnings
+- **DO** report linting issues with full context and reasoning
+- **DO** explain why a rule is failing and suggest solutions
+- **DO** let the user decide whether to:
+  - Fix the code to comply with the rule
+  - Disable the rule with justification
+  - Keep the rule and refactor the code
+
+**Rationale:**
+
+Linter rules encode project quality standards and team conventions. Automated changes to these rules can:
+
+- Silently lower code quality standards
+- Hide real issues that should be addressed
+- Create inconsistent enforcement across the codebase
+- Bypass important architectural or style decisions
+
+**When linting fails:**
+
+1. Report the specific rule and failure location
+2. Explain what the rule enforces and why it exists
+3. Suggest code changes to fix the issue
+4. If the rule seems inappropriate, explain why and let user decide
+5. Never automatically disable rules to make tests pass

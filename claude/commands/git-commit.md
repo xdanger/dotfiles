@@ -3,7 +3,7 @@
 执行步骤：
 
 1. 运行 git diff --cached 查看所有已 staged 的变更
-2. 如果 ARGUMENTS 不为空，运行 gh issue view {ARGUMENTS} 获取 issue 详情
+2. 如果 $ARGUMENTS 不为空，运行 gh issue view $ARGUMENTS 获取 issue 详情
 3. 分析变更内容，确定：
    - type: feat/fix/docs/style/refactor/perf/test/build/ci/chore/revert
    - scope: 从 issue 或分支名提取作用域（可选）
