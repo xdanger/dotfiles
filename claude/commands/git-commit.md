@@ -1,8 +1,8 @@
-根据当前 staged 的文件生成并提交一条符合 Gitmoji 和 Conventional Commits 规范的 commit message。
+生成并提交符合 Gitmoji 和 Conventional Commits 规范的 commit message。
 
 执行步骤：
 
-1. 运行 git diff --cached 查看所有已 staged 的变更
+1. 运行 git diff --cached 查看所有已 staged 的变更（忽视 unstaged 文件）
 2. 如果 $ARGUMENTS 不为空，运行 gh issue view $ARGUMENTS 获取 issue 详情
 3. 分析变更内容，确定：
    - type: feat/fix/docs/style/refactor/perf/test/build/ci/chore/revert
