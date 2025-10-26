@@ -13,8 +13,10 @@
 - link:
     ~/.claude/CLAUDE.md: "CLAUDE.md"
     ~/.claude/commands: "claude/commands"
+    ~/.config/ghostty: "ghostty"
     ~/.config/git/ignore: "git/gitignore"
     ~/.config/git/verified_signers: "git/verified_signers"
+    ~/.config/ranger: "ranger"
     ~/.gemrc: "ruby/gemrc"
     ~/.gitconfig: "git/gitconfig"
     ~/.htoprc: "util/htoprc"
