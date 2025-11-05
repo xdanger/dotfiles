@@ -23,7 +23,9 @@ if [ -d "$HOME/.bun" ]; then
 fi
 # Rust
 [ -d "$HOME/.cargo/bin" ] && \. "$HOME/.cargo/env"
-
+# Mise
+[ -f "$HOME/.local/bin/mise" ] && eval "$($HOME/.local/bin/mise activate zsh)"
+# Platform-specific environment variables
 uname=${(L)$(uname -s)}
 [ -f "$ZDOTDIR/env.$uname.zsh" ] && source "$ZDOTDIR/env.$uname.zsh"
 
