@@ -64,3 +64,4 @@ window-title-font-family = SF Compact Text
 
 # theme = dark:Monokai Pro,light:Monokai Pro Light
 theme = Monokai Pro
+keybind = shift+enter=text:\x1b\r
