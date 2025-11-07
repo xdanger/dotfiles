@@ -87,13 +87,10 @@ Except for file deletion and database operations, all other operations do not re
 ### Definition of Done
 
 - [ ] Tests written and passing
-- [ ] Code follows project conventions
 - [ ] No linter/formatter warnings
 - [ ] Commit messages follow standards
-- [ ] Implementation matches plan
 - [ ] No TODOs without issue numbers
 - [ ] No breaking changes without approval
-- [ ] Language & writing standards met
 
 ### Test Guidelines
 
