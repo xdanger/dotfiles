@@ -27,14 +27,6 @@ for pth in `ruby -e 'puts Gem.path'`; do
   [ -d "$pth" ] && path=("$pth/bin" $path)
 done
 
-# pnpm
-export PNPM_HOME="$HOME/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
 # Added by OrbStack: command-line tools and integration
 if [ -d "$HOME/.orbstack" ]; then
   source "$HOME/.orbstack/shell/init.zsh" 2>/dev/null || :
