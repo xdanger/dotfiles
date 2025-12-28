@@ -44,11 +44,12 @@ if [[ `uname` == "Darwin" ]]; then
   # macOS
   # clang -framework Carbon util/reset-input.m -o bin/reset-input
   brew update && brew upgrade
-  brew install --quiet ack ag aria2 bat csvkit diff-so-fancy entr fortune fzf git-delta gitkraken-cli glab \
-  htop ncdu noti ripgrep prettyping tldr yt-dlp font-im-writing-nerd-font font-droid-sans-mono-nerd-font
+  brew install --quiet ack ag aria2 bat csvkit curl diff-so-fancy dust entr fd fortune fzf git-delta \
+  gitkraken-cli git-delta glab hyperfine htop jq lsof ncdu netcat noti ripgrep prettyping socat tldr \
+  tokei tree wget yt-dlp font-im-writing-nerd-font font-droid-sans-mono-nerd-font
   # brew tap homebrew/cask-fonts && brew install -f font-fira-code
 elif [[ `uname` == "Linux" ]]; then
   # Other Linux distributions
   sudo apt update && sudo apt upgrade -y
-  sudo apt install -y ack bat fzf htop jq ripgrep prettyping tldr
+  sudo apt install -y ack bat curl dust fd fzf git git-delta hyperfine htop jq lsof netcat ripgrep prettyping socat tldr tokei tree wget
 fi
