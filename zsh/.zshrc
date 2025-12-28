@@ -44,7 +44,7 @@ HIST_STAMPS="yyyy/mm/dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(macos git bundler node gcloud 1password)
+#plugins=(macos git node python)
 # Do not enable the following (incompatible to Pure) plugins: vi-mode, virtualenv.
 
 # User configuration
