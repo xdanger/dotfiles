@@ -165,3 +165,4 @@ dmypy.json
 cython_debug/
 
 **/.claude/settings.local.json
+.serena/
