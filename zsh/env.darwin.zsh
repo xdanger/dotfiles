@@ -42,6 +42,11 @@ fi
     open -a "/Applications/Cursor.app" "$@"
 }
 
+# Tailscale
+if [ -f "/Applications/Tailscale.app/Contents/MacOS/Tailscale" ]; then
+    alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+fi
+
 # Matalab
 [ -f /Applications/MATLAB_R2019a.app/bin/matlab ] && alias matlab-cli='/Applications/MATLAB_R2019a.app/bin/matlab -nodisplay -nosplash -nodesktop'
 
