@@ -121,9 +121,55 @@ Except for file deletion and database operations, all other operations do not re
 **Punctuation**: CN full-width (，。), EN half-width (, .)
 **Characters**: Numbers/letters half-width only
 
-### Git Standards
+## MCP Tools (via mcporter)
 
-#### Commit Message Format
+`mcporter`: Shell bridge for any registered MCP server; One config, works with any agent that can run shell commands. run `bunx mcporter` to get started.
+
+### Discovery
+
+List all servers: `bunx mcporter list`
+List tools + signatures for a server: `bunx mcporter list <server> --schema`
+
+When unsure how to call a tool, run `bunx mcporter list <server> --schema` first.
+
+### Context7 — Live Library Docs
+
+Up-to-date API docs and code examples for any library/framework. Two steps:
+
+1. Resolve library ID: `bunx mcporter call context7.resolve-library-id libraryName="next.js"`
+2. Query docs: `bunx mcporter call context7.get-library-docs context7CompatibleLibraryID="/vercel/next.js" topic="middleware"`
+
+### Tavily — Web Search
+
+Real-time search, extraction, research, and web crawling through a single, secure API.
+
+```⁠bash
+# Quick search
+bunx mcporter call tavily.tavily_search query="..." max_results:5 search_depth=basic
+
+# Deep research
+bunx mcporter call tavily.tavily_research input="..." model=pro
+
+# Extract page content
+bunx mcporter call tavily.tavily_extract urls='["https://example.com"]'
+```
+
+### Auth
+
+All current servers are keyless or key-in-URL. No OAuth required.
+If a future server returns an auth error:
+- Do NOT retry or guess credentials
+- Run `bunx mcporter auth <server>` requires browser interaction — **stop and ask the user to complete it**
+- Never construct raw HTTP requests to bypass mcporter
+
+### Debugging
+
+On failure, add `--verbose` to see the full request/response:
+`bunx mcporter call <server.tool> key=value --verbose`
+
+## Git Standards
+
+### Commit Message Format
 
 ```
 <Gitmoji> <type>(<scope>)[!]: <subject> [(#issue)]
@@ -157,7 +203,7 @@ Except for file deletion and database operations, all other operations do not re
 - rename `AuthError` to `LoginError`
 ```
 
-### Linter Policy
+## Linter Policy
 
 **NEVER modify `eslint.config.mjs` without explicit approval.**
 
@@ -182,14 +228,9 @@ Except for file deletion and database operations, all other operations do not re
 - Make assumptions - verify with existing code
 - Modify linter config without approval
 - Use `mv` for tracked files - always use `git mv` (preserves history)
-- Use `--squash` or `--rebase` for PR merge unless explicitly instructed
 
 **ALWAYS**:
 
 - Commit working code incrementally
 - Update plan documentation as you go
-- Learn from existing implementations
-- Stop after 3 failed attempts and reassess
 - Use `git mv` for tracked files (preserves history)
-- Use `gh pr merge <NUM> --merge --delete-branch=false` as default PR merge strategy (preserves history/context)
-- Always use context7 when I need code generation, setup or configuration steps, or library/API documentation. This means you should automatically use the Context7 MCP tools to resolve library id and get library docs without me having to explicitly ask.
