@@ -9,10 +9,11 @@ EOF
 path=("$HOMEBREW/sbin" "$HOMEBREW/bin" $path)
 manpath+=("$HOMEBREW/man")
 
-# SSH agent
-if [[ -z "$SSH_TTY" ]]; then
-  export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-fi
+# SSH auth agent
+#if [[ -z "$SSH_TTY" ]]; then
+#  export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+#fi
+SSH_AUTH_SOCK=$(launchctl getenv SSH_AUTH_SOCK) /usr/bin/ssh-add --apple-use-keychain 2>/dev/null
 
 # Google Cloud Platform
 if `command -v gcloud &>/dev/null`; then
