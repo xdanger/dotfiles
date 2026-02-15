@@ -1,8 +1,9 @@
 - defaults:
     link:
+      create: true
       relink: true
-      force: true
       relative: true
+      force: true
     clean:
       force: false
 
@@ -11,8 +12,10 @@
     - ~/.config/git
 
 - link:
-    ~/.claude/CLAUDE.md: "CLAUDE.md"
-    ~/.claude/commands: "claude/commands"
+    ~/.agents/AGENTS.md: "AGENTS.md" # OpenCode
+    ~/.claude/CLAUDE.md: "AGENTS.md" # Claude Code
+    ~/.codex/AGENTS.md: "AGENTS.md" # OpenAI Codex
+    ~/.gemini/GEMINI.md: "AGENTS.md" # Gemini Cli
     ~/.config/ghostty: "ghostty"
     ~/.config/git/ignore: "git/gitignore"
     ~/.config/git/verified_signers: "git/verified_signers"
