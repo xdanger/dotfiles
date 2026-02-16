@@ -99,6 +99,33 @@
       "skillFolderHash": "d9ed23aaf02a172820a8b42964cfe2d21e06e25b",
       "installedAt": "2026-02-16T03:36:08.769Z",
       "updatedAt": "2026-02-16T03:36:08.769Z"
+    },
+    "gh-cli": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/github/awesome-copilot.git",
+      "skillPath": "skills/gh-cli/SKILL.md",
+      "skillFolderHash": "437437f7f20bcdbbdb3081cf164435a388c0a39a",
+      "installedAt": "2026-02-16T04:27:52.315Z",
+      "updatedAt": "2026-02-16T04:27:52.315Z"
+    },
+    "documentation-lookup": {
+      "source": "upstash/context7",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/upstash/context7.git",
+      "skillPath": "plugins/claude/context7/skills/documentation-lookup/SKILL.md",
+      "skillFolderHash": "4aedd1bbd79f085458a06b097fbc8bba9194a310",
+      "installedAt": "2026-02-16T04:38:00.698Z",
+      "updatedAt": "2026-02-16T04:38:00.698Z"
+    },
+    "git-commit": {
+      "source": "xdanger/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/xdanger/skills.git",
+      "skillPath": "skills/git-commit/SKILL.md",
+      "skillFolderHash": "ab799429133dcd350b0353c1042d549fa6717d18",
+      "installedAt": "2026-02-16T05:02:46.175Z",
+      "updatedAt": "2026-02-16T05:02:46.175Z"
     }
   },
   "dismissed": {
