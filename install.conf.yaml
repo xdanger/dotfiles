@@ -20,7 +20,7 @@
     ~/.config/ranger: "ranger"
     ~/.gemrc: "ruby/gemrc"
     ~/.gitconfig: "git/gitconfig"
-    ~/.htoprc: "util/htoprc"
+    ~/.htoprc: "utils/htoprc"
     ~/.tmux:
     ~/.tmux.conf: "tmux/tmux.conf"
     ~/.vim:
