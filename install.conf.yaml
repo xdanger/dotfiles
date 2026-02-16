@@ -25,11 +25,17 @@
     ~/.tmux.conf: "tmux/tmux.conf"
     ~/.vim:
     ~/.vimrc: "vim/vimrc"
-    ~/.zlogin: "zsh/.zlogin" # ④ 登录 shell（在 ②③ 之后，只想在登录完成后再跑一次 的逻辑：打印欢迎横幅、启动 tmux、自动 attach screen 等。
-    ~/.zlogout: "zsh/.zlogout" # ⑤ 登录 shell 结束，清理：kill 代理、umount、history 收尾等。
-    ~/.zprofile: "zsh/.zprofile" # ② 登录 shell (`zsh -l`, SSH、终端登录)，会话初始化：`nvm/asdf`、SSH-agent、path_helper 等登录时才需要的设置。
-    ~/.zshenv: "zsh/.zshenv" # ① 所有 zsh，最小环境：PATH/LANG/EDITOR 等任何场景都需要的变量。
-    ~/.zshrc: "zsh/.zshrc" # ③ 交互式 shell (`$-` 含 `i`)，Prompt / 主题 / alias / 补全插件，所有交互体验相关内容。
+    # zsh 启动文件加载顺序：.zshenv → [.zprofile if login] → [.zshrc if interactive] → [.zlogin if login] → [.zlogout on exit]
+    # ① .zshenv    — 所有 zsh（login/interactive/script），不可产生输出。PATH/LANG/EDITOR 等全局环境变量。注意 macOS /etc/zprofile 会在之后调用 path_helper 重排 PATH。
+    # ② .zprofile  — 登录 shell，在 .zshrc 之前。会话级初始化：path_helper、nvm/mise、SSH-agent 等。与 .zlogin 本为二选一（ksh 风格），此处拆分使用。
+    # ③ .zshrc     — 交互式 shell（$- 含 i）。Prompt/主题/alias/函数/补全/键绑定，所有交互体验相关内容。
+    # ④ .zlogin    — 登录 shell，在 .zshrc 之后。不应改变 shell 环境，仅运行外部命令：欢迎横幅、fortune、启动 tmux 等。
+    # ⑤ .zlogout   — 登录 shell 退出时。清理：kill agent、umount、临时文件/history 收尾等。
+    ~/.zshenv: "zsh/.zshenv"
+    ~/.zprofile: "zsh/.zprofile"
+    ~/.zshrc: "zsh/.zshrc"
+    ~/.zlogin: "zsh/.zlogin"
+    ~/.zlogout: "zsh/.zlogout"
 
 - shell:
     - command: bash $PWD/scripts/post-install.sh
