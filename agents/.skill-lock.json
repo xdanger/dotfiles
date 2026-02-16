@@ -1,0 +1,116 @@
+{
+  "version": 3,
+  "skills": {
+    "crawl": {
+      "source": "tavily-ai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/tavily-ai/skills.git",
+      "skillPath": "skills/tavily/crawl/SKILL.md",
+      "skillFolderHash": "bc5e379a494672189eb80eb7910e8455bf7917fd",
+      "installedAt": "2026-02-14T01:56:25.774Z",
+      "updatedAt": "2026-02-16T03:10:39.557Z"
+    },
+    "extract": {
+      "source": "tavily-ai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/tavily-ai/skills.git",
+      "skillPath": "skills/tavily/extract/SKILL.md",
+      "skillFolderHash": "f01593047227a77af3833afdbbe9da093ffa72c1",
+      "installedAt": "2026-02-14T01:56:25.815Z",
+      "updatedAt": "2026-02-16T03:10:39.611Z"
+    },
+    "research": {
+      "source": "tavily-ai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/tavily-ai/skills.git",
+      "skillPath": "skills/tavily/research/SKILL.md",
+      "skillFolderHash": "14d59c6cafe49d6ac21837aee3e88c3e2297605f",
+      "installedAt": "2026-02-14T01:56:25.861Z",
+      "updatedAt": "2026-02-16T03:10:39.659Z"
+    },
+    "search": {
+      "source": "tavily-ai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/tavily-ai/skills.git",
+      "skillPath": "skills/tavily/search/SKILL.md",
+      "skillFolderHash": "2684443c958a18adb5c002801a8ee4c3e2ea0678",
+      "installedAt": "2026-02-14T01:56:25.900Z",
+      "updatedAt": "2026-02-16T03:10:39.698Z"
+    },
+    "tavily-best-practices": {
+      "source": "tavily-ai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/tavily-ai/skills.git",
+      "skillPath": "skills/tavily/tavily-best-practices/SKILL.md",
+      "skillFolderHash": "355fe1000719af9ba849e7683762eb803793b2b2",
+      "installedAt": "2026-02-14T01:56:25.937Z",
+      "updatedAt": "2026-02-16T03:10:39.735Z"
+    },
+    "nano-banana-pro": {
+      "source": "intellectronica/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/intellectronica/agent-skills.git",
+      "skillPath": "skills/nano-banana-pro/SKILL.md",
+      "skillFolderHash": "eea680c3ebf9b8ae10ed99ea457f27af2bc05b19",
+      "installedAt": "2026-02-16T03:27:31.287Z",
+      "updatedAt": "2026-02-16T03:27:31.287Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "c2f31172b6f256272305a5e6e7228b258446899f",
+      "installedAt": "2026-02-16T03:30:57.972Z",
+      "updatedAt": "2026-02-16T03:30:57.972Z"
+    },
+    "notion-api": {
+      "source": "intellectronica/agent-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/intellectronica/agent-skills.git",
+      "skillPath": "skills/notion-api/SKILL.md",
+      "skillFolderHash": "f62186555624f784371cf31f9580a03f389fb592",
+      "installedAt": "2026-02-16T03:31:48.852Z",
+      "updatedAt": "2026-02-16T03:31:48.852Z"
+    },
+    "playwright-skill": {
+      "source": "sickn33/antigravity-awesome-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/sickn33/antigravity-awesome-skills.git",
+      "skillPath": "skills/playwright-skill/SKILL.md",
+      "skillFolderHash": "b2d559b68b4c3004840124862f30c6d371270646",
+      "installedAt": "2026-02-16T03:32:25.600Z",
+      "updatedAt": "2026-02-16T03:32:25.600Z"
+    },
+    "playwright-cli": {
+      "source": "microsoft/playwright-cli",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/microsoft/playwright-cli.git",
+      "skillPath": "skills/playwright-cli/SKILL.md",
+      "skillFolderHash": "a5a8823e403adc13b2488aae9968d6d92adbd2d7",
+      "installedAt": "2026-02-16T03:32:31.689Z",
+      "updatedAt": "2026-02-16T03:32:31.689Z"
+    },
+    "agent-browser": {
+      "source": "vercel-labs/agent-browser",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
+      "skillPath": "skills/agent-browser/SKILL.md",
+      "skillFolderHash": "d9ed23aaf02a172820a8b42964cfe2d21e06e25b",
+      "installedAt": "2026-02-16T03:36:08.769Z",
+      "updatedAt": "2026-02-16T03:36:08.769Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "codex",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-cli",
+    "opencode",
+    "claude-code"
+  ]
+}
