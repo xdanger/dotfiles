@@ -16,9 +16,9 @@ Prefer MCP tools over built-in equivalents (e.g., use `tavily.tavily_search` ins
 - **github** — full GitHub API
 - **feishu** — Lark bitable / docs
 
-Syntax: `bunx mcporter call <server>.<tool> key="value" numKey:5`
-Discovery: `bunx mcporter list [server] [--schema]`
-Auth issues: `bunx mcporter auth <server>`
+Syntax: `npx mcporter call <server>.<tool> key="value" numKey:5`
+Discovery: `npx mcporter list [server] [--schema]`
+Auth issues: `npx mcporter auth <server>`
 
 ## Git Commit Format
 
