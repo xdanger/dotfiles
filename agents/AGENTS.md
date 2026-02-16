@@ -12,7 +12,6 @@
 Prefer MCP tools over built-in equivalents (e.g., use `tavily.tavily_search` instead of built-in WebSearch).
 
 - **tavily** — web search / extract / crawl / research (prefer over built-in WebSearch)
-- **brave-search** — web search / local search
 - **context7** — live library docs lookup
 - **github** — full GitHub API
 - **feishu** — Lark bitable / docs
