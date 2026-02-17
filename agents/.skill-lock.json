@@ -96,9 +96,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
       "skillPath": "skills/agent-browser/SKILL.md",
-      "skillFolderHash": "d9ed23aaf02a172820a8b42964cfe2d21e06e25b",
+      "skillFolderHash": "84fe752a54c0e33238594b71fd4f80ccc3df8206",
       "installedAt": "2026-02-16T03:36:08.769Z",
-      "updatedAt": "2026-02-16T03:36:08.769Z"
+      "updatedAt": "2026-02-17T14:13:17.623Z"
     },
     "gh-cli": {
       "source": "github/awesome-copilot",
