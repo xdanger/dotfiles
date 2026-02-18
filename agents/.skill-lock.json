@@ -146,7 +146,6 @@
     "gemini-cli",
     "github-copilot",
     "kimi-cli",
-    "opencode",
-    "claude-code"
+    "opencode"
   ]
 }

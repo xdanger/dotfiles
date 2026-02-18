@@ -13,7 +13,8 @@
 
 - link:
     ~/.agents:
-    ~/.claude/CLAUDE.md: "agents/AGENTS.md" # Claude Code
+    ~/.claude/CLAUDE.md: "agents/AGENTS.md"
+    ~/.claude/skills: "agents/skills"
     ~/.config/ghostty: "ghostty"
     ~/.config/git/ignore: "git/gitignore"
     ~/.config/git/verified_signers: "git/verified_signers"
