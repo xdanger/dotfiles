@@ -11,7 +11,7 @@
 [alias]
     st = status
     br = branch -a
-    ci = commit -v -S
+    ci = "!claude --permission-mode bypassPermissions -p \"/git-commit\" --model sonnet"
     co = checkout
     clone-bare-for-worktrees = "!zsh $DOTFILES/bin/git-clone-bare-for-worktrees.zsh"
 [init]
