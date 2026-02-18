@@ -125,5 +125,9 @@ if type brew &>/dev/null; then
 fi
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
+# direnv
+eval "$(direnv hook zsh)"
+
 # OpenClaw Completion
 [ -f "$HOME/.openclaw/completions/openclaw.zsh" ] && source "$HOME/.openclaw/completions/openclaw.zsh"
+
