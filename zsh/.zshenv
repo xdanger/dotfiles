@@ -23,6 +23,9 @@ export ZDOTDIR="$DOTFILES/zsh"
 # Set ZSH environment variable
 export ZSH="$ZDOTDIR/oh-my-zsh"
 
+# direnv: suppress loading/unloading messages
+export DIRENV_LOG_FORMAT=
+
 # other envs
 [ -f "$ZDOTDIR/../../.dotlocal/envs.zsh" ] && source "$ZDOTDIR/../../.dotlocal/envs.zsh"
 # add ./bin to $PATH

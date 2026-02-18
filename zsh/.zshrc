@@ -126,6 +126,7 @@ fi
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # direnv
+export DIRENV_LOG_FORMAT=
 eval "$(direnv hook zsh)"
 
 # OpenClaw Completion
