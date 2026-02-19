@@ -9,7 +9,6 @@
 
 - create:
     - ~/.vim/undo-history
-    - ~/.config/git
 
 - link:
     ~/.agents:
