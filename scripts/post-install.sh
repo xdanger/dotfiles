@@ -49,5 +49,5 @@ if [[ `uname` == "Darwin" ]]; then
 elif [[ `uname` == "Linux" ]]; then
   # Other Linux distributions
   sudo apt update && sudo apt upgrade -y
-  sudo apt install -y ack bat curl dust fd fzf git git-delta hyperfine htop jq lsof netcat ripgrep prettyping socat tldr tokei tree wget
+  sudo apt install -y ack bat curl du-dust fd-find fzf git git-delta hyperfine htop jq lsof netcat-openbsd ripgrep prettyping socat tldr tokei tree wget
 fi
