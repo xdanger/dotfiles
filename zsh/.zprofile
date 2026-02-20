@@ -75,5 +75,7 @@ reorder_path() {
 reorder_path
 
 
-[[ "$OSTYPE" = linux* ]] && [ -f ~/.ssh/langley ] && (( $+commands[keychain] )) && eval $(keychain --eval --agents ssh langley)
+if [[ "$OSTYPE" = linux* ]] && [ -f ~/.ssh/langley ] && (( $+commands[keychain] )); then
+  ssh-add -l 2>/dev/null | grep -q langley || eval $(keychain --eval --agents ssh langley)
+fi
 
