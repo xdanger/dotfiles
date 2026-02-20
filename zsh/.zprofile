@@ -73,3 +73,7 @@ reorder_path() {
 
 # autoload -Uz reorder_path
 reorder_path
+
+
+[[ "$OSTYPE" = linux* ]] && [ -f ~/.ssh/langley ] && (( $+commands[keychain] )) && eval $(keychain --eval --agents ssh langley)
+
