@@ -2,32 +2,29 @@
 LOGINSHELL_INITED=1
 
 # rvm
-[ -s "$HOME/.rvm/scripts/rvm" ] && source "$HOME/.rvm/scripts/rvm"
-# [ -d "$HOME/.rvm/bin" ] && path+=("$HOME/.rvm/bin")
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 # virtualenv
-[ -d "$HOME/.local/bin" ] && path+=("$HOME/.local/bin")
+[[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
 # Python installations by [uv](https://github.com/astral-sh/uv)
-[ -f "$HOME/.local/bin/env" ] && source "$HOME/.local/bin/env"
+[[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
 # nvm & node
-[ -f "$HOME/.nvm/nvm.sh" ] && export NVM_DIR="$HOME/.nvm" && \. "$NVM_DIR/nvm.sh"
+[[ -f "$HOME/.nvm/nvm.sh" ]] && export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh"
 # Deno
-if [ -d "$HOME/.deno/bin" ]; then
+if [[ -d "$HOME/.deno/bin" ]]; then
   export DENO_INSTALL="$HOME/.deno"
   path=("$DENO_INSTALL/bin" $path)
 fi
 # Bun
-if [ -d "$HOME/.bun" ]; then
+if [[ -d "$HOME/.bun" ]]; then
   export BUN_INSTALL="$HOME/.bun" && path+=("$BUN_INSTALL/bin")
-  # completion in macOS
-  [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 fi
 # Rust
-[ -d "$HOME/.cargo/bin" ] && \. "$HOME/.cargo/env"
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 # Mise
-[ -f "$HOME/.local/bin/mise" ] && eval "$($HOME/.local/bin/mise activate zsh)"
+[[ -f "$HOME/.local/bin/mise" ]] && eval "$($HOME/.local/bin/mise activate zsh)"
 # Platform-specific environment variables
-uname=${(L)$(uname -s)}
-[ -f "$ZDOTDIR/env.$uname.zsh" ] && source "$ZDOTDIR/env.$uname.zsh"
+local os_name=${(L)$(uname -s)}
+[[ -f "$ZDOTDIR/env.$os_name.zsh" ]] && source "$ZDOTDIR/env.$os_name.zsh"
 
 # reorder_path - 重新排序 $PATH 环境变量
 # 排序规则：
@@ -47,13 +44,13 @@ reorder_path() {
   #-------------------------------------
   local -a group1 group2 group3
 
-  for p in $path; do
+  for p in "${path[@]}"; do
     if [[ $p == ${HOME}/.* ]]; then
-      group1+=$p                      # $HOME/.开头的路径
+      group1+=("$p")                  # $HOME/.开头的路径
     elif [[ $p == /opt/homebrew* ]]; then
-      group2+=$p                      # /opt/homebrew开头的路径
+      group2+=("$p")                  # /opt/homebrew开头的路径
     else
-      group3+=$p                      # 其他路径
+      group3+=("$p")                  # 其他路径
     fi
   done
 
@@ -68,14 +65,10 @@ reorder_path() {
   # ④ 重新组装 PATH
   #-------------------------------------
   path=( "${group1[@]}" "${group2[@]}" "${group3[@]}" )
-  export PATH                         # 同步回字符串形式
 }
 
-# autoload -Uz reorder_path
 reorder_path
 
-
-if [[ "$OSTYPE" = linux* ]] && [ -f ~/.ssh/langley ] && (( $+commands[keychain] )); then
-  ssh-add -l 2>/dev/null | grep -q langley || eval $(keychain --eval --agents ssh langley)
+if [[ "$OSTYPE" == linux* ]] && [[ -f ~/.ssh/langley ]] && (( $+commands[keychain] )); then
+  ssh-add -l 2>/dev/null | grep -q langley || eval "$(keychain --eval --agents ssh langley)"
 fi
-
