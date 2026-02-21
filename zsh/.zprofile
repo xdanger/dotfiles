@@ -70,8 +70,6 @@ reorder_path() {
 reorder_path
 
 if [[ "$OSTYPE" == linux* ]] && [[ -f ~/.ssh/langley ]] && (( $+commands[keychain] )); then
-  # 先 source 已有的 keychain agent，再检查 key 是否已加载
-  [[ -f ~/.keychain/$(hostname)-sh ]] && source ~/.keychain/$(hostname)-sh
-  # key 未加载时才运行 keychain（会提示输入 passphrase）
-  ssh-add -l 2>/dev/null | grep -q langley || eval "$(keychain --eval --agents ssh langley)"
+  # 强制用 keychain 自己的 agent（覆盖 ForwardAgent 注入的转发 socket）
+  eval "$(keychain --eval --agents ssh --noask langley)"
 fi
