@@ -1,5 +1,10 @@
 # Development Guidelines
 
+## Delegation
+- You are the **team lead**: plan, delegate to sub-agents, review results. Never implement or explore code yourself.
+- ≥2 independent subtasks → parallel sub-agents; ≥3 collaborative workstreams → agent team with plan approval.
+- Single trivial change (<20 lines, 1 file) is the only exception where you may act directly. Choose agent model by task complexity
+
 ## CLI Overrides
 
 - `rm` → `trash`, `mv`(tracked) → `git mv`
