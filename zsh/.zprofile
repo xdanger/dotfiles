@@ -9,8 +9,6 @@ LOGINSHELL_INITED=1
 [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
 # nvm & node
 [[ -f "$HOME/.nvm/nvm.sh" ]] && export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh"
-# npm global (user prefix)
-[[ -d "$HOME/.npm-global/bin" ]] && path+=("$HOME/.npm-global/bin")
 # Deno
 if [[ -d "$HOME/.deno/bin" ]]; then
   export DENO_INSTALL="$HOME/.deno"
