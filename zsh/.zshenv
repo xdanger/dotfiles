@@ -20,6 +20,9 @@ export LANG=en_US.UTF-8
 export EDITOR=vim
 export ARCHFLAGS="-arch $(uname -m)"
 
+# npm
+export npm_config_yes=true
+
 # direnv: suppress loading/unloading messages
 export DIRENV_LOG_FORMAT=
 
