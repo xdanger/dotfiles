@@ -133,8 +133,8 @@
       "sourceUrl": "https://github.com/steipete/clawdis.git",
       "skillPath": "skills/mcporter/SKILL.md",
       "skillFolderHash": "8793f4ac0788600d66b40d4059b63cf4938febdb",
-      "installedAt": "2026-02-16T22:10:20.907Z",
-      "updatedAt": "2026-02-16T22:10:20.907Z"
+      "installedAt": "2026-02-28T19:07:45.593Z",
+      "updatedAt": "2026-02-28T19:07:45.593Z"
     }
   },
   "dismissed": {
@@ -142,10 +142,13 @@
   },
   "lastSelectedAgents": [
     "amp",
+    "cline",
     "codex",
+    "cursor",
     "gemini-cli",
     "github-copilot",
     "kimi-cli",
-    "opencode"
+    "opencode",
+    "claude-code"
   ]
 }
