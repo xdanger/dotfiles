@@ -18,8 +18,6 @@ fi
 if [[ -d "$HOME/.bun" ]]; then
   export BUN_INSTALL="$HOME/.bun" && path+=("$BUN_INSTALL/bin")
 fi
-# Rust
-[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 # Mise
 (( $+commands[mise] )) && eval "$(mise activate zsh)"
 # Platform-specific environment variables

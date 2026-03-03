@@ -34,3 +34,4 @@ export DIRENV_LOG_FORMAT=
 # add ./bin to $PATH
 [[ -d "$DOTFILES/bin" ]] && path+=("$DOTFILES/bin")
 [[ -d "/opt/bin" ]] && path+=("/opt/bin")
+[[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
