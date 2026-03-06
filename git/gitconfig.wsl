@@ -4,6 +4,8 @@
     signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQTzEIrjphfjlF5f/vWKaKBNPXN2WafTjyYBIWp6fbZ
 [commit]
     gpgsign = true
+[core]
+    sshCommand = "ssh.exe"
 [gpg]
     format = ssh
 [gpg "ssh"]

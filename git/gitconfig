@@ -13,7 +13,7 @@
     br = branch -a
     ci = "!claude --permission-mode bypassPermissions -p \"/git-commit\" --model sonnet"
     co = checkout
-    clone-bare-for-worktrees = "!f(){ script=\"$HOME/.dotfiles/bin/git-clone-bare-for-worktrees.zsh\"; origin=$(git config --global --show-origin --get alias.clone-bare-for-worktrees 2>/dev/null | awk '{print $1}'); case \"$origin\" in file:*) config_path=${origin#file:}; if [ -e \"$config_path\" ]; then candidate=$(cd \"$(dirname \"$config_path\")/..\" && pwd)/bin/git-clone-bare-for-worktrees.zsh; [ -x \"$candidate\" ] && script=\"$candidate\"; fi ;; esac; exec zsh \"$script\" \"$@\"; }; f"
+    clone-bare-for-worktrees = "!zsh -lc 'script=\"\"; if [[ -n \"${DOTFILES:-}\" && -x \"${DOTFILES}/bin/git-clone-bare-for-worktrees.zsh\" ]]; then script=\"${DOTFILES}/bin/git-clone-bare-for-worktrees.zsh\"; elif command -v git-clone-bare-for-worktrees.zsh >/dev/null 2>&1; then script=\"$(command -v git-clone-bare-for-worktrees.zsh)\"; else for config in \"$HOME/.gitconfig\" \"$HOME/.config/git/config\"; do if [[ -e \"$config\" ]]; then real_config=${config:A}; candidate=${real_config:h:h}/bin/git-clone-bare-for-worktrees.zsh; if [[ -x \"$candidate\" ]]; then script=\"$candidate\"; break; fi; fi; done; fi; [[ -n \"$script\" ]] || script=\"$HOME/.dotfiles/bin/git-clone-bare-for-worktrees.zsh\"; exec zsh \"$script\" \"$@\"' zsh \"$@\""
 [init]
     defaultBranch = main
 [pull]

@@ -20,7 +20,14 @@
 set -euo pipefail
 
 LOGIN_URL="${1:?Usage: $0 <login-url> [state-file]}"
-STATE_FILE="${2:-${TMPDIR:-/tmp}/agent-browser-auth-state.json}"
+WORKFLOW_NAME="$(basename "$0")"
+WORKFLOW_NAME="${WORKFLOW_NAME%.*}"
+WORKFLOW_SLUG="$(printf '%s' "$WORKFLOW_NAME" | tr -cs 'A-Za-z0-9._-' '-')"
+TARGET_HOST="$(printf '%s' "$LOGIN_URL" | awk -F/ '{print $3}')"
+TARGET_HOST="${TARGET_HOST:-site}"
+TARGET_SLUG="$(printf '%s' "$TARGET_HOST" | tr -cs 'A-Za-z0-9._-' '-')"
+TARGET_HASH="$(printf '%s' "$LOGIN_URL" | cksum | awk '{print $1}')"
+STATE_FILE="${2:-${TMPDIR:-/tmp}/${WORKFLOW_SLUG}-${TARGET_SLUG}-${TARGET_HASH}.json}"
 
 echo "Authentication workflow: $LOGIN_URL"
 echo "State file: $STATE_FILE"
