@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
+REPO_ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
+
 # ensure missing properties in `.git/config` will be "synced" by `.gitmodules`
 git submodule sync --recursive
 # ensure existing properties in `.git/config` will be "updated" from `.gitmodules`
 git submodule update --init --recursive
 
 # link ~/.gitconfig to gitconfig_codespaces in GitHub Codespaces
-[[ $CODESPACES == "true" ]] && ln -sf $PWD/git/gitconfig.codespaces ~/.gitconfig
+[[ ${CODESPACES:-} == "true" ]] && ln -sf "${REPO_ROOT}/git/gitconfig.codespaces" "${HOME}/.gitconfig"
 # link ~/.gitconfig to gitconfig.wsl in Windows Subsystem for Linux
-[[ -n ${WSL_DISTRO_NAME:-} ]] && ln -sf $PWD/git/gitconfig.wsl ~/.gitconfig
+[[ -n ${WSL_DISTRO_NAME:-} ]] && ln -sf "${REPO_ROOT}/git/gitconfig.wsl" "${HOME}/.gitconfig"
 
 is_container() {
   # 1) systemd-detect-virt
@@ -41,13 +45,13 @@ if is_container; then
   exit 0
 fi
 
-if [[ `uname` == "Darwin" ]]; then
+if [[ $(uname) == "Darwin" ]]; then
   # macOS
   # clang -framework Carbon util/reset-input.m -o bin/reset-input
   brew update && brew upgrade
   brew install --quiet ack ag aria2 bat csvkit curl diff-so-fancy difftastic direnv duf dust entr eza fd fortune fzf git-delta gitkraken-cli glab glow htop hyperfine jq just lsof ncdu netcat noti prettyping ripgrep sd socat tldr tokei trash-cli tree watchexec wget yq yt-dlp font-droid-sans-mono-nerd-font font-im-writing-nerd-font
   # brew tap homebrew/cask-fonts && brew install -f font-fira-code
-elif [[ `uname` == "Linux" ]]; then
+elif [[ $(uname) == "Linux" ]]; then
   # Other Linux distributions
   ARCH=$(uname -m)
   case "$ARCH" in
@@ -65,6 +69,10 @@ elif [[ `uname` == "Linux" ]]; then
     sudo snap install diff-so-fancy difftastic glab glow gitkraken-cli
     sudo snap install just --classic
     sudo snap install dust  # du alternative (apt package `du-dust` does not exist)
+  else
+    echo "Error: snap is required on Linux to install these repo-managed tools: diff-so-fancy, difftastic, dust, gitkraken-cli, glab, glow, just." >&2
+    echo "Install snapd first, then rerun ./install." >&2
+    exit 1
   fi
   # snap `difftastic` binary is named `difftastic`, alias to `difft`
   [ -x /snap/bin/difftastic ] && sudo ln -sf /snap/bin/difftastic /usr/local/bin/difft

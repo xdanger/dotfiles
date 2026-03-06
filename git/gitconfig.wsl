@@ -2,8 +2,6 @@
     name = Yunjie Dai
     email = xdanger@gmail.com
     signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQTzEIrjphfjlF5f/vWKaKBNPXN2WafTjyYBIWp6fbZ
-[core]
-    sshCommand = "ssh.exe"
 [commit]
     gpgsign = true
 [gpg]

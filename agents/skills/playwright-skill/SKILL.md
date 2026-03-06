@@ -42,6 +42,7 @@ General-purpose browser automation skill. I'll write custom Playwright code for 
 4. I execute it via: `cd $SKILL_DIR && node run.js /tmp/playwright-test-*.js`
 5. Results displayed in real-time, browser window visible for debugging
 6. Test files auto-cleaned from /tmp by your OS
+7. If Playwright is missing, I stop and tell you to run setup instead of mutating the skill repo during execution
 
 ## Setup (First Time)
 
@@ -51,6 +52,7 @@ npm run setup
 ```
 
 This installs Playwright and Chromium browser. Only needed once.
+If `node run.js ...` says Playwright is missing, rerun this setup command manually.
 
 ## Execution Pattern
 
@@ -389,6 +391,7 @@ For comprehensive Playwright API documentation, see [API_REFERENCE.md](API_REFER
 - **Parameterize URLs** - Put detected/provided URL in a `TARGET_URL` constant at the top of every script
 - **DEFAULT: Visible browser** - Always use `headless: false` unless user explicitly asks for headless mode
 - **Headless mode** - Only use `headless: true` when user specifically requests "headless" or "background" execution
+- **Executor setup** - `run.js` expects Playwright to already be installed via `npm run setup`; it does not auto-install or create temp execution files in the skill repo
 - **Slow down:** Use `slowMo: 100` to make actions visible and easier to follow
 - **Wait strategies:** Use `waitForURL`, `waitForSelector`, `waitForLoadState` instead of fixed timeouts
 - **Error handling:** Always use try-catch for robust automation

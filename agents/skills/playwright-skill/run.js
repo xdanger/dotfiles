@@ -12,7 +12,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const Module = require('module');
 
 // Change to skill directory for proper module resolution
 process.chdir(__dirname);
@@ -22,7 +22,7 @@ process.chdir(__dirname);
  */
 function checkPlaywrightInstalled() {
   try {
-    require.resolve('playwright');
+    require.resolve('playwright', { paths: [__dirname] });
     return true;
   } catch (e) {
     return false;
@@ -30,20 +30,17 @@ function checkPlaywrightInstalled() {
 }
 
 /**
- * Install Playwright if missing
+ * Exit with setup instructions if Playwright is missing.
  */
-function installPlaywright() {
-  console.log('📦 Playwright not found. Installing...');
-  try {
-    execSync('npm install', { stdio: 'inherit', cwd: __dirname });
-    execSync('npx playwright install chromium', { stdio: 'inherit', cwd: __dirname });
-    console.log('✅ Playwright installed successfully');
-    return true;
-  } catch (e) {
-    console.error('❌ Failed to install Playwright:', e.message);
-    console.error('Please run manually: cd', __dirname, '&& npm run setup');
-    return false;
+function ensurePlaywrightInstalled() {
+  if (checkPlaywrightInstalled()) {
+    return;
   }
+
+  console.error('❌ Playwright is not installed for this skill.');
+  console.error('Run the setup step once before using the executor:');
+  console.error(`  cd ${__dirname} && npm run setup`);
+  process.exit(1);
 }
 
 /**
@@ -81,29 +78,6 @@ function getCodeToExecute() {
 }
 
 /**
- * Clean up old temporary execution files from previous runs
- */
-function cleanupOldTempFiles() {
-  try {
-    const files = fs.readdirSync(__dirname);
-    const tempFiles = files.filter(f => f.startsWith('.temp-execution-') && f.endsWith('.js'));
-
-    if (tempFiles.length > 0) {
-      tempFiles.forEach(file => {
-        const filePath = path.join(__dirname, file);
-        try {
-          fs.unlinkSync(filePath);
-        } catch (e) {
-          // Ignore errors - file might be in use or already deleted
-        }
-      });
-    }
-  } catch (e) {
-    // Ignore directory read errors
-  }
-}
-
-/**
  * Wrap code in async IIFE if not already wrapped
  */
 function wrapCodeIfNeeded(code) {
@@ -118,9 +92,10 @@ function wrapCodeIfNeeded(code) {
 
   // If it's just Playwright commands, wrap in full template
   if (!hasRequire) {
+    const helpersPath = JSON.stringify(path.join(__dirname, 'lib', 'helpers'));
     return `
 const { chromium, firefox, webkit, devices } = require('playwright');
-const helpers = require('./lib/helpers');
+const helpers = require(${helpersPath});
 
 // Extra headers from environment variables (if configured)
 const __extraHeaders = helpers.getExtraHeadersFromEnv();
@@ -176,40 +151,31 @@ function getContextOptionsWithHeaders(options = {}) {
   return code;
 }
 
+function executeCode(code) {
+  const executionFilename = path.join(__dirname, '.playwright-skill-runtime.js');
+  const executionModule = new Module(executionFilename, module);
+  executionModule.filename = executionFilename;
+  executionModule.paths = Module._nodeModulePaths(__dirname);
+  executionModule._compile(code, executionFilename);
+}
+
 /**
  * Main execution
  */
 async function main() {
   console.log('🎭 Playwright Skill - Universal Executor\n');
 
-  // Clean up old temp files from previous runs
-  cleanupOldTempFiles();
-
   // Check Playwright installation
-  if (!checkPlaywrightInstalled()) {
-    const installed = installPlaywright();
-    if (!installed) {
-      process.exit(1);
-    }
-  }
+  ensurePlaywrightInstalled();
 
   // Get code to execute
   const rawCode = getCodeToExecute();
   const code = wrapCodeIfNeeded(rawCode);
 
-  // Create temporary file for execution
-  const tempFile = path.join(__dirname, `.temp-execution-${Date.now()}.js`);
-
   try {
-    // Write code to temp file
-    fs.writeFileSync(tempFile, code, 'utf8');
-
     // Execute the code
     console.log('🚀 Starting automation...\n');
-    require(tempFile);
-
-    // Note: Temp file will be cleaned up on next run
-    // This allows long-running async operations to complete safely
+    executeCode(code);
 
   } catch (error) {
     console.error('❌ Execution failed:', error.message);

@@ -18,7 +18,9 @@ export ZSH="$ZDOTDIR/oh-my-zsh"
 # Language and editor
 export LANG=en_US.UTF-8
 export EDITOR=vim
-export ARCHFLAGS="-arch $(uname -m)"
+if [[ "$OSTYPE" == darwin* ]] && [[ -z "${ARCHFLAGS:-}" ]]; then
+  export ARCHFLAGS="-arch $(uname -m)"
+fi
 
 # npm
 export npm_config_yes=true

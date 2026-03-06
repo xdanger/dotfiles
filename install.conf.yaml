@@ -38,6 +38,6 @@
     ~/.zlogout: "zsh/.zlogout"
 
 - shell:
-    - command: bash $PWD/scripts/post-install.sh
+    - command: bash "$PWD/scripts/post-install.sh"
       stdout: true
       stderr: true

@@ -23,49 +23,8 @@ fi
 # Platform-specific environment variables
 local os_name=${(L)$(uname -s)}
 [[ -f "$ZDOTDIR/env.$os_name.zsh" ]] && source "$ZDOTDIR/env.$os_name.zsh"
-
-# reorder_path - 重新排序 $PATH 环境变量
-# 排序规则：
-#   1. $HOME/.开头的路径（如 ~/.bun, ~/.cargo）
-#   2. /opt/homebrew开头的路径
-#   3. 其他路径
-# 每组内部按字母升序排序
-
-reorder_path() {
-  #-------------------------------------
-  # ① 准备：去重
-  #-------------------------------------
-  typeset -gU path                    # 去重 (全局变量, -g)
-
-  #-------------------------------------
-  # ② 分组收集路径
-  #-------------------------------------
-  local -a group1 group2 group3
-
-  for p in "${path[@]}"; do
-    if [[ $p == ${HOME}/.* ]]; then
-      group1+=("$p")                  # $HOME/.开头的路径
-    elif [[ $p == /opt/homebrew* ]]; then
-      group2+=("$p")                  # /opt/homebrew开头的路径
-    else
-      group3+=("$p")                  # 其他路径
-    fi
-  done
-
-  #-------------------------------------
-  # ③ 对每组内部按字母排序
-  #-------------------------------------
-  group1=(${(o)group1})               # (o) = 按字母升序排序
-  group2=(${(o)group2})               # (o) = 按字母升序排序
-  group3=(${(o)group3})               # (o) = 按字母升序排序
-
-  #-------------------------------------
-  # ④ 重新组装 PATH
-  #-------------------------------------
-  path=( "${group1[@]}" "${group2[@]}" "${group3[@]}" )
-}
-
-reorder_path
+# Preserve PATH activation order from version managers such as mise/nvm/uv.
+typeset -gU path
 
 if [[ "$OSTYPE" == linux* ]] && [[ -f ~/.ssh/langley ]] && (( $+commands[keychain] )); then
   # 强制用 keychain 自己的 agent（覆盖 ForwardAgent 注入的转发 socket）

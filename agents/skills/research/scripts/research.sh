@@ -3,7 +3,7 @@
 # Usage: ./research.sh '{"input": "your research query", ...}' [output_file]
 # Example: ./research.sh '{"input": "quantum computing trends", "model": "pro"}' results.md
 
-set -e
+set -euo pipefail
 
 # Function to decode JWT payload
 decode_jwt_payload() {
@@ -63,15 +63,15 @@ get_mcp_token() {
 }
 
 # Try to load OAuth token from MCP if TAVILY_API_KEY is not set
-if [ -z "$TAVILY_API_KEY" ]; then
+if [ -z "${TAVILY_API_KEY:-}" ]; then
     token=$(get_mcp_token) || true
     if [ -n "$token" ]; then
         export TAVILY_API_KEY="$token"
     fi
 fi
 
-JSON_INPUT="$1"
-OUTPUT_FILE="$2"
+JSON_INPUT="${1:-}"
+OUTPUT_FILE="${2:-}"
 
 if [ -z "$JSON_INPUT" ]; then
     echo "Usage: ./research.sh '<json>' [output_file]"
@@ -94,7 +94,7 @@ if [ -z "$JSON_INPUT" ]; then
 fi
 
 # If no token found, run MCP OAuth flow
-if [ -z "$TAVILY_API_KEY" ]; then
+if [ -z "${TAVILY_API_KEY:-}" ]; then
     set +e
     echo "No Tavily token found. Initiating OAuth flow..." >&2
     echo "Please complete authentication in your browser..." >&2
@@ -120,7 +120,7 @@ if [ -z "$TAVILY_API_KEY" ]; then
     set -e
 fi
 
-if [ -z "$TAVILY_API_KEY" ]; then
+if [ -z "${TAVILY_API_KEY:-}" ]; then
     echo "Error: Failed to obtain Tavily API token"
     echo "Note: The OAuth flow requires an existing Tavily account — account creation is not supported through this flow."
     echo "Please sign up at https://tavily.com first, then retry, or set TAVILY_API_KEY manually."
@@ -145,6 +145,48 @@ MODEL=$(echo "$JSON_INPUT" | jq -r '.model // "mini"')
 echo "Researching: $INPUT (model: $MODEL)"
 echo "This may take 30-120 seconds..."
 
+parse_mcp_response() {
+    local response="$1"
+    local json_data=""
+
+    if jq -e . >/dev/null 2>&1 <<<"$response"; then
+        json_data="$response"
+    else
+        json_data=$(printf '%s\n' "$response" | awk '
+            /^data:/ {
+                sub(/^data:[[:space:]]*/, "", $0)
+                if ($0 != "[DONE]") {
+                    last = $0
+                }
+            }
+            END {
+                if (last) {
+                    print last
+                }
+            }
+        ')
+    fi
+
+    if [ -z "$json_data" ]; then
+        echo "Error: Tavily MCP server returned no JSON payload" >&2
+        printf '%s\n' "$response" >&2
+        return 1
+    fi
+
+    if ! jq empty >/dev/null 2>&1 <<<"$json_data"; then
+        echo "Error: Tavily MCP server returned malformed JSON" >&2
+        printf '%s\n' "$json_data" >&2
+        return 1
+    fi
+
+    if jq -e '.error' >/dev/null 2>&1 <<<"$json_data"; then
+        jq '.error' <<<"$json_data" >&2
+        return 1
+    fi
+
+    printf '%s\n' "$json_data"
+}
+
 # Build MCP JSON-RPC request
 MCP_REQUEST=$(jq -n --argjson args "$JSON_INPUT" '{
     "jsonrpc": "2.0",
@@ -157,22 +199,19 @@ MCP_REQUEST=$(jq -n --argjson args "$JSON_INPUT" '{
 }')
 
 # Call Tavily MCP server via HTTPS (SSE response)
-RESPONSE=$(curl -s --request POST \
+if ! RESPONSE=$(curl --silent --show-error --fail-with-body --request POST \
     --url "https://mcp.tavily.com/mcp" \
     --header "Authorization: Bearer $TAVILY_API_KEY" \
     --header 'Content-Type: application/json' \
     --header 'Accept: application/json, text/event-stream' \
     --header 'x-client-source: claude-code-skill' \
-    --data "$MCP_REQUEST")
-
-# Parse SSE response and extract the JSON result
-JSON_DATA=$(echo "$RESPONSE" | grep '^data:' | sed 's/^data://' | head -1)
-
-if [ -z "$JSON_DATA" ]; then
-    RESULT="$RESPONSE"
-else
-    RESULT=$(echo "$JSON_DATA" | jq '.result.structuredContent // .result.content[0].text // .error // .' 2>/dev/null || echo "$JSON_DATA")
+    --data "$MCP_REQUEST"); then
+    echo "Error: Tavily request failed" >&2
+    exit 1
 fi
+
+JSON_DATA=$(parse_mcp_response "$RESPONSE")
+RESULT=$(echo "$JSON_DATA" | jq '.result.structuredContent // .result.content[0].text // .result.content // .' 2>/dev/null || echo "$JSON_DATA")
 
 if [ -n "$OUTPUT_FILE" ]; then
     echo "$RESULT" > "$OUTPUT_FILE"

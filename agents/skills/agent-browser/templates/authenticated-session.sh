@@ -20,9 +20,11 @@
 set -euo pipefail
 
 LOGIN_URL="${1:?Usage: $0 <login-url> [state-file]}"
-STATE_FILE="${2:-./auth-state.json}"
+STATE_FILE="${2:-${TMPDIR:-/tmp}/agent-browser-auth-state.json}"
 
 echo "Authentication workflow: $LOGIN_URL"
+echo "State file: $STATE_FILE"
+echo "Tip: pass an ignored path explicitly if you need a durable session outside /tmp."
 
 # ================================================================
 # SAVED STATE: Skip login if valid saved state exists

@@ -54,8 +54,10 @@ is_wsl() {
   return 1
 }
 if is_wsl; then
-  alias ssh="ssh.exe"
   export WSL=true
+  if (( ! $+commands[ssh] )) && (( $+commands[ssh.exe] )); then
+    alias ssh="ssh.exe"
+  fi
 else
   unset WSL
 fi
