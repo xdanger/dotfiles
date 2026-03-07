@@ -42,9 +42,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/tavily-ai/skills.git",
       "skillPath": "skills/tavily/tavily-best-practices/SKILL.md",
-      "skillFolderHash": "355fe1000719af9ba849e7683762eb803793b2b2",
+      "skillFolderHash": "3849b5fe162114711bab621f392f34d73e8d65d5",
       "installedAt": "2026-02-14T01:56:25.937Z",
-      "updatedAt": "2026-02-16T03:10:39.735Z"
+      "updatedAt": "2026-03-04T10:20:05.941Z"
     },
     "nano-banana-pro": {
       "source": "intellectronica/agent-skills",
@@ -64,24 +64,6 @@
       "installedAt": "2026-02-16T03:30:57.972Z",
       "updatedAt": "2026-02-16T03:30:57.972Z"
     },
-    "notion-api": {
-      "source": "intellectronica/agent-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/intellectronica/agent-skills.git",
-      "skillPath": "skills/notion-api/SKILL.md",
-      "skillFolderHash": "f62186555624f784371cf31f9580a03f389fb592",
-      "installedAt": "2026-02-16T03:31:48.852Z",
-      "updatedAt": "2026-02-16T03:31:48.852Z"
-    },
-    "playwright-skill": {
-      "source": "sickn33/antigravity-awesome-skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/sickn33/antigravity-awesome-skills.git",
-      "skillPath": "skills/playwright-skill/SKILL.md",
-      "skillFolderHash": "b2d559b68b4c3004840124862f30c6d371270646",
-      "installedAt": "2026-02-16T03:32:25.600Z",
-      "updatedAt": "2026-02-16T03:32:25.600Z"
-    },
     "playwright-cli": {
       "source": "microsoft/playwright-cli",
       "sourceType": "github",
@@ -96,18 +78,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
       "skillPath": "skills/agent-browser/SKILL.md",
-      "skillFolderHash": "84fe752a54c0e33238594b71fd4f80ccc3df8206",
+      "skillFolderHash": "368263b629b1c1af2abd68ff2e45fa40ead82601",
       "installedAt": "2026-02-16T03:36:08.769Z",
-      "updatedAt": "2026-02-17T14:13:17.623Z"
-    },
-    "gh-cli": {
-      "source": "github/awesome-copilot",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/github/awesome-copilot.git",
-      "skillPath": "skills/gh-cli/SKILL.md",
-      "skillFolderHash": "437437f7f20bcdbbdb3081cf164435a388c0a39a",
-      "installedAt": "2026-02-16T04:27:52.315Z",
-      "updatedAt": "2026-02-16T04:27:52.315Z"
+      "updatedAt": "2026-03-04T10:20:10.726Z"
     },
     "documentation-lookup": {
       "source": "upstash/context7",
