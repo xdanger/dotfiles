@@ -64,15 +64,15 @@ elif [[ $(uname) == "Linux" ]]; then
   # Debian/Ubuntu renames: bat→batcat, fd-find→fdfind
   [ -x /usr/bin/batcat ] && sudo ln -sf /usr/bin/batcat /usr/local/bin/bat
   [ -x /usr/bin/fdfind ] && sudo ln -sf /usr/bin/fdfind /usr/local/bin/fd
-  # Tools not in standard apt repos — install via snap
+  SNAP_TOOLS=(diff-so-fancy difftastic dust gitkraken-cli glab glow just)
+  # Tools not in standard apt repos — install via snap when available
   if command -v snap >/dev/null 2>&1; then
     sudo snap install diff-so-fancy difftastic glab glow gitkraken-cli
     sudo snap install just --classic
     sudo snap install dust  # du alternative (apt package `du-dust` does not exist)
   else
-    echo "Error: snap is required on Linux to install these repo-managed tools: diff-so-fancy, difftastic, dust, gitkraken-cli, glab, glow, just." >&2
-    echo "Install snapd first, then rerun ./install." >&2
-    exit 1
+    echo "Warning: snap not found; skipping optional repo-managed tools: ${SNAP_TOOLS[*]}." >&2
+    echo "Install snapd and rerun ./install if you want those extra CLI tools." >&2
   fi
   # snap `difftastic` binary is named `difftastic`, alias to `difft`
   [ -x /snap/bin/difftastic ] && sudo ln -sf /snap/bin/difftastic /usr/local/bin/difft

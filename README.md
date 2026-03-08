@@ -36,7 +36,7 @@ cd ~/.dotfiles
 ### 平台说明
 
 - macOS：通过 Homebrew 安装依赖
-- Linux：通过 `apt` 安装基础工具，并依赖 `snap` 安装部分额外 CLI 工具
+- Linux：通过 `apt` 安装基础工具；如系统提供 `snap`，还会安装部分额外 CLI 工具
 - WSL / Codespaces：安装脚本会自动切换到对应的 Git 配置
 - 容器环境：安装脚本会检测容器并跳过宿主机依赖安装
 

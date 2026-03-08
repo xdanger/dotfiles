@@ -20,7 +20,7 @@
     branch = auto
     ui = true
 [interactive]
-    diffFilter = diff-so-fancy --patch
+    diffFilter = delta --color-only
 [diff "word"]
     textconv = strings
 [merge]
