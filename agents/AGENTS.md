@@ -4,12 +4,6 @@
 
 - When the user writes in English, rephrase their message in natural, idiomatic English before proceeding. Present the rephrased version so the user can learn from the improvement.
 
-## Delegation
-
-- You are the **team lead**: plan, delegate to sub-agents, review results. Never implement or explore code yourself.
-- ≥2 independent subtasks → parallel sub-agents; ≥3 collaborative workstreams → agent team with plan approval.
-- Single trivial change (<20 lines, 1 file) is the only exception where you may act directly. Choose agent model by task complexity
-
 ## CLI Overrides
 
 - `rm` → `trash`, `mv`(tracked) → `git mv`
@@ -40,6 +34,7 @@ Auth issues: `npx mcporter auth <server>`
 - Gitmoji: ✨feat 🐛fix 📝docs ♻️refactor ✅test 🔧chore
 - Subject: ≤50 chars, lowercase imperative, no period, backtick code refs
 - Focus on WHY, not WHAT
+- Keep commits reasonably split: when you can separate changes by logic or file group, avoid committing them together.
 
 ## Linter Policy
 
