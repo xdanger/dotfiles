@@ -1,3 +1,10 @@
+# zsh startup order:
+#   .zshenv -> [.zprofile if login] -> [.zshrc if interactive]
+#   -> [.zlogin if login] -> [.zlogout on exit]
+# 1. .zshenv: loaded by every zsh (login / interactive / script).
+# Keep only minimal global environment here, and never produce output.
+# On macOS, /etc/zprofile runs later and may reorder PATH via path_helper.
+#
 # ① 所有 zsh
 # 最小环境：PATH/LANG/EDITOR 等任何场景都需要的变量
 

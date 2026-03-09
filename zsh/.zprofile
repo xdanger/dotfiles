@@ -1,3 +1,10 @@
+# zsh startup order:
+#   .zshenv -> [.zprofile if login] -> [.zshrc if interactive]
+#   -> [.zlogin if login] -> [.zlogout on exit]
+# 2. .zprofile: loaded for login shells, before .zshrc.
+# Put session-level initialization here, such as version managers and agents.
+# This repo intentionally splits responsibilities between .zprofile and .zlogin.
+#
 (( ${+LOGINSHELL_INITED} )) && return
 LOGINSHELL_INITED=1
 

@@ -1,3 +1,9 @@
+# zsh startup order:
+#   .zshenv -> [.zprofile if login] -> [.zshrc if interactive]
+#   -> [.zlogin if login] -> [.zlogout on exit]
+# 3. .zshrc: loaded for interactive shells.
+# Put interactive behavior here, such as prompt, aliases, completion, and key bindings.
+#
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
