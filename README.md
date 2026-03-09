@@ -1,6 +1,6 @@
 # dotfiles
 
-个人 dotfiles 仓库，用于统一管理 macOS、Linux、WSL 和 Codespaces 下的开发环境配置。
+个人 dotfiles 仓库，用于在多台 macOS、Linux、WSL 和 Codespaces 环境之间统一管理开发环境配置。
 
 ## 包含内容
 
@@ -60,3 +60,12 @@ cd ~/.dotfiles
 - `~/.gitconfig`
 - `~/.tmux.conf`
 - `~/.vimrc`
+
+其中，Zsh 配置按启动阶段拆分，便于在多台机器上复用时快速判断该改哪个文件：
+
+- `.zshenv -> .zprofile -> .zshrc -> .zlogin -> .zlogout`
+- `~/.zshenv`：所有 Zsh 都会加载，只放全局环境变量，不能有输出
+- `~/.zprofile`：login shell 初始化，适合会话级环境准备
+- `~/.zshrc`：interactive shell 配置，放 prompt、alias、completion、key bindings 等
+- `~/.zlogin`：login shell 在 `.zshrc` 之后执行，适合欢迎信息、启动 `tmux` 等外部命令
+- `~/.zlogout`：login shell 退出时的清理逻辑
