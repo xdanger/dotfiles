@@ -23,6 +23,14 @@ fi
 # Platform-specific environment variables
 local os_name=${(L)$(uname -s)}
 [[ -f "$ZDOTDIR/env.$os_name.zsh" ]] && source "$ZDOTDIR/env.$os_name.zsh"
+
+# Android SDK
+if [[ -d "$HOME/Library/Android/sdk" ]]; then
+  export ANDROID_HOME="$HOME/Library/Android/sdk"
+  export ANDROID_SDK_ROOT="$ANDROID_HOME"
+  [[ -d "$ANDROID_HOME/platform-tools" ]] && path=("$ANDROID_HOME/platform-tools" $path)
+  [[ -d "/opt/homebrew/share/android-commandlinetools/cmdline-tools/latest/bin" ]] && path+=("/opt/homebrew/share/android-commandlinetools/cmdline-tools/latest/bin")
+fi
 # Preserve PATH activation order from version managers such as mise/nvm/uv.
 typeset -gU path
 
