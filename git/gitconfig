@@ -33,6 +33,10 @@
     commitencoding = UTF-8
 [http]
     postBuffer = 524288000
+[worktree]
+	useRelativePaths = true
+[delta]
+	navigate = true
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
@@ -41,11 +45,11 @@
 [filter "media"]
     clean = git-media-clean %f
     smudge = git-media-smudge %f
+
 [credential "https://huggingface.co"]
     provider = generic
 [credential "https://dev.azure.com"]
     useHttpPath = true
-[worktree]
-	useRelativePaths = true
-[delta]
-	navigate = true
+[credential "https://git.tapsvc.com"]
+	helper =
+	helper = !glab auth git-credential
