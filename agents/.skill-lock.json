@@ -1,24 +1,6 @@
 {
   "version": 3,
   "skills": {
-    "crawl": {
-      "source": "tavily-ai/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/tavily-ai/skills.git",
-      "skillPath": "skills/tavily/crawl/SKILL.md",
-      "skillFolderHash": "bc5e379a494672189eb80eb7910e8455bf7917fd",
-      "installedAt": "2026-02-14T01:56:25.774Z",
-      "updatedAt": "2026-02-16T03:10:39.557Z"
-    },
-    "extract": {
-      "source": "tavily-ai/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/tavily-ai/skills.git",
-      "skillPath": "skills/tavily/extract/SKILL.md",
-      "skillFolderHash": "f01593047227a77af3833afdbbe9da093ffa72c1",
-      "installedAt": "2026-02-14T01:56:25.815Z",
-      "updatedAt": "2026-02-16T03:10:39.611Z"
-    },
     "research": {
       "source": "tavily-ai/skills",
       "sourceType": "github",
@@ -27,24 +9,6 @@
       "skillFolderHash": "14d59c6cafe49d6ac21837aee3e88c3e2297605f",
       "installedAt": "2026-02-14T01:56:25.861Z",
       "updatedAt": "2026-02-16T03:10:39.659Z"
-    },
-    "search": {
-      "source": "tavily-ai/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/tavily-ai/skills.git",
-      "skillPath": "skills/tavily/search/SKILL.md",
-      "skillFolderHash": "2684443c958a18adb5c002801a8ee4c3e2ea0678",
-      "installedAt": "2026-02-14T01:56:25.900Z",
-      "updatedAt": "2026-02-16T03:10:39.698Z"
-    },
-    "tavily-best-practices": {
-      "source": "tavily-ai/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/tavily-ai/skills.git",
-      "skillPath": "skills/tavily/tavily-best-practices/SKILL.md",
-      "skillFolderHash": "3849b5fe162114711bab621f392f34d73e8d65d5",
-      "installedAt": "2026-02-14T01:56:25.937Z",
-      "updatedAt": "2026-03-04T10:20:05.941Z"
     },
     "nano-banana-pro": {
       "source": "intellectronica/agent-skills",
@@ -78,9 +42,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
       "skillPath": "skills/agent-browser/SKILL.md",
-      "skillFolderHash": "368263b629b1c1af2abd68ff2e45fa40ead82601",
+      "skillFolderHash": "ef3abe1fe6f259718037dc6131d332c7571292c3",
       "installedAt": "2026-02-16T03:36:08.769Z",
-      "updatedAt": "2026-03-04T10:20:10.726Z"
+      "updatedAt": "2026-03-10T22:40:41.676Z"
     },
     "documentation-lookup": {
       "source": "upstash/context7",
