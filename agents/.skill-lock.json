@@ -73,6 +73,15 @@
       "pluginName": "brave-search-skills",
       "installedAt": "2026-03-12T01:00:32.899Z",
       "updatedAt": "2026-03-12T01:00:32.899Z"
+    },
+    "research": {
+      "source": "xdanger/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/xdanger/skills.git",
+      "skillPath": "skills/research/SKILL.md",
+      "skillFolderHash": "108e42419952760fa28e855eb3633375b7497856",
+      "installedAt": "2026-03-12T01:28:55.743Z",
+      "updatedAt": "2026-03-12T01:28:55.743Z"
     }
   },
   "dismissed": {
