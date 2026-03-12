@@ -82,6 +82,15 @@
       "skillFolderHash": "108e42419952760fa28e855eb3633375b7497856",
       "installedAt": "2026-03-12T01:28:55.743Z",
       "updatedAt": "2026-03-12T01:28:55.743Z"
+    },
+    "manus": {
+      "source": "xdanger/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/xdanger/skills.git",
+      "skillPath": "skills/manus/SKILL.md",
+      "skillFolderHash": "e2b8530e63382ff35ccb91565801c8bc26d380a5",
+      "installedAt": "2026-03-12T01:30:38.946Z",
+      "updatedAt": "2026-03-12T01:30:38.946Z"
     }
   },
   "dismissed": {
