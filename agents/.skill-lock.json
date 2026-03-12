@@ -1,15 +1,6 @@
 {
   "version": 3,
   "skills": {
-    "research": {
-      "source": "tavily-ai/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/tavily-ai/skills.git",
-      "skillPath": "skills/tavily/research/SKILL.md",
-      "skillFolderHash": "14d59c6cafe49d6ac21837aee3e88c3e2297605f",
-      "installedAt": "2026-02-14T01:56:25.861Z",
-      "updatedAt": "2026-02-16T03:10:39.659Z"
-    },
     "nano-banana-pro": {
       "source": "intellectronica/agent-skills",
       "sourceType": "github",
@@ -72,6 +63,16 @@
       "skillFolderHash": "8793f4ac0788600d66b40d4059b63cf4938febdb",
       "installedAt": "2026-02-28T19:07:45.593Z",
       "updatedAt": "2026-02-28T19:07:45.593Z"
+    },
+    "llm-context": {
+      "source": "brave/brave-search-skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/brave/brave-search-skills.git",
+      "skillPath": "skills/llm-context/SKILL.md",
+      "skillFolderHash": "206fb44b69606d45c8741b8c3490d4b8fd7be129",
+      "pluginName": "brave-search-skills",
+      "installedAt": "2026-03-12T01:00:32.899Z",
+      "updatedAt": "2026-03-12T01:00:32.899Z"
     }
   },
   "dismissed": {
