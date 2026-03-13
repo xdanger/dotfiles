@@ -145,7 +145,9 @@ test("open typed blockers keep the session from claiming stop", async () => {
   updateStopStatus(session);
 
   assert.equal(session.stop_status.decision, "continue");
-  assert.ok(session.stop_status.remaining_gaps.includes("Need stronger enterprise proof points."));
+  assert.ok(
+    session.stop_status.remaining_gaps.includes("Need stronger enterprise proof points."),
+  );
 });
 
 test("advanceStage waits for agent judgment when authored control exists and no work remains", () => {
@@ -180,10 +182,15 @@ test("advanceStage waits for agent judgment when authored control exists and no 
 
   assert.equal(session.stage, "awaiting_agent_decision");
   assert.equal(
-    session.work_items.some((item) => item.kind === "gather_thread" || item.kind === "verify_claim"),
+    session.work_items.some(
+      (item) => item.kind === "gather_thread" || item.kind === "verify_claim",
+    ),
     false,
   );
-  assert.equal(session.work_items.some((item) => item.kind === "synthesize_session"), false);
+  assert.equal(
+    session.work_items.some((item) => item.kind === "synthesize_session"),
+    false,
+  );
 });
 
 test("advanceStage marks authored sessions as blocked when blockers remain and no work is queued", () => {
@@ -230,5 +237,8 @@ test("advanceStage marks authored sessions as blocked when blockers remain and n
   advanceStage(session);
 
   assert.equal(session.stage, "blocked");
-  assert.equal(session.work_items.some((item) => item.kind === "synthesize_session"), false);
+  assert.equal(
+    session.work_items.some((item) => item.kind === "synthesize_session"),
+    false,
+  );
 });

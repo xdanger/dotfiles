@@ -14,8 +14,8 @@ import {
 import { depthProfile, isTimeSensitiveGoal } from "./router.mjs";
 
 function resolvedEvidenceForClaim(session, claimId) {
-  return linkedClaimEvidence(session, claimId, ["support", "oppose"]).filter((item) =>
-    isRealEvidence(item),
+  return linkedClaimEvidence(session, claimId, ["support", "oppose", "unassessed"]).filter(
+    (item) => isRealEvidence(item),
   );
 }
 
@@ -266,8 +266,7 @@ export function advanceStage(session) {
             "Auto-synthesize enabled; producing synthesis without waiting for agent decision.",
         });
       } else {
-        session.stage =
-          openGaps.length > 0 ? "blocked" : "awaiting_agent_decision";
+        session.stage = openGaps.length > 0 ? "blocked" : "awaiting_agent_decision";
       }
     }
     return syncSessionStage(session);

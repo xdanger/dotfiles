@@ -8,6 +8,12 @@ The ambition here is simpler and more serious: give an agent a research runtime 
 
 This README is written for humans maintaining the skill. It is meant to give a clear feel for what this project is, what kind of taste it is trying to embody, and where its boundaries should stay. Agent-facing operating instructions live in [SKILL.md](SKILL.md).
 
+## Usage
+
+```bash
+npx skills add https://github.com/xdanger/skills --skill research
+```
+
 ## The Shape Of The Thing
 
 The target is an **evidence-aware deep research engine** for agents.

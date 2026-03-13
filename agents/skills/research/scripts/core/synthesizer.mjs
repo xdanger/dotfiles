@@ -78,9 +78,13 @@ function latestDeltaPlanSummary(session) {
     what_changed: latest.what_changed,
     why_now: latest.why_now,
     gap_update_count: Array.isArray(latest.gap_updates) ? latest.gap_updates.length : 0,
-    thread_action_count: Array.isArray(latest.thread_actions) ? latest.thread_actions.length : 0,
+    thread_action_count: Array.isArray(latest.thread_actions)
+      ? latest.thread_actions.length
+      : 0,
     claim_action_count: Array.isArray(latest.claim_actions) ? latest.claim_actions.length : 0,
-    queue_proposal_count: Array.isArray(latest.queue_proposals) ? latest.queue_proposals.length : 0,
+    queue_proposal_count: Array.isArray(latest.queue_proposals)
+      ? latest.queue_proposals.length
+      : 0,
     applied_at: latest.applied_at,
   };
 }
@@ -130,9 +134,10 @@ function detailVerificationFinding(session, leadFinding) {
   }
   const statusOrder = {
     supported: 0,
-    mixed: 1,
-    insufficient: 2,
-    rejected: 3,
+    evidence_collected: 1,
+    mixed: 2,
+    insufficient: 3,
+    rejected: 4,
   };
   return (
     [...session.findings]
@@ -143,8 +148,9 @@ function detailVerificationFinding(session, leadFinding) {
             `${item.thread_title} ${item.claim_text}`,
           ),
       )
-      .sort((left, right) => (statusOrder[left.status] ?? 9) - (statusOrder[right.status] ?? 9))[0] ??
-    null
+      .sort(
+        (left, right) => (statusOrder[left.status] ?? 9) - (statusOrder[right.status] ?? 9),
+      )[0] ?? null
   );
 }
 
@@ -286,10 +292,12 @@ function summarizeVerificationAnswer(session, finding) {
     const supportDetail = support
       ? ` The strongest supporting detail comes from ${support.title}, which says: ${support.snippet}`
       : "";
-    const opposeDetail = oppose
-      ? ` Conflicting evidence also appears in ${oppose.title}.`
-      : "";
+    const opposeDetail = oppose ? ` Conflicting evidence also appears in ${oppose.title}.` : "";
     return `Not conclusively. Evidence is mixed on whether ${session.goal}.${supportDetail}${opposeDetail}`.trim();
+  }
+  if (finding.status === "evidence_collected") {
+    const contextDetail = caveat ? ` Relevant evidence was found in ${caveat.title}.` : "";
+    return `Evidence collected but not yet assessed for: ${session.goal}.${contextDetail}`.trim();
   }
   return `Not yet. Current evidence does not conclusively answer: ${session.goal}.`;
 }
@@ -313,7 +321,10 @@ function threadSummary(session, thread) {
 
   const resolvedFindings = findings.filter((item) => item.status !== "insufficient");
   const unresolvedCount = findings.filter(
-    (item) => item.status === "mixed" || item.status === "insufficient",
+    (item) =>
+      item.status === "mixed" ||
+      item.status === "insufficient" ||
+      item.status === "evidence_collected",
   ).length;
   let summary =
     resolvedFindings.length > 0
@@ -436,6 +447,14 @@ export function summarizeSession(session) {
         resolution_strategy: item.resolution_strategy ?? "",
         status: item.status,
       })),
+    synthesis: session.final_answer.answer_summary
+      ? {
+          answer_summary: session.final_answer.answer_summary,
+          key_findings: session.final_answer.key_findings,
+          citations: session.final_answer.citations,
+          generated_at: session.final_answer.generated_at ?? null,
+        }
+      : null,
     recent_activity: session.activity_history.slice(-5),
     updated_at: session.updated_at,
   };
@@ -443,7 +462,9 @@ export function summarizeSession(session) {
 
 export function reviewSessionPacket(session) {
   const openGaps = activeGaps(session);
-  const unresolvedContradictions = session.contradictions.filter((item) => item.status === "open");
+  const unresolvedContradictions = session.contradictions.filter(
+    (item) => item.status === "open",
+  );
   const latestEvidence = [...session.evidence]
     .filter((item) => item.url)
     .slice(-5)
@@ -549,8 +570,12 @@ export function summarizeReport(session) {
     `Review required: ${session.plan_state?.review_required ? "yes" : "no"}`,
     `Workflow state: ${session.plan_state?.workflow_state ?? "draft"}`,
     `Control mode: ${session.plan_state?.control_mode ?? "none"}`,
-    currentPlan ? `Current plan: ${currentPlan.summary || currentPlan.plan_version_id}` : "Current plan: none",
-    pendingPlan ? `Pending plan: ${pendingPlan.summary || pendingPlan.plan_version_id}` : "Pending plan: none",
+    currentPlan
+      ? `Current plan: ${currentPlan.summary || currentPlan.plan_version_id}`
+      : "Current plan: none",
+    pendingPlan
+      ? `Pending plan: ${pendingPlan.summary || pendingPlan.plan_version_id}`
+      : "Pending plan: none",
     latestDeltaPlan
       ? `Latest delta plan: ${latestDeltaPlan.summary || latestDeltaPlan.delta_plan_id}`
       : "Latest delta plan: none",

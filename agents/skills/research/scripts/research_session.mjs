@@ -1,6 +1,6 @@
 /* global process */
 
-import { readFileSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 
 import {
@@ -57,7 +57,11 @@ function isMainModule() {
   if (!entry) {
     return false;
   }
-  return import.meta.url === pathToFileURL(entry).href;
+  try {
+    return import.meta.url === pathToFileURL(realpathSync(entry)).href;
+  } catch {
+    return import.meta.url === pathToFileURL(entry).href;
+  }
 }
 
 function parseCsvList(value) {
@@ -269,7 +273,9 @@ function applyQueuedRejoinPayload(session, workItem) {
         .map((link) => `${link.claim_id}:${link.stance}`)
         .join(",")}`,
   );
-  const remoteGapSummaries = Array.isArray(payload.remaining_gaps) ? payload.remaining_gaps : [];
+  const remoteGapSummaries = Array.isArray(payload.remaining_gaps)
+    ? payload.remaining_gaps
+    : [];
   const remoteTypedGaps = Array.isArray(payload.gaps) ? payload.gaps : [];
   session.stop_status.remaining_gaps =
     remoteGapSummaries.length > 0
@@ -281,7 +287,8 @@ function applyQueuedRejoinPayload(session, workItem) {
         summary: gap,
         kind: "remote_gap",
         created_by: "remote",
-        recommended_next_action: "Review the remote handoff result and decide the next local step.",
+        recommended_next_action:
+          "Review the remote handoff result and decide the next local step.",
       });
     }
   }
@@ -529,11 +536,9 @@ async function cmdContinue(args, adapters) {
   }
   if (args.deltaFile) {
     const delta = JSON.parse(readFileSync(args.deltaFile, "utf8"));
-    applyResearchPlan(
-      session,
-      delta.delta_plan ? delta : { delta_plan: delta },
-      { mode: "append" },
-    );
+    applyResearchPlan(session, delta.delta_plan ? delta : { delta_plan: delta }, {
+      mode: "append",
+    });
   }
   reopenSessionForContinuation(session, instruction || "agent-authored follow-up plan");
   await runOrchestrator(session, adapters);

@@ -50,7 +50,9 @@ function evaluateClaimAssessment(session, claim, items) {
   );
   const context = items.filter((item) =>
     item.claim_links.some(
-      (link) => link.claim_id === claim.claim_id && link.stance === "context",
+      (link) =>
+        link.claim_id === claim.claim_id &&
+        (link.stance === "context" || link.stance === "unassessed"),
     ),
   );
   const primaryEvidenceIds = items
@@ -63,11 +65,25 @@ function evaluateClaimAssessment(session, claim, items) {
   let verdict = "unproven";
   let sufficiency = "insufficient";
   let resolutionState = "unassessed";
-  let reason = "The claim does not yet have direct supporting or opposing evidence.";
+  let reason = "The claim does not yet have agent-assessed supporting or opposing evidence.";
   const missingDimensions = [];
 
-  if (supporting.length === 0 && opposing.length === 0) {
-    missingDimensions.push("direct_support");
+  const unassessed = items.filter((item) =>
+    item.claim_links.some(
+      (link) => link.claim_id === claim.claim_id && link.stance === "unassessed",
+    ),
+  );
+
+  if (supporting.length === 0 && opposing.length === 0 && unassessed.length === 0) {
+    missingDimensions.push("agent_stance_assessment");
+  } else if (supporting.length === 0 && opposing.length === 0 && unassessed.length > 0) {
+    status = "open";
+    verdict = "evidence_collected";
+    sufficiency = "partial";
+    resolutionState = "tentative";
+    reason =
+      "Relevant evidence has been collected but stance has not been assessed by the agent.";
+    missingDimensions.push("agent_stance_assessment");
   } else if (supporting.length > 0 && opposing.length === 0) {
     status = "supported";
     verdict = primaryEvidenceIds.length > 0 ? "supported" : "tentative_support";
@@ -156,7 +172,10 @@ export function reconcileClaims(session) {
 
     const { bestSupport, bestOppose } = evaluateClaimAssessment(session, claim, items);
 
-    if (claim.assessment.verdict === "unproven") {
+    if (
+      claim.assessment.verdict === "unproven" ||
+      claim.assessment.verdict === "evidence_collected"
+    ) {
       continue;
     }
 
@@ -198,15 +217,17 @@ export function reconcileClaims(session) {
       continue;
     }
 
-    upsertContradiction(session, {
-      claimId: claim.claim_id,
-      leftEvidenceId: bestSupport?.evidence_id ?? null,
-      rightEvidenceId: bestOppose?.evidence_id ?? null,
-      conflictType: "factual_disagreement",
-      summary: `Conflicting evidence exists for "${claim.text}".`,
-      status: "open",
-      resolutionStrategy: "seek_more_primary_or_recent_source",
-    });
+    if (bestSupport && bestOppose && bestSupport.url !== bestOppose.url) {
+      upsertContradiction(session, {
+        claimId: claim.claim_id,
+        leftEvidenceId: bestSupport.evidence_id,
+        rightEvidenceId: bestOppose.evidence_id,
+        conflictType: "factual_disagreement",
+        summary: `Conflicting evidence exists for "${claim.text}".`,
+        status: "open",
+        resolutionStrategy: "seek_more_primary_or_recent_source",
+      });
+    }
   }
 }
 
@@ -438,8 +459,12 @@ export async function verifyClaims(session, runtime, workItem) {
   claim.verification.attempts += 1;
   claim.verification.last_checked_at = isoNow();
   reconcileClaims(session);
-  const realEvidence = linkedClaimEvidence(session, claim.claim_id, ["support", "oppose"]);
-  if (realEvidence.length === 0) {
+  const assessedEvidence = linkedClaimEvidence(session, claim.claim_id, [
+    "support",
+    "oppose",
+    "unassessed",
+  ]);
+  if (assessedEvidence.length === 0) {
     claim.status = "insufficient";
   }
   appendDecision(session, "verify", "Ran claim-centric verification for a queued claim.", {

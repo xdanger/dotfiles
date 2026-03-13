@@ -218,14 +218,16 @@ export function validateGeminiGroundingResponse(payload) {
     web_search_queries: Array.isArray(metadata.webSearchQueries)
       ? metadata.webSearchQueries
       : [],
-    grounding_chunks: (
-      Array.isArray(metadata.groundingChunks) ? metadata.groundingChunks : []
+    grounding_chunks: (Array.isArray(metadata.groundingChunks)
+      ? metadata.groundingChunks
+      : []
     ).map((chunk) => ({
       uri: chunk.web?.uri ?? "",
       title: chunk.web?.title ?? "",
     })),
-    grounding_supports: (
-      Array.isArray(metadata.groundingSupports) ? metadata.groundingSupports : []
+    grounding_supports: (Array.isArray(metadata.groundingSupports)
+      ? metadata.groundingSupports
+      : []
     ).map((support) => ({
       text: support.segment?.text ?? "",
       start_index: support.segment?.startIndex ?? 0,

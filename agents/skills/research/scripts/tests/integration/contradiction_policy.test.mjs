@@ -5,7 +5,7 @@ import { createFixtureAdapters } from "../fixtures/provider_fixtures.mjs";
 import { createSession } from "../../core/session_schema.mjs";
 import { runOrchestrator } from "../../research_session.mjs";
 
-test("contradictory policy case leaves unresolved contradiction when no tie-breaker exists", async () => {
+test("runtime does not create false contradictions from unassessed evidence", async () => {
   const adapters = createFixtureAdapters({
     runTavilySearch({ query }) {
       return {
@@ -46,8 +46,20 @@ test("contradictory policy case leaves unresolved contradiction when no tie-brea
     domains: [],
   });
 
-  await runOrchestrator(session, adapters, 12);
+  await runOrchestrator(session, adapters, 16);
 
-  assert.ok(session.contradictions.some((item) => item.status === "open"));
-  assert.ok(session.stop_status.open_claim_ids.length > 0);
+  const openContradictions = session.contradictions.filter((item) => item.status === "open");
+  assert.equal(
+    openContradictions.length,
+    0,
+    "No contradictions from unassessed evidence — stance judgment is deferred to the agent",
+  );
+  assert.ok(
+    session.evidence.every((item) =>
+      item.claim_links.every(
+        (link) => link.stance === "unassessed" || link.stance === "context",
+      ),
+    ),
+    "All evidence has unassessed or context stance",
+  );
 });

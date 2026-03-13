@@ -14,11 +14,7 @@ import {
   runOrchestrator,
 } from "./research_session.mjs";
 import { applyResearchPlan } from "./core/planner.mjs";
-import {
-  approvePendingPlan,
-  createSession,
-  queueWorkItem,
-} from "./core/session_schema.mjs";
+import { approvePendingPlan, createSession, queueWorkItem } from "./core/session_schema.mjs";
 import { loadSession } from "./core/session_store.mjs";
 
 async function withMutedStdout(fn) {

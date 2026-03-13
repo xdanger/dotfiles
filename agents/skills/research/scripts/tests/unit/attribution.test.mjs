@@ -3,7 +3,7 @@ import test from "node:test";
 
 import { inferClaimMatch } from "../../core/retrieval.mjs";
 
-test("inferClaimMatch marks direct positive evidence as support", () => {
+test("inferClaimMatch returns unassessed stance with token attribution", () => {
   const claim = { text: "Product X is SOC 2 certified" };
   const result = inferClaimMatch(
     claim,
@@ -11,14 +11,14 @@ test("inferClaimMatch marks direct positive evidence as support", () => {
     "Product X SOC 2 official evidence",
   );
 
-  assert.equal(result.stance, "support");
+  assert.equal(result.stance, "unassessed");
   assert.match(result.whyMatched, /product|certified/iu);
   assert.equal(result.attribution.excerpt_method, "sentence_token_match");
   assert.match(result.attribution.anchor_text, /SOC 2 certified/iu);
-  assert.ok(result.attribution.attribution_confidence >= 0.5);
+  assert.ok(result.attribution.attribution_confidence >= 0.4);
 });
 
-test("inferClaimMatch marks local negative evidence as oppose", () => {
+test("inferClaimMatch does not infer stance from negation keywords", () => {
   const claim = { text: "Product X is SOC 2 certified" };
   const result = inferClaimMatch(
     claim,
@@ -26,15 +26,15 @@ test("inferClaimMatch marks local negative evidence as oppose", () => {
     "Product X SOC 2 official evidence",
   );
 
-  assert.equal(result.stance, "oppose");
-  assert.match(result.attribution.anchor_text, /not SOC 2 certified/iu);
+  assert.equal(result.stance, "unassessed", "stance judgment is deferred to the agent");
+  assert.match(result.attribution.anchor_text, /SOC 2 certified/iu);
 });
 
-test("inferClaimMatch falls back to context when the claim is not locally grounded", () => {
+test("inferClaimMatch falls back to context when no claim tokens match", () => {
   const claim = { text: "Product X is SOC 2 certified" };
   const result = inferClaimMatch(
     claim,
-    "This page describes pricing tiers and API limits, but not compliance.",
+    "This page describes pricing tiers and API limits.",
     "Product X official evidence",
   );
 
@@ -42,7 +42,7 @@ test("inferClaimMatch falls back to context when the claim is not locally ground
   assert.ok(result.attribution.attribution_confidence <= 0.3);
 });
 
-test("inferClaimMatch requires concrete endpoint detail for endpoint-style claims", () => {
+test("inferClaimMatch returns unassessed for endpoint-style claims with token overlap", () => {
   const claim = {
     text: "Official sources name the endpoint, API surface, or mechanism needed to answer: Does OpenAI expose deep research in the API, and if so through which endpoint.",
   };
@@ -57,6 +57,6 @@ test("inferClaimMatch requires concrete endpoint detail for endpoint-style claim
     "OpenAI deep research endpoint official docs",
   );
 
-  assert.equal(vague.stance, "context");
-  assert.equal(concrete.stance, "support");
+  assert.equal(vague.stance, "unassessed");
+  assert.equal(concrete.stance, "unassessed");
 });

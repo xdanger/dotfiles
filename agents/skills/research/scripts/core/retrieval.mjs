@@ -64,19 +64,13 @@ function buildAttribution({
   };
 }
 
-function attributionConfidenceForMatch({
-  score,
-  stance,
-  hasConcreteDetail = false,
-  tokenCount = 0,
-}) {
+function attributionConfidenceForMatch({ score, stance, tokenCount = 0 }) {
   if (score <= 0) {
     return 0.2;
   }
   const base = 0.3 + Math.min(0.35, score * 0.12) + Math.min(0.15, tokenCount * 0.03);
-  const stanceBonus = stance === "context" ? 0 : 0.15;
-  const detailBonus = hasConcreteDetail ? 0.1 : 0;
-  return base + stanceBonus + detailBonus;
+  const stanceBonus = stance === "context" ? 0 : 0.1;
+  return base + stanceBonus;
 }
 
 function domainFromUrl(url) {
@@ -232,53 +226,8 @@ export function inferClaimMatch(claim, snippet, query) {
     };
   }
 
-  const negativePattern =
-    /\b(no|not|without|lack|lacks|is not|isn't|does not|doesn't|unavailable|deprecated|cannot|can't)\b/i;
-  const positivePattern =
-    /\b(available|supported|includes|provides|offers|documents|listed|shows|states|certified|enabled)\b/i;
-  let stance = "context";
-  if (negativePattern.test(best.sentence)) {
-    stance = "oppose";
-  } else if (positivePattern.test(best.sentence) || best.score >= Math.min(2, tokens.length)) {
-    stance = "support";
-  }
-
-  const detailIntent =
-    /\b(endpoint|api surface|route|path|pricing|price|cost|billing|plan)\b/i.test(claim.text);
-  if (stance === "support" && detailIntent) {
-    const hasConcreteEndpoint =
-      /\b(\/v\d+(?:\/[a-z0-9._-]+)+)\b/iu.test(best.sentence) ||
-      /\b([A-Z][A-Za-z0-9/-]*(?:\s+[A-Z][A-Za-z0-9/-]*)*\s+API)\b/u.test(best.sentence) ||
-      /\b(?:through|via|using)\s+the\s+[A-Za-z0-9/_ -]{3,80}[.;,]?/iu.test(best.sentence);
-    const hasConcretePricing =
-      /\$\d|\bfree\b|\bcontact sales\b|\bper (?:month|seat|user|request)\b/i.test(
-        best.sentence,
-      );
-    if (!hasConcreteEndpoint && !hasConcretePricing) {
-      return {
-        stance: "context",
-        whyMatched: `Matched the topic for "${query}", but the sentence did not include the concrete endpoint, API surface, or pricing detail needed to support the claim.`,
-        attribution: buildAttribution({
-          sentence: best.sentence,
-          sentenceIndex: best.sentenceIndex,
-          matchedTokens: best.matched,
-          excerptMethod: "sentence_token_match",
-          attributionConfidence: attributionConfidenceForMatch({
-            score: best.score,
-            stance: "context",
-            tokenCount: tokens.length,
-          }),
-        }),
-      };
-    }
-  }
-
-  const hasConcreteDetail =
-    /\b(\/v\d+(?:\/[a-z0-9._-]+)+)\b/iu.test(best.sentence) ||
-    /\b([A-Z][A-Za-z0-9/-]*(?:\s+[A-Z][A-Za-z0-9/-]*)*\s+API)\b/u.test(best.sentence) ||
-    /\$\d|\bfree\b|\bcontact sales\b|\bper (?:month|seat|user|request)\b/i.test(best.sentence);
   return {
-    stance,
+    stance: "unassessed",
     whyMatched: `Matched claim tokens [${best.matched.join(", ")}] in sentence "${best.sentence.slice(0, 180)}" from query "${query}".`,
     attribution: buildAttribution({
       sentence: best.sentence,
@@ -287,8 +236,7 @@ export function inferClaimMatch(claim, snippet, query) {
       excerptMethod: "sentence_token_match",
       attributionConfidence: attributionConfidenceForMatch({
         score: best.score,
-        stance,
-        hasConcreteDetail,
+        stance: "unassessed",
         tokenCount: tokens.length,
       }),
     }),

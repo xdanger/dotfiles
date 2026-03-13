@@ -12,7 +12,9 @@ test("broad market scan fans out into multiple searches and produces citations",
     domains: [],
   });
 
-  await runOrchestrator(session, createFixtureAdapters(), 12);
+  // Higher limit needed: without runtime stance inference, claims stay "partial" longer,
+  // requiring more gather/verify rounds before the exhaustion heuristic triggers stop.
+  await runOrchestrator(session, createFixtureAdapters(), 24);
 
   assert.equal(session.task_shape, "broad");
   assert.ok(session.runs.filter((run) => run.tool === "search").length >= 3);

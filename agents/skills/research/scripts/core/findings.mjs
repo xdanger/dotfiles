@@ -1,3 +1,5 @@
+import { URL } from "node:url";
+
 import {
   claimLinkForEvidence,
   getThreadById,
@@ -210,6 +212,9 @@ function findingStatus(claim) {
   if (claim.status === "rejected") {
     return "rejected";
   }
+  if (claim.assessment.verdict === "evidence_collected") {
+    return "evidence_collected";
+  }
   return "insufficient";
 }
 
@@ -241,6 +246,11 @@ function summaryFromFinding(status, supportEvidence, opposeEvidence, contextEvid
     return `Evidence is mixed: ${supportTitle} supports the point, but ${opposeTitle} does not fully confirm it. The detail remains unresolved.`.trim();
   }
 
+  if (status === "evidence_collected" && context) {
+    const titles = listTitles(contextEvidence.slice(0, 3));
+    return `Evidence collected from ${titles.join(", ")}. Stance assessment pending.`;
+  }
+
   if (context) {
     return `Evidence remains insufficient. ${context.title} provides context, but the point is not settled yet.`;
   }
@@ -264,7 +274,7 @@ export function buildFindings(session) {
       claim.text,
     ).map((item) => summarizeEvidence(claim, item));
     const contextEvidence = sortEvidence(
-      linkedClaimEvidence(session, claim.claim_id, ["context"]).filter((item) =>
+      linkedClaimEvidence(session, claim.claim_id, ["context", "unassessed"]).filter((item) =>
         isRealEvidence(item),
       ),
       claim.text,
@@ -309,8 +319,9 @@ export function buildFindings(session) {
     const statusOrder = {
       supported: 0,
       rejected: 1,
-      mixed: 2,
-      insufficient: 3,
+      evidence_collected: 2,
+      mixed: 3,
+      insufficient: 4,
     };
     return (statusOrder[left.status] ?? 9) - (statusOrder[right.status] ?? 9);
   });
@@ -338,6 +349,11 @@ export function summarizeVerificationAnswer(session, finding) {
   }
   if (finding.status === "mixed") {
     return `Not conclusively. Sources disagree on ${quotedGoal}, so the answer remains contested.`;
+  }
+  if (finding.status === "evidence_collected") {
+    const context = finding.context_evidence[0] ?? null;
+    const contextDetail = context ? ` Relevant evidence was found in ${context.title}.` : "";
+    return `Evidence collected but not yet assessed for ${quotedGoal}.${contextDetail}`.trim();
   }
   return `Not yet. Current evidence does not conclusively answer ${quotedGoal}.`;
 }

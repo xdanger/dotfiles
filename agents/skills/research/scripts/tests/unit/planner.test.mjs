@@ -2,7 +2,11 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import { approvePendingPlan, createSession } from "../../core/session_schema.mjs";
-import { applyContinuationInstruction, applyResearchPlan, planSession } from "../../core/planner.mjs";
+import {
+  applyContinuationInstruction,
+  applyResearchPlan,
+  planSession,
+} from "../../core/planner.mjs";
 import { planningArtifactsFromGeminiGrounding } from "../../core/planner_legacy.mjs";
 import { scoreSession, updateStopStatus } from "../../core/scorer.mjs";
 import { createFixtureAdapters, createTestRuntime } from "../fixtures/provider_fixtures.mjs";
@@ -68,8 +72,14 @@ test("planSession does not fall back to runtime planning when authored control i
   assert.equal(session.threads.length, 1);
   assert.equal(session.threads[0]?.title, "Workflow fit");
   assert.equal(session.plan_state.control_mode, "agent_authored");
-  assert.equal(session.runs.some((run) => run.tool === "research"), false);
-  assert.equal(session.operations.some((operation) => operation.tool === "research"), false);
+  assert.equal(
+    session.runs.some((run) => run.tool === "research"),
+    false,
+  );
+  assert.equal(
+    session.operations.some((operation) => operation.tool === "research"),
+    false,
+  );
 });
 
 test("planSession shapes verification claims around the user's actual question", async () => {
@@ -185,7 +195,9 @@ test("applyResearchPlan lets the agent seed threads and claims directly", () => 
   assert.ok(
     session.stop_status.remaining_gaps.includes("Need primary sources for deployment claims."),
   );
-  assert.ok(session.gaps.some((gap) => gap.summary === "Need primary sources for deployment claims."));
+  assert.ok(
+    session.gaps.some((gap) => gap.summary === "Need primary sources for deployment claims."),
+  );
 });
 
 test("applyResearchPlan carries research_brief and source_policy into the session", () => {
@@ -217,10 +229,15 @@ test("applyResearchPlan carries research_brief and source_policy into the sessio
     ],
   });
 
-  assert.equal(session.research_brief.objective, "Compare AI coding agents for enterprise adoption");
+  assert.equal(
+    session.research_brief.objective,
+    "Compare AI coding agents for enterprise adoption",
+  );
   assert.equal(session.research_brief.deliverable, "report");
   assert.ok(session.research_brief.source_policy.allow_domains.includes("openai.com"));
-  assert.ok(session.research_brief.source_policy.preferred_domains.includes("developers.openai.com"));
+  assert.ok(
+    session.research_brief.source_policy.preferred_domains.includes("developers.openai.com"),
+  );
   assert.ok(
     session.research_brief.clarification_notes.includes(
       "Optimize for enterprise buyers, not hobbyists.",
@@ -436,7 +453,9 @@ test("explicit continuation gaps survive scoring updates", () => {
   scoreSession(session);
   updateStopStatus(session);
 
-  assert.ok(session.stop_status.remaining_gaps.includes("Need stronger enterprise proof points."));
+  assert.ok(
+    session.stop_status.remaining_gaps.includes("Need stronger enterprise proof points."),
+  );
 });
 
 test("resolved typed gaps drop out of the compatible text view", () => {
@@ -465,12 +484,16 @@ test("resolved typed gaps drop out of the compatible text view", () => {
     ],
   });
 
-  const gap = session.gaps.find((item) => item.summary === "Need stronger enterprise proof points.");
+  const gap = session.gaps.find(
+    (item) => item.summary === "Need stronger enterprise proof points.",
+  );
   gap.status = "resolved";
   scoreSession(session);
   updateStopStatus(session);
 
-  assert.ok(!session.stop_status.remaining_gaps.includes("Need stronger enterprise proof points."));
+  assert.ok(
+    !session.stop_status.remaining_gaps.includes("Need stronger enterprise proof points."),
+  );
 });
 
 test("pending plan snapshots carry typed gaps", () => {
@@ -501,7 +524,10 @@ test("pending plan snapshots carry typed gaps", () => {
   });
 
   assert.equal(session.plan_versions.length, 1);
-  assert.equal(session.plan_versions[0].gaps[0]?.summary, "Need stronger enterprise proof points.");
+  assert.equal(
+    session.plan_versions[0].gaps[0]?.summary,
+    "Need stronger enterprise proof points.",
+  );
   assert.equal(
     session.plan_versions[0].gaps[0]?.recommended_next_action,
     "Check official enterprise case studies.",
@@ -617,7 +643,10 @@ test("applyResearchPlan can apply an agent-authored delta plan", () => {
   });
 
   assert.equal(session.delta_plans.length, 1);
-  assert.equal(session.goal, "Research AI coding agents for enterprise adoption and pricing clarity");
+  assert.equal(
+    session.goal,
+    "Research AI coding agents for enterprise adoption and pricing clarity",
+  );
   assert.ok(session.research_brief.source_policy.allow_domains.includes("openai.com"));
   assert.ok(session.gaps.some((gap) => gap.summary === "Need fresher pricing evidence."));
   assert.equal(existingClaim.verification.stale, true);
@@ -709,7 +738,9 @@ test("delta plan pause suppresses already queued gather work for the thread", ()
   assert.equal(existingThread.execution.gather_status, "blocked");
   assert.ok(
     session.work_items
-      .filter((item) => item.kind === "gather_thread" && item.scope_id === existingThread.thread_id)
+      .filter(
+        (item) => item.kind === "gather_thread" && item.scope_id === existingThread.thread_id,
+      )
       .every((item) => item.status !== "queued"),
   );
 });

@@ -38,18 +38,18 @@ node "$SCRIPT" report --session-id <id>
 
 All commands:
 
-| Command | Purpose |
-|---------|---------|
-| `start` | Begin a new research session |
-| `prepare` | Begin but pause for plan approval before gathering |
-| `approve` | Resume a prepared session after plan review |
-| `status` | Show session state, scores, and open work |
-| `review` | Show a takeover-ready packet for another agent |
-| `continue` | Mutate the session with new instructions or plans |
-| `report` | Show the final synthesis (`--format md\|json`) |
-| `sources` | List all evidence sources with attribution |
-| `rejoin` | Import results from an async remote handoff |
-| `close` | Mark the session as finished |
+| Command    | Purpose                                            |
+| ---------- | -------------------------------------------------- |
+| `start`    | Begin a new research session                       |
+| `prepare`  | Begin but pause for plan approval before gathering |
+| `approve`  | Resume a prepared session after plan review        |
+| `status`   | Show session state, scores, and open work          |
+| `review`   | Show a takeover-ready packet for another agent     |
+| `continue` | Mutate the session with new instructions or plans  |
+| `report`   | Show the final synthesis (`--format md\|json`)     |
+| `sources`  | List all evidence sources with attribution         |
+| `rejoin`   | Import results from an async remote handoff        |
+| `close`    | Mark the session as finished                       |
 
 Useful flags: `--depth quick|standard|deep`, `--domains d1,d2`,
 `--plan-file`, `--brief-file`, `--delta-file`, `--instruction`.
@@ -133,12 +133,12 @@ Treat `continue` as a durable mutation. Do not wipe the ledger.
 
 Always prefer structured artifacts over prose:
 
-| Artifact | When to use |
-|----------|-------------|
-| `--delta-file` (delta plan) | Agent knows what changed and what should happen next |
+| Artifact                           | When to use                                                         |
+| ---------------------------------- | ------------------------------------------------------------------- |
+| `--delta-file` (delta plan)        | Agent knows what changed and what should happen next                |
 | `--plan-file` (continuation patch) | Specific operations: merge domains, mark stale, requeue, add thread |
-| `--plan-file` (full plan) | Restructure the research entirely |
-| `--instruction` (prose) | Simple cases only — goes through legacy inference, not recommended |
+| `--plan-file` (full plan)          | Restructure the research entirely                                   |
+| `--instruction` (prose)            | Simple cases only — goes through legacy inference, not recommended  |
 
 Supported delta plan actions: `thread_actions` (deepen, pause, branch),
 `claim_actions` (mark_stale, set_priority),

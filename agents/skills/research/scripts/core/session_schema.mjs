@@ -75,6 +75,9 @@ export function normalizeStance(value) {
   if (value === "oppose" || value === "opposes") {
     return "oppose";
   }
+  if (value === "unassessed") {
+    return "unassessed";
+  }
   return "context";
 }
 
