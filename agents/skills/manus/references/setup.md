@@ -88,9 +88,9 @@ If your environment prefers Python, the bundled fallback remains available at `<
 
 ## Troubleshooting
 
-| Issue | What to check |
-| --- | --- |
-| `MANUS_API_KEY not set` | Confirm the env var is visible to the process running `uv` |
-| Attachment creation fails | Uploaded file attachments must send `filename` and `file_id` |
+| Issue                      | What to check                                                             |
+| -------------------------- | ------------------------------------------------------------------------- |
+| `MANUS_API_KEY not set`    | Confirm the env var is visible to the process running `uv`                |
+| Attachment creation fails  | Uploaded file attachments must send `filename` and `file_id`              |
 | Webhook verification fails | Verify the full URL, including query params, and use the raw request body |
-| No files downloaded | Some tasks only return text, not attachments |
+| No files downloaded        | Some tasks only return text, not attachments                              |
