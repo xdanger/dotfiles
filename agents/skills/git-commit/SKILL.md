@@ -1,13 +1,13 @@
 ---
 name: git-commit
-description: Create standardized git commits using Conventional Commits with Gitmoji. Use when the user asks to commit changes, create a commit, or says "/commit". Analyzes staged/unstaged diffs and generates semantic commit messages with emoji prefixes.
+description: Create atomic git commits with Conventional Commits and Gitmoji. Use when the user asks to commit changes, create a commit, or says "/commit". Review staged and unstaged diffs, split changes into logical groups, and write focused commit messages that follow repository-local conventions.
 ---
 
-# Git Commit with Gitmoji + Conventional Commits
+# Git Commit
 
-## Commit Format
+Follow repo-local commit instructions first. If none exist, use:
 
-```
+```text
 <Gitmoji> <type>(<scope>)[!]: <subject>
 
 [optional body]
@@ -15,142 +15,91 @@ description: Create standardized git commits using Conventional Commits with Git
 [optional footer(s)]
 ```
 
-### Example
-
-```
-✨ feat(auth): add OAuth2 login flow
-
-- :sparkles: implement `GoogleAuthProvider` with PKCE
-- :lock: add CSRF token validation
-
-Closes #42
-```
-
-## Commit Types
-
-| Gitmoji | Type       | Purpose                        |
-| ------- | ---------- | ------------------------------ |
-| ✨      | `feat`     | New feature                    |
-| 🐛      | `fix`      | Bug fix                        |
-| 📝      | `docs`     | Documentation only             |
-| 💄      | `style`    | Formatting/style (no logic)    |
-| ♻️      | `refactor` | Code refactor (no feature/fix) |
-| ⚡️      | `perf`     | Performance improvement        |
-| ✅      | `test`     | Add/update tests               |
-| 🏗️      | `build`    | Build system/dependencies      |
-| 👷      | `ci`       | CI/config changes              |
-| 🔧      | `chore`    | Maintenance/misc               |
-| ⏪️      | `revert`   | Revert commit                  |
-
-### Additional Gitmoji (use with closest type)
-
-| Gitmoji | Meaning                  | Type       |
-| ------- | ------------------------ | ---------- |
-| 🔒️      | Security fix             | `fix`      |
-| 🚀      | Deploy                   | `chore`    |
-| 🎨      | Improve structure/format | `refactor` |
-| 🔥      | Remove code/files        | `chore`    |
-| 🚑️      | Critical hotfix          | `fix`      |
-| ➕      | Add dependency           | `build`    |
-| ➖      | Remove dependency        | `build`    |
-| 🔧      | Add/update config        | `chore`    |
-| 🗃️      | Database changes         | `feat`     |
-| 📦️      | Update compiled/packages | `build`    |
-| 🚚      | Move/rename resources    | `chore`    |
-| ♿️      | Accessibility            | `feat`     |
-| 🌐      | Internationalization     | `feat`     |
-| 🏷️      | Add/update types         | `feat`     |
-
-## Subject Line Rules
-
-- Imperative mood, present tense: "add" not "added"
-- Lowercase, no period at end
-- Max 50 characters
-- Wrap code references in backticks
-- Focus on WHY, not WHAT
-
-## Breaking Changes
-
-```
-♻️ refactor(api)!: change response envelope format
-
-BREAKING CHANGE: `data` key renamed to `result` in all API responses
-```
-
-## Body Format
-
-Use Gitmoji shortcodes (`:emoji:`) as bullet prefixes in the body to describe individual changes:
-
-```
-- :sparkles: add new endpoint
-- :bug: fix null pointer in handler
-- :recycle: extract shared validation logic
-```
-
 ## Workflow
 
-### 1. Analyze changes
+### 1. Inspect the worktree
+
+Check both staged and unstaged changes before committing:
 
 ```bash
-# Check what's staged vs unstaged
 git status --porcelain
-
-# View staged diff (preferred)
-git diff --staged
-
-# View unstaged diff if nothing staged
-git diff
+git diff --staged --stat
+git diff --stat
+git diff --staged -- <file>
+git diff -- <file>
 ```
 
-### 2. Stage files if needed
+### 2. Plan atomic commit groups
+
+Prefer the fewest commits that still keep concerns isolated.
+
+- One logical change per commit
+- Keep tests with the code they validate
+- Keep lockfiles with the dependency change that produced them
+- Separate behavioral changes from formatting, renames, docs, and other mechanical edits
+- If one file mixes concerns, use `git add -p`
+
+Quick check:
+
+1. Can this commit be described without "and"?
+2. Would reverting it undo only one intent?
+3. Would `git bisect` or `git cherry-pick` still be clear?
+
+### 3. Stage one group at a time
 
 ```bash
-# Stage specific files (preferred over git add -A)
 git add path/to/file1 path/to/file2
-
-# Stage by pattern
-git add src/components/*
+git add -p path/to/file
 ```
 
-Never stage secrets (.env, credentials, private keys).
+Avoid broad staging unless the entire worktree is one logical change. Never stage secrets.
 
-### 3. Determine commit attributes
+### 4. Write the commit message
 
-From the diff, determine:
+Choose the closest matching type and Gitmoji. Common pairs:
 
-- **Gitmoji + Type**: What kind of change?
-- **Scope**: What module/area? (optional but preferred)
-- **Breaking**: Does it break existing API/behavior?
-- **Subject**: One-line summary focusing on WHY
+- `✨ feat` for user-facing additions
+- `🐛 fix` for bug fixes
+- `♻️ refactor` for internal restructuring without behavior change
+- `✅ test` for test-only work
+- `📝 docs` for documentation
+- `🔧 chore` for maintenance, config, or repo upkeep
 
-### 4. Commit
+Message checklist:
 
-```bash
-# Single line
-git commit -m "✨ feat(auth): add OAuth2 login flow"
+- imperative, lowercase subject
+- no trailing period
+- keep the subject short, ideally within 50 characters
+- add scope when it helps
+- use `!` and a `BREAKING CHANGE:` footer for breaking changes
+- add body bullets only when they improve reviewability
+- add issue refs or `Co-Authored-By:` footers when applicable
 
-# Multi-line with body
-git commit -m "$(cat <<'EOF'
+Example:
+
+```text
 ✨ feat(auth): add OAuth2 login flow
 
 - :sparkles: implement `GoogleAuthProvider` with PKCE
 - :lock: add CSRF token validation
 
 Closes #42
-EOF
-)"
 ```
 
-## Best Practices
+### 5. Commit in a useful order
 
-- One logical change per commit
-- Reference issues: `Closes #123`, `Refs #456`
-- Co-author: append `Co-Authored-By:` footer when applicable
+When multiple commits are needed, prefer:
+
+1. preparatory refactors
+2. infrastructure or config
+3. feature or fix
+4. docs or formatting
+
+Each commit should leave the tree in a coherent state.
 
 ## Git Safety
 
-- NEVER update git config
-- NEVER run destructive commands (--force, hard reset) without explicit request
-- NEVER skip hooks (--no-verify) unless user asks
-- NEVER force push to main/master
-- If commit fails due to hooks, fix and create NEW commit (don't amend)
+- do not change git config
+- do not use destructive commands unless explicitly requested
+- do not bypass hooks unless explicitly requested
+- if hooks fail, fix the issue and create a new commit instead of amending by default
