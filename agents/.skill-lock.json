@@ -33,9 +33,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
       "skillPath": "skills/agent-browser/SKILL.md",
-      "skillFolderHash": "ef3abe1fe6f259718037dc6131d332c7571292c3",
+      "skillFolderHash": "e81e77232443f0b2d70f152a671c6581850db856",
       "installedAt": "2026-02-16T03:36:08.769Z",
-      "updatedAt": "2026-03-10T22:40:41.676Z"
+      "updatedAt": "2026-03-13T12:55:29.562Z"
     },
     "documentation-lookup": {
       "source": "upstash/context7",
@@ -51,9 +51,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/xdanger/skills.git",
       "skillPath": "skills/git-commit/SKILL.md",
-      "skillFolderHash": "ab799429133dcd350b0353c1042d549fa6717d18",
+      "skillFolderHash": "da10dc16fe152affcb9e4b8e00cf3fdc43a1e81b",
       "installedAt": "2026-02-16T05:02:46.175Z",
-      "updatedAt": "2026-02-16T05:02:46.175Z"
+      "updatedAt": "2026-03-13T12:55:31.332Z"
     },
     "mcporter": {
       "source": "steipete/clawdis",
@@ -79,18 +79,18 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/xdanger/skills.git",
       "skillPath": "skills/research/SKILL.md",
-      "skillFolderHash": "108e42419952760fa28e855eb3633375b7497856",
+      "skillFolderHash": "88b61a065bc419f6cafe25b9e60a955774e13b0b",
       "installedAt": "2026-03-12T01:28:55.743Z",
-      "updatedAt": "2026-03-12T01:28:55.743Z"
+      "updatedAt": "2026-03-13T12:55:33.423Z"
     },
     "manus": {
       "source": "xdanger/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/xdanger/skills.git",
       "skillPath": "skills/manus/SKILL.md",
-      "skillFolderHash": "e2b8530e63382ff35ccb91565801c8bc26d380a5",
+      "skillFolderHash": "40fcb57439bb648197efc2ec015b089cf190dfde",
       "installedAt": "2026-03-12T01:30:38.946Z",
-      "updatedAt": "2026-03-12T01:30:38.946Z"
+      "updatedAt": "2026-03-13T12:55:35.183Z"
     }
   },
   "dismissed": {
