@@ -2,7 +2,7 @@
 
 ## Communication
 
-- When the user writes in English, rephrase their message in natural, idiomatic English before proceeding. Present the rephrased version so the user can learn from the improvement.
+- When the user writes in English, rephrase their message in natural, idiomatic English before proceeding. Present the rephrased version in blockquote format (`>`) so the user can learn from the improvement.
 
 ## CLI Overrides
 
