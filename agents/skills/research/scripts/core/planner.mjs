@@ -5,6 +5,7 @@ import {
   fail,
   getThreadById,
   mergeUniqueStrings,
+  normalizeStance,
   queueWorkItem,
   recordDeltaPlan,
   recordPlanVersion,
@@ -17,6 +18,7 @@ import {
   compileDeltaPlan as compileDeltaPlanArtifact,
 } from "./artifact_compiler.mjs";
 import { classifyTaskShape, normalizeGoal } from "./router.mjs";
+import { reconcileClaims } from "./verifier.mjs";
 import {
   buildFallbackPlan,
   defaultComparisonAxes,
@@ -448,6 +450,32 @@ function applyDeltaPlan(
       claim.priority = claimAction.priority;
       claim.answer_relevance =
         claimAction.priority === "high" ? "high" : claim.answer_relevance;
+      continue;
+    }
+    if (claimAction.action === "assess_evidence") {
+      if (!Array.isArray(claimAction.stances)) {
+        continue;
+      }
+      for (const entry of claimAction.stances) {
+        const evidence = session.evidence.find(
+          (item) => item.evidence_id === entry.evidence_id,
+        );
+        if (!evidence) {
+          continue;
+        }
+        const link = evidence.claim_links.find(
+          (item) => item.claim_id === claimAction.claim_id,
+        );
+        if (!link) {
+          continue;
+        }
+        link.stance = normalizeStance(entry.stance);
+        if (entry.reason) {
+          link.reason = entry.reason;
+        }
+      }
+      reconcileClaims(session);
+      continue;
     }
   }
 

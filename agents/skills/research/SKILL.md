@@ -13,30 +13,11 @@ than answering from memory.
 
 The agent owns research judgment. The runtime enforces reliability.
 
-## Quick Start
+## Quick Reference
 
 ```bash
 SCRIPT="<SKILL_DIR>/scripts/research_session.mjs"
 ```
-
-The simplest path — let the agent author a plan and auto-synthesize:
-
-```bash
-# Write a plan to a temp file, then:
-node "$SCRIPT" start --query "Your question" --plan-file /path/to/plan.json --depth standard
-```
-
-For multi-step research where the agent should review evidence before synthesis:
-
-```bash
-node "$SCRIPT" start --query "Your question" --plan-file /path/to/plan.json
-node "$SCRIPT" status --session-id <id>
-# Review evidence, then push to synthesis:
-node "$SCRIPT" continue --session-id <id> --delta-file /path/to/synth-delta.json
-node "$SCRIPT" report --session-id <id>
-```
-
-All commands:
 
 | Command    | Purpose                                            |
 | ---------- | -------------------------------------------------- |
@@ -45,7 +26,7 @@ All commands:
 | `approve`  | Resume a prepared session after plan review        |
 | `status`   | Show session state, scores, and open work          |
 | `review`   | Show a takeover-ready packet for another agent     |
-| `continue` | Mutate the session with new instructions or plans  |
+| `continue` | Mutate the session with delta plans or patches     |
 | `report`   | Show the final synthesis (`--format md\|json`)     |
 | `sources`  | List all evidence sources with attribution         |
 | `rejoin`   | Import results from an async remote handoff        |
@@ -54,20 +35,59 @@ All commands:
 Useful flags: `--depth quick|standard|deep`, `--domains d1,d2`,
 `--plan-file`, `--brief-file`, `--delta-file`, `--instruction`.
 
-## Operating Model
+## The Research Loop
 
-The agent decides what to research. The runtime makes decisions durable and replayable.
+The full pipeline has five stages. **Do not skip assess.**
 
 ```
-plan → gather → verify → synthesize
+plan → gather → verify → assess → synthesize
 ```
 
-When the runtime has no authored next step, it enters `awaiting_agent_decision` instead of
-inventing its own plan. The agent should respond with `--plan-file` or `--delta-file`.
+1. **Plan** — author a plan file with threads, claims, and subqueries.
+2. **Gather** — runtime searches and extracts evidence, links it to claims.
+3. **Verify** — runtime runs claim-centric verification for high-priority claims.
+4. **Assess** — agent reads evidence excerpts and assigns stances (`support`/`oppose`/`context`).
+5. **Synthesize** — runtime builds findings and the final answer from assessed evidence.
 
-To skip this pause, set `auto_synthesize: true` in the `research_brief`.
+If you skip step 4, synthesis will produce hollow results — evidence stays `"unassessed"`,
+no findings get `support` or `oppose` status, and the final answer is just a list of titles
+with "stance assessment pending."
 
-## Agent-Authored Planning (Primary Path)
+### Complete workflow
+
+```bash
+# 1. Author a plan and start the session
+node "$SCRIPT" start --query "Your question" --plan-file /tmp/plan.json --depth standard
+
+# 2. Wait for gather + verify to finish (if run in background, poll until exit)
+
+# 3. Check status — look for missing_dimensions: ["agent_stance_assessment"]
+node "$SCRIPT" status --session-id <id>
+
+# 4. Read evidence, evaluate stances, write them back
+node "$SCRIPT" sources --session-id <id>
+# → use the excerpts to build a stance delta (see Stance Assessment below)
+node "$SCRIPT" continue --session-id <id> --delta-file /tmp/stance-delta.json
+
+# 5. Trigger synthesis
+node "$SCRIPT" continue --session-id <id> --delta-file /tmp/synth-delta.json
+
+# 6. Read the report
+node "$SCRIPT" report --session-id <id> --format md
+```
+
+### With `auto_synthesize`
+
+Setting `auto_synthesize: true` in the research brief makes the runtime synthesize
+automatically after gather+verify. But the runtime does **not** wait for stance assessment —
+it will synthesize with unassessed evidence and produce a hollow result.
+
+When using `auto_synthesize`, the agent must still:
+1. Wait for the session to complete
+2. Run stance assessment via `continue --delta-file`
+3. Re-trigger synthesis via another `continue --delta-file` with `synthesize_session`
+
+## Planning
 
 Always prefer `--plan-file` for non-trivial research. The runtime has a fallback planner for
 simple queries, but it is low-authority (`source: "runtime_fallback"`) and should not be
@@ -104,16 +124,55 @@ Minimal plan:
 Key fields: `plan_id` (stable, for dedup), `task_shape` (broad|verification|site|async),
 `threads[].claims[].priority` (high claims drive gathering and verification).
 
-## When the Session Awaits Your Decision
+## Stance Assessment
 
-When the session enters `awaiting_agent_decision`, check `status` or `review`, then:
+After gather and verify, evidence is linked to claims but all stances are `"unassessed"`.
+The agent must evaluate each piece and assign `support`, `oppose`, or `context` before
+synthesis can produce meaningful results.
 
-- `continue --delta-file` with `synthesize_session` → produce the final answer
-- `continue --delta-file` with `gather_thread` or `verify_claim` → dig deeper
-- `continue --plan-file` → restructure the research
-- `close` → end the session
+### How to read evidence
 
-Minimal delta to trigger synthesis:
+Use `sources --session-id <id>` to get all evidence with URLs, excerpts, and claim links.
+Use `report --session-id <id> --format json` for structured access to evidence per claim.
+Use `status --session-id <id>` to check which claims have
+`missing_dimensions: ["agent_stance_assessment"]`.
+
+### How to write stances
+
+Use `continue --delta-file` with `assess_evidence` claim actions:
+
+```json
+{
+  "delta_plan": {
+    "delta_plan_id": "stance-v1",
+    "summary": "Assess evidence stances for all claims",
+    "claim_actions": [
+      {
+        "claim_id": "claim-xxx",
+        "action": "assess_evidence",
+        "stances": [
+          { "evidence_id": "evidence-aaa", "stance": "support", "reason": "Directly confirms the claim with official documentation" },
+          { "evidence_id": "evidence-bbb", "stance": "oppose", "reason": "Contradicts the stated timeline" },
+          { "evidence_id": "evidence-ccc", "stance": "context", "reason": "Background info, does not directly address the claim" }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### What to assess
+
+- Focus on high-priority claims first.
+- Read the evidence excerpt and decide: does it **support** the claim, **oppose** it,
+  or provide **context** without taking a clear position?
+- Provide a brief `reason` — this becomes part of the finding summary.
+- You do not need to assess every piece of evidence. Unassessed evidence is treated
+  as context during synthesis.
+
+### After assessment
+
+Trigger synthesis with a `synthesize_session` queue proposal:
 
 ```json
 {
@@ -126,6 +185,16 @@ Minimal delta to trigger synthesis:
   }
 }
 ```
+
+## When the Session Awaits Your Decision
+
+When the session enters `awaiting_agent_decision`, check `status` or `review`, then:
+
+- `continue --delta-file` with `assess_evidence` → assess stances (do this first)
+- `continue --delta-file` with `synthesize_session` → produce the final answer (after assessment)
+- `continue --delta-file` with `gather_thread` or `verify_claim` → dig deeper
+- `continue --plan-file` → restructure the research
+- `close` → end the session
 
 ## Continuation
 
@@ -141,7 +210,7 @@ Always prefer structured artifacts over prose:
 | `--instruction` (prose)            | Simple cases only — goes through legacy inference, not recommended  |
 
 Supported delta plan actions: `thread_actions` (deepen, pause, branch),
-`claim_actions` (mark_stale, set_priority),
+`claim_actions` (assess_evidence, mark_stale, set_priority),
 `queue_proposals` (gather_thread, verify_claim, synthesize_session, handoff_session).
 
 Supported continuation patch operations: merge_domains, mark_claim_stale, requeue_thread,
@@ -220,6 +289,7 @@ Escalate to Manus only for long-running tasks, connector-backed work, or async d
 
 - the main question is answered with acceptable confidence
 - important claims have good enough evidence
+- **stances are assessed** for high-priority claims
 - new searches are mostly repetitive
 - the remaining gaps are explicit
 
