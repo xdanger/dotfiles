@@ -44,3 +44,6 @@ export DIRENV_LOG_FORMAT=
 [[ -d "$DOTFILES/bin" ]] && path+=("$DOTFILES/bin")
 [[ -d "/opt/bin" ]] && path+=("/opt/bin")
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+# device-specific env (not tracked by any repo)
+[[ -f "$HOME/.zshenv.local" ]] && source "$HOME/.zshenv.local"
