@@ -16,8 +16,6 @@
     ~/.claude/skills: "agents/skills"
     ~/.codex/AGENTS.md: "agents/AGENTS.md"
     ~/.config/ghostty: "ghostty"
-    ~/.config/git/ignore: "git/gitignore"
-    ~/.config/git/verified_signers: "git/verified_signers"
     ~/.config/ranger: "ranger"
     ~/.gemrc: "ruby/gemrc"
     ~/.gitconfig: "git/gitconfig"

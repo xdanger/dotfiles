@@ -8,6 +8,7 @@
     gpgsign = true
 [core]
 	pager = delta
+	excludesFile = ~/.dotfiles/git/gitignore
 [alias]
     st = status
     br = branch -a
