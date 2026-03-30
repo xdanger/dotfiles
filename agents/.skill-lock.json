@@ -91,6 +91,15 @@
       "skillFolderHash": "40fcb57439bb648197efc2ec015b089cf190dfde",
       "installedAt": "2026-03-12T01:30:38.946Z",
       "updatedAt": "2026-03-13T12:55:35.183Z"
+    },
+    "greploop": {
+      "source": "greptileai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/greptileai/skills.git",
+      "skillPath": "greploop/SKILL.md",
+      "skillFolderHash": "bc1b6bf25399dc79f77644ed7ab0c7eaa581b55f",
+      "installedAt": "2026-03-30T16:10:26.002Z",
+      "updatedAt": "2026-03-30T16:10:26.002Z"
     }
   },
   "dismissed": {
@@ -98,13 +107,16 @@
   },
   "lastSelectedAgents": [
     "amp",
+    "antigravity",
     "cline",
     "codex",
     "cursor",
+    "deepagents",
     "gemini-cli",
     "github-copilot",
     "kimi-cli",
     "opencode",
+    "warp",
     "claude-code"
   ]
 }
