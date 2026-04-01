@@ -40,10 +40,20 @@ export DIRENV_LOG_FORMAT=
 
 # other envs
 [[ -f "$HOME/.dotlocal/envs.zsh" ]] && source "$HOME/.dotlocal/envs.zsh"
+# Bootstrap Homebrew into PATH early for non-interactive shells that may skip
+# `.zprofile`, while keeping heavier macOS initialization in `env.darwin.zsh`.
+if [[ "$OSTYPE" == darwin* ]]; then
+  export HOMEBREW="/opt/homebrew"
+  [[ $(uname -m) == "x86_64" ]] && export HOMEBREW="/usr/local"
+  [[ -d "$HOMEBREW/sbin" ]] && path=("$HOMEBREW/sbin" $path)
+  [[ -d "$HOMEBREW/bin" ]] && path=("$HOMEBREW/bin" $path)
+fi
 # add ./bin to $PATH
 [[ -d "$DOTFILES/bin" ]] && path+=("$DOTFILES/bin")
 [[ -d "/opt/bin" ]] && path+=("/opt/bin")
 [[ -f "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+typeset -gU path
 
 # device-specific env (not tracked by any repo)
 [[ -f "$HOME/.zshenv.local" ]] && source "$HOME/.zshenv.local"
