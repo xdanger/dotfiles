@@ -62,6 +62,11 @@ if [[ -d "$HOMEBREW/anaconda3" ]]; then
 fi
 # <<< conda initialize <<<
 
+# taobao-native CLI
+if [[ -d "$HOME/Library/Application Support/taobao/cli" ]]; then
+  export TBN_CLI_BIN="/Users/xdanger/Library/Application Support/taobao/cli/bin"
+fi
+
 # pnpm
 export PNPM_HOME="$HOME/Library/pnpm"
 path=("$PNPM_HOME" $path)
