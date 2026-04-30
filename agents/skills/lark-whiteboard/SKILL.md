@@ -12,10 +12,8 @@ metadata:
 ---
 
 > [!IMPORTANT]
-> **执行前检查环境**：
-> - 运行 `whiteboard-cli --version`，确认版本为 `0.2.x`；未安装或版本不符 → `npm install -g @larksuite/whiteboard-cli@^0.2.0`
-> - 运行 `lark-cli --version`，确认可用。
-> - 执行任何 `npm install` 前，**必须征得用户同意**。
+> - 运行 `lark-cli --version`，确认可用，无需询问用户。
+> - 运行 `npx -y @larksuite/whiteboard-cli@^0.2.10 -v`，确认可用，无需询问用户。
 
 **CRITICAL — 开始前 MUST 先用 Read 工具读取 [`../lark-shared/SKILL.md`](../lark-shared/SKILL.md)，其中包含认证、权限处理**
 
@@ -57,7 +55,7 @@ metadata:
 |---|---|
 | 直接给了 whiteboard token（`wbcnXXX`）| 直接使用 |
 | 文档 URL 或 doc_id，文档中已有画板 | `lark-cli docs +fetch --doc <URL> --as user`，从返回的 `<whiteboard token="xxx"/>` 提取 |
-| 文档 URL 或 doc_id，需要新建画板 | `lark-cli docs +update --doc <doc_id> --mode append --markdown '<whiteboard type="blank"></whiteboard>' --as user`，从响应 `data.board_tokens[0]` 取得（参数详见 lark-doc SKILL.md）|
+| 文档 URL 或 doc_id，需要新建画板 | `lark-cli docs +update --api-version v2 --doc <doc_id> --command append --content '<whiteboard type="blank"></whiteboard>' --as user`，从响应 `data.new_blocks[0].block_token` 取得（`block_type == "whiteboard"` 的那条；参数详见 lark-doc SKILL.md）|
 
 **Step 2：渲染 & 写入**
 
@@ -126,7 +124,7 @@ diagram.png           ← 渲染结果
 
 ```bash
 # 第一步：dry-run 探测
-npx -y @larksuite/whiteboard-cli@^0.2.0 -i <产物文件> --to openapi --format json \
+npx -y @larksuite/whiteboard-cli@^0.2.10 -i <产物文件> --to openapi --format json \
   | lark-cli whiteboard +update \
     --whiteboard-token <Token> \
     --source - --input_format raw \
@@ -134,7 +132,7 @@ npx -y @larksuite/whiteboard-cli@^0.2.0 -i <产物文件> --to openapi --format 
     --overwrite --dry-run --as user
 
 # 第二步：确认后执行
-npx -y @larksuite/whiteboard-cli@^0.2.0 -i <产物文件> --to openapi --format json \
+npx -y @larksuite/whiteboard-cli@^0.2.10 -i <产物文件> --to openapi --format json \
   | lark-cli whiteboard +update \
     --whiteboard-token <Token> \
     --source - --input_format raw \
