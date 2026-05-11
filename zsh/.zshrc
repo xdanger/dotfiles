@@ -82,3 +82,9 @@ local os_name=${(L)$(uname -s)}
 
 # OpenClaw Completion
 [[ -f "$HOME/.openclaw/completions/openclaw.zsh" ]] && source "$HOME/.openclaw/completions/openclaw.zsh"
+
+# Claude Code
+# Fullscreen rendering mode 切到 alternate screen buffer（替代屏幕缓冲），内存占用更稳定，且原生支持鼠标滚动。
+export CLAUDE_CODE_NO_FLICKER=1
+# 如果你发现 tmux copy-mode / 终端原生选中是肌肉记忆，再加这行：
+# export CLAUDE_CODE_DISABLE_MOUSE=1
