@@ -58,6 +58,8 @@
 
 用对象数组：
 
+> **人员筛选：不要猜 ID。** 不知道 `open_id` 时，先用 `lark-contact` 查 id：`lark-cli contact +search-user --query "<姓名/邮箱/手机号>" --as user`。
+
 ```json
 ["负责人", "intersects", [{ "id": "ou_xxx" }]]
 ```
@@ -65,6 +67,8 @@
 ### `group_chat`
 
 用对象数组：
+
+> **群组筛选：不要猜 ID。** 不知道 `chat_id` 时，先用 `lark-im` 搜群：`lark-cli im +chat-search --query "<群名关键词>" --as user`；取结果里的 `oc_xxx`。
 
 ```json
 ["负责群", "intersects", [{ "id": "oc_xxx" }]]
