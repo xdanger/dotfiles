@@ -19,6 +19,7 @@ metadata:
 - 用户要**搜文档 / Wiki / 电子表格 / 多维表格 / 云空间对象**，优先使用 `lark-cli drive +search`。自然语言里"最近我编辑过的"、"我创建的"、"最近一周我打开过的 xxx"、"某人创建的 docx" 等直接映射到扁平 flag，避免手写嵌套 JSON。老的 `docs +search` 进入维护期、后续会下线，不要新增对它的依赖。
 - 用户要把本地 `.xlsx` / `.csv` / `.base` 导入成 Base / 多维表格 / bitable，第一步必须使用 `lark-cli drive +import --type bitable`。
 - 用户要把本地 `.md` / `.docx` / `.doc` / `.txt` / `.html` 导入成在线文档，使用 `lark-cli drive +import --type docx`。
+- 用户要在 Drive 里上传、创建、读取、覆盖更新**原生 `.md` 文件**（不是导入成 docx），切到 [`lark-markdown`](../lark-markdown/SKILL.md)。
 - 用户要把本地 `.xlsx` / `.xls` / `.csv` 导入成电子表格，使用 `lark-cli drive +import --type sheet`。
 - 用户要在云空间里新建文件夹，优先使用 `lark-cli drive +create-folder`。
 - 用户要把本地文件上传到知识库 / 文档库里的某个 wiki 节点下时，仍然使用 `lark-cli drive +upload --wiki-token <wiki_token>`；不要误切到 `wiki` 域命令。
@@ -228,13 +229,16 @@ Shortcut 是对常用操作的高级封装（`lark-cli drive +<verb> [flags]`）
 | [`+upload`](references/lark-drive-upload.md) | Upload a local file to a Drive folder or wiki node |
 | [`+create-folder`](references/lark-drive-create-folder.md) | Create a Drive folder, optionally under a parent folder, with bot auto-grant support |
 | [`+download`](references/lark-drive-download.md) | Download a file from Drive to local |
+| [`+status`](references/lark-drive-status.md) | Compare a local directory with a Drive folder by SHA-256 content hash; reports `new_local` / `new_remote` / `modified` / `unchanged` (read-only diff primitive for sync workflows). `--local-dir` 必须是 cwd 内的相对路径，越界路径 CLI 会直接拒绝；目标在 cwd 外时引导用户切换 agent 工作目录，不要私自 `cd` 绕过。 |
+| [`+pull`](references/lark-drive-pull.md) | One-way **file-level** mirror of a Drive folder onto a local directory (Drive → local). Supports `--if-exists` (overwrite/skip) and `--delete-local` for orphan cleanup; the destructive `--delete-local` requires `--yes` and only unlinks regular files — empty local directories left behind by remote folder deletes are NOT pruned. Item-level failures exit non-zero (`error.type=partial_failure`) and skip the `--delete-local` pass to avoid half-synced state. `--local-dir` is bounded to cwd by CLI path validation; tell the user to switch the agent's working directory if the target is outside cwd. |
 | [`+create-shortcut`](references/lark-drive-create-shortcut.md) | Create a shortcut to an existing Drive file in another folder |
 | [`+add-comment`](references/lark-drive-add-comment.md) | Add a comment to doc/docx/sheet/slides, also supports wiki URL resolving to doc/docx/sheet/slides |
-| [`+export`](references/lark-drive-export.md) | Export a doc/docx/sheet/bitable to a local file with limited polling |
+| [`+export`](references/lark-drive-export.md) | Export a doc/docx/sheet/bitable to a local file with limited polling; supports `--file-name` for local naming |
 | [`+export-download`](references/lark-drive-export-download.md) | Download an exported file by file_token |
 | [`+import`](references/lark-drive-import.md) | Import a local file to Drive as a cloud document (docx, sheet, bitable) |
 | [`+move`](references/lark-drive-move.md) | Move a file or folder to another location in Drive |
 | [`+delete`](references/lark-drive-delete.md) | Delete a Drive file or folder with limited polling for folder deletes |
+| [`+push`](references/lark-drive-push.md) | Mirror a local directory onto a Drive folder (local → Drive). Supports `--if-exists` (overwrite/skip) and `--delete-remote` for one-way mirror sync; the destructive `--delete-remote` requires `--yes`. `--local-dir` is bounded to cwd by CLI path validation; tell the user to switch the agent's working directory if the source is outside cwd. |
 | [`+task_result`](references/lark-drive-task-result.md) | Poll async task result for import, export, move, or delete operations |
 | [`+apply-permission`](references/lark-drive-apply-permission.md) | Apply to the document owner for view/edit access (user-only; 5/day per document) |
 
