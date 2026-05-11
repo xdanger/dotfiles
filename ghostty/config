@@ -25,8 +25,9 @@
 # ==========================
 # # The config file consists of simple key-value pairs,
 # # separated by equals signs.
-background-opacity = 0.9
+background-opacity = 0.97
 background-blur = true
+# cursor-style = bar
 font-family = iMWritingMono Nerd Font
 font-size = 14
 font-thicken = true
@@ -41,6 +42,8 @@ window-height = 32
 window-width = 128
 window-padding-x = 2
 window-title-font-family = SF Compact Text
+window-decoration = true
+
 #
 # # Spacing around the equals sign does not matter.
 # # All of these are identical:
@@ -62,9 +65,35 @@ window-title-font-family = SF Compact Text
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-# theme = dark:Monokai Pro,light:Monokai Pro Light
-theme = Monokai Pro
+# ============ macOS 必备 ============
+# 让 Option+Enter / Option+P 等 Claude Code 快捷键能工作
+macos-option-as-alt = true
+
+# ============ Multi-line 显式绑定（保险起见） ============
+# 默认情况下 Ghostty 已正确发送 Shift+Enter；
+# 但若你在 SSH / 容器内使用，建议显式声明：
 keybind = shift+enter=text:\x1b\r
 
-# Set TERM to xterm-256color for better SSH compatibility
-term = xterm-256color
+# ============ 全局快捷终端（quick terminal 下拉式） ============
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+# ============ 分屏（多 Claude Code 实例并行） ============
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+j=goto_split:bottom
+keybind = ctrl+k=goto_split:top
+keybind = ctrl+l=goto_split:right
+keybind = cmd+shift+enter=toggle_split_zoom   # 临时放大单个 pane
+
+# ============ Shell 集成（pwd 同步、OSC 7） ============
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# ============ 大滚动缓冲（应对 Claude Code 长输出） ============
+scrollback-limit = 100000           # 默认 10k 行偏小
+
+# ============ 触控板/鼠标 ============
+mouse-scroll-multiplier = 3
+copy-on-select = clipboard
+
