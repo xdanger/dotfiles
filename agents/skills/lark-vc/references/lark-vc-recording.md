@@ -109,7 +109,7 @@ lark-cli vc +notes --minute-tokens <minute_token>
 
 ```bash
 # 第 1 步：搜索历史会议，拿到 meeting_ids
-lark-cli vc +search --query "周会" --start yesterday
+lark-cli vc +search --query "周会" --start 2026-03-10
 
 # 第 2 步：使用上一步返回的 meeting_ids 查询录制，拿到 minute_tokens
 lark-cli vc +recording --meeting-ids <ids>

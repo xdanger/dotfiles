@@ -117,7 +117,7 @@ Drive Folder (云空间文件夹)
 
 | 操作 | 需要的 Token | 说明 |
 |------|-------------|------|
-| 读取文档内容 | `file_token` / 通过 `docs +fetch --api-version v2` 自动处理 | `docs +fetch` 支持直接传入 URL |
+| 读取文档内容 | `file_token` / 通过 `docs +fetch --api-version v2` 自动处理 | `docs +fetch --api-version v2` 支持直接传入 URL |
 | 添加局部评论（划词评论） | `file_token` | 传 `--block-id` 时，`drive +add-comment` 会创建局部评论；`docx` 支持文本定位或 block_id，`slides` 仅支持 block_id，且都支持最终解析到对应类型的 wiki URL |
 | 添加全文评论 | `file_token` | 不传 `--block-id` 时，`drive +add-comment` 默认创建全文评论；支持 `docx`、旧版 `doc` URL，以及最终解析为 `doc`/`docx` 的 wiki URL |
 | 下载文件 | `file_token` | 从文件 URL 中直接提取 |
@@ -200,6 +200,19 @@ lark-cli drive file.comments list --params '{"file_token": "xxx", "file_type": "
 | `permission denied` | 没有相关操作权限 | 引导用户检查当前身份对文档/文件是否有相应操作权限；如果需要，可以授予相应权限 |
 | `invalid file_type` | file_type 参数错误 | 根据 `obj_type` 传入正确的 file_type（docx/doc/sheet/slides） |
 
+#### `permission.public.patch` 错误码引导
+
+调用 `lark-cli drive permission.public patch` 更新文档公开权限失败时，如果返回以下错误码，按表格给用户明确下一步。不要把这些错误简单归类为缺少 scope；它们通常表示租户、对外分享或文档密级策略拦截。
+
+| 错误码 | 含义                     | 给用户的引导 |
+|--------|------------------------|--------------|
+| `91009` | 对外分享被租户安全策略管控，当前用户无法开启 | 提示用户：对外分享能力被租户安全策略统一管控，无法通过 API 或当前用户直接开启；需要联系租户管理员调整组织级对外分享策略。 |
+| `91010` | 文档对外分享未打开              | 提示用户：当前文档尚未打开对外分享，请先在文档权限设置中打开对外分享，再重试 `permission.public.patch`。 |
+| `91011` | 对外分享被文档密级管控            | 提示用户：对外分享被密级策略拦截，需要打开目标文档，在文档内发起密级豁免或进行密级降级后再重试；回复中必须给出目标文档 URL。 |
+| `91012` | 权限设置被文档密级管控            | 提示用户：该权限设置被密级策略拦截，需要打开目标文档，在文档内发起密级豁免或进行密级降级后再重试；回复中必须给出目标文档 URL。 |
+
+当用户最初提供的是文档 URL，遇到 `91011` 或 `91012` 时直接把该 URL 原样返回给用户作为操作入口；如果上下文只有 token，需要先尽量通过已有上下文、搜索结果或元数据恢复目标文档 URL，再给出可点击的文档 URL。
+
 ### 授权当前应用访问文档
 
 当需要将文档权限授予**当前应用（bot）自身**时，先通过 bot info 接口获取应用的 open_id，再调用权限接口授权：
@@ -229,8 +242,8 @@ Shortcut 是对常用操作的高级封装（`lark-cli drive +<verb> [flags]`）
 | [`+upload`](references/lark-drive-upload.md) | Upload a local file to a Drive folder or wiki node |
 | [`+create-folder`](references/lark-drive-create-folder.md) | Create a Drive folder, optionally under a parent folder, with bot auto-grant support |
 | [`+download`](references/lark-drive-download.md) | Download a file from Drive to local |
-| [`+status`](references/lark-drive-status.md) | Compare a local directory with a Drive folder by SHA-256 content hash; reports `new_local` / `new_remote` / `modified` / `unchanged` (read-only diff primitive for sync workflows). `--local-dir` 必须是 cwd 内的相对路径，越界路径 CLI 会直接拒绝；目标在 cwd 外时引导用户切换 agent 工作目录，不要私自 `cd` 绕过。 |
-| [`+pull`](references/lark-drive-pull.md) | One-way **file-level** mirror of a Drive folder onto a local directory (Drive → local). Supports `--if-exists` (overwrite/skip) and `--delete-local` for orphan cleanup; the destructive `--delete-local` requires `--yes` and only unlinks regular files — empty local directories left behind by remote folder deletes are NOT pruned. Item-level failures exit non-zero (`error.type=partial_failure`) and skip the `--delete-local` pass to avoid half-synced state. `--local-dir` is bounded to cwd by CLI path validation; tell the user to switch the agent's working directory if the target is outside cwd. |
+| [`+status`](references/lark-drive-status.md) | Compare a local directory with a Drive folder by exact SHA-256 hash by default, or use `--quick` for a best-effort modified-time diff that skips remote downloads; reports `new_local` / `new_remote` / `modified` / `unchanged` plus `detection=exact` or `detection=quick`. Duplicate remote `rel_path` conflicts fail fast with `error.type=duplicate_remote_path` and list every conflicting entry; do not proceed as if one was chosen. `--local-dir` 必须是 cwd 内的相对路径，越界路径 CLI 会直接拒绝；目标在 cwd 外时引导用户切换 agent 工作目录，不要私自 `cd` 绕过。 |
+| [`+pull`](references/lark-drive-pull.md) | File-level Drive → local mirror. Duplicate remote `rel_path` conflicts fail by default; for duplicate files, `rename` downloads all copies with stable hashed suffixes, while `newest` / `oldest` pick one. `--if-exists` supports `overwrite` / `smart` / `skip` (`smart` is a best-effort modified-time incremental mode for repeat syncs). `--delete-local` requires `--yes`, only removes regular files, and is skipped after item failures. `--local-dir` must stay inside cwd. |
 | [`+create-shortcut`](references/lark-drive-create-shortcut.md) | Create a shortcut to an existing Drive file in another folder |
 | [`+add-comment`](references/lark-drive-add-comment.md) | Add a comment to doc/docx/sheet/slides, also supports wiki URL resolving to doc/docx/sheet/slides |
 | [`+export`](references/lark-drive-export.md) | Export a doc/docx/sheet/bitable to a local file with limited polling; supports `--file-name` for local naming |
@@ -238,7 +251,7 @@ Shortcut 是对常用操作的高级封装（`lark-cli drive +<verb> [flags]`）
 | [`+import`](references/lark-drive-import.md) | Import a local file to Drive as a cloud document (docx, sheet, bitable) |
 | [`+move`](references/lark-drive-move.md) | Move a file or folder to another location in Drive |
 | [`+delete`](references/lark-drive-delete.md) | Delete a Drive file or folder with limited polling for folder deletes |
-| [`+push`](references/lark-drive-push.md) | Mirror a local directory onto a Drive folder (local → Drive). Supports `--if-exists` (overwrite/skip) and `--delete-remote` for one-way mirror sync; the destructive `--delete-remote` requires `--yes`. `--local-dir` is bounded to cwd by CLI path validation; tell the user to switch the agent's working directory if the source is outside cwd. |
+| [`+push`](references/lark-drive-push.md) | File-level local → Drive mirror. Duplicate remote `rel_path` conflicts fail by default; `newest` / `oldest` only apply to duplicate files when you explicitly want to target one remote file. `--if-exists` supports `skip` / `smart` / `overwrite` (`smart` skips files whose remote `modified_time` is already up to date, but falls through to the same overwrite path when the remote is older, so it inherits overwrite's rollout caveat). `--delete-remote` requires `--yes`. `--local-dir` must stay inside cwd. |
 | [`+task_result`](references/lark-drive-task-result.md) | Poll async task result for import, export, move, or delete operations |
 | [`+apply-permission`](references/lark-drive-apply-permission.md) | Apply to the document owner for view/edit access (user-only; 5/day per document) |
 
@@ -302,27 +315,29 @@ lark-cli drive <resource> <method> [flags] # 调用 API
 
 ## 权限表
 
-| 方法 | 所需 scope |
-|------|-----------|
-| `files.copy` | `docs:document:copy` |
-| `files.create_folder` | `space:folder:create` |
-| `files.list` | `space:document:retrieve` |
-| `files.patch` | `docx:document:write_only` |
-| `file.comments.batch_query` | `docs:document.comment:read` |
-| `file.comments.create_v2` | `docs:document.comment:create` |
-| `file.comments.list` | `docs:document.comment:read` |
-| `file.comments.patch` | `docs:document.comment:update` |
-| `file.comment.replys.create` | `docs:document.comment:create` |
-| `file.comment.replys.delete` | `docs:document.comment:delete` |
-| `file.comment.replys.list` | `docs:document.comment:read` |
-| `file.comment.replys.update` | `docs:document.comment:update` |
-| `permission.members.auth` | `docs:permission.member:auth` |
-| `permission.members.create` | `docs:permission.member:create` |
-| `permission.members.transfer_owner` | `docs:permission.member:transfer` |
-| `metas.batch_query` | `drive:drive.metadata:readonly` |
-| `user.remove_subscription` | `docs:event:subscribe` |
-| `user.subscription` | `docs:event:subscribe` |
-| `user.subscription_status` | `docs:event:subscribe` |
-| `file.statistics.get` | `drive:drive.metadata:readonly` |
-| `file.view_records.list` | `drive:file:view_record:readonly` |
-| `file.comment.reply.reactions.update_reaction` | `docs:document.comment:create` |
+| 方法                                             | 所需 scope                          |
+|------------------------------------------------|-----------------------------------|
+| `files.copy`                                   | `docs:document:copy`              |
+| `files.create_folder`                          | `space:folder:create`             |
+| `files.list`                                   | `space:document:retrieve`         |
+| `files.patch`                                  | `docx:document:write_only`        |
+| `file.comments.batch_query`                    | `docs:document.comment:read`      |
+| `file.comments.create_v2`                      | `docs:document.comment:create`    |
+| `file.comments.list`                           | `docs:document.comment:read`      |
+| `file.comments.patch`                          | `docs:document.comment:update`    |
+| `file.comment.replys.create`                   | `docs:document.comment:create`    |
+| `file.comment.replys.delete`                   | `docs:document.comment:delete`    |
+| `file.comment.replys.list`                     | `docs:document.comment:read`      |
+| `file.comment.replys.update`                   | `docs:document.comment:update`    |
+| `permission.members.auth`                      | `docs:permission.member:auth`     |
+| `permission.members.create`                    | `docs:permission.member:create`   |
+| `permission.members.transfer_owner`            | `docs:permission.member:transfer` |
+| `permission.public.get`                        | `docs:permission.setting:read`    |
+| `permission.public.patch`                      | `docs:permission.setting:write_only` |
+| `metas.batch_query`                            | `drive:drive.metadata:readonly`   |
+| `user.remove_subscription`                     | `docs:event:subscribe`            |
+| `user.subscription`                            | `docs:event:subscribe`            |
+| `user.subscription_status`                     | `docs:event:subscribe`            |
+| `file.statistics.get`                          | `drive:drive.metadata:readonly`   |
+| `file.view_records.list`                       | `drive:file:view_record:readonly` |
+| `file.comment.reply.reactions.update_reaction` | `docs:document.comment:create`    |
