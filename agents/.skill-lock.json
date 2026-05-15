@@ -74,15 +74,6 @@
       "installedAt": "2026-03-12T01:00:32.899Z",
       "updatedAt": "2026-03-12T01:00:32.899Z"
     },
-    "research": {
-      "source": "xdanger/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/xdanger/skills.git",
-      "skillPath": "skills/research/SKILL.md",
-      "skillFolderHash": "88b61a065bc419f6cafe25b9e60a955774e13b0b",
-      "installedAt": "2026-03-12T01:28:55.743Z",
-      "updatedAt": "2026-03-13T12:55:33.423Z"
-    },
     "manus": {
       "source": "xdanger/skills",
       "sourceType": "github",
