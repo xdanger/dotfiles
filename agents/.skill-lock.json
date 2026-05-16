@@ -241,9 +241,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/larksuite/cli.git",
       "skillPath": "skills/lark-wiki/SKILL.md",
-      "skillFolderHash": "e17809b1dd49830b78a9517d997dfe46fe887c1e",
+      "skillFolderHash": "f193c7b778830a3175b0220a7771132c69ebee8a",
       "installedAt": "2026-04-01T15:50:26.570Z",
-      "updatedAt": "2026-05-15T11:03:32.936Z"
+      "updatedAt": "2026-05-16T07:39:53.192Z"
     },
     "lark-workflow-meeting-summary": {
       "source": "larksuite/cli",
