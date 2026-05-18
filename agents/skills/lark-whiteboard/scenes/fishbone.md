@@ -1,238 +1,198 @@
-# 鱼骨图（因果图）
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.ico" />
+  <title></title>
+  <style>
+      * {
+          box-sizing: border-box;
+          padding: 0;
+          margin: 0;
+      }
 
-> **必须写脚本生成 JSON。** 鱼骨图的分支角度、原因小骨坐标需要三角函数计算，直接手写 JSON 极易导致节点重叠和连线穿模。请用下方脚本模板。
+      .open-platform-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          background-color: #ffffff;
+      }
 
-## Content 约束
+      .open-platform-icon {
+          width: 120px;
+          height: 120px;
+          display: block;
+      }
 
-- 分类 4-6 个
-- 每个分类的原因 ≤ 4
-- 总原因 ≤ 20（超过必须合并分类）
+      .open-platform-desc {
+          margin-top: 16px;
+          line-height: 22px;
+          font-size: 14px;
+          color: #646a73;
+          text-align: center
+      }
 
-## Layout 选型
+      .open-platform-back {
+          border-radius: 6px;
+          font-size: 14px;
+          height: 32px;
+          line-height: 22px;
+          min-width: 80px;
+          padding: 4px 11px;
+          text-align: center;
+          text-decoration: none;
+          touch-action: manipulation;
+          transition: color .1s ease-in, background-color .1s ease-in, border-color .1s ease-in, width .2s ease-in;
+          user-select: none;
+          white-space: nowrap;
+          background: #1456f0;
+          border: 1px solid #1456f0;
+          color: #ffffff;
+          margin-top: 16px;
+      }
+  </style>
+</head>
+<body>
+<div class="open-platform-wrapper">
+  <img class="open-platform-icon"
+       src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyLjkxMyA1NS4yNDRjLTUuNjMyIDIuOTUtOC4yNDYgNi4yODQtOC4yNDYgOS40NHY5LjcyYzAtMy4xNTYgMi42MTQtNi40OSA4LjI0Ni05LjQ0di05LjcyWm05NC4xNjMtMTIuMDg0di05LjcyNmM1LjkzNC0zLjE5IDguOTgxLTYuODkxIDguOTgxLTEwLjcyNXY5LjcyYzAgMy44NC0zLjA0NyA3LjU0My04Ljk4MSAxMC43MzJaIiBmaWxsPSIjMEMyOTZFIi8+PHBhdGggZD0iTTYwLjIyOSAxOS4wNTkgNDguNzMgNDkuOTIyIDYwLjM2NSA3Mi45MmwtOC40NzQgMjMuODczSDE2LjkyM2E0IDQgMCAwIDEtNC00VjIzLjA2YTQgNCAwIDAgMSA0LTRINjAuMjNaIiBmaWxsPSIjQkJCRkM0IiBmaWxsLW9wYWNpdHk9Ii40NSIvPjxwYXRoIGQ9Ik03MS40MDggMTkuMDU5IDYwLjAxMyA0OS45MjIgNzEuNDYgNzIuOTJsLTguMzI1IDIzLjg3M2gzOS45NDNhNCA0IDAgMCAwIDQtNFYyMy4wNmE0IDQgMCAwIDAtNC00aC0zMS42N1oiIGZpbGw9IiNCQkJGQzQiIGZpbGwtb3BhY2l0eT0iLjQ1Ii8+PHBhdGggZD0iTTIxLjkyMyAyNi4xYTIgMiAwIDEgMSAwIDQgMiAyIDAgMCAxIDAtNFptMyAyYTMgMyAwIDEgMC02IDAgMyAzIDAgMCAwIDYgMFptNi45MTUtMmEyIDIgMCAxIDEgMCA0IDIgMiAwIDAgMSAwLTRabTMgMmEzIDMgMCAxIDAtNiAwIDMgMyAwIDAgMCA2IDBabS0xNS43NjMgNy4zOTRhLjUuNSAwIDAgMSAuNS0uNWgzMS41ODFhLjUuNSAwIDAgMSAwIDFIMTkuNTc1YS41LjUgMCAwIDEtLjUtLjVabTQ4LjQ3NyAwYS41LjUgMCAwIDEgLjUtLjVoMzIuNDY1YS41LjUgMCAwIDEgMCAxSDY4LjA1MmEuNS41IDAgMCAxLS41LS41WiIgZmlsbD0iIzhGOTU5RSIvPjxwYXRoIGQ9Ik05OCAxMTFjOS45NDEgMCAxOC04LjA1OSAxOC0xOHMtOC4wNTktMTgtMTgtMThjLTkuOTQyIDAtMTggOC4wNTktMTggMThzOC4wNTggMTggMTggMThaIiBmaWxsPSIjRjgwIi8+PHBhdGggZD0iTTk3LjE4MSA4NC44MThhLjgxOC44MTggMCAwIDAtLjgxOC44MTl2OS44MThjMCAuNDUyLjM2Ni44MTguODE4LjgxOGgxLjYzN2EuODE4LjgxOCAwIDAgMCAuODE4LS44MTh2LTkuODE5YS44MTguODE4IDAgMCAwLS44MTgtLjgxOEg5Ny4xOFptMCAxMy4wOTJhLjgxOC44MTggMCAwIDAtLjgxOC44MTh2MS42MzZjMCAuNDUyLjM2Ni44MTguODE4LjgxOGgxLjYzN2EuODE4LjgxOCAwIDAgMCAuODE4LS44MTh2LTEuNjM2YS44MTguODE4IDAgMCAwLS44MTgtLjgxOUg5Ny4xOFoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNNC4wMjcgODUuMzFjMi40OSA1LjUxIDE0Ljc3IDkuOTQgNDEuNDUgOS45M3Y5LjcyMWMtMjYuNjguMDEtMzguOTYtNC40Mi00MS40NS05Ljkzdi05LjcyWm04NC44MS0yNy4yN2MxNy41Mi0yLjY5IDI1LjgwNy03LjAyNiAyNy4yLTExLjcxdjkuNzJjLS4zMyA0LjY3LTkuNjggOS4wMi0yNy4yIDExLjcxdi05LjcyWiIgZmlsbD0iIzMzNzBGRiIvPjxwYXRoIGQ9Ik04OS4yMzcgMTMuMDFjMTguMDU4IDAgMjYuOCAzLjI1IDI2LjggOS43MnY5LjcyYzAtNi40Ny04Ljc0Mi05LjcyLTI2LjgtOS43MnYtOS43MlptLTg0LjU3IDUxLjdjMCA2LjYgMTEuMzcgMTIuNDUgMzAuNDcgMTIuNDR2OS43MmMtMTkuMSAwLTMwLjQ3LTUuODQtMzAuNDctMTIuNDR2LTkuNzJaIiBmaWxsPSIjMDBENkI5Ii8+PC9zdmc+"
+       alt="">
+  <div class="open-platform-desc">The page does not exist.</div>
+  <a class="open-platform-back" href="/">Go to homepage</a>
+</div>
+<script>window.gfdatav1={"env":"prod","ver":"1.0.0.13","canary":0,"garrModules":null,"envName":"prod","region":"CN","idc":"hl","webServerCodeType":"DeployServerlessWebServer","runtime":"node","extra":{"canaryType":null}}</script><script>
 
-- **脚本生成坐标**（必须）：用 .cjs 脚本通过三角函数计算鱼骨坐标，脚本输出 JSON 文件后调用 `npx -y @larksuite/whiteboard-cli@^0.2.11` 渲染
+  function parseQueryString(queryString) {
+    // 移除开头的 "?"
+    if (queryString.charAt(0) === '?') {
+      queryString = queryString.substring(1);
+    }
 
-## Layout 规则
+    var params = {};
+    if (!queryString) return params;
 
-- 主干水平居中，从左向右延伸
-- 分类节点按 spineX 从左到右排列，奇数（第 1、3、5...）在上方，偶数（第 2、4...）在下方
-- 每个分类的原因沿斜线（分支骨）等距排列
-- 鱼头（中心问题）在右侧，用 ellipse
-- 主干连线带箭头指向鱼头，分支骨和原因小骨连线 endArrow: "none"
-- 原因小骨水平延伸到原因框右侧，Y 坐标精准对齐
+    // 分割参数对
+    var paramPairs = queryString.split('&');
 
-## 骨架示例
+    for (var i = 0; i < paramPairs.length; i++) {
+      var paramPair = paramPairs[i].split('=');
+      var key = decodeURIComponent(paramPair[0]);
+      var value = paramPair.length > 1 ? decodeURIComponent(paramPair[1]) : '';
 
-**上下交替**：分类标签按 spineX 从左到右排列，奇数（第1、3、5...）在上方，偶数（第2、4...）在下方。
+      // 处理重复参数（转为数组）
+      if (params[key] === undefined) {
+        params[key] = value;
+      } else if (!Array.isArray(params[key])) {
+        params[key] = [params[key], value];
+      } else {
+        params[key].push(value);
+      }
+    }
 
-**视觉同色系**：同一个分支的分类标签、连线及其下的所有原因节点，必须使用同一个色系（如相同的背景色与边框色组合），以保持图形风格统一和逻辑连贯。可以预定义一组颜色数组，按分支轮询使用。
-
-### 坐标计算脚本模板（必须严格参照此算法生成）
-
-以下 Node.js 脚本模板包含了完整的动态布局算法，能够自动适配任意数量的分类和原因，生成完美不重叠的鱼骨图：
-
-```javascript
-const fs = require('fs');
-
-const nodes = [];
-
-// 1. 数据定义 (根据用户需求填充)
-const categories = [
-  { id: "c0", text: "前端代码", reasons: ["未压缩资源", "冗余请求", "超大图片未懒加载"] },
-  { id: "c1", text: "后端服务", reasons: ["数据库慢查询", "缓存失效", "并发量过大"] },
-  { id: "c2", text: "网络环境", reasons: ["CDN配置错误", "DNS解析缓慢", "带宽限制", "网络抖动"] }
-];
-
-// 2. 动态布局计算
-const catWidth = 120;
-const catHeight = 40;
-const reasonWidth = 140; // 调整原因框宽度以适应长文本
-const reasonHeight = 32;
-const lineLength = 20; // 原因小骨连线的水平延伸长度
-const paddingX = 40; // 同侧节点间的水平安全间距
-
-// 预置的分支色系数组（分支骨分类和具体原因保持同一色系）
-const branchColors = [
-  { fill: "#E8F3FF", stroke: "#1664FF" }, // 蓝色系
-  { fill: "#E6FFED", stroke: "#00B42A" }, // 绿色系
-  { fill: "#FFF7E8", stroke: "#FF7D00" }, // 橙色系
-  { fill: "#FFECE8", stroke: "#F5319D" }, // 粉色系
-  { fill: "#F2E8FF", stroke: "#722ED1" }, // 紫色系
-  { fill: "#E8FFFF", stroke: "#14C9C9" }  // 青色系
-];
-
-let maxSpineY_up = 0;
-let maxSpineY_down = 0;
-
-// 第一步：计算每个 category 的内部尺寸和相对包围盒
-categories.forEach((cat, index) => {
-  const isTop = index % 2 === 0;
-  const numReasons = cat.reasons.length;
-
-  // 动态计算分支高度，确保原因小骨不会垂直重叠
-  // 每个原因需要 reasonHeight + 上下间距(约 16)
-  const requiredY = (numReasons + 1) * (reasonHeight + 16);
-  const branchDY = Math.max(160, requiredY);
-  const branchDX = -branchDY * 0.7; // 保持固定的倾斜角度向左延伸
-
-  cat.isTop = isTop;
-  cat.branchDX = branchDX;
-  cat.branchDY = branchDY;
-
-  // 记录最大分支高度，用于计算背景高度和主骨 Y 坐标
-  if (isTop) maxSpineY_up = Math.max(maxSpineY_up, branchDY + catHeight + 40);
-  else maxSpineY_down = Math.max(maxSpineY_down, branchDY + catHeight + 40);
-
-  // 计算该分类的相对包围盒的极值（相对于 spineX 锚点）
-  // 最左侧可能由分类框或原因框决定
-  cat.minX = Math.min(branchDX - catWidth / 2, branchDX - lineLength - reasonWidth);
-  // 最右侧为主骨挂载点 0 或 分类框右侧
-  cat.maxX = Math.max(0, branchDX + catWidth / 2);
-});
-
-// 第二步：计算每个 category 在主骨上的绝对 X 坐标 (spineX)
-let currentSpineX = 100; // 初始偏移
-for (let i = 0; i < categories.length; i++) {
-  const cat = categories[i];
-  let startX = currentSpineX;
-
-  // 需要和上一个同侧的 category 保持距离，防止水平重叠
-  if (i >= 2) {
-    const prevSameSideCat = categories[i - 2];
-    const requiredX = prevSameSideCat.spineX + prevSameSideCat.maxX - cat.minX + paddingX;
-    startX = Math.max(startX, requiredX);
+    return params;
   }
 
-  // 确保左侧最长分支不会超出画布左边界
-  if (startX + cat.minX < 50) {
-    startX = 50 - cat.minX;
+  function getLocale() {
+    var zhLang = 'zh-CN';
+    var enLang = 'en-US';
+
+    var queryLang = parseQueryString(window.location.search).lang;
+    var cookieLang = getCookieLocale();
+    var lang = enLang;
+
+    <!--从cookie中取值-->
+    function getCookieLocale() {
+      var locale = '';
+      var cookies = document.cookie.split('; ');
+      var loclaeKey = 'open_locale';
+
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        var cookieArr = cookie.split('=');
+        if (cookieArr[0] === loclaeKey) {
+          locale = cookieArr[1];
+          break;
+        }
+      }
+      return locale;
+    }
+
+    function setLocaleCookie(lang) {
+      var date = new Date();
+      // 300天到期
+      date.setTime(date.getTime() + (300 * 24 * 60 * 60 * 1000));
+      var expires = 'expires=' + date.toUTCString();
+      document.cookie = 'open_locale=' + lang + '; ' + expires + '; path=/;';
+    }
+
+    // 获取浏览器默认语言
+    if (navigator.language.indexOf('en') !== -1) {
+      lang = enLang;
+    } else if (navigator.language.indexOf('zh') !== -1) {
+      lang = zhLang;
+    }
+    if (cookieLang === enLang) {
+      lang = enLang;
+    } else if (cookieLang === zhLang) {
+      lang = zhLang;
+    }
+    if (queryLang === enLang) {
+      lang = enLang;
+    } else if (queryLang === zhLang) {
+      lang = zhLang;
+    }
+    // 设置cookie
+    setLocaleCookie(lang);
+    return lang;
   }
 
-  cat.spineX = startX;
-  // 每次略微向前推进，确保异侧节点也能稍微错开
-  currentSpineX = startX + 80;
-}
+  // 根据域名获取当前brand
+  function isLarkDomain() {
+    var defaultBrandMap = {
+      lark: ['larksuite'],
+      feishu: ['feishu', 'larkoffice', 'larkenterprise'],
+    };
+    const { hostname } = window.location;
 
-// 第三步：计算全局画布尺寸
-const lastCat = categories[categories.length - 1];
-const spineY = maxSpineY_up + 50; // 动态推导主骨 Y 坐标
-const totalWidth = lastCat.spineX + 350; // 右侧留出鱼头的空间
-const totalHeight = spineY + maxSpineY_down + 50;
+    if (defaultBrandMap.feishu.some((item) => hostname.includes(item))) {
+      return false;
+    }
 
-// 4. 生成节点数据
-// 背景
-nodes.push({ type: "rect", x: 0, y: 0, width: totalWidth, height: totalHeight, fillColor: "#FFFFFF", borderWidth: 0 });
+    if (defaultBrandMap.lark.some((item) => hostname.includes(item))) {
+      return true;
+    }
 
-// 鱼头
-const headWidth = 180;
-const headHeight = 80;
-const headX = totalWidth - headWidth - 40;
-const headY = spineY - headHeight / 2;
-nodes.push({ type: "ellipse", id: "head", x: headX, y: headY, width: headWidth, height: headHeight, text: "核心问题" });
+    if (window.domainBrand) {
+      return window.domainBrand === 'lark';
+    }
 
-// 主骨连线
-const firstSpineX = categories[0].spineX + categories[0].minX;
-nodes.push({
-  type: "connector",
-  connector: { from: { x: firstSpineX, y: spineY }, to: "head", toAnchor: "left", lineShape: "straight", endArrow: "arrow" }
-});
+    return false;
+  }
 
-// 遍历生成分类和原因小骨
-categories.forEach((cat, index) => {
-  const isTop = cat.isTop;
-  const branchDY = cat.branchDY;
-  const branchDX = cat.branchDX;
-  const color = branchColors[index % branchColors.length];
+  var isLarkBrand = isLarkDomain();
 
-  // 分类标签
-  const catX = cat.spineX + branchDX - catWidth / 2;
-  const catY = spineY + (isTop ? -branchDY - catHeight : branchDY);
+  var config = {
+    'zh-CN': {
+      'desc': '抱歉，您访问的页面不存在',
+      'back': '返回首页',
+      'title': (isLarkBrand ? 'Lark' : '飞书') + '开放平台',
+    },
+    'en-US': {
+      'desc': 'The page does not exist.',
+      'back': 'Go to homepage',
+      'title': (isLarkBrand ? 'Lark': 'Feishu') + ' Open Platform',
+    },
+  };
+  var locale = getLocale();
+  var descObj = document.querySelector('.open-platform-desc');
+  var backObj = document.querySelector('.open-platform-back');
+  descObj.innerHTML = config[locale].desc;
+  backObj.innerHTML = config[locale].back;
+  document.title = config[locale].title;
 
-  nodes.push({
-    type: "rect", id: cat.id, x: catX, y: catY, width: catWidth, height: catHeight, text: cat.text,
-    fillColor: color.fill, strokeColor: color.stroke
-  });
-  // 分支骨连线
-  nodes.push({
-    type: "connector",
-    connector: { from: { x: cat.spineX, y: spineY }, to: cat.id, toAnchor: isTop ? "bottom" : "top", lineShape: "straight", endArrow: "none", lineColor: color.stroke }
-  });
-
-  // 原因小骨
-  cat.reasons.forEach((reason, rIndex) => {
-    // 线性插值，均匀分布在分支骨上
-    const t = (rIndex + 1) / (cat.reasons.length + 1);
-    const attachX = cat.spineX + branchDX * t;
-    const attachY = spineY + (isTop ? -branchDY : branchDY) * t;
-
-    // 关键对齐：确保原因盒子完全在连线左侧，并且 Y 坐标中心精准对齐
-    const boxX = attachX - lineLength - reasonWidth;
-    const boxY = attachY - reasonHeight / 2;
-
-    const rId = `${cat.id}-r${rIndex}`;
-    nodes.push({
-      type: "rect", id: rId, x: boxX, y: boxY, width: reasonWidth, height: reasonHeight, text: reason,
-      fillColor: color.fill, strokeColor: color.stroke
-    });
-    // 原因小骨连线
-    nodes.push({
-      type: "connector",
-      connector: { from: { x: attachX, y: attachY }, to: rId, toAnchor: "right", lineShape: "straight", endArrow: "none", lineColor: color.stroke }
-    });
-  });
-});
-
-fs.writeFileSync('diagram.json', JSON.stringify({ version: 2, nodes }, null, 2));
-```
-
-## 连线格式与注意点
-
-所有 connector 都用 `{ "type": "connector", "connector": { ... } }` 格式。
-**注意：除了主骨外，其他所有连线（分支骨、原因小骨）都必须设置 `"endArrow": "none"`，否则会默认带箭头，导致方向混乱。**
-
-分支骨：从主骨上的绝对坐标点 → 分类标签节点：
-
-```json
-{
-  "version": 2,
-  "nodes": [
-    { "type": "rect", "x": 0, "y": 0, "width": "__totalWidth__", "height": "__totalHeight__" },
-
-    { "type": "ellipse", "id": "head", "x": "__headX__", "y": "__headY__",
-      "width": 180, "height": 80, "text": "[中心问题]" },
-
-    { "type": "connector", "connector": {
-      "from": { "x": "__spineStartX__", "y": "__spineY__" },
-      "to": "head", "toAnchor": "left",
-      "lineShape": "straight", "endArrow": "arrow"
-    }},
-
-    { "type": "rect", "id": "c0", "x": "__catX__", "y": "__catY__",
-      "width": 120, "height": 40, "text": "[分类A]" },
-    { "type": "connector", "connector": {
-      "from": { "x": "__spineX0__", "y": "__spineY__" },
-      "to": "c0", "toAnchor": "bottom",
-      "lineShape": "straight", "endArrow": "none"
-    }},
-
-    { "type": "rect", "id": "c0-r0", "x": "__reasonX__", "y": "__reasonY__",
-      "width": 140, "height": 32, "text": "[原因1]" },
-    { "type": "connector", "connector": {
-      "from": { "x": "__attachX__", "y": "__attachY__" },
-      "to": "c0-r0", "toAnchor": "right",
-      "lineShape": "straight", "endArrow": "none"
-    }}
-  ]
-}
-```
-
-上述骨架展示一个分类（上方）+ 一条原因的模式。完整鱼骨图重复此模式，上下交替。每个分类下可有多条原因，均匀插值分布在分支骨上。
-
-## 陷阱
-
-- **代码生成**：必须使用带有动态防重叠算法的脚本来计算坐标并输出 JSON。
-- **分支骨防重叠**：同一侧的相邻分支骨和原因框必须没有任何交叉。
-- **自适应高度**：原因数量较多时，分支骨自动拉长以容纳所有小骨。
-- **原因小骨水平**：原因框右侧的附着点必须与连线起点 Y 坐标一致。
-- **无箭头**：所有分类的分支连线、小骨连线均必须关闭箭头。
-- **同色系**：同一个分支骨、分类标签节点以及原因小骨节点和连线，必须使用同色系的颜色以保持视觉连贯性。
+</script>
+</body>
+</html>

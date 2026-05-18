@@ -60,9 +60,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/steipete/clawdis.git",
       "skillPath": "skills/mcporter/SKILL.md",
-      "skillFolderHash": "836036d0ee3b35be50a55a0b2ba359cd62aa2ba2",
+      "skillFolderHash": "f8b951fadb4db6fd6f7b2cc287ca69e155ea4be4",
       "installedAt": "2026-02-28T19:07:45.593Z",
-      "updatedAt": "2026-04-30T03:59:57.453Z"
+      "updatedAt": "2026-05-18T07:00:54.549Z"
     },
     "llm-context": {
       "source": "brave/brave-search-skills",
@@ -93,175 +93,204 @@
       "updatedAt": "2026-04-20T08:07:10.170Z"
     },
     "lark-base": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-base/SKILL.md",
-      "skillFolderHash": "65d0fc96aeb8ba3ab70437f2a020a380032b46f8",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-base/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:08.850Z",
-      "updatedAt": "2026-05-15T03:03:34.161Z"
+      "updatedAt": "2026-05-18T04:34:00.074Z"
     },
     "lark-calendar": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-calendar/SKILL.md",
-      "skillFolderHash": "75d8416cf391220827977dd67d549f3302197740",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-calendar/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:10.125Z",
-      "updatedAt": "2026-04-30T04:00:13.352Z"
+      "updatedAt": "2026-05-18T04:34:00.075Z"
     },
     "lark-contact": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-contact/SKILL.md",
-      "skillFolderHash": "3727ca0662a891b8deb872d97ea4b8846a27df59",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-contact/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:11.228Z",
-      "updatedAt": "2026-04-30T04:00:24.885Z"
+      "updatedAt": "2026-05-18T04:34:00.076Z"
     },
     "lark-doc": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-doc/SKILL.md",
-      "skillFolderHash": "7f09bc47663650dc789aa50b680fb9904ff0a895",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-doc/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:12.644Z",
-      "updatedAt": "2026-05-15T11:03:30.931Z"
+      "updatedAt": "2026-05-18T04:34:00.076Z"
     },
     "lark-drive": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-drive/SKILL.md",
-      "skillFolderHash": "ad40435be5cdcc34c5de8d286b8f5b8dce5f15ae",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-drive/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:13.472Z",
-      "updatedAt": "2026-05-15T03:03:36.971Z"
+      "updatedAt": "2026-05-18T04:34:00.077Z"
     },
     "lark-event": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-event/SKILL.md",
-      "skillFolderHash": "8ead748e9db45aea0dd5f15d5699ddd9e8bd7d4e",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-event/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:14.386Z",
-      "updatedAt": "2026-04-30T04:00:54.553Z"
+      "updatedAt": "2026-05-18T04:34:00.077Z"
     },
     "lark-im": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-im/SKILL.md",
-      "skillFolderHash": "4f5572b72d86a5e586b00cdf4a97f619e0dac4eb",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-im/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:15.279Z",
-      "updatedAt": "2026-05-15T03:53:13.658Z"
+      "updatedAt": "2026-05-18T04:34:00.078Z"
     },
     "lark-mail": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-mail/SKILL.md",
-      "skillFolderHash": "ab92e604a7ec3153c0f4caf881fb36542175ab5d",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-mail/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:16.722Z",
-      "updatedAt": "2026-05-11T02:19:02.721Z"
+      "updatedAt": "2026-05-18T04:34:00.078Z"
     },
     "lark-minutes": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-minutes/SKILL.md",
-      "skillFolderHash": "473d4f3f35bac7c9fff6c9a5ef0d98c2474e95a0",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-minutes/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:17.630Z",
-      "updatedAt": "2026-05-15T11:03:31.977Z"
+      "updatedAt": "2026-05-18T04:34:00.079Z"
     },
     "lark-openapi-explorer": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-openapi-explorer/SKILL.md",
-      "skillFolderHash": "b403a77f10cf342a01792241a3e77231842c438c",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-openapi-explorer/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:19.016Z",
-      "updatedAt": "2026-04-01T15:50:19.016Z"
+      "updatedAt": "2026-05-18T04:34:00.080Z"
     },
     "lark-shared": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-shared/SKILL.md",
-      "skillFolderHash": "c1e0972bb42c46ec253a1151d8b06dbbffc5f5c1",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-shared/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:20.533Z",
-      "updatedAt": "2026-05-15T03:04:35.435Z"
+      "updatedAt": "2026-05-18T04:34:00.080Z"
     },
     "lark-sheets": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-sheets/SKILL.md",
-      "skillFolderHash": "5fdf3cc13c5619da8dde02d9ab7b245f069aac49",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-sheets/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:21.514Z",
-      "updatedAt": "2026-05-11T02:19:05.864Z"
+      "updatedAt": "2026-05-18T04:34:00.081Z"
     },
     "lark-skill-maker": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-skill-maker/SKILL.md",
-      "skillFolderHash": "f1f0673f26a0b5d2b6cf12454dd47253587f181e",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-skill-maker/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:22.416Z",
-      "updatedAt": "2026-04-01T15:50:22.416Z"
+      "updatedAt": "2026-05-18T04:34:00.081Z"
     },
     "lark-task": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-task/SKILL.md",
-      "skillFolderHash": "5638265fe9e3e906522b6989bf24e370176b1ad7",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-task/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:23.342Z",
-      "updatedAt": "2026-05-11T02:19:07.455Z"
+      "updatedAt": "2026-05-18T04:34:00.082Z"
     },
     "lark-vc": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-vc/SKILL.md",
-      "skillFolderHash": "6ccc1bd3a392f2b4f23aefacdaa57355f676971a",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-vc/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:24.784Z",
-      "updatedAt": "2026-05-15T03:04:36.706Z"
+      "updatedAt": "2026-05-18T04:34:00.083Z"
     },
     "lark-whiteboard": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-whiteboard/SKILL.md",
-      "skillFolderHash": "d065e56a74def2bcd08ccb6160f04d919f0ddef1",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-whiteboard/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:25.690Z",
-      "updatedAt": "2026-05-15T03:05:31.863Z"
+      "updatedAt": "2026-05-18T04:34:00.083Z"
     },
     "lark-wiki": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-wiki/SKILL.md",
-      "skillFolderHash": "f193c7b778830a3175b0220a7771132c69ebee8a",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-wiki/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:26.570Z",
-      "updatedAt": "2026-05-16T07:39:53.192Z"
+      "updatedAt": "2026-05-18T04:34:00.084Z"
     },
     "lark-workflow-meeting-summary": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-workflow-meeting-summary/SKILL.md",
-      "skillFolderHash": "6a72623946c7c0a21e3df361d905203b6e9e0d49",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-workflow-meeting-summary/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:27.293Z",
-      "updatedAt": "2026-04-30T04:02:10.956Z"
+      "updatedAt": "2026-05-18T04:34:00.084Z"
     },
     "lark-workflow-standup-report": {
-      "source": "larksuite/cli",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/larksuite/cli.git",
-      "skillPath": "skills/lark-workflow-standup-report/SKILL.md",
-      "skillFolderHash": "a61356a8c9077a5b5268647cc7834f4ecab1d233",
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-workflow-standup-report/SKILL.md",
+      "skillFolderHash": "",
       "installedAt": "2026-04-01T15:50:28.173Z",
-      "updatedAt": "2026-04-01T15:50:28.173Z"
+      "updatedAt": "2026-05-18T04:34:00.085Z"
+    },
+    "lark-approval": {
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-approval/SKILL.md",
+      "skillFolderHash": "",
+      "installedAt": "2026-05-18T04:34:00.070Z",
+      "updatedAt": "2026-05-18T04:34:00.070Z"
+    },
+    "lark-attendance": {
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-attendance/SKILL.md",
+      "skillFolderHash": "",
+      "installedAt": "2026-05-18T04:34:00.074Z",
+      "updatedAt": "2026-05-18T04:34:00.074Z"
+    },
+    "lark-markdown": {
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-markdown/SKILL.md",
+      "skillFolderHash": "",
+      "installedAt": "2026-05-18T04:34:00.079Z",
+      "updatedAt": "2026-05-18T04:34:00.079Z"
+    },
+    "lark-okr": {
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-okr/SKILL.md",
+      "skillFolderHash": "",
+      "installedAt": "2026-05-18T04:34:00.079Z",
+      "updatedAt": "2026-05-18T04:34:00.079Z"
+    },
+    "lark-slides": {
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-slides/SKILL.md",
+      "skillFolderHash": "",
+      "installedAt": "2026-05-18T04:34:00.082Z",
+      "updatedAt": "2026-05-18T04:34:00.082Z"
+    },
+    "lark-vc-agent": {
+      "source": "open.feishu.cn",
+      "sourceType": "well-known",
+      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-vc-agent/SKILL.md",
+      "skillFolderHash": "",
+      "installedAt": "2026-05-18T04:34:00.083Z",
+      "updatedAt": "2026-05-18T04:34:00.083Z"
     }
   },
   "dismissed": {

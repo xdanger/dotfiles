@@ -1,101 +1,198 @@
-# 漏斗图 (Funnel)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.ico" />
+  <title></title>
+  <style>
+      * {
+          box-sizing: border-box;
+          padding: 0;
+          margin: 0;
+      }
 
-## Content 约束
+      .open-platform-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          background-color: #ffffff;
+      }
 
-- 阶段 3-6 个
-- 每阶段一行标签 + 数值（如 "{{STAGE_NAME}} ({{PERCENTAGE}})"）
-- 文案尽量简短；长文案外置到漏斗旁边，图形内仅保留核心短文案
+      .open-platform-icon {
+          width: 120px;
+          height: 120px;
+          display: block;
+      }
 
-## Layout 选型
+      .open-platform-desc {
+          margin-top: 16px;
+          line-height: 22px;
+          font-size: 14px;
+          color: #646a73;
+          text-align: center
+      }
 
-绝对定位。用 `trapezoid` / `triangle` 节点从宽到窄排列，height 用 `fit-content`。
+      .open-platform-back {
+          border-radius: 6px;
+          font-size: 14px;
+          height: 32px;
+          line-height: 22px;
+          min-width: 80px;
+          padding: 4px 11px;
+          text-align: center;
+          text-decoration: none;
+          touch-action: manipulation;
+          transition: color .1s ease-in, background-color .1s ease-in, border-color .1s ease-in, width .2s ease-in;
+          user-select: none;
+          white-space: nowrap;
+          background: #1456f0;
+          border: 1px solid #1456f0;
+          color: #ffffff;
+          margin-top: 16px;
+      }
+  </style>
+</head>
+<body>
+<div class="open-platform-wrapper">
+  <img class="open-platform-icon"
+       src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyLjkxMyA1NS4yNDRjLTUuNjMyIDIuOTUtOC4yNDYgNi4yODQtOC4yNDYgOS40NHY5LjcyYzAtMy4xNTYgMi42MTQtNi40OSA4LjI0Ni05LjQ0di05LjcyWm05NC4xNjMtMTIuMDg0di05LjcyNmM1LjkzNC0zLjE5IDguOTgxLTYuODkxIDguOTgxLTEwLjcyNXY5LjcyYzAgMy44NC0zLjA0NyA3LjU0My04Ljk4MSAxMC43MzJaIiBmaWxsPSIjMEMyOTZFIi8+PHBhdGggZD0iTTYwLjIyOSAxOS4wNTkgNDguNzMgNDkuOTIyIDYwLjM2NSA3Mi45MmwtOC40NzQgMjMuODczSDE2LjkyM2E0IDQgMCAwIDEtNC00VjIzLjA2YTQgNCAwIDAgMSA0LTRINjAuMjNaIiBmaWxsPSIjQkJCRkM0IiBmaWxsLW9wYWNpdHk9Ii40NSIvPjxwYXRoIGQ9Ik03MS40MDggMTkuMDU5IDYwLjAxMyA0OS45MjIgNzEuNDYgNzIuOTJsLTguMzI1IDIzLjg3M2gzOS45NDNhNCA0IDAgMCAwIDQtNFYyMy4wNmE0IDQgMCAwIDAtNC00aC0zMS42N1oiIGZpbGw9IiNCQkJGQzQiIGZpbGwtb3BhY2l0eT0iLjQ1Ii8+PHBhdGggZD0iTTIxLjkyMyAyNi4xYTIgMiAwIDEgMSAwIDQgMiAyIDAgMCAxIDAtNFptMyAyYTMgMyAwIDEgMC02IDAgMyAzIDAgMCAwIDYgMFptNi45MTUtMmEyIDIgMCAxIDEgMCA0IDIgMiAwIDAgMSAwLTRabTMgMmEzIDMgMCAxIDAtNiAwIDMgMyAwIDAgMCA2IDBabS0xNS43NjMgNy4zOTRhLjUuNSAwIDAgMSAuNS0uNWgzMS41ODFhLjUuNSAwIDAgMSAwIDFIMTkuNTc1YS41LjUgMCAwIDEtLjUtLjVabTQ4LjQ3NyAwYS41LjUgMCAwIDEgLjUtLjVoMzIuNDY1YS41LjUgMCAwIDEgMCAxSDY4LjA1MmEuNS41IDAgMCAxLS41LS41WiIgZmlsbD0iIzhGOTU5RSIvPjxwYXRoIGQ9Ik05OCAxMTFjOS45NDEgMCAxOC04LjA1OSAxOC0xOHMtOC4wNTktMTgtMTgtMThjLTkuOTQyIDAtMTggOC4wNTktMTggMThzOC4wNTggMTggMTggMThaIiBmaWxsPSIjRjgwIi8+PHBhdGggZD0iTTk3LjE4MSA4NC44MThhLjgxOC44MTggMCAwIDAtLjgxOC44MTl2OS44MThjMCAuNDUyLjM2Ni44MTguODE4LjgxOGgxLjYzN2EuODE4LjgxOCAwIDAgMCAuODE4LS44MTh2LTkuODE5YS44MTguODE4IDAgMCAwLS44MTgtLjgxOEg5Ny4xOFptMCAxMy4wOTJhLjgxOC44MTggMCAwIDAtLjgxOC44MTh2MS42MzZjMCAuNDUyLjM2Ni44MTguODE4LjgxOGgxLjYzN2EuODE4LjgxOCAwIDAgMCAuODE4LS44MTh2LTEuNjM2YS44MTguODE4IDAgMCAwLS44MTgtLjgxOUg5Ny4xOFoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNNC4wMjcgODUuMzFjMi40OSA1LjUxIDE0Ljc3IDkuOTQgNDEuNDUgOS45M3Y5LjcyMWMtMjYuNjguMDEtMzguOTYtNC40Mi00MS40NS05Ljkzdi05LjcyWm04NC44MS0yNy4yN2MxNy41Mi0yLjY5IDI1LjgwNy03LjAyNiAyNy4yLTExLjcxdjkuNzJjLS4zMyA0LjY3LTkuNjggOS4wMi0yNy4yIDExLjcxdi05LjcyWiIgZmlsbD0iIzMzNzBGRiIvPjxwYXRoIGQ9Ik04OS4yMzcgMTMuMDFjMTguMDU4IDAgMjYuOCAzLjI1IDI2LjggOS43MnY5LjcyYzAtNi40Ny04Ljc0Mi05LjcyLTI2LjgtOS43MnYtOS43MlptLTg0LjU3IDUxLjdjMCA2LjYgMTEuMzcgMTIuNDUgMzAuNDcgMTIuNDR2OS43MmMtMTkuMSAwLTMwLjQ3LTUuODQtMzAuNDctMTIuNDR2LTkuNzJaIiBmaWxsPSIjMDBENkI5Ii8+PC9zdmc+"
+       alt="">
+  <div class="open-platform-desc">The page does not exist.</div>
+  <a class="open-platform-back" href="/">Go to homepage</a>
+</div>
+<script>window.gfdatav1={"env":"prod","ver":"1.0.0.13","canary":0,"garrModules":null,"envName":"prod","region":"CN","idc":"lf","webServerCodeType":"DeployServerlessWebServer","runtime":"node","extra":{"canaryType":null}}</script><script>
 
-## Layout 规则
-
-- 外层 frame 使用 `layout: "vertical"` + `alignItems: "center"` 居中对齐
-- 所有层必须使用脚本计算宽度，以保证**绝对完美的等斜率（直线边缘）**。切勿手写拍脑袋的宽度！
-- 每层间 gap 0-8px（紧密堆叠视觉效果好），从上到下宽度递减。注意 children 数组第一个元素是最顶层（最宽）
-- 所有图形节点必须设置 `"vFlip": false`（引擎默认朝上翻转，漏斗需要朝下）
-- 注意：因为 `vFlip: false` 且是倒金字塔结构，所以 `topWidth` 实际控制的是漏斗各层的**底部较窄边缘**。底层可用 `triangle`（`topWidth: 0`）收窄为尖角，或继续用 `trapezoid` 保持平底。
-
-> **严格的斜率算法（必须在脚本中实现）**：
-> 要让漏斗的侧边形成一条完美的直线，**宽度的递减必须与高度和 gap 严格挂钩**。
-> 1. 设定整体宽度收缩系数 `angleK`（建议值 1.5 到 2.5，表示高度每增加1px，总宽度减少的像素数）。
-> 2. 因为从上往下变窄，所以公式是减法：`bottomWidth(即 topWidth 属性) = currentWidth - (height * angleK)`
-> 3. 下一层的顶宽公式（必须考虑 gap 带来的额外内收）：`nextLayerWidth = bottomWidth - (gap * angleK)`
-
-## 脚本构建模板
-
-此场景必须用 .cjs 脚本生成。
-
-```javascript
-const fs = require('fs');
-
-// 1. 配置基础参数
-const GAP = 4;
-const ANGLE_K = 2; // 斜率系数：高度每下降1px，宽度减少2px
-const LAYER_HEIGHT = 80;
-
-const data = [
-  { text: "展现 (100%)", fillColor: "#F0F4FC", textColor: "#1F2329" },
-  { text: "点击 (50%)", fillColor: "#EAE2FE", textColor: "#1F2329" },
-  { text: "加购 (20%)", fillColor: "#DFF5E5", textColor: "#1F2329" },
-  { text: "成交 (5%)", fillColor: "#1F2329", textColor: "#FFFFFF" }
-];
-
-// 计算第一层的初始宽度 (保证最底层缩到0或平底)
-// 倒推公式：startWidth = 最后一层底宽 + 所有高度消耗 + 所有gap消耗
-const totalHeightLoss = data.length * LAYER_HEIGHT * ANGLE_K;
-const totalGapLoss = (data.length - 1) * GAP * ANGLE_K;
-// 设定最底层为一个尖角 (底宽为0)
-let currentWidth = 0 + totalHeightLoss + totalGapLoss;
-
-const children = data.map((layer, index) => {
-  // 2. 根据公式计算当前层的底宽 (对应节点的 topWidth 属性)
-  const currentBottomWidth = currentWidth - (LAYER_HEIGHT * ANGLE_K);
-  
-  const node = {
-    type: currentBottomWidth <= 0 ? "triangle" : "trapezoid",
-    width: currentWidth,
-    // 注意：漏斗中 topWidth 表示的是下方的窄边！如果 <=0 就用 triangle
-    topWidth: Math.max(0, currentBottomWidth), 
-    height: LAYER_HEIGHT,
-    vFlip: false, // 必须为 false
-    text: layer.text,
-    textAlign: "center",
-    fillColor: layer.fillColor,
-    borderColor: layer.fillColor,
-    borderWidth: 2,
-    fontSize: 16,
-    textColor: layer.textColor
-  };
-
-  // 3. 关键：计算下一层的顶宽。必须减去 gap 的向内收缩量！
-  currentWidth = currentBottomWidth - (GAP * ANGLE_K);
-  
-  return node;
-});
-
-const output = {
-  version: 2,
-  nodes: [
-    {
-      type: "frame",
-      layout: "vertical",
-      alignItems: "center",
-      gap: GAP,
-      padding: 40,
-      children: children
+  function parseQueryString(queryString) {
+    // 移除开头的 "?"
+    if (queryString.charAt(0) === '?') {
+      queryString = queryString.substring(1);
     }
-  ]
-};
 
-fs.writeFileSync('diagram.json', JSON.stringify(output, null, 2));
-```
+    var params = {};
+    if (!queryString) return params;
 
-## 陷阱
+    // 分割参数对
+    var paramPairs = queryString.split('&');
 
-- **不要手写随意递减的宽度**：这会导致漏斗侧边变成折线，不直。必须严格使用上述 `angleK` 公式计算。
-- **忘记计算 gap 带来的收缩**：如果下一层的 `width` 只是简单等于上一层的 `topWidth`，在有 gap 的情况下，衔接处会产生锯齿折角。必须减去 `gap * angleK`。
-- **vFlip 未设置**：忘记 `"vFlip": false` 会导致梯形朝上翻转，漏斗形状错误
-- **文字溢出底层**：底层越窄空间越小，短文案用 `\n` 换行，长文案外置到漏斗旁边（外层套 `layout: "horizontal"` 的 frame，漏斗一侧，说明文字另一侧）
+    for (var i = 0; i < paramPairs.length; i++) {
+      var paramPair = paramPairs[i].split('=');
+      var key = decodeURIComponent(paramPair[0]);
+      var value = paramPair.length > 1 ? decodeURIComponent(paramPair[1]) : '';
+
+      // 处理重复参数（转为数组）
+      if (params[key] === undefined) {
+        params[key] = value;
+      } else if (!Array.isArray(params[key])) {
+        params[key] = [params[key], value];
+      } else {
+        params[key].push(value);
+      }
+    }
+
+    return params;
+  }
+
+  function getLocale() {
+    var zhLang = 'zh-CN';
+    var enLang = 'en-US';
+
+    var queryLang = parseQueryString(window.location.search).lang;
+    var cookieLang = getCookieLocale();
+    var lang = enLang;
+
+    <!--从cookie中取值-->
+    function getCookieLocale() {
+      var locale = '';
+      var cookies = document.cookie.split('; ');
+      var loclaeKey = 'open_locale';
+
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        var cookieArr = cookie.split('=');
+        if (cookieArr[0] === loclaeKey) {
+          locale = cookieArr[1];
+          break;
+        }
+      }
+      return locale;
+    }
+
+    function setLocaleCookie(lang) {
+      var date = new Date();
+      // 300天到期
+      date.setTime(date.getTime() + (300 * 24 * 60 * 60 * 1000));
+      var expires = 'expires=' + date.toUTCString();
+      document.cookie = 'open_locale=' + lang + '; ' + expires + '; path=/;';
+    }
+
+    // 获取浏览器默认语言
+    if (navigator.language.indexOf('en') !== -1) {
+      lang = enLang;
+    } else if (navigator.language.indexOf('zh') !== -1) {
+      lang = zhLang;
+    }
+    if (cookieLang === enLang) {
+      lang = enLang;
+    } else if (cookieLang === zhLang) {
+      lang = zhLang;
+    }
+    if (queryLang === enLang) {
+      lang = enLang;
+    } else if (queryLang === zhLang) {
+      lang = zhLang;
+    }
+    // 设置cookie
+    setLocaleCookie(lang);
+    return lang;
+  }
+
+  // 根据域名获取当前brand
+  function isLarkDomain() {
+    var defaultBrandMap = {
+      lark: ['larksuite'],
+      feishu: ['feishu', 'larkoffice', 'larkenterprise'],
+    };
+    const { hostname } = window.location;
+
+    if (defaultBrandMap.feishu.some((item) => hostname.includes(item))) {
+      return false;
+    }
+
+    if (defaultBrandMap.lark.some((item) => hostname.includes(item))) {
+      return true;
+    }
+
+    if (window.domainBrand) {
+      return window.domainBrand === 'lark';
+    }
+
+    return false;
+  }
+
+  var isLarkBrand = isLarkDomain();
+
+  var config = {
+    'zh-CN': {
+      'desc': '抱歉，您访问的页面不存在',
+      'back': '返回首页',
+      'title': (isLarkBrand ? 'Lark' : '飞书') + '开放平台',
+    },
+    'en-US': {
+      'desc': 'The page does not exist.',
+      'back': 'Go to homepage',
+      'title': (isLarkBrand ? 'Lark': 'Feishu') + ' Open Platform',
+    },
+  };
+  var locale = getLocale();
+  var descObj = document.querySelector('.open-platform-desc');
+  var backObj = document.querySelector('.open-platform-back');
+  descObj.innerHTML = config[locale].desc;
+  backObj.innerHTML = config[locale].back;
+  document.title = config[locale].title;
+
+</script>
+</body>
+</html>
