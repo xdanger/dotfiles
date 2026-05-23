@@ -91,7 +91,7 @@ keybind = cmd+shift+enter=toggle_split_zoom
 
 # ============ Shell 集成（pwd 同步、OSC 7） ============
 shell-integration = detect
-shell-integration-features = cursor,sudo,title
+shell-integration-features = cursor,sudo,title,ssh-terminfo
 
 # ============ 大滚动缓冲（应对 Claude Code 长输出） ============
 # 默认 10k 行偏小
