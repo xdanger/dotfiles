@@ -138,12 +138,47 @@ if $COLORTERM == 'gnome-terminal'
     set t_Co=256
 endif
 
-try
-    colorscheme desert
-catch
-endtry
+" Use truecolor in modern terminals such as Ghostty.
+if has('termguicolors') && (&term =~# 'ghostty' || $TERM_PROGRAM =~? 'ghostty' || $COLORTERM =~? 'truecolor\|24bit')
+    set termguicolors
+endif
 
-set background=dark
+let g:terminal_dark_colorscheme = get(g:, 'terminal_dark_colorscheme', 'ghostty-monokai-pro-spectrum')
+let g:terminal_light_colorscheme = get(g:, 'terminal_light_colorscheme', 'ghostty-monokai-pro-light-sun')
+
+let s:applying_terminal_colors = 0
+
+function! s:ApplyTerminalColors() abort
+    if s:applying_terminal_colors
+        return
+    endif
+
+    let s:applying_terminal_colors = 1
+    let l:colorscheme = &background ==# 'light' ? g:terminal_light_colorscheme : g:terminal_dark_colorscheme
+
+    try
+        execute 'colorscheme ' . l:colorscheme
+    catch /^Vim\%((\a\+)\)\=:E185/
+        colorscheme default
+    endtry
+
+    let s:applying_terminal_colors = 0
+endfunction
+
+function! s:RequestTerminalBackground(...) abort
+    if exists('&t_RB') && &t_RB !=# ''
+        call echoraw(&t_RB)
+    endif
+endfunction
+
+augroup terminal_background
+    autocmd!
+    autocmd VimEnter,FocusGained,CursorHold,CursorHoldI * call <SID>RequestTerminalBackground()
+    autocmd OptionSet background call <SID>ApplyTerminalColors()
+    autocmd TermResponseAll background call <SID>ApplyTerminalColors()
+augroup END
+
+call s:ApplyTerminalColors()
 
 " Set extra options when running in GUI mode
 if has("gui_running")
