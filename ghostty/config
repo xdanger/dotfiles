@@ -76,7 +76,8 @@ macos-option-as-alt = true
 keybind = shift+enter=text:\x1b\r
 
 # ============ 全局快捷终端（quick terminal 下拉式） ============
-keybind = global:cmd+grave_accent=toggle_quick_terminal
+# 避开 macOS 默认的 Cmd+` App 内窗口切换
+keybind = global:ctrl+cmd+grave_accent=toggle_quick_terminal
 
 # ============ 分屏（多 Claude Code 实例并行） ============
 keybind = cmd+d=new_split:right
