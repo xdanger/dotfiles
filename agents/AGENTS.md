@@ -36,6 +36,11 @@ Auth issues: `npx mcporter auth <server>`
 - Focus on WHY, not WHAT
 - Keep commits reasonably split: when you can separate changes by logic or file group, avoid committing them together.
 
+## PR Reviews
+
+- When resolving CI issues in a PR, reply to every inline comment after applying the fix — even if the comment doesn't reflect a real bug.
+- Mark resolved inline comments by calling the `resolveReviewThread` mutation via `gh api graphql`.
+
 ## Linter Policy
 
 Never modify linter configs without explicit approval. On lint failure: report rule + location, suggest fix, let user decide.
