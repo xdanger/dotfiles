@@ -40,6 +40,7 @@ Auth issues: `npx mcporter auth <server>`
 
 - When resolving CI issues in a PR, reply to every inline comment after applying the fix — even if the comment doesn't reflect a real bug.
 - Mark resolved inline comments by calling the `resolveReviewThread` mutation via `gh api graphql`.
+- Merge PRs with "rebase and merge" by default.
 
 ## Linter Policy
 
