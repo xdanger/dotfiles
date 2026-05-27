@@ -37,13 +37,15 @@ font-thicken-strength = 128
 font-feature = +liga
 font-synthetic-style = false
 font-style-bold = false
-adjust-cell-width = -18%
+adjust-cell-width = -16%
 adjust-cell-height = +24%
-# adjust-box-thickness = +20%
+adjust-box-thickness = +20%
 window-height = 32
 window-width = 128
-window-padding-x = 2
-window-title-font-family = SF Compact Text
+window-padding-x = 12
+window-padding-y = 8
+window-padding-balance = true
+window-title-font-family = Geist
 window-decoration = true
 
 #
