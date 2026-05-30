@@ -23,6 +23,11 @@ Prefer MCP tools over built-in equivalents (e.g., use `tavily.tavily_search` ins
 Syntax: `npx mcporter call <server>.<tool> key="value" numKey:5`
 Auth issues: `npx mcporter auth <server>`
 
+## Git Usage
+
+- When using `git` or `gh`, request elevated permissions so the command runs against the system tools and configuration instead of the sandboxed toolchain.
+- The system `git` configuration signs commits with an SSH token. Ensure every created commit is signed, and verify the signature after committing.
+
 ## Git Commit Format
 
 ```
