@@ -38,7 +38,9 @@ Auth issues: `npx mcporter auth <server>`
 
 ## PR Reviews
 
-- When resolving CI issues in a PR, reply to every inline comment after applying the fix — even if the comment doesn't reflect a real bug.
+- When creating a PR, add `xdanger` (GitHub user ID `7087`) as an assignee.
+- When creating a ready-to-review PR directly, or when marking a draft PR ready for review, request review from `apps/copilot-pull-request-reviewer`.
+- Reply to every code review inline comment after applying the fix or deciding on the response — even if the comment doesn't reflect a real bug.
 - Mark resolved inline comments by calling the `resolveReviewThread` mutation via `gh api graphql`.
 - Merge PRs with "rebase and merge" by default.
 
