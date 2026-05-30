@@ -4,6 +4,8 @@
     signingkey = ~/.ssh/singapore
 [gpg]
     format = ssh
+[gpg "ssh"]
+    allowedSignersFile = ~/.config/git/verified_signers
 [commit]
     gpgsign = true
 [core]
