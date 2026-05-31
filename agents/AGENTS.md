@@ -26,6 +26,7 @@ Auth issues: `npx mcporter auth <server>`
 ## Git Usage
 
 - When using `git` or `gh`, request elevated permissions so the command runs against the system tools and configuration instead of the sandboxed toolchain.
+- Use system `git` to create commits so the local signing configuration is applied, and follow the Git commit message format below for every commit.
 - The system `git` configuration signs commits with an SSH token. Ensure every created commit is signed, and verify the signature after committing.
 
 ## Git Commit Format
@@ -47,7 +48,7 @@ Auth issues: `npx mcporter auth <server>`
 - When creating a ready-to-review PR directly, or when marking a draft PR ready for review, request review from `apps/copilot-pull-request-reviewer`.
 - Reply to every code review inline comment after applying the fix or deciding on the response — even if the comment doesn't reflect a real bug.
 - Mark resolved inline comments by calling the `resolveReviewThread` mutation via `gh api graphql`.
-- Merge PRs with "rebase and merge" by default.
+- Merge PRs with "create a merge commit" by default.
 
 ## Linter Policy
 
