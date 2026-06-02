@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- The ONLY automated piece: a thin collector that runs as root (powermetrics
+     needs it) and just appends data points. It runs collect.py DIRECTLY from the
+     dotfiles repo, so editing the script takes effect on the next tick — no
+     redeploy. install.sh substitutes the __TOKENS__ for this machine. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.ai-agent.power-collector</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>__COLLECT__</string>
+    <string>--data-dir</string>
+    <string>__DATA_DIR__</string>
+  </array>
+  <key>StartInterval</key><integer>__INTERVAL__</integer>
+  <key>RunAtLoad</key><true/>
+  <key>ProcessType</key><string>Background</string>
+  <key>LowPriorityIO</key><true/>
+  <key>Nice</key><integer>10</integer>
+  <key>StandardOutPath</key><string>__LOG_DIR__/collector.log</string>
+  <key>StandardErrorPath</key><string>__LOG_DIR__/collector.log</string>
+</dict>
+</plist>
