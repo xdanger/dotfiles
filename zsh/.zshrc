@@ -11,6 +11,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Keep paths correct when `source ~/.zshrc` inherits stale variables.
+ZDOTDIR="${${(%):-%x}:A:h}"
+DOTFILES="${ZDOTDIR:h}"
+ZSH="$ZDOTDIR/oh-my-zsh"
+export ZDOTDIR DOTFILES ZSH
+
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="yyyy/mm/dd"
 

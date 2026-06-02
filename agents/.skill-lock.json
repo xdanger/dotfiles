@@ -37,19 +37,10 @@
       "installedAt": "2026-02-16T03:36:08.769Z",
       "updatedAt": "2026-05-11T02:18:57.490Z"
     },
-    "documentation-lookup": {
-      "source": "upstash/context7",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/upstash/context7.git",
-      "skillPath": "plugins/claude/context7/skills/documentation-lookup/SKILL.md",
-      "skillFolderHash": "4aedd1bbd79f085458a06b097fbc8bba9194a310",
-      "installedAt": "2026-02-16T04:38:00.698Z",
-      "updatedAt": "2026-02-16T04:38:00.698Z"
-    },
     "git-commit": {
-      "source": "xdanger/skills",
+      "source": "daihaus/skills",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/xdanger/skills.git",
+      "sourceUrl": "https://github.com/daihaus/skills.git",
       "skillPath": "skills/git-commit/SKILL.md",
       "skillFolderHash": "da10dc16fe152affcb9e4b8e00cf3fdc43a1e81b",
       "installedAt": "2026-02-16T05:02:46.175Z",
@@ -75,9 +66,9 @@
       "updatedAt": "2026-03-12T01:00:32.899Z"
     },
     "manus": {
-      "source": "xdanger/skills",
+      "source": "daihaus/skills",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/xdanger/skills.git",
+      "sourceUrl": "https://github.com/daihaus/skills.git",
       "skillPath": "skills/manus/SKILL.md",
       "skillFolderHash": "40fcb57439bb648197efc2ec015b089cf190dfde",
       "installedAt": "2026-03-12T01:30:38.946Z",
