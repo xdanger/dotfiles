@@ -146,6 +146,14 @@ endif
 let g:terminal_dark_colorscheme = get(g:, 'terminal_dark_colorscheme', 'ghostty-monokai-pro-spectrum')
 let g:terminal_light_colorscheme = get(g:, 'terminal_light_colorscheme', 'ghostty-monokai-pro-light-sun')
 
+" Some Vim builds (notably Debian's, even under terminals that support the
+" OSC 11 "query background colour" sequence) leave t_RB empty, so Vim never
+" asks the terminal and 'background' stays at its default. Set t_RB ourselves
+" so the detection below has something to send. OSC 11 query, BEL-terminated.
+if !has('gui_running') && &t_RB ==# '' && (&term =~# '\v^(xterm|tmux|screen|foot|kitty|wezterm|alacritty|ghostty|vte|st|rio|contour)' || $COLORTERM =~? 'truecolor\|24bit' || $TERM_PROGRAM =~? 'ghostty\|iterm\|apple_terminal\|wezterm')
+    let &t_RB = "\<Esc>]11;?\<C-G>"
+endif
+
 let s:applying_terminal_colors = 0
 
 function! s:ApplyTerminalColors() abort
@@ -165,9 +173,48 @@ function! s:ApplyTerminalColors() abort
     let s:applying_terminal_colors = 0
 endfunction
 
+" Parse the terminal's OSC 11 reply (kept by Vim in v:termrbgresp) and set
+" 'background' from its perceived luminance. Changing 'background' fires the
+" OptionSet autocmd below, which reapplies the colorscheme. This is a portable
+" fallback for builds lacking the TermResponseAll event (patch 9.1.0501) or
+" that do not flip 'background' on their own.
+function! s:ApplyBackgroundFromTerminal(...) abort
+    if empty(v:termrbgresp)
+        return
+    endif
+
+    let l:rgb = matchlist(v:termrbgresp, '\v(\x+)/(\x+)/(\x+)')
+    if empty(l:rgb)
+        return
+    endif
+
+    " Per-channel width can be 1-4 hex digits; normalise each to 0.0-1.0.
+    let l:lum = 0.0
+    for [l:idx, l:weight] in [[1, 0.299], [2, 0.587], [3, 0.114]]
+        let l:hex = l:rgb[l:idx]
+        let l:lum += l:weight * str2nr(l:hex, 16) / (pow(16, len(l:hex)) - 1)
+    endfor
+
+    let l:background = l:lum >= 0.5 ? 'light' : 'dark'
+    if &background !=# l:background
+        let &background = l:background
+    endif
+endfunction
+
 function! s:RequestTerminalBackground(...) abort
-    if exists('&t_RB') && &t_RB !=# ''
-        call echoraw(&t_RB)
+    if has('gui_running') || &t_RB ==# ''
+        return
+    endif
+
+    call echoraw(&t_RB)
+
+    " The reply is read asynchronously; parse it once it has arrived. Two
+    " staggered timers cover both fast local and slower SSH round-trips.
+    if has('timers')
+        call timer_start(50, function('s:ApplyBackgroundFromTerminal'))
+        call timer_start(200, function('s:ApplyBackgroundFromTerminal'))
+    else
+        call s:ApplyBackgroundFromTerminal()
     endif
 endfunction
 
@@ -175,7 +222,11 @@ augroup terminal_background
     autocmd!
     autocmd VimEnter,FocusGained,CursorHold,CursorHoldI * call <SID>RequestTerminalBackground()
     autocmd OptionSet background call <SID>ApplyTerminalColors()
-    autocmd TermResponseAll background call <SID>ApplyTerminalColors()
+    " TermResponseAll (patch 9.1.0501) fires when the background reply arrives;
+    " register it only where it exists, otherwise sourcing throws E216.
+    if exists('##TermResponseAll')
+        autocmd TermResponseAll background call <SID>ApplyTerminalColors()
+    endif
 augroup END
 
 call s:ApplyTerminalColors()
