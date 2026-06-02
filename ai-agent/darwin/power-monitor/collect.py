@@ -19,6 +19,7 @@ import gzip
 import json
 import os
 import plistlib
+import re
 import shutil
 import subprocess
 import sys
@@ -47,6 +48,23 @@ def run_powermetrics():
     return plistlib.loads(out)
 
 
+def read_power_source():
+    """Cheap AC-vs-battery + charge read. Laptop, so this varies; analysis
+    cares whether a burst happened on battery. Failsafe: (None, None)."""
+    try:
+        out = subprocess.run(
+            ["/usr/bin/pmset", "-g", "batt"], capture_output=True, timeout=5
+        ).stdout.decode("utf-8", "replace")
+    except Exception:
+        return None, None
+    src = "ac" if "AC Power" in out else ("battery" if "Battery Power" in out else None)
+    pct = None
+    m = re.search(r"(\d+)%", out)
+    if m:
+        pct = int(m.group(1))
+    return src, pct
+
+
 def build_records(d, now):
     proc = d.get("processor", {}) or {}
     gpu = d.get("gpu", {}) or {}
@@ -55,8 +73,11 @@ def build_records(d, now):
     except OSError:
         load1 = load5 = load15 = None
 
+    pwr, batt_pct = read_power_source()
+
     sys_rec = {
         "t": now, "type": "sys",
+        "pwr": pwr, "batt_pct": batt_pct,
         "cpu_mw": proc.get("cpu_power"),
         "gpu_mw": proc.get("gpu_power"),
         "ane_mw": proc.get("ane_power"),

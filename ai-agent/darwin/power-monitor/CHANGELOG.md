@@ -18,3 +18,13 @@ Format: `## YYYY-MM-DD — <what changed> — <why>`
   briefly and was dropped same-day to honor that.)
 - Collector runs directly from this repo via LaunchDaemon `com.ai-agent.power-collector`
   (edits take effect next tick; sampling interval lives in the plist).
+
+## 2026-06-02 — add `pwr` + `batt_pct` to sys record — recurring analysis need
+- `collect.py`: new `read_power_source()` helper (cheap `pmset -g batt` parse,
+  failsafe → `(None, None)`) adds two fields to each `sys` line: `pwr`
+  ("ac"/"battery"/null) and `batt_pct` (int). This is a laptop, so AC-vs-battery
+  context matters for reading a burst, and the `/power-audit` routine had been
+  fetching it manually via `pmset` on all 3 runs so far — promoting it into the
+  time series. Backward-compatible (analysis reads keys with `.get()`; old records
+  lacking the field still parse). Verified: compiles, dry-run emits a valid record
+  with `"pwr":"ac","batt_pct":80`. Interval unchanged → no `install.sh` rerun needed.
