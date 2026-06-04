@@ -75,6 +75,16 @@ def build_records(d, now):
 
     pwr, batt_pct = read_power_source()
 
+    # powermetrics labels GPU avg freq "freq_hz" but actually emits MHz on this
+    # hardware (e.g. ~373 ≈ residency-weighted avg of the 338/486/636 MHz dvfm
+    # states), so the old `/1e6` pinned this field to 0.0 every tick. Treat the
+    # value as MHz; guard in case some build ever returns true Hz (would be ≫1e5).
+    gpu_freq = gpu.get("freq_hz")
+    if gpu_freq:
+        gpu_mhz = round(gpu_freq / 1e6 if gpu_freq > 1e5 else gpu_freq, 1)
+    else:
+        gpu_mhz = None
+
     sys_rec = {
         "t": now, "type": "sys",
         "pwr": pwr, "batt_pct": batt_pct,
@@ -82,7 +92,7 @@ def build_records(d, now):
         "gpu_mw": proc.get("gpu_power"),
         "ane_mw": proc.get("ane_power"),
         "combined_mw": proc.get("combined_power"),
-        "gpu_mhz": round(gpu["freq_hz"] / 1e6, 1) if gpu.get("freq_hz") else None,
+        "gpu_mhz": gpu_mhz,
         "gpu_busy_pct": round((1.0 - gpu["idle_ratio"]) * 100, 1) if gpu.get("idle_ratio") is not None else None,
         "load1": load1, "load5": load5, "load15": load15,
         "ncpu": os.cpu_count(),
