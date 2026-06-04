@@ -11,10 +11,24 @@ path=("$HOMEBREW/sbin" "$HOMEBREW/bin" $path)
 manpath+=("$HOMEBREW/man")
 
 # SSH auth agent
-#if [[ -z "$SSH_TTY" ]]; then
-#  export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-#fi
-SSH_AUTH_SOCK=$(launchctl getenv SSH_AUTH_SOCK) /usr/bin/ssh-add --apple-use-keychain 2>/dev/null
+# Alternative: route through the 1Password agent instead of the system one —
+#   export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+#
+# GUI (Aqua) login sessions inherit SSH_AUTH_SOCK from launchd automatically.
+# Non-GUI sessions (e.g. `ssh` in with `ForwardAgent no`) don't — so reattach to
+# the very same launchd-managed agent, making its already-loaded keys usable
+# here too. The launchd socket path changes every boot, so resolve it
+# dynamically: try launchctl first (fast, works on some setups), then fall back
+# to locating the agent's `Listeners` socket via lsof.
+if [[ -z "$SSH_AUTH_SOCK" ]] || ! /usr/bin/ssh-add -l >/dev/null 2>&1; then
+  _agent_sock=$(launchctl getenv SSH_AUTH_SOCK 2>/dev/null)
+  [[ -S "$_agent_sock" ]] || \
+    _agent_sock=$(lsof -aUc ssh-agent -u "$(id -un)" 2>/dev/null | awk '/Listeners$/{print $NF; exit}')
+  [[ -S "$_agent_sock" ]] && export SSH_AUTH_SOCK="$_agent_sock"
+  unset _agent_sock
+fi
+# Load Apple-keychain-stored keys into the agent (no-op if already present).
+/usr/bin/ssh-add --apple-use-keychain 2>/dev/null
 
 # Google Cloud Platform
 if (( $+commands[gcloud] )); then
