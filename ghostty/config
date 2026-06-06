@@ -27,7 +27,7 @@
 # # separated by equals signs.
 #theme = light:Monokai Pro Light Sun,dark:Monokai Pro Spectrum
 theme = Monokai Pro Spectrum
-background-opacity = 0.97
+#background-opacity = 0.97
 background-blur = true
 # cursor-style = bar
 #font-family = iMWritingMono Nerd Font
