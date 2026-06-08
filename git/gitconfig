@@ -15,7 +15,7 @@
     st = status
     br = branch -a
     #ci = "!claude -p '/git-commit' --model sonnet"
-    ci = "!codex exec '$git-commit'"
+    ci = "!codex --model gpt-5.3-codex-spark exec '$git-commit'"
     co = checkout
     clone-bare-for-worktrees = "!zsh -lc 'script=\"\"; if [[ -n \"${DOTFILES:-}\" && -x \"${DOTFILES}/bin/git-clone-bare-for-worktrees.zsh\" ]]; then script=\"${DOTFILES}/bin/git-clone-bare-for-worktrees.zsh\"; elif command -v git-clone-bare-for-worktrees.zsh >/dev/null 2>&1; then script=\"$(command -v git-clone-bare-for-worktrees.zsh)\"; else for config in \"$HOME/.gitconfig\" \"$HOME/.config/git/config\"; do if [[ -e \"$config\" ]]; then real_config=${config:A}; candidate=${real_config:h:h}/bin/git-clone-bare-for-worktrees.zsh; if [[ -x \"$candidate\" ]]; then script=\"$candidate\"; break; fi; fi; done; fi; [[ -n \"$script\" ]] || script=\"$HOME/.dotfiles/bin/git-clone-bare-for-worktrees.zsh\"; exec zsh \"$script\" \"$@\"' zsh \"$@\""
 [init]
