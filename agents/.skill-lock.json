@@ -300,6 +300,15 @@
       "skillFolderHash": "50ea99cdc029b475d9236e2ae35289520c94abfa",
       "installedAt": "2026-06-13T03:00:27.799Z",
       "updatedAt": "2026-06-13T03:00:27.799Z"
+    },
+    "pr-shepherd": {
+      "source": "daihaus/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/daihaus/skills.git",
+      "skillPath": "skills/pr-shepherd/SKILL.md",
+      "skillFolderHash": "8895ad7485b911183c272111e56139a3accfeea7",
+      "installedAt": "2026-06-13T17:01:51.890Z",
+      "updatedAt": "2026-06-13T17:01:51.890Z"
     }
   },
   "dismissed": {
