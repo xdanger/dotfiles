@@ -291,6 +291,15 @@
       "skillFolderHash": "ae187e1bc0c19d3b9299e69ed126b69a46015acc",
       "installedAt": "2026-06-13T02:38:45.786Z",
       "updatedAt": "2026-06-13T02:38:45.786Z"
+    },
+    "deep-dive": {
+      "source": "daihaus/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/daihaus/skills.git",
+      "skillPath": "skills/deep-dive/SKILL.md",
+      "skillFolderHash": "50ea99cdc029b475d9236e2ae35289520c94abfa",
+      "installedAt": "2026-06-13T03:00:27.799Z",
+      "updatedAt": "2026-06-13T03:00:27.799Z"
     }
   },
   "dismissed": {
