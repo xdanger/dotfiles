@@ -282,6 +282,15 @@
       "skillFolderHash": "",
       "installedAt": "2026-05-18T04:34:00.083Z",
       "updatedAt": "2026-05-18T04:34:00.083Z"
+    },
+    "audience-aware-comms": {
+      "source": "daihaus/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/daihaus/skills.git",
+      "skillPath": "skills/audience-aware-comms/SKILL.md",
+      "skillFolderHash": "ae187e1bc0c19d3b9299e69ed126b69a46015acc",
+      "installedAt": "2026-06-13T02:38:45.786Z",
+      "updatedAt": "2026-06-13T02:38:45.786Z"
     }
   },
   "dismissed": {
@@ -290,15 +299,17 @@
   "lastSelectedAgents": [
     "amp",
     "antigravity",
+    "antigravity-cli",
     "cline",
     "codex",
     "cursor",
     "deepagents",
     "gemini-cli",
     "github-copilot",
-    "kimi-cli",
+    "kimi-code-cli",
     "opencode",
     "warp",
+    "zed",
     "claude-code"
   ]
 }
