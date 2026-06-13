@@ -113,15 +113,15 @@ gh api repos/OWNER/REPO \
   --jq '{squash:.allow_squash_merge, merge:.allow_merge_commit, rebase:.allow_rebase_merge}'
 ```
 
-Pick the user's configured preference if given; otherwise prefer `squash` when
-allowed (clean single-commit history for a feature PR), then `merge`, then
-`rebase`. Use only a method the repo allows.
+Pick the user's configured preference if given; otherwise prefer `merge` (a true
+merge commit) when allowed, then `squash`, then `rebase`. Use only a method the
+repo allows.
 
 ## 8. Merge + remote branch deletion
 
 ```bash
-gh pr merge <PR> --squash               # or --merge / --rebase
-gh pr merge <PR> --squash --delete-branch   # also deletes the REMOTE head branch
+gh pr merge <PR> --merge                 # or --squash / --rebase
+gh pr merge <PR> --merge --delete-branch # also deletes the REMOTE head branch
 ```
 
 `--delete-branch` removes the remote branch and _attempts_ the local one — but it
@@ -130,7 +130,7 @@ worktree-based flows do the merge WITHOUT `--delete-branch`, delete the remote
 explicitly, then handle local cleanup in step 9:
 
 ```bash
-gh pr merge <PR> --squash
+gh pr merge <PR> --merge
 gh api -X DELETE repos/OWNER/REPO/git/refs/heads/HEAD_REF   # delete remote branch
 ```
 

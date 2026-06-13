@@ -125,18 +125,18 @@ Re-confirm GREEN immediately before merging — state can change between iterati
 (a new review, a fresh push from a teammate). Then:
 
 1. **Choose the merge method.** Use the user's stated preference; otherwise
-   detect allowed methods and prefer squash → merge → rebase
+   detect allowed methods and prefer merge → squash → rebase
    (`references/github-api.md` §7).
 
 2. **Decide the merge autonomy.** By default, ask for a one-line confirmation
    before the irreversible merge, showing what you're about to do
-   ("All green — squash-merging #123 into main and deleting `feature/x`. Go?").
+   ("All green — merge-committing #123 into main and deleting `feature/x`. Go?").
    If the user has explicitly asked for hands-off operation, or handed you an
    autonomous mandate, skip the prompt and merge — the strict GREEN gate is the
    safety mechanism in that case. Either way, merge is the point of no return:
    only cross it on a gate you trust.
 
-3. **Merge.** `gh pr merge <PR> --squash` (or chosen method).
+3. **Merge.** `gh pr merge <PR> --merge` (or chosen method).
 
 4. **Delete the remote branch — unless it is long-lived.** Treat as long-lived
    (do NOT delete) any branch that is: a default/integration branch
@@ -176,7 +176,7 @@ Re-confirm GREEN immediately before merging — state can change between iterati
 
 ## Configurable knobs (mention these if the user wants to tune behavior)
 
-- **Merge method**: squash (default if allowed) / merge / rebase.
+- **Merge method**: merge commit (default if allowed) / squash / rebase.
 - **Merge autonomy**: confirm-before-merge (default) / fully autonomous.
 - **Long-lived branch keep-list**: extra patterns beyond the built-in set.
 - **Iteration cap**: default 5.
