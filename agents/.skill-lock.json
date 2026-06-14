@@ -38,9 +38,9 @@
       "updatedAt": "2026-05-11T02:18:57.490Z"
     },
     "git-commit": {
-      "source": "daihaus/skills",
+      "source": "krosdai/skills",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/daihaus/skills.git",
+      "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/git-commit/SKILL.md",
       "skillFolderHash": "da10dc16fe152affcb9e4b8e00cf3fdc43a1e81b",
       "installedAt": "2026-02-16T05:02:46.175Z",
@@ -66,9 +66,9 @@
       "updatedAt": "2026-03-12T01:00:32.899Z"
     },
     "manus": {
-      "source": "daihaus/skills",
+      "source": "krosdai/skills",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/daihaus/skills.git",
+      "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/manus/SKILL.md",
       "skillFolderHash": "40fcb57439bb648197efc2ec015b089cf190dfde",
       "installedAt": "2026-03-12T01:30:38.946Z",
@@ -284,27 +284,27 @@
       "updatedAt": "2026-05-18T04:34:00.083Z"
     },
     "audience-aware-comms": {
-      "source": "daihaus/skills",
+      "source": "krosdai/skills",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/daihaus/skills.git",
+      "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/audience-aware-comms/SKILL.md",
       "skillFolderHash": "ae187e1bc0c19d3b9299e69ed126b69a46015acc",
       "installedAt": "2026-06-13T02:38:45.786Z",
       "updatedAt": "2026-06-13T02:38:45.786Z"
     },
     "deep-dive": {
-      "source": "daihaus/skills",
+      "source": "krosdai/skills",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/daihaus/skills.git",
+      "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/deep-dive/SKILL.md",
       "skillFolderHash": "50ea99cdc029b475d9236e2ae35289520c94abfa",
       "installedAt": "2026-06-13T03:00:27.799Z",
       "updatedAt": "2026-06-13T03:00:27.799Z"
     },
     "pr-shepherd": {
-      "source": "daihaus/skills",
+      "source": "krosdai/skills",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/daihaus/skills.git",
+      "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/pr-shepherd/SKILL.md",
       "skillFolderHash": "515ddca3ab9e4a40560f251e38835c7d318b90bd",
       "installedAt": "2026-06-13T17:01:51.890Z",
