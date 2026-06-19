@@ -11,6 +11,7 @@
 - `grep` → `rg`，`find` → `fd`，`cat` → `bat`，`ls` → `eza`
 - `sed` → `sd`，`du` → `dust`，`df` → `duf`，`make` → `just`
 - Also available: `jq`, `yq`, `fzf`, `glow`, `tldr`, `watchexec`, `difft`, `tokei`, `hyperfine`
+- @RTK.md
 
 ## MCP Tools (via mcporter)
 
@@ -63,3 +64,4 @@ Never modify linter configs without explicit approval. On lint failure: report r
 
 - Add space between CJK and ASCII/numbers (e.g., "使用 Python 3.11"), except °%
 - CJK text: full-width punctuation; English text: half-width punctuation
+
