@@ -40,13 +40,13 @@ source "$ZSH/oh-my-zsh.sh"
 
 (( $+commands[rsync] ))         && alias rsync="rsync --exclude '.DS_Store'"
 (( $+commands[rclone] ))        && alias rclone="rclone --exclude-from $DOTFILES/rclone/exclude-list.txt"
-(( $+commands[bat] ))           && alias cat='bat --paging never'
-(( $+commands[prettyping] ))    && alias ping='prettyping --nolegend'
-(( $+commands[htop] ))          && alias top='sudo htop'
-(( $+commands[diff-so-fancy] )) && alias diff='diff-so-fancy'
-(( $+commands[tldr] ))          && alias help='tldr'
-(( $+commands[podman] ))        && alias docker='podman'
-(( $+commands[jira] ))          && eval "$(jira --completion-script-bash)"
+#(( $+commands[bat] ))           && alias cat='bat --paging never'
+#(( $+commands[prettyping] ))    && alias ping='prettyping --nolegend'
+#(( $+commands[htop] ))          && alias top='sudo htop'
+#(( $+commands[diff-so-fancy] )) && alias diff='diff-so-fancy'
+#(( $+commands[tldr] ))          && alias help='tldr'
+#(( $+commands[podman] ))        && alias docker='podman'
+#(( $+commands[jira] ))          && eval "$(jira --completion-script-bash)"
 if (( $+commands[aria2c] )); then
   extargs="-ci --external-downloader aria2c --external-downloader-args aria2c:'-s16 -x16 -k 4M' -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]' --write-sub --sub-lang 'en,zh-CN,zh-Hans,zh-TW,zh-Hant' --convert-subs 'srt' --restrict-filenames -o '%(playlist)s/%(playlist_index)05d.%(title)s.%(id)s.%(ext)s'"
   (( $+commands[youtube-dl] )) && alias youtube-dl="youtube-dl $extargs"
