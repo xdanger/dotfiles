@@ -33,9 +33,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
       "skillPath": "skills/agent-browser/SKILL.md",
-      "skillFolderHash": "c1470a475a0472fceda2401ea6763708a91680a8",
+      "skillFolderHash": "9b31e495b887e4ca123960415eca69fc7e1bba28",
       "installedAt": "2026-02-16T03:36:08.769Z",
-      "updatedAt": "2026-05-11T02:18:57.490Z"
+      "updatedAt": "2026-06-21T07:02:35.255Z"
     },
     "git-commit": {
       "source": "krosdai/skills",
