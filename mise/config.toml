@@ -1,0 +1,23 @@
+[tools]
+bun = "latest"
+go = "latest"
+node = "latest"
+pnpm = "latest"
+python = "latest"
+ruby = "latest"
+rust = "latest"
+uv = "latest"
+yarn = "latest"
+deno = "latest"
+terraform = "latest"
+kubectl = "latest"
+awscli = { version = "latest", symlink_bins = "true" }
+gcloud = "latest"
+
+[settings]
+# Auto-trust every mise.toml under this repo (incl. all .claude/worktrees/*)
+trusted_config_paths = ["~/repos/krosdai.scaffold", "~/repos/xindong.relu"]
+
+[settings.ruby]
+compile = false
+
