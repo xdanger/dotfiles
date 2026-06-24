@@ -11,7 +11,7 @@ yarn = "latest"
 deno = "latest"
 terraform = "latest"
 kubectl = "latest"
-awscli = { version = "latest", symlink_bins = "true" }
+awscli = "latest"
 gcloud = "latest"
 
 [settings.ruby]
