@@ -14,8 +14,6 @@ LOGINSHELL_INITED=1
 [[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
 # Python installations by [uv](https://github.com/astral-sh/uv)
 [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
-# nvm & node
-[[ -f "$HOME/.nvm/nvm.sh" ]] && export NVM_DIR="$HOME/.nvm" && source "$NVM_DIR/nvm.sh"
 # Deno
 if [[ -d "$HOME/.deno/bin" ]]; then
   export DENO_INSTALL="$HOME/.deno"
@@ -38,7 +36,7 @@ if [[ -d "$HOME/Library/Android/sdk" ]]; then
   [[ -d "$ANDROID_HOME/platform-tools" ]] && path=("$ANDROID_HOME/platform-tools" $path)
   [[ -d "/opt/homebrew/share/android-commandlinetools/cmdline-tools/latest/bin" ]] && path+=("/opt/homebrew/share/android-commandlinetools/cmdline-tools/latest/bin")
 fi
-# Preserve PATH activation order from version managers such as mise/nvm/uv.
+# Preserve PATH activation order from version managers such as mise/uv.
 typeset -gU path
 
 if [[ "$OSTYPE" == linux* ]] && [[ -f ~/.ssh/langley ]] && (( $+commands[keychain] )); then

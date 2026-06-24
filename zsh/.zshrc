@@ -71,8 +71,6 @@ else
   unset WSL
 fi
 
-[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
-
 # Bun completion
 [[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
 
