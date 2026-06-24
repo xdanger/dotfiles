@@ -55,9 +55,6 @@ fi
 
 [[ -f "$ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && \
   source "$ZDOTDIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-if [[ $TERM_PROGRAM == "iTerm.app" ]] && [[ -f "$ZDOTDIR/iterm2_shell_integration.zsh" ]]; then
-  source "$ZDOTDIR/iterm2_shell_integration.zsh"
-fi
 
 # 判断是不是 WSL
 is_wsl() {
@@ -81,6 +78,7 @@ fi
 
 # Platform-specific interactive config
 local os_name=${(L)$(uname -s)}
+[[ -f "$ZDOTDIR/os.$os_name.zsh" ]] && source "$ZDOTDIR/os.$os_name.zsh"
 [[ -f "$ZDOTDIR/rc.$os_name.zsh" ]] && source "$ZDOTDIR/rc.$os_name.zsh"
 
 # direnv
@@ -94,7 +92,3 @@ local os_name=${(L)$(uname -s)}
 export CLAUDE_CODE_NO_FLICKER=1
 # 如果你发现 tmux copy-mode / 终端原生选中是肌肉记忆，再加这行：
 # export CLAUDE_CODE_DISABLE_MOUSE=1
-
-# >>> grok installer >>>
-export PATH="$HOME/.grok/bin:$PATH"
-# <<< grok installer <<<
