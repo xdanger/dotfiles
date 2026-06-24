@@ -23,8 +23,6 @@ fi
 if [[ -d "$HOME/.bun" ]]; then
   export BUN_INSTALL="$HOME/.bun" && path+=("$BUN_INSTALL/bin")
 fi
-# Mise
-(( $+commands[mise] )) && eval "$(mise activate zsh)"
 # Platform-specific environment variables
 local os_name=${(L)$(uname -s)}
 [[ -f "$ZDOTDIR/env.$os_name.zsh" ]] && source "$ZDOTDIR/env.$os_name.zsh"

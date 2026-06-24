@@ -79,6 +79,9 @@ local os_name=${(L)$(uname -s)}
 [[ -f "$ZDOTDIR/os.$os_name.zsh" ]] && source "$ZDOTDIR/os.$os_name.zsh"
 [[ -f "$ZDOTDIR/rc.$os_name.zsh" ]] && source "$ZDOTDIR/rc.$os_name.zsh"
 
+# Mise — activate in interactive shells (covers non-login shells like tmux splits)
+(( $+commands[mise] )) && eval "$(mise activate zsh)"
+
 # direnv
 (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
