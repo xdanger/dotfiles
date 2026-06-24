@@ -18,7 +18,7 @@
     ~/.codex/AGENTS.md: "agents/AGENTS.md"
     ~/.codex/RTK.md: "agents/RTK-codex.md"
     ~/.config/ghostty: "ghostty"
-    ~/.config/mise/config.toml: "mise/config.toml"
+    ~/.config/mise/config.toml: "mise/global.toml"
     ~/.config/ranger: "ranger"
     ~/.gemrc: "ruby/gemrc"
     ~/.gitconfig: "git/gitconfig"
