@@ -81,6 +81,9 @@ if [[ -d "$HOME/Library/Application Support/taobao/cli" ]]; then
   export TBN_CLI_BIN="/Users/xdanger/Library/Application Support/taobao/cli/bin"
 fi
 
-# pnpm
+# grok CLI (xAI)
+[[ -d "$HOME/.grok/bin" ]] && path=("$HOME/.grok/bin" $path)
+
+# pnpm — global binaries live in $PNPM_HOME/bin
 export PNPM_HOME="$HOME/Library/pnpm"
-path=("$PNPM_HOME" $path)
+[[ -d "$PNPM_HOME/bin" ]] && path=("$PNPM_HOME/bin" $path)
