@@ -1,198 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="favicon.ico" />
-  <title></title>
-  <style>
-      * {
-          box-sizing: border-box;
-          padding: 0;
-          margin: 0;
-      }
 
-      .open-platform-wrapper {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          background-color: #ffffff;
-      }
+# vc +meeting-leave
 
-      .open-platform-icon {
-          width: 120px;
-          height: 120px;
-          display: block;
-      }
+通过 `meeting_id` 离开当前身份所在的视频会议（bot leave）。这是一次**写操作**，会实际把当前身份从会议中移出。
 
-      .open-platform-desc {
-          margin-top: 16px;
-          line-height: 22px;
-          font-size: 14px;
-          color: #646a73;
-          text-align: center
-      }
+本 skill 对应 shortcut：`lark-cli vc +meeting-leave`（调用 `POST /open-apis/vc/v1/bots/leave`）。
 
-      .open-platform-back {
-          border-radius: 6px;
-          font-size: 14px;
-          height: 32px;
-          line-height: 22px;
-          min-width: 80px;
-          padding: 4px 11px;
-          text-align: center;
-          text-decoration: none;
-          touch-action: manipulation;
-          transition: color .1s ease-in, background-color .1s ease-in, border-color .1s ease-in, width .2s ease-in;
-          user-select: none;
-          white-space: nowrap;
-          background: #1456f0;
-          border: 1px solid #1456f0;
-          color: #ffffff;
-          margin-top: 16px;
-      }
-  </style>
-</head>
-<body>
-<div class="open-platform-wrapper">
-  <img class="open-platform-icon"
-       src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTEyLjkxMyA1NS4yNDRjLTUuNjMyIDIuOTUtOC4yNDYgNi4yODQtOC4yNDYgOS40NHY5LjcyYzAtMy4xNTYgMi42MTQtNi40OSA4LjI0Ni05LjQ0di05LjcyWm05NC4xNjMtMTIuMDg0di05LjcyNmM1LjkzNC0zLjE5IDguOTgxLTYuODkxIDguOTgxLTEwLjcyNXY5LjcyYzAgMy44NC0zLjA0NyA3LjU0My04Ljk4MSAxMC43MzJaIiBmaWxsPSIjMEMyOTZFIi8+PHBhdGggZD0iTTYwLjIyOSAxOS4wNTkgNDguNzMgNDkuOTIyIDYwLjM2NSA3Mi45MmwtOC40NzQgMjMuODczSDE2LjkyM2E0IDQgMCAwIDEtNC00VjIzLjA2YTQgNCAwIDAgMSA0LTRINjAuMjNaIiBmaWxsPSIjQkJCRkM0IiBmaWxsLW9wYWNpdHk9Ii40NSIvPjxwYXRoIGQ9Ik03MS40MDggMTkuMDU5IDYwLjAxMyA0OS45MjIgNzEuNDYgNzIuOTJsLTguMzI1IDIzLjg3M2gzOS45NDNhNCA0IDAgMCAwIDQtNFYyMy4wNmE0IDQgMCAwIDAtNC00aC0zMS42N1oiIGZpbGw9IiNCQkJGQzQiIGZpbGwtb3BhY2l0eT0iLjQ1Ii8+PHBhdGggZD0iTTIxLjkyMyAyNi4xYTIgMiAwIDEgMSAwIDQgMiAyIDAgMCAxIDAtNFptMyAyYTMgMyAwIDEgMC02IDAgMyAzIDAgMCAwIDYgMFptNi45MTUtMmEyIDIgMCAxIDEgMCA0IDIgMiAwIDAgMSAwLTRabTMgMmEzIDMgMCAxIDAtNiAwIDMgMyAwIDAgMCA2IDBabS0xNS43NjMgNy4zOTRhLjUuNSAwIDAgMSAuNS0uNWgzMS41ODFhLjUuNSAwIDAgMSAwIDFIMTkuNTc1YS41LjUgMCAwIDEtLjUtLjVabTQ4LjQ3NyAwYS41LjUgMCAwIDEgLjUtLjVoMzIuNDY1YS41LjUgMCAwIDEgMCAxSDY4LjA1MmEuNS41IDAgMCAxLS41LS41WiIgZmlsbD0iIzhGOTU5RSIvPjxwYXRoIGQ9Ik05OCAxMTFjOS45NDEgMCAxOC04LjA1OSAxOC0xOHMtOC4wNTktMTgtMTgtMThjLTkuOTQyIDAtMTggOC4wNTktMTggMThzOC4wNTggMTggMTggMThaIiBmaWxsPSIjRjgwIi8+PHBhdGggZD0iTTk3LjE4MSA4NC44MThhLjgxOC44MTggMCAwIDAtLjgxOC44MTl2OS44MThjMCAuNDUyLjM2Ni44MTguODE4LjgxOGgxLjYzN2EuODE4LjgxOCAwIDAgMCAuODE4LS44MTh2LTkuODE5YS44MTguODE4IDAgMCAwLS44MTgtLjgxOEg5Ny4xOFptMCAxMy4wOTJhLjgxOC44MTggMCAwIDAtLjgxOC44MTh2MS42MzZjMCAuNDUyLjM2Ni44MTguODE4LjgxOGgxLjYzN2EuODE4LjgxOCAwIDAgMCAuODE4LS44MTh2LTEuNjM2YS44MTguODE4IDAgMCAwLS44MTgtLjgxOUg5Ny4xOFoiIGZpbGw9IiNmZmYiLz48cGF0aCBkPSJNNC4wMjcgODUuMzFjMi40OSA1LjUxIDE0Ljc3IDkuOTQgNDEuNDUgOS45M3Y5LjcyMWMtMjYuNjguMDEtMzguOTYtNC40Mi00MS40NS05Ljkzdi05LjcyWm04NC44MS0yNy4yN2MxNy41Mi0yLjY5IDI1LjgwNy03LjAyNiAyNy4yLTExLjcxdjkuNzJjLS4zMyA0LjY3LTkuNjggOS4wMi0yNy4yIDExLjcxdi05LjcyWiIgZmlsbD0iIzMzNzBGRiIvPjxwYXRoIGQ9Ik04OS4yMzcgMTMuMDFjMTguMDU4IDAgMjYuOCAzLjI1IDI2LjggOS43MnY5LjcyYzAtNi40Ny04Ljc0Mi05LjcyLTI2LjgtOS43MnYtOS43MlptLTg0LjU3IDUxLjdjMCA2LjYgMTEuMzcgMTIuNDUgMzAuNDcgMTIuNDR2OS43MmMtMTkuMSAwLTMwLjQ3LTUuODQtMzAuNDctMTIuNDR2LTkuNzJaIiBmaWxsPSIjMDBENkI5Ii8+PC9zdmc+"
-       alt="">
-  <div class="open-platform-desc">The page does not exist.</div>
-  <a class="open-platform-back" href="/">Go to homepage</a>
-</div>
-<script>window.gfdatav1={"env":"prod","ver":"1.0.0.13","canary":0,"garrModules":null,"envName":"prod","region":"CN","idc":"hl","webServerCodeType":"DeployServerlessWebServer","runtime":"node","extra":{"canaryType":null}}</script><script>
+## 命令
 
-  function parseQueryString(queryString) {
-    // 移除开头的 "?"
-    if (queryString.charAt(0) === '?') {
-      queryString = queryString.substring(1);
-    }
+```bash
+# 通过 meeting_id 离会
+lark-cli vc +meeting-leave --as bot --meeting-id 69xxxxxxxxxxxxx28
 
-    var params = {};
-    if (!queryString) return params;
+# 输出格式
+lark-cli vc +meeting-leave --as bot --meeting-id 69xxxxxxxxxxxxx28 --format json
 
-    // 分割参数对
-    var paramPairs = queryString.split('&');
+# 预览 API 调用（不实际离会）
+lark-cli vc +meeting-leave --as bot --meeting-id 69xxxxxxxxxxxxx28 --dry-run
+```
 
-    for (var i = 0; i < paramPairs.length; i++) {
-      var paramPair = paramPairs[i].split('=');
-      var key = decodeURIComponent(paramPair[0]);
-      var value = paramPair.length > 1 ? decodeURIComponent(paramPair[1]) : '';
+## 参数
 
-      // 处理重复参数（转为数组）
-      if (params[key] === undefined) {
-        params[key] = value;
-      } else if (!Array.isArray(params[key])) {
-        params[key] = [params[key], value];
-      } else {
-        params[key].push(value);
-      }
-    }
+| 参数 | 必填 | 说明 |
+|------|------|------|
+| `--meeting-id <id>` | 是 | 会议 ID（**不是 9 位会议号**） |
+| `--dry-run` | 否 | 预览 API 调用，不实际离会；meeting_id 或身份不确定时先用它确认请求 |
 
-    return params;
-  }
+## 核心约束
 
-  function getLocale() {
-    var zhLang = 'zh-CN';
-    var enLang = 'en-US';
+### 1. 入参是 meeting_id，不是会议号
 
-    var queryLang = parseQueryString(window.location.search).lang;
-    var cookieLang = getCookieLocale();
-    var lang = enLang;
+`--meeting-id` 必须是会议的长数字 ID，通常由 `+meeting-join --as bot` 返回体中的 `meeting.id` 提供，也可从应用身份 `+meeting-list-active --as bot --user-id <user_open_id>` 返回体中的 `meeting_id` 获取。**传 9 位会议号会失败**。
 
-    <!--从cookie中取值-->
-    function getCookieLocale() {
-      var locale = '';
-      var cookies = document.cookie.split('; ');
-      var loclaeKey = 'open_locale';
+### 2. 优先使用 bot 身份
 
-      for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i].trim();
-        var cookieArr = cookie.split('=');
-        if (cookieArr[0] === loclaeKey) {
-          locale = cookieArr[1];
-          break;
-        }
-      }
-      return locale;
-    }
+这是应用机器人离会能力，使用与入会或 active meeting 发现相同的 `--as bot`。只能让当前身份自己离会，无法强制移出其他参会人。
 
-    function setLocaleCookie(lang) {
-      var date = new Date();
-      // 300天到期
-      date.setTime(date.getTime() + (300 * 24 * 60 * 60 * 1000));
-      var expires = 'expires=' + date.toUTCString();
-      document.cookie = 'open_locale=' + lang + '; ' + expires + '; path=/;';
-    }
+### 3. 当前身份必须在会议中
 
-    // 获取浏览器默认语言
-    if (navigator.language.indexOf('en') !== -1) {
-      lang = enLang;
-    } else if (navigator.language.indexOf('zh') !== -1) {
-      lang = zhLang;
-    }
-    if (cookieLang === enLang) {
-      lang = enLang;
-    } else if (cookieLang === zhLang) {
-      lang = zhLang;
-    }
-    if (queryLang === enLang) {
-      lang = enLang;
-    } else if (queryLang === zhLang) {
-      lang = zhLang;
-    }
-    // 设置cookie
-    setLocaleCookie(lang);
-    return lang;
-  }
+应用机器人必须已经在该会议中，否则接口会报错。如果 `meeting_id` 来自 `+meeting-list-active`，必须确认这是应用身份发现到的会议。
 
-  // 根据域名获取当前brand
-  function isLarkDomain() {
-    var defaultBrandMap = {
-      lark: ['larksuite'],
-      feishu: ['feishu', 'larkoffice', 'larkenterprise'],
-    };
-    const { hostname } = window.location;
+### 4. 离会立即生效，对其他参会人可见
 
-    if (defaultBrandMap.feishu.some((item) => hostname.includes(item))) {
-      return false;
-    }
+机器人会立刻从参会列表消失；若会议启用了录制/纪要，bot 的参会时段到此截止。只有在用户明确要求退出 / 离开 / 结束参会时才调用；如需要重新入会，再跑 `+meeting-join` 即可（非真正"不可逆"）。
 
-    if (defaultBrandMap.lark.some((item) => hostname.includes(item))) {
-      return true;
-    }
+## 输出结果
 
-    if (window.domainBrand) {
-      return window.domainBrand === 'lark';
-    }
+接口成功返回时，默认输出：`Left meeting <meeting-id> successfully.`。
+`--format json` 返回 API 原始响应体。
 
-    return false;
-  }
+## 如何获取输入参数
 
-  var isLarkBrand = isLarkDomain();
+| 输入参数 | 获取方式 |
+|---------|---------|
+| `meeting-id` | `+meeting-join --as bot` 返回的 `meeting.id`；或应用身份 `+meeting-list-active --as bot --user-id <user_open_id>` 返回的 `meeting_id` |
 
-  var config = {
-    'zh-CN': {
-      'desc': '抱歉，您访问的页面不存在',
-      'back': '返回首页',
-      'title': (isLarkBrand ? 'Lark' : '飞书') + '开放平台',
-    },
-    'en-US': {
-      'desc': 'The page does not exist.',
-      'back': 'Go to homepage',
-      'title': (isLarkBrand ? 'Lark': 'Feishu') + ' Open Platform',
-    },
-  };
-  var locale = getLocale();
-  var descObj = document.querySelector('.open-platform-desc');
-  var backObj = document.querySelector('.open-platform-back');
-  descObj.innerHTML = config[locale].desc;
-  backObj.innerHTML = config[locale].back;
-  document.title = config[locale].title;
+## Agent 组合场景
 
-</script>
-</body>
-</html>
+### 场景 1：加入 → 用户明确要求时离开
+
+```bash
+# 第 1 步：加入会议，记录 meeting.id
+lark-cli vc +meeting-join --as bot --meeting-number 123456789
+
+# 第 2 步：在会中处理用户请求（如监听发言、记录信息等）
+# ...
+
+# 第 3 步：仅在用户明确要求退出 / 离开 / 结束参会时，使用上一步记录的 meeting.id 离会
+lark-cli vc +meeting-leave --as bot --meeting-id <meeting.id>
+```
+
+### 场景 2：会后补拉产物（不需要离会）
+
+如果用户只是要求会议结束后拉录制、纪要或逐字稿，不要先调用 `+meeting-leave`；直接跨到 `lark-vc` 查询会后产物。
+
+```bash
+# 第 1 步：会议结束后进入 lark-vc 获取会议产物信息
+lark-cli vc +notes --meeting-ids <meeting.id>
+```
+
+## 常见错误与排查
+
+| 错误现象 | 根本原因 | 解决方案 |
+|---------|---------|---------|
+| `--meeting-id is required` | 未传入 `--meeting-id` | 传入从 `+meeting-join --as bot` 得到的 `meeting.id`，或应用身份 `+meeting-list-active` 返回的 `meeting_id` |
+| `meeting not found` / `invalid meeting_id` | 误传了 9 位会议号 | 必须使用 `meeting.id`，不是会议号 |
+| `not in meeting` | 当前身份并不在该会议中 | 确认先 `+meeting-join` 成功 |
+
+## 提示
+
+- 只有用户明确要求退出 / 离开 / 结束参会时才调用；离会会让机器人从参会列表消失，对其他参会人可见。若需要重新入会直接再 `+meeting-join`，不是真正的"不可逆"。参数格式不确定时可选 `--dry-run` 预览。
+- `+meeting-leave` 优先使用 `+meeting-join --as bot` 返回的 `meeting.id`，但不是每次 join 后都必须调用 leave。
+- `meeting_id` 如果来自 `+meeting-list-active`，必须来自应用身份，并确认应用机器人就在该会议中。不要用 9 位会议号。
+
+## 参考
+
+- [lark-vc-agent-meeting-join](lark-vc-agent-meeting-join.md) — 对应的入会命令
+- [lark-vc-agent-meeting-list-active](lark-vc-agent-meeting-list-active.md) — 发现当前可读事件的进行中会议 ID
+- [lark-vc-agent-meeting-events](lark-vc-agent-meeting-events.md) — 会中事件流
+- [lark-vc-search](../../lark-vc/references/lark-vc-search.md) — 搜索历史会议（获取 meeting_id）
+- [lark-vc-recording](../../lark-vc/references/lark-vc-recording.md) — 查询 minute_token
+- [lark-vc-notes](../../lark-vc/references/lark-vc-notes.md) — 获取会议纪要
+- [lark-vc-agent](../SKILL.md) — Agent 参会能力（本 skill）
+- [lark-vc](../../lark-vc/SKILL.md) — 视频会议原子域（Meeting / Note 等核心概念）
+- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
