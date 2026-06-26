@@ -306,9 +306,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/pr-shepherd/SKILL.md",
-      "skillFolderHash": "515ddca3ab9e4a40560f251e38835c7d318b90bd",
+      "skillFolderHash": "f733e4ccc7e63bd53f504fbe9f835cee12085fb9",
       "installedAt": "2026-06-13T17:01:51.890Z",
-      "updatedAt": "2026-06-13T18:04:48.965Z"
+      "updatedAt": "2026-06-26T14:54:22.111Z"
     },
     "lark-apps": {
       "source": "open.feishu.cn",

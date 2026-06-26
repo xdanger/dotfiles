@@ -52,11 +52,18 @@ runaway loop that keeps pushing commits is worse than asking.
 2. **Branch on the verdict:**
    - `NOT_ELIGIBLE` — draft or closed. Report and stop.
    - `WAITING_CI` — checks are still QUEUED/IN_PROGRESS or mergeability is still
-     computing. Wait, don't poll-spin. Block on completion, then re-read:
+     computing. Wait, don't poll-spin:
      ```bash
-     gh pr checks <PR> --watch --fail-fast=false   # returns when all checks settle
+     scripts/wait_for_settle.sh <PR>   # blocks until the verdict leaves WAITING_CI
      ```
-     Then go back to step 1.
+     It blocks on `gh pr checks --watch` while checks are the holdup, and short-
+     polls the gate otherwise — so it wakes not only on CI settling but on
+     mergeability finishing and review/thread changes mid-wait (which `--watch`
+     alone cannot see), avoiding the spin where `WAITING_CI` is driven by
+     mergeability still computing. It prints the same JSON the next read would, so
+     treat its output as your step-1 read for this iteration and branch on the new
+     verdict. On `--max-wait` timeout it exits `10` with a resume hint — re-run it
+     to continue waiting.
    - `NEEDS_WORK` — address the specific `blockers[]` (next section), push, and
      loop.
    - `BLOCKED_HUMAN` — something only a person can clear (a required approval, an
@@ -181,5 +188,11 @@ Re-confirm GREEN immediately before merging — state can change between iterati
 - **Long-lived branch keep-list**: extra patterns beyond the built-in set.
 - **Iteration cap**: default 5.
 - **Flake re-run policy**: default one re-run per failing check, then escalate.
+- **Wait tuning**: `wait_for_settle.sh --interval` (default 10s) and `--max-wait`
+  (default 1800s, resumable on timeout).
 - **Required-only checks**: by default _all_ checks must pass (the user's strict
   definition); optionally relax to "only branch-protection-required checks".
+- **Wait transport**: polling/`--watch` by default. For repo-admin users on a
+  local host who want push-latency wakes on review/branch events, an optional
+  webhook mode is documented in `references/github-api.md` §11 — it is a wake
+  signal only; `pr_status.sh` stays the gate.

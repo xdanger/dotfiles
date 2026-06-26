@@ -20,6 +20,7 @@ the repo owner, repo name, and PR number.
 8. Merge + remote branch deletion
 9. Local cleanup (worktree, branch, main)
 10. State-value cheat sheet
+11. Optional: webhook-driven waiting (advanced — repo admin + local host)
 
 ---
 
@@ -166,3 +167,51 @@ verdict that the PR merged, so the force delete is safe.
   non-required checks pending/failing), DRAFT, HAS_HOOKS, UNKNOWN.
 - **PR.reviewDecision**: APPROVED, CHANGES_REQUESTED, REVIEW_REQUIRED, or null
   (no review required by branch protection).
+
+## 11. Optional: webhook-driven waiting (advanced — repo admin + local host)
+
+The default wait (`scripts/wait_for_settle.sh`, §1) polls and needs only an
+authenticated `gh`. If you want **push-latency wakes** on review/branch events —
+not just CI — and you can satisfy all three conditions below, you can have GitHub
+forward webhooks to you instead. Most of the time the default is the better
+choice; reach for this only when:
+
+1. you have **repo admin** (required to create the hook — there is no
+   non-admin path), **and**
+2. you run on a **local host that can hold a long-running foreground process**
+   (this collides with the "purely API/MCP surface" mode in SKILL.md), **and**
+3. you specifically want sub-second wakes on `pull_request_review` /
+   `pull_request_review_thread` / branch updates, which `gh pr checks --watch`
+   never sees.
+
+The official `cli/gh-webhook` extension tunnels deliveries through GitHub's own
+forwarding service, so **no public endpoint, smee, or ngrok is needed**:
+
+```bash
+gh extension install cli/gh-webhook
+gh webhook forward --repo=OWNER/REPO \
+  --events=check_run,check_suite,status,pull_request_review,pull_request_review_thread,workflow_run \
+  --url=http://localhost:PORT/hook    # point at a minimal local receiver
+# repo-level events (above) need no extra scope. ONLY org-scoped events need
+# `gh auth refresh -s admin:org_hook`, which persistently broadens your gh token
+# to manage every webhook in the org — see the scope caveat below before running.
+```
+
+**Integration stance — webhook is a wake signal, never the gate.** On each
+relevant delivery, re-run `scripts/pr_status.sh` and branch on its verdict exactly
+as the polling loop does. There is **no `mergeable` webhook event** (GitHub
+computes mergeability asynchronously), so the merge gate can only come from
+re-querying the PR — the webhook just tells you _when_ to look.
+
+**Caveats, stated plainly:**
+
+- Requires **repo admin**; frequently unavailable on shared/org repos.
+- A **long-running foreground daemon**; **one forwarder per repo** (a second
+  start fails with `Hook already exists`).
+- Officially **dev/test only**, and **not supported on GitHub Enterprise Server**.
+- `admin:org_hook` (org-scoped events only) **persistently expands your `gh`
+  token** to manage every webhook in the org — a broad, lasting grant for a
+  convenience wake signal. Skip it unless you genuinely need org-level events;
+  repo-level events need no extra scope.
+- Keep the committed skill free of any real URL, port, token, or local path — use
+  placeholders (`OWNER/REPO`, `PORT`) as above; this is a public repository.
