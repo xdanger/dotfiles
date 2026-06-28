@@ -69,6 +69,23 @@ if is_wsl; then
   fi
 else
   unset WSL
+
+  # SSH sessions can leave the local terminal in remote TUI modes after a
+  # network timeout. Restore both TTY flags and common terminal private modes.
+  function ssh() {
+    local tty_state rc
+
+    [[ -t 0 ]] && tty_state="$(stty -g 2>/dev/null)"
+    command ssh "$@"
+    rc=$?
+
+    [[ -n "$tty_state" ]] && stty "$tty_state" 2>/dev/null
+    if [[ -t 1 ]]; then
+      printf '\e[0m\e[?1l\e>\e[?12l\e[?25h\e[?1000l\e[?1002l\e[?1003l\e[?1006l\e[?2004l'
+    fi
+
+    return $rc
+  }
 fi
 
 # Bun completion
