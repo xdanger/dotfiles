@@ -81,7 +81,7 @@ else
 
     [[ -n "$tty_state" ]] && stty "$tty_state" 2>/dev/null
     if [[ -t 1 ]]; then
-      printf '\e[0m\e[?1l\e>\e[?12l\e[?25h\e[?1000l\e[?1002l\e[?1003l\e[?1006l\e[?2004l'
+      printf '\e[0m\e[?1l\e>\e[?12l\e[?25h\e[?1000l\e[?1002l\e[?1003l\e[?1006l\e[?2004l\e[<999u\e[=0u'
     fi
 
     return $rc
