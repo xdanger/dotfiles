@@ -15,9 +15,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/skills.git",
       "skillPath": "skills/find-skills/SKILL.md",
-      "skillFolderHash": "eb6a23305aea6e340d14b9de3766e721f9f4861b",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
       "installedAt": "2026-02-16T03:30:57.972Z",
-      "updatedAt": "2026-06-24T07:00:58.820Z"
+      "updatedAt": "2026-07-11T07:02:15.192Z"
     },
     "playwright-cli": {
       "source": "microsoft/playwright-cli",
