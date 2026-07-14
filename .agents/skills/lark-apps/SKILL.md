@@ -30,6 +30,7 @@ lark-cli auth login --domain apps
 |---|---|---|
 | 创建**新**应用资产、拿 app_id | `+create` | [`lark-apps-create.md`](references/lark-apps-create.md) |
 | 找已有 app_id、按名字过滤应用 | `+list --keyword <name>` | [`lark-apps-list.md`](references/lark-apps-list.md) |
+| 查单个应用详情（类型、名称、发布状态等） | `+get --app-id <app_id>` | [`lark-apps-get.md`](references/lark-apps-get.md) |
 | 改应用名或描述 | `+update` | [`lark-apps-update.md`](references/lark-apps-update.md) |
 | 发布本地 `index.html` 或静态目录为可访问 URL | `+html-publish` | [`lark-apps-html-publish.md`](references/lark-apps-html-publish.md) |
 | 开发已有应用 / 初始化本地仓库（开发方式已定为本地后；先解析 app_id，勿 `+create` 新建） | `+init`（或手动 `+git-credential-init` + 原生 git）。**执行前必读** [`lark-apps-local-dev.md`](references/lark-apps-local-dev.md)，含端到端流程和领域规则 | [`lark-apps-init.md`](references/lark-apps-init.md), [`lark-apps-git-credential.md`](references/lark-apps-git-credential.md) |

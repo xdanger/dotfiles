@@ -9,7 +9,7 @@
     "lark-apps": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "0fa4790096fff2af1492af005ad0fb979f773c59198b337ae5bd599435a55ebe"
+      "computedHash": "276d537844246d0d41d631951859a68a46d3caa9334a28453db4bf916bacd58f"
     },
     "lark-attendance": {
       "source": "open.feishu.cn",
@@ -34,12 +34,12 @@
     "lark-doc": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "409addc2b756c9b3ab771d355a888aba11efcf509c3ab2cae5503a6a4652e8d6"
+      "computedHash": "0af618df205fe8914dd499ac0e3df28f37ef1cdd27506940c972de140ebbb9e4"
     },
     "lark-drive": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "15a769e655ec368a6ae9c4eda2e9f981056ae58e6479c07b60675e1d30f20a96"
+      "computedHash": "b0dbe3366be3b1d7deb751c0dc53ecbe583009cbe56e9309561ea3cd0880ad4f"
     },
     "lark-event": {
       "source": "open.feishu.cn",
@@ -49,7 +49,7 @@
     "lark-im": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "2d2f1d5c88d69d0eddc80fc222488e5071526f1ef6dd663df6f7850287cb9f2d"
+      "computedHash": "08b3e85d6e8a85476f2b88692be9ae26072b3f420dbd06c20f5e43f9ea82f735"
     },
     "lark-mail": {
       "source": "open.feishu.cn",
@@ -89,7 +89,7 @@
     "lark-sheets": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "7cfbdac3f20d7379591cda436bda80478a4ef2ad15316f4d7f7931fad125d51c"
+      "computedHash": "6687d85918052ea2ecdf5ac1ec79b5e3acbaaae9551827acf29a0dca944f6fb6"
     },
     "lark-skill-maker": {
       "source": "open.feishu.cn",
@@ -119,7 +119,7 @@
     "lark-whiteboard": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "87f209fb57c7b607a3817fd12346ebc8f36102257c1ce1f15cc0aa3c932b23cf"
+      "computedHash": "442c330000a9c742cc70d7fef16c967a493dc769675ea4b85fbf3ae9412139b2"
     },
     "lark-wiki": {
       "source": "open.feishu.cn",
