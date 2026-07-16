@@ -9,7 +9,7 @@
     "lark-apps": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "fd2350807ee8f6335244e1a70d1145e0ad3d11a6dbc3eb53b2df4529adc0ccbd"
+      "computedHash": "bbef5dce6d29ca3cffe0c1a1267f42a3988bc87fb31dd5d4d156664fead8ae74"
     },
     "lark-attendance": {
       "source": "open.feishu.cn",
@@ -24,7 +24,7 @@
     "lark-calendar": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "e31f5fa2535938604c1fc1f652aa7d61b358b295537163a011279c14ebf79145"
+      "computedHash": "f06e34c2b074ee22a149c8c3fb41916ae293b13c4b7c4313636e01cc3240d283"
     },
     "lark-contact": {
       "source": "open.feishu.cn",
@@ -34,12 +34,12 @@
     "lark-doc": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "0af618df205fe8914dd499ac0e3df28f37ef1cdd27506940c972de140ebbb9e4"
+      "computedHash": "dc997d86e888a4e18dc52352d5cedeb77b998288a7adf9fd00ebbdebcd9a7594"
     },
     "lark-drive": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "ea9d71b50ba9efe1fa6bbc8ce71fea0c793feda41b5d8ba66f1cd9b0ab12a4a4"
+      "computedHash": "fa8cb5e4ec83b646029e70d011564e4fd15e4403b7f6169312019ccb47be9607"
     },
     "lark-event": {
       "source": "open.feishu.cn",
@@ -99,7 +99,7 @@
     "lark-slides": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "63a30722fc39a75bab8715df6aa71928ec3c528694cc2e7323807630c38276a4"
+      "computedHash": "ad29a4bbdae0f0607b363f2229aaf99cc17b30455deb743cd6132691db319721"
     },
     "lark-task": {
       "source": "open.feishu.cn",
@@ -114,7 +114,7 @@
     "lark-vc-agent": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "computedHash": "0905e0c63f797a2c939078652dc03b4efcb0572e911a28c0cdd60eee74760eb2"
+      "computedHash": "5329e52ce54e035f022855f3df006b5b7c643eba7963681a93c28b15f5cc636d"
     },
     "lark-whiteboard": {
       "source": "open.feishu.cn",
