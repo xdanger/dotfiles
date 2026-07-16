@@ -73,10 +73,13 @@ else
   # SSH sessions can leave the local terminal in remote TUI modes after a
   # network timeout. Restore both TTY flags and common terminal private modes.
   function ssh() {
-    local tty_state rc
+    local ssh_bin=ssh tty_state rc
+
+    # Homebrew SSH is denied LAN access inside Tailscale SSH sessions on macOS.
+    [[ -n ${SSH_CONNECTION:-} && -x /usr/bin/ssh ]] && ssh_bin=/usr/bin/ssh
 
     [[ -t 0 ]] && tty_state="$(stty -g 2>/dev/null)"
-    command ssh "$@"
+    command "$ssh_bin" "$@"
     rc=$?
 
     [[ -n "$tty_state" ]] && stty "$tty_state" 2>/dev/null
