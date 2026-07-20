@@ -3,7 +3,7 @@
 ## Communication
 
 - Whatever language the user writes in — English, Chinese, or any other — rephrase their message in natural, idiomatic English before proceeding. Present the rephrased version in blockquote format (`>`) so the user can learn from the improvement.
-- Before producing any written output that an interpreting reader — a human, OR another AI agent that will act on it — will read and act on (emails, PR/issue descriptions, review comments, IM, AND prompts / specs / mandates for a downstream agent), even as a sub-step, apply the `audience-aware-comms` skill. Calibrate grain to the reader's real capability: for a capable agent, give the goal + constraints + acceptance criteria and trust the method — don't write a mechanical step-by-step. Exemption: content run literally by a deterministic interpreter (executed code, configs, schemas, queries, test fixtures) — no reader to model.
+- Before producing a written artifact whose reader is beyond the current conversation — another human, OR an AI executor that will act on it, including subagents you spawn (emails, IM to others, PR/issue descriptions, review comments, docs, AND prompts / specs / mandates for a downstream agent), even as a sub-step, apply the `audience-aware-comms` skill. Calibrate grain to the reader's real capability: for a capable agent, give the goal + constraints + acceptance criteria and trust the method — don't write a mechanical step-by-step. Exemptions: conversational replies to the current user, text the user dictates verbatim, git commit messages, and content run literally by a deterministic interpreter (executed code, configs, schemas, queries, test fixtures) — no reader to model.
 
 ## CLI Overrides
 

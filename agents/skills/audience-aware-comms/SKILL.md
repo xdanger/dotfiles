@@ -1,29 +1,33 @@
 ---
 name: audience-aware-comms
 description: >-
-  Apply whenever you are about to produce written output that an INTERPRETING
-  READER — a human, or another AI agent that will act on your words — will read
-  and act on: emails, IM/Slack, PR or issue descriptions, review comments,
-  design or decision docs, customer-facing copy, AND natural-language task
-  specs, prompts, or agent mandates whose executor is a person or an LLM. Use
-  it even when the user did not ask for "communication" and the message is only
-  a sub-step of a larger task (e.g. the PR body after a feature, or a prompt you
-  are writing for a downstream agent) — those incidental cases are where
-  audience-blind writing slips through, so reach for this proactively. It makes
-  you model the reader's actual capability and what they will infer or assume,
-  then emit only the calibrated artifact. Do NOT use for output consumed
-  literally by a deterministic interpreter — executed code, configs, schemas,
-  queries, regexes, test fixtures — where correctness is binary and there is no
-  mind to model.
+  Apply when writing an artifact whose reader is beyond this conversation —
+  another human, or an AI executor that will act on your words, including
+  subagents you spawn: emails; IM/Slack to other people; PR/issue descriptions;
+  review comments; design/decision docs; customer-facing copy; docs/README;
+  natural-language prompts, specs, or agent mandates. Apply even when the
+  artifact is an incidental sub-step of a larger task (the PR body after a
+  feature, a subagent prompt) — that is where audience-blind writing slips
+  through. It makes you model the reader's real capability and what they will
+  infer or assume, then emit only the calibrated artifact. Do NOT apply to:
+  in-chat replies addressed to the current user (answers, explanations,
+  summaries, status updates — however substantial), unless the user signals
+  the text is destined for someone else ("to send to my manager", "to paste
+  into Slack") — then that recipient is the reader and the skill applies; text
+  the user dictates verbatim; git commit messages; output consumed literally
+  by a deterministic interpreter (executed code, configs, schemas, queries,
+  regexes, test fixtures) — no mind to model.
 ---
 
 # Audience-Aware Communication
 
 The "when to use" lives entirely in the `description` above — that is the trigger.
-By the time you are reading this body, assume the output has an interpreting reader
-and is consequential. (If on reflection it is consumed literally by a deterministic
-interpreter — executed code, a config, a schema, a query — exit quietly and respond
-normally; that is the one reader you do not model.)
+By the time you are reading this body, assume you are writing an artifact for a
+reader beyond this conversation and it is consequential. (If on reflection the text
+falls under one of the description's exclusions — an in-chat reply to the current
+user, dictated-verbatim text, a git commit message, or output consumed literally by
+a deterministic interpreter — exit quietly and respond normally; those cases are out
+of scope.)
 
 ## Why this skill exists
 
@@ -39,8 +43,10 @@ images of each other, and both come from ignoring the reader's actual level:
   judgment. (Write to it like it's an idiot and it will execute like one.)
 
 Same root error both times: not modeling the reader's real capability. A deterministic
-interpreter genuinely is literal — that is the only reader you skip. Everything else,
-human or LLM, infers and fills gaps, so model it.
+interpreter genuinely is literal, so you skip it. (You also skip the current user in
+live chat — not because they are literal, but because ordinary conversational judgment
+already covers them. The description above carries the full exclusion list.) Every
+reader outside those exclusions, human or LLM, infers and fills gaps, so model it.
 
 ## 1. Run this in your thinking — never in the output
 

@@ -33,9 +33,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
       "skillPath": "skills/agent-browser/SKILL.md",
-      "skillFolderHash": "9b31e495b887e4ca123960415eca69fc7e1bba28",
+      "skillFolderHash": "037e8078db4b20b4aa25c04f21c6de7d335ec449",
       "installedAt": "2026-02-16T03:36:08.769Z",
-      "updatedAt": "2026-06-21T07:02:35.255Z"
+      "updatedAt": "2026-07-20T04:40:56.062Z"
     },
     "git-commit": {
       "source": "krosdai/skills",
@@ -288,9 +288,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/audience-aware-comms/SKILL.md",
-      "skillFolderHash": "ae187e1bc0c19d3b9299e69ed126b69a46015acc",
+      "skillFolderHash": "3e68ee2b8c9b765acc8ff9eed9f58966c55defc1",
       "installedAt": "2026-06-13T02:38:45.786Z",
-      "updatedAt": "2026-06-13T02:38:45.786Z"
+      "updatedAt": "2026-07-20T04:40:56.834Z"
     },
     "deep-dive": {
       "source": "krosdai/skills",
