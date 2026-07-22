@@ -79,9 +79,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/greptileai/skills.git",
       "skillPath": "greploop/SKILL.md",
-      "skillFolderHash": "347330e4b64be5c2d59f324726d9be6dbf5ebf00",
+      "skillFolderHash": "fbef5a8a22b222d14fad7cb4dcb5af37065eb257",
       "installedAt": "2026-03-30T16:10:26.002Z",
-      "updatedAt": "2026-05-28T07:01:44.448Z"
+      "updatedAt": "2026-07-22T06:04:14.987Z"
     },
     "lark-base": {
       "source": "open.feishu.cn",
