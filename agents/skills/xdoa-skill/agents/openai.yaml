@@ -1,0 +1,7 @@
+interface:
+  display_name: "XDOA Office Docs"
+  short_description: "Use xdoa for office docs, live OA lookups, and flow help."
+  default_prompt: "Use $xdoa-skill to answer an office or IT question with xdoa, run a live OA lookup, or prepare an approval-flow workflow."
+
+policy:
+  allow_implicit_invocation: true

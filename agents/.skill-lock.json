@@ -325,6 +325,42 @@
       "skillFolderHash": "",
       "installedAt": "2026-06-25T16:46:17.635Z",
       "updatedAt": "2026-07-21T17:16:10.001Z"
+    },
+    "steel-browser": {
+      "source": "steel-dev/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/steel-dev/skills.git",
+      "skillPath": "steel-browser/SKILL.md",
+      "skillFolderHash": "65826ed7c7ab03c9701c9492ccdf53625cf3b898",
+      "installedAt": "2026-07-24T13:48:04.152Z",
+      "updatedAt": "2026-07-24T13:48:04.152Z"
+    },
+    "steel-developer": {
+      "source": "steel-dev/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/steel-dev/skills.git",
+      "skillPath": "steel-developer/SKILL.md",
+      "skillFolderHash": "feccd0d0273a2bcc5c8993f5bc819163d75dddbb",
+      "installedAt": "2026-07-24T13:48:04.153Z",
+      "updatedAt": "2026-07-24T13:48:04.153Z"
+    },
+    "steel-reliability": {
+      "source": "steel-dev/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/steel-dev/skills.git",
+      "skillPath": "steel-reliability/SKILL.md",
+      "skillFolderHash": "7defbdefa13a857a6f6fa305273d389fc141d143",
+      "installedAt": "2026-07-24T13:48:36.037Z",
+      "updatedAt": "2026-07-24T13:48:36.037Z"
+    },
+    "steel-session-debugging": {
+      "source": "steel-dev/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/steel-dev/skills.git",
+      "skillPath": "steel-session-debugging/SKILL.md",
+      "skillFolderHash": "f6b3cb414a786ba72cf9f2ca1eb5d049a3233964",
+      "installedAt": "2026-07-24T13:48:36.039Z",
+      "updatedAt": "2026-07-24T13:48:36.039Z"
     }
   },
   "dismissed": {
