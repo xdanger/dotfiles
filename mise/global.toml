@@ -13,6 +13,7 @@ terraform = "latest"
 kubectl = "latest"
 awscli = "latest"
 gcloud = "latest"
+herdr = "latest"
 
 [settings.ruby]
 compile = false
