@@ -37,7 +37,7 @@ lark-cli auth login --domain vc,drive   # 含读取纪要文档正文、生成�
 {时间范围} ─► vc +search ──► 会议列表 (meeting_ids)
                    │
                    ▼
-               vc +detail ──► 获取 note_id
+               vc +detail ──► 获取 note_id 
                    │
                    ▼
                note +detail ──► 纪要文档 tokens

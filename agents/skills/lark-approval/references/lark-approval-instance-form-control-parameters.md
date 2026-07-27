@@ -105,7 +105,7 @@ interval | float | 是 | 时长（天）。
 控件 type 为 radio/radioV2，JSON 数据示例：
 
 ```json
-{
+{                                     
     "id": "widget1",
     "type": "radioV2",
     "value": "k2b8mkx0-h71x5gl1234-1" // string 类型
@@ -251,7 +251,7 @@ type | string | 是 | 文档类型，支持 `docx`。
     "id": "widget1",
     "type": "fieldList",
     "value": [
-         [
+         [   
             {
                 "id": "widget1",
                 "type": "checkbox",
@@ -272,7 +272,7 @@ type | string | 是 | 文档类型，支持 `docx`。
 {
     "id":"widget1",
     "type":"department",
-    "value":[
+    "value":[ 
         {
             "open_id": "od-xxx"
         }
@@ -390,16 +390,16 @@ reason | string | 是 | 换班原因。
         "type":"image",
         "value": ["D93653C3-2609-4EE0-8041-61DC1D84F0B5"]
       },
-      {
+      {                                     
         "id": "widgetLeaveGroupFeedingArrivingLate",
         "type": "radioV2",
         "value": "30"
       },
-      {
+      {                                     
         "id": "widgetLeaveGroupFeedingOffLeaveEarly",
         "type": "radioV2",
         "value": "30"
-      }
+      }        
     ]
 }
 ```
@@ -544,7 +544,7 @@ message                                                                         
         {
             "id": "widgetOutGroupType",
             "type": "radioV2",
-            "value":  "me15yqrf-gmjgbml2vhp-0"
+            "value":  "me15yqrf-gmjgbml2vhp-0"      
         },
         {
             "id": "widgetOutGroupStartTime",
@@ -565,8 +565,8 @@ message                                                                         
             "id":"widgetOutGroupImage",
             "type":"image",
             "value": ["D93653C3-2609-4EE0-8041-61DC1D84F0B5"]
-        }
-    ]
+        }                    
+    ]   
 }
 
 ```

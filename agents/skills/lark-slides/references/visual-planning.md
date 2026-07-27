@@ -69,7 +69,7 @@ Geometry:
 - For split covers, make the background reinforce the composition, such as a darker text side and a related visual panel. Avoid one flat field where title and diagram compete for attention.
 - Keep source metadata to one short line where possible. If it wraps, shorten author lists or move details to notes.
 - The main title should be controlled, normally one or two lines. Do not let it occupy both the text region and the visual region.
-- Do not add a vertical accent bar, side rail, or decorative line/strip.
+- Do not add a vertical accent bar, side rail, or decorative line/strip. 
 
 Text:
 - `low` only unless the user explicitly asks for detail.
