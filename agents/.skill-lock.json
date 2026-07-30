@@ -97,9 +97,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/larksuite/cli.git",
       "skillPath": "skills/lark-calendar/SKILL.md",
-      "skillFolderHash": "fdbd6667dfe4dfb758c61f113e61219ab68fc1b3",
+      "skillFolderHash": "a4b5c4c326a4fa1e73af0d60a12afa159e253a88",
       "installedAt": "2026-04-01T15:50:10.125Z",
-      "updatedAt": "2026-07-29T06:02:58.302Z"
+      "updatedAt": "2026-07-30T08:56:32.755Z"
     },
     "lark-contact": {
       "source": "larksuite/cli",
