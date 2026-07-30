@@ -27,6 +27,8 @@ Auth issues: `npx mcporter auth <server>`
 
 ## Git Usage
 
+- When working in a Git repository, create a dedicated worktree before making concrete changes by default. Repository-specific instructions or explicit user direction may override this default.
+- Choose the branch type that best fits the work. Every branch created must match `^(build|ci|chore|docs|feat|fix|perf|refactor|style|test)/[a-z0-9]+(-[a-z0-9]+)*$`.
 - When using `git` or `gh`, request elevated permissions so the command runs against the system tools and configuration instead of the sandboxed toolchain.
 - Use system `git` to create commits so the local signing configuration is applied, and follow the Git commit message format below for every commit.
 - The system `git` configuration signs commits with an SSH token. Ensure every created commit is signed, and verify the signature after committing.
@@ -51,6 +53,7 @@ Auth issues: `npx mcporter auth <server>`
 - Reply to every code review inline comment after applying the fix or deciding on the response — even if the comment doesn't reflect a real bug.
 - Mark resolved inline comments by calling the `resolveReviewThread` mutation via `gh api graphql`.
 - Merge PRs with "create a merge commit" by default.
+- After a PR is merged, if the branch is not a long-lived branch, leave and remove the associated worktree from its owning repository, then fast-forward the repository's default branch to the corresponding `origin` branch.
 
 ## Linter Policy
 
@@ -64,4 +67,3 @@ Never modify linter configs without explicit approval. On lint failure: report r
 
 - Add space between CJK and ASCII/numbers (e.g., "使用 Python 3.11"), except °%
 - CJK text: full-width punctuation; English text: half-width punctuation
-
