@@ -25,35 +25,46 @@ Prefer MCP tools over built-in equivalents (e.g., use `tavily.tavily_search` ins
 Syntax: `npx mcporter call <server>.<tool> key="value" numKey:5`
 Auth issues: `npx mcporter auth <server>`
 
-## Git Usage
+## Git Workflow
+
+**Branches and worktrees**
 
 - When working in a Git repository, create a dedicated worktree before making concrete changes by default. Repository-specific instructions or explicit user direction may override this default.
 - Choose the branch type that best fits the work. Every branch created must match `^(build|ci|chore|docs|feat|fix|perf|refactor|style|test)/[a-z0-9]+(-[a-z0-9]+)*$`.
 - When using `git` or `gh`, request elevated permissions so the command runs against the system tools and configuration instead of the sandboxed toolchain.
-- Use system `git` to create commits so the local signing configuration is applied, and follow the Git commit message format below for every commit.
-- The system `git` configuration signs commits with an SSH token. Ensure every created commit is signed, and verify the signature after committing.
 
-## Git Commit Format
+**Commits**
 
-```
-<Gitmoji> <type>(<scope>)[!]: <subject>
+- Use system `git` to create commits so the local signing configuration is applied. The system configuration signs commits with an SSH token; ensure every created commit is signed and verify its signature after committing.
+- Follow this format for every commit:
 
-- :emoji: change description
-```
+  ```
+  <Gitmoji> <type>(<scope>)[!]: <subject>
+
+  - :emoji: change description
+  ```
 
 - Gitmoji: ✨feat 🐛fix 📝docs ♻️refactor ✅test 🔧chore
 - Subject: ≤50 chars, lowercase imperative, no period, backtick code refs
 - Focus on WHY, not WHAT
 - Keep commits reasonably split: when you can separate changes by logic or file group, avoid committing them together.
 
-## PR Reviews
+**Shipping**
+
+- Treat “ship the changes,” “ship the branch,” and equivalent requests as an explicit, fully autonomous mandate to complete the entire Git workflow. Do not stop after committing, pushing, or opening the PR.
+- Use the existing compliant task branch, or create one without disturbing unrelated work. Commit the task-scoped changes, run the full test suite before the first push, and push to `origin` using the exact same branch name.
+- Treat a local test failure as non-blocking only after verifying that it is pre-existing on the current upstream base and unrelated to the change; preserve the evidence. Never weaken tests or absorb unrelated fixes merely to obtain a passing result. PR checks remain subject to the strict `pr-shepherd` GREEN gate; escalate if an upstream failure blocks merging.
+- Open a ready-for-review PR and invoke the `pr-shepherd` skill. Own it until it is merged and cleaned up or a genuine human-only blocker is reached: monitor CI and reviews, fix real failures, rerun genuine flakes at most once, address and resolve every review thread, re-check the strict gate after each push, merge only when GREEN, and perform the prescribed branch and worktree cleanup.
+- A “ship” request authorizes the final merge without additional confirmation once the strict GREEN gate passes. Use the repository's configured merge and cleanup policies.
+
+**Pull requests, merge, and cleanup**
 
 - When creating a PR, add `xdanger` (GitHub user ID `7087`) as an assignee.
 - When creating a ready-to-review PR directly, or when marking a draft PR ready for review, request review from `apps/copilot-pull-request-reviewer`.
 - Reply to every code review inline comment after applying the fix or deciding on the response — even if the comment doesn't reflect a real bug.
 - Mark resolved inline comments by calling the `resolveReviewThread` mutation via `gh api graphql`.
 - Merge PRs with "create a merge commit" by default.
-- After a PR is merged, if the branch is not a long-lived branch, leave and remove the associated worktree from its owning repository, then fast-forward the repository's default branch to the corresponding `origin` branch.
+- After a PR is merged, if the branch is not long-lived, leave and remove the associated worktree from its owning repository, then fast-forward the repository's default branch to the corresponding `origin` branch.
 
 ## Linter Policy
 
