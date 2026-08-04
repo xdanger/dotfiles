@@ -388,6 +388,15 @@
       "skillFolderHash": "f6b3cb414a786ba72cf9f2ca1eb5d049a3233964",
       "installedAt": "2026-07-24T13:48:36.039Z",
       "updatedAt": "2026-07-24T13:48:36.039Z"
+    },
+    "orchestrate-agents": {
+      "source": "krosdai/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/krosdai/skills.git",
+      "skillPath": "skills/orchestrate-agents/SKILL.md",
+      "skillFolderHash": "da474d6d05973b1b3f80fa269b57f499b240cb6f",
+      "installedAt": "2026-08-04T00:27:55.795Z",
+      "updatedAt": "2026-08-04T00:27:55.795Z"
     }
   },
   "dismissed": {
