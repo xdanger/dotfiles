@@ -1,17 +1,22 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot.git
+	branch = master
 	ignore = dirty
 [submodule "oh-my-zsh"]
 	path = zsh/oh-my-zsh
-    url = https://github.com/robbyrussell/oh-my-zsh.git
-    ignore = dirty
+	url = https://github.com/robbyrussell/oh-my-zsh.git
+	branch = master
+	ignore = dirty
 [submodule "zsh-syntax-highlighting"]
 	path = zsh/zsh-syntax-highlighting
-    url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+	branch = master
 [submodule "pure"]
 	path = zsh/pure
 	url = https://github.com/sindresorhus/pure.git
+	branch = main
 [submodule "powerlevel10k"]
 	path = zsh/oh-my-custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
+	branch = master
