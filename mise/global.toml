@@ -1,20 +1,19 @@
 [tools]
+awscli = "latest"
 bun = "latest"
+deno = "latest"
+gcloud = "latest"
 go = "latest"
+herdr = "latest"
+kubectl = "latest"
 node = "latest"
 pnpm = "latest"
 python = "latest"
 ruby = "latest"
 rust = "latest"
+terraform = "latest"
 uv = "latest"
 yarn = "latest"
-deno = "latest"
-terraform = "latest"
-kubectl = "latest"
-awscli = "latest"
-gcloud = "latest"
-herdr = "latest"
 
 [settings.ruby]
 compile = false
-
