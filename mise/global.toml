@@ -13,6 +13,7 @@ ruby = "latest"
 rust = "latest"
 terraform = "latest"
 uv = "latest"
+wrangler = "latest"
 yarn = "latest"
 
 [settings.ruby]
