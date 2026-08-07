@@ -3,9 +3,10 @@ name: orchestrate-agents
 description: >-
   Orchestrate codex and grok CLIs as parallel workers from a supervising agent session.
   Use when work should be delegated across isolated worktrees, run concurrently, or
-  cross-reviewed by another model. Covers lane selection, decomposition, durable state,
-  budgets, cleanup, verification, and serialized integration. Do not use for in-process
-  subagents or a single sequential task.
+  cross-reviewed by another model, including fleets of codex app-servers backed by multiple
+  CODEX_HOME profiles. Covers usage-aware routing, lane selection, decomposition, durable
+  state, budgets, cleanup, verification, and serialized integration. Do not use for
+  in-process subagents or a single sequential task.
 ---
 
 # Orchestrate agents: codex + grok
@@ -28,11 +29,44 @@ file scopes collide, or no independent work remains.
 Use Lane A by default. Use Lane B when mid-turn correction, thread reuse, programmatic
 approvals, or rate-limit inspection justifies the extra protocol and lifecycle complexity.
 
+## Route by observed capacity
+
+Maintain an explicit server-to-`CODEX_HOME` inventory. Before fan-out, periodically while the
+fleet runs, and after worker completion or a rate-limit response, run
+`scripts/read-codex-usage.py` for every profile and persist its JSON Lines output with the fleet
+state. It derives the newest `token_count.rate_limits` event across each profile's session logs
+by comparing events in files changed within the freshness window, falling back to older logs only
+as stale diagnostic evidence, and verifies that `codex login status` reports ChatGPT
+authentication. Pass one `--home PROFILE=CODEX_HOME` per server and set `--max-age` to the fleet's
+freshness tolerance. Consume `status`, `schedulable`, `snapshot_age_seconds`,
+`effective_remaining_percent`, and the raw `rate_limits`; one bad profile remains a data record
+rather than aborting the sample round.
+
+Treat this as an observed snapshot, not a live billing query. Session logs refresh only when
+Codex emits a usage event. Never describe a stale or post-reset snapshot as current; use a real,
+low-cost probe only when a dispatch decision warrants fresher evidence.
+
+Route work from the normalized snapshot and in-flight reservations:
+
+- Exclude profiles with invalid authentication, missing or stale evidence, a reached limit, or
+  spend control. Treat credits as supplemental capacity, not as a substitute for window quota.
+- Use the lowest remaining percentage across reported windows as effective headroom. Reserve
+  expected usage for running and queued work so simultaneous dispatches do not all consume the
+  same apparent capacity.
+- Estimate task cost and uncertainty from prior deltas. Prefer the smallest eligible capacity
+  that still leaves the configured reserve, preserving room for expensive or unpredictable work.
+- When no profile safely fits, reduce concurrency or wait for the earliest relevant reset. Do not
+  evade a limit by changing identity outside the declared profile inventory.
+
+Choose a sampling cadence that matches task duration and decision frequency; polling the same
+files more often does not make their underlying snapshot fresher.
+
 ## Run the fleet
 
 1. **Preflight.** Read repository instructions, resolve the upstream base, check host capacity,
    identify runtime and dependency collisions, and verify the credential and quota each worker
-   will actually spend. Do not infer billing from a profile name or login-status message.
+   will actually spend. Use login status only to establish auth mode; obtain capacity from the
+   matching profile's usage snapshot.
 2. **Decompose.** Give each concurrent task one worker, one worktree, one branch, one brief, and
    a non-overlapping file scope. Serialize dependency changes, migrations, protocol changes, and
    any other shared boundary; land those before dependent work.
@@ -43,8 +77,9 @@ approvals, or rate-limit inspection justifies the extra protocol and lifecycle c
    visible background tasks unless they must outlive the supervisor session. Close inherited
    stdin and keep structured output, final output, and stderr separate.
 5. **Persist state.** Store every round's brief, structured result, exit code, logs, branch, and
-   worktree on disk. Reconstruct fleet state from those artifacts and live processes after every
-   checkpoint; never depend on conversation memory.
+   worktree on disk, together with usage observations and capacity reservations. Reconstruct
+   fleet state from those artifacts and live processes after every checkpoint; never depend on
+   conversation memory.
 6. **Monitor.** Judge completion from the process exit status and structured terminal state, not
    from the presence of output or the word `error`. Preserve partial worktrees for inspection.
 7. **Review.** Give a different model the brief and diff without the implementer's assessment.
