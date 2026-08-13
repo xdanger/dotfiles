@@ -1,0 +1,15 @@
+[Unit]
+Description=Cursor agent worker
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+Environment=HOME=/home/xdanger
+Environment=PATH=/home/xdanger/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/home/xdanger/.local/bin/agent worker start
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=default.target

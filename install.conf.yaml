@@ -19,6 +19,7 @@
     ~/.codex/RTK.md: "agents/RTK-codex.md"
     ~/.config/AGENTS.md: "agents/AGENTS.md"
     ~/.config/ghostty: "ghostty"
+    ~/.config/systemd/user/agent-worker.service: "systemd/user/agent-worker.service"
     ~/.config/mise/config.toml: "mise/global.toml"
     ~/.config/ranger: "ranger"
     ~/.config/zed/AGENTS.md: "agents/AGENTS.md"
