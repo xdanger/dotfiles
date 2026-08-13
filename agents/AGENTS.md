@@ -51,11 +51,13 @@ Auth issues: `npx mcporter auth <server>`
 
 **Shipping**
 
-- Treat “ship the changes,” “ship the branch,” and equivalent requests as an explicit, fully autonomous mandate to complete the entire Git workflow. Do not stop after committing, pushing, or opening the PR.
-- Use the existing compliant task branch, or create one without disturbing unrelated work. Commit the task-scoped changes, run the full test suite before the first push, and push to `origin` using the exact same branch name.
-- Treat a local test failure as non-blocking only after verifying that it is pre-existing on the current upstream base and unrelated to the change; preserve the evidence. Never weaken tests or absorb unrelated fixes merely to obtain a passing result. PR checks remain subject to the strict `pr-shepherd` GREEN gate; escalate if an upstream failure blocks merging.
-- Open a ready-for-review PR and invoke the `pr-shepherd` skill. Own it until it is merged and cleaned up or a genuine human-only blocker is reached: monitor CI and reviews, fix real failures, rerun genuine flakes at most once, address and resolve every review thread, re-check the strict gate after each push, merge only when GREEN, and perform the prescribed branch and worktree cleanup.
-- A “ship” request authorizes the final merge without additional confirmation once the strict GREEN gate passes. Use the repository's configured merge and cleanup policies.
+- Treat “ship the changes,” “ship the branch,” and equivalent requests as an explicit mandate to deliver the current changes end to end.
+- Create a dedicated branch whose name matches `^(build|ci|chore|docs|feat|fix|perf|refactor|style|test)/[a-z0-9]+(-[a-z0-9]+)*$`.
+- Commit the changes, run the full test suite, then push the branch to `origin` under the exact same name.
+- Proceed past a failure only after verifying that it is a pre-existing upstream failure unrelated to the change, and document the evidence.
+- Open a ready-for-review PR, invoke the `pr-shepherd` skill, and autonomously drive it through merge: monitor the strict CI and review gate, fix genuine failures, rerun genuine flakes at most once, address and resolve every review thread, and wait for restarted checks.
+- Merge only when the strict gate is fully GREEN, then perform the prescribed cleanup.
+- Escalate any required human action or persistent blocker instead of bypassing protections.
 
 **Pull requests, merge, and cleanup**
 
