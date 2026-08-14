@@ -35,6 +35,9 @@ export npm_config_yes=true
 # direnv: suppress loading/unloading messages
 export DIRENV_LOG_FORMAT=
 
+# Herdr
+HERDR_ENV=1
+
 # Go
 (( $+commands[go] )) && export GOBIN="$HOME/.local/bin"
 
