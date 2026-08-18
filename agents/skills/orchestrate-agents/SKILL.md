@@ -3,9 +3,10 @@ name: orchestrate-agents
 description: >-
   Orchestrate codex and grok CLIs as parallel workers from a supervising agent session.
   Use when work should be delegated across isolated worktrees, run concurrently, or
-  cross-reviewed by another model, including fleets of codex app-servers backed by multiple
-  CODEX_HOME profiles. Covers usage-aware routing, lane selection, decomposition, durable
-  state, budgets, cleanup, verification, and serialized integration. Do not use for
+  cross-reviewed by another model. Drives codex workers through per-profile app-server
+  threads by default, with one-shot exec as the fallback lane; grok always runs as
+  processes. Covers usage-aware routing, lane selection, decomposition, durable state,
+  budgets, cleanup, verification, and serialized integration. Do not use for
   in-process subagents or a single sequential task.
 ---
 
@@ -19,32 +20,46 @@ file scopes collide, or no independent work remains.
 
 ## Choose the lane
 
-|                 | Lane A: one process per task      | Lane B: persistent app-server     |
-| --------------- | --------------------------------- | --------------------------------- |
-| Best for        | bounded implementation and review | repeated or steerable work        |
-| Context cost    | paid again for every process      | amortized across turns            |
-| Mid-run control | kill and restart                  | steer, interrupt, fork, approvals |
-| Default         | yes                               | only when its controls matter     |
+|                 | Lane A: one process per task                  | Lane B: persistent app-server                              |
+| --------------- | --------------------------------------------- | ---------------------------------------------------------- |
+| Best for        | grok (always); codex fire-and-forget fallback | codex workers (default)                                    |
+| Progress        | coarse JSONL items, exit code                 | token deltas, live diff, plan updates, in-turn token usage |
+| Mid-run control | kill and restart                              | steer, interrupt, fork, per-action approvals               |
+| Context cost    | paid again for every process                  | amortized across turns in a thread                         |
 
-Use Lane A by default. Use Lane B when mid-turn correction, thread reuse, programmatic
-approvals, or rate-limit inspection justifies the extra protocol and lifecycle complexity.
+Default codex workers to Lane B. `codex exec` is itself an app-server client, so Lane A runs
+the same runtime behind a downsampling layer that discards the control channel; Lane B removes
+that layer rather than adding a dependency. Its controls turn chronic failure modes from
+brief-level requests into harness-level enforcement: corrective rounds (steer without repaying
+context), quota evidence (authoritative rate-limit reads), and escalations (per-action approvals
+for actions the sandbox does not already allow).
+
+Fall back to Lane A for codex when a task is genuinely fire-and-forget and a crude external
+wall-clock bound is worth more than steerability, when the supervisor cannot hold a connection
+for the task's lifetime, or when the app-server itself is the suspect. grok has no app-server;
+it always runs Lane A.
 
 ## Route by observed capacity
 
-Maintain an explicit server-to-`CODEX_HOME` inventory. Before fan-out, periodically while the
-fleet runs, and after worker completion or a rate-limit response, run
-`scripts/read-codex-usage.py` for every profile and persist its JSON Lines output with the fleet
-state. It derives the newest `token_count.rate_limits` event across each profile's session logs
-by comparing events in files changed within the freshness window, falling back to older logs only
-as stale diagnostic evidence, and verifies that `codex login status` reports ChatGPT
-authentication. Pass one `--home PROFILE=CODEX_HOME` per server and set `--max-age` to the fleet's
-freshness tolerance. Consume `status`, `schedulable`, `snapshot_age_seconds`,
-`effective_remaining_percent`, and the raw `rate_limits`; one bad profile remains a data record
-rather than aborting the sample round.
+Maintain an explicit server-to-`CODEX_HOME` inventory. For profiles with a running lane
+server, read capacity in-protocol: `account/rateLimits/read` returns authoritative usage
+(used percent per window, reset time, plan type, credits, spend control, per-limit buckets),
+and `account/rateLimits/updated` pushes sparse rolling revisions mid-turn. Treat the last full
+read as the snapshot of record: merge an update's present fields into it — an absent or null
+field carries no information and never clears a previously observed value — or refetch the full
+snapshot. Replacing the snapshot with a sparse update overstates capacity wherever the update
+omits a window, credits, or spend-control state.
 
-Treat this as an observed snapshot, not a live billing query. Session logs refresh only when
-Codex emits a usage event. Never describe a stale or post-reset snapshot as current; use a real,
-low-cost probe only when a dispatch decision warrants fresher evidence.
+For profiles without a running server, fall back to `scripts/read-codex-usage.py`. It derives
+the newest `token_count.rate_limits` event across each profile's session logs within the
+freshness window and verifies that `codex login status` reports ChatGPT authentication. Pass
+one `--home PROFILE=CODEX_HOME` per server and set `--max-age` to the fleet's freshness
+tolerance. Consume `status`, `schedulable`, `snapshot_age_seconds`,
+`effective_remaining_percent`, and the raw `rate_limits`; one bad profile remains a data
+record rather than aborting the sample round. Treat script output as an observed snapshot,
+not a live billing query: session logs refresh only when Codex emits a usage event, and
+polling the same files more often does not make their snapshot fresher. Never describe a
+stale or post-reset snapshot as current.
 
 Route work from the normalized snapshot and in-flight reservations:
 
@@ -58,30 +73,29 @@ Route work from the normalized snapshot and in-flight reservations:
 - When no profile safely fits, reduce concurrency or wait for the earliest relevant reset. Do not
   evade a limit by changing identity outside the declared profile inventory.
 
-Choose a sampling cadence that matches task duration and decision frequency; polling the same
-files more often does not make their underlying snapshot fresher.
-
 ## Run the fleet
 
 1. **Preflight.** Read repository instructions, resolve the upstream base, check host capacity,
    identify runtime and dependency collisions, and verify the credential and quota each worker
-   will actually spend. Use login status only to establish auth mode; obtain capacity from the
-   matching profile's usage snapshot.
+   will actually spend. Use login status only to establish auth mode; obtain capacity as above.
 2. **Decompose.** Give each concurrent task one worker, one worktree, one branch, one brief, and
    a non-overlapping file scope. Serialize dependency changes, migrations, protocol changes, and
    any other shared boundary; land those before dependent work.
 3. **Brief.** State the goal, constraints, acceptance criteria, file scope, required commit, and
    verification. Specify durable invariants rather than preferred code paths. Treat the
    supervisor's previous instruction as a possible source of the defect.
-4. **Launch.** Apply both wall-clock and tool-level budgets where available. Keep workers as
-   visible background tasks unless they must outlive the supervisor session. Close inherited
-   stdin and keep structured output, final output, and stderr separate.
-5. **Persist state.** Store every round's brief, structured result, exit code, logs, branch, and
-   worktree on disk, together with usage observations and capacity reservations. Reconstruct
-   fleet state from those artifacts and live processes after every checkpoint; never depend on
-   conversation memory.
-6. **Monitor.** Judge completion from the process exit status and structured terminal state, not
-   from the presence of output or the word `error`. Preserve partial worktrees for inspection.
+4. **Launch.** In Lane B, start one thread per task with the worktree as its `cwd` and apply a
+   supervisor-owned wall-clock budget per turn. In Lane A, apply both wall-clock and tool-level
+   budgets where available. Keep workers as visible background tasks unless they must outlive
+   the supervisor session. Close inherited stdin and keep structured output, final output, and
+   stderr separate.
+5. **Persist state.** Store every round's brief, structured result, terminal status, logs,
+   branch, worktree, and — in Lane B — thread ID on disk, together with usage observations and
+   capacity reservations. Reconstruct fleet state from those artifacts and live processes after
+   every checkpoint; never depend on conversation memory.
+6. **Monitor.** Judge completion from the structured terminal state — `turn/completed` status in
+   Lane B, process exit status plus structured terminal state in Lane A — not from the presence
+   of output or the word `error`. Preserve partial worktrees for inspection.
 7. **Review.** Give a different model the brief and diff without the implementer's assessment.
    Judge findings before relaying them; never apply a suggested snippet merely because a reviewer
    proposed it.
@@ -91,6 +105,9 @@ files more often does not make their underlying snapshot fresher.
 
 ## Brief corrective rounds
 
+- Prefer `turn/steer` for corrections a Lane B worker can absorb mid-flight: it injects
+  guidance without discarding accumulated context or lifting the output contract. Start a
+  fresh round when the accumulated context is itself the defect.
 - When the same defect shape recurs, brief the class and require the worker to find every instance
   within its scope. Do not imply that the manager's examples are exhaustive.
 - Above roughly five affected sites, require an inventory of each site, its previous protection,
@@ -110,6 +127,9 @@ Passing-test counts are weak evidence. For critical behavior, temporarily break 
 that the relevant test fails, then restore it. Add state-specific verification where mutation is
 unsafe or insufficient.
 
+In Lane B, read the accumulated `turn/diff/updated` stream before believing a completion claim:
+what the worker actually changed is evidence; what it says it changed is not.
+
 A suite that always bootstraps from scratch cannot expose defects that occur only on an
 already-migrated system. Inspect or test upgrade state explicitly.
 
@@ -122,8 +142,16 @@ Anything mechanically enforceable belongs in the harness rather than only in a b
 budgets, worktree creation, accepted lanes, result capture, process cleanup, and failure reporting.
 Repeating an ignored instruction is not control.
 
-On every worker exit, reap processes whose resolved current working directory is the worker's
-resolved worktree or a descendant. Escalate from graceful termination when necessary. After the
+In Lane B, answer every server-to-client request — an unanswered approval hangs the turn — and
+adjudicate each one against the task's brief. Do not mistake approvals for file-scope
+enforcement: with a writable worktree sandbox, edits inside the workspace never surface a
+request, so a worker can touch out-of-scope files without asking. Enforce file scope
+mechanically by validating the worktree's actual Git diff against the declared scope before
+integration, and reject the round when it strays.
+
+On every worker exit (Lane A) or turn completion (Lane B), reap processes whose resolved current
+working directory is the worker's resolved worktree or a descendant; the app-server does not reap
+agent-spawned background processes. Escalate from graceful termination when necessary. After the
 fleet drains, inspect parent PID directly for remaining processes under worker worktrees; command
 text searches miss bare busy loops.
 
@@ -142,17 +170,62 @@ Use the same strict structured contract for every worker. Require:
 - `committed`: whether the worker created the required commit;
 - `files_changed`: the complete changed-file list.
 
+Carry the schema via `turn/start.outputSchema` in Lane B and `--output-schema` in Lane A; both
+enforce it at the model boundary, and steering does not lift the contract.
+
 For tasks that need richer reporting, also require verification performed, omitted work, and a
 nullable `blocked_reason`. A truthful blocker is better than false success; never use the string
 `none` to hide skipped work.
 
 Keep strict-schema properties required and use nullable values where absence is meaningful. Treat
-any nonzero exit as no usable final result, even when partial edits remain. Distinguish advisory
-error items from a failed terminal state.
+any turn status other than `completed` (Lane B) or any nonzero exit (Lane A) as no usable final
+result, even when partial edits remain — `interrupted` is terminal without being `failed`, and a
+budget-interrupted turn has no schema-conforming answer. Distinguish advisory error items from a
+failed terminal state.
 
 ## Lane-specific rules
 
-### Lane A
+### Lane B (codex default)
+
+- Spawn a dedicated `codex app-server --listen stdio://` child per `CODEX_HOME` and own its
+  lifetime; never
+  attach orchestration to an operator's already-running daemon or its control socket, where a
+  supervisor bug can disturb interactive sessions. One process is one credential profile; a
+  multi-account fleet is N processes. If a socket listener is unavoidable, prefer a private Unix
+  socket, authenticate WebSocket listeners, protect token files, and tunnel non-loopback traffic.
+- Treat stdio as newline-delimited JSON-RPC and Unix or TCP listeners as WebSocket transports. Do
+  not reuse stdio framing on sockets.
+- Generate protocol bindings from the installed binary (`codex app-server generate-ts` /
+  `codex app-server generate-json-schema`); they are version-locked to that binary by construction. Regenerate on
+  every codex upgrade and treat a resulting compile break as the upgrade signal. Do not build the
+  supervisor on experimental-marked methods or fields.
+- Complete the `initialize`/`initialized` handshake and assert that the returned `codexHome`
+  equals the intended profile before dispatching work. The home assertion does not establish
+  which credential the process will spend: launch the server with a sanitized environment,
+  removing API-key and custom-provider overrides exactly as Lane A requires, because such keys
+  outrank the profile's stored login and `codex login status` does not report them.
+- Start one thread per task via `thread/start` with the worktree as `cwd` and per-thread sandbox,
+  approval policy, and config overrides. Start threads non-ephemeral so they persist, and record
+  each thread ID in fleet state. Thread creation can restart the configured MCP server set and is
+  not free: reuse threads for serialized follow-up work, and measure contention before assuming
+  parallel threads produce linear throughput.
+- `turn/start` returns an in-progress handle immediately; the turn's only completion signal is
+  the `turn/completed` notification carrying terminal status. `turn/steer` requires the
+  `expectedTurnId` from that handle — an intended guard against steering the wrong turn.
+  Budgets are supervisor-owned: bound each turn by wall clock, escalate `turn/interrupt`, and
+  only as a last resort kill the process, which takes every thread in it.
+- A server crash takes down all its threads. On restart or reconnection, resume from persisted
+  thread IDs via `thread/resume`. A lost connection is not a dead server: when the process
+  survived, the original turn may still be running, so read the resumed thread's status and
+  `turn/interrupt` any live turn before dispatching anything — otherwise two turns race the same
+  worktree. Then reconcile before retrying: a turn that performed side effects before the
+  crash — commits, file mutations, spawned processes — repeats them if replayed verbatim, and
+  replayed thread history is lossy (not every command execution is persisted), so treat the
+  worktree and external state as the authority on what already happened. Continue from that
+  reconciled checkpoint with a brief scoped to the remainder, retrying only operations known to
+  be idempotent, rather than re-issuing the original turn.
+
+### Lane A (grok always; codex fallback)
 
 - Use headless one-shot execution in an isolated worktree. Bound codex with an external wall-clock
   timeout; bound grok by both turns and wall clock.
@@ -167,19 +240,6 @@ error items from a failed terminal state.
   wrong range.
 - Set grok permissions deliberately. Prefer targeted allowances; pair any broad unattended
   permission mode with a sandbox boundary.
-
-### Lane B
-
-- Follow the app-server lifecycle and generate protocol schemas from the installed binary. Do not
-  build the supervisor on experimental methods.
-- Treat stdio as newline-delimited JSON and Unix or TCP listeners as WebSocket transports. Do not
-  reuse stdio framing on sockets.
-- Prefer a private Unix socket on a shared host. Authenticate WebSocket listeners, protect token
-  files, and tunnel non-loopback traffic because the listener does not provide TLS.
-- Treat one app-server process as one credential profile. Assert the returned profile directory
-  during initialization and use one server per profile when accounts must differ.
-- Reuse threads when appropriate: thread creation can restart the configured MCP server set and is
-  not free. Measure contention before assuming parallel threads produce linear throughput.
 
 ## Non-negotiables
 

@@ -60,10 +60,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/brave/brave-search-skills.git",
       "skillPath": "skills/llm-context/SKILL.md",
-      "skillFolderHash": "206fb44b69606d45c8741b8c3490d4b8fd7be129",
-      "pluginName": "brave-search-skills",
+      "skillFolderHash": "48021337e75124af614c546d0e86640dfb8e63c6",
       "installedAt": "2026-03-12T01:00:32.899Z",
-      "updatedAt": "2026-03-12T01:00:32.899Z"
+      "updatedAt": "2026-08-18T00:41:42.376Z"
     },
     "manus": {
       "source": "krosdai/skills",
@@ -367,18 +366,18 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/orchestrate-agents/SKILL.md",
-      "skillFolderHash": "09a2dc209806e12e3aaf2acc7b89a3a4841d2c50",
+      "skillFolderHash": "a2c01ecbbde5abc0ef9c2e2b2c6f7f08bb41a9a3",
       "installedAt": "2026-08-04T00:27:55.795Z",
-      "updatedAt": "2026-08-07T12:30:07.597Z"
+      "updatedAt": "2026-08-18T00:41:38.079Z"
     },
     "herdr": {
       "source": "herdrdev/herdr",
       "sourceType": "github",
       "sourceUrl": "https://github.com/herdrdev/herdr.git",
       "skillPath": "skills/herdr/SKILL.md",
-      "skillFolderHash": "9ea7b409135fc1be2ff7bc3e3e69764961536dd4",
+      "skillFolderHash": "4821f1d39ccae24b9b274b03184edaaf198a3994",
       "installedAt": "2026-08-14T10:00:06.267Z",
-      "updatedAt": "2026-08-14T10:00:06.267Z"
+      "updatedAt": "2026-08-18T00:41:54.602Z"
     }
   },
   "dismissed": {
