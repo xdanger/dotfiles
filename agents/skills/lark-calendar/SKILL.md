@@ -21,6 +21,8 @@ metadata:
 - 查看/管理登录用户本人的日程 → `--as user`（默认，绝大多数场景）。
 - 查看/管理 bot 自己创建/拥有的日程 → `--as bot` 
 
+**对话人称映射**：「我」= 登录用户，「你」= 应用（bot）；作为字段取值的人称（参会人、会议 owner 等）不参与身份判定，如「你创建日程，邀请我、会议 owner 为我」→ `--as bot` 创建，登录用户仅作参会人与会议 owner。
+
 ```bash
 # 用户本人日程 → user
 lark-cli calendar +agenda --as user
@@ -190,7 +192,7 @@ lark-cli contact +search-user --query <query> --as user
 lark-cli im +chat-search --query <query> --as user
 ```
 
-> 搜索用户接口不支持 bot 身份，必须用 `--as user`；搜到的 `ou_` open_id 用于日程参与人操作（如添加日程参与人）。
+> 搜索用户/群不支持 bot 身份，必须用 `--as user`。**解析不到或类型不明确时，向用户澄清该参会人类型，不要靠名字形态硬猜类型。**
 
 ## 不在本 skill 范围
 
