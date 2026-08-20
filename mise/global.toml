@@ -6,7 +6,7 @@ gcloud = "latest"
 go = "latest"
 herdr = "latest"
 kubectl = "latest"
-node = "latest"
+node = "lts"
 pnpm = "latest"
 python = "latest"
 ruby = "latest"
@@ -17,4 +17,7 @@ wrangler = "latest"
 yarn = "latest"
 
 [settings.ruby]
+compile = false
+
+[settings.python]
 compile = false
