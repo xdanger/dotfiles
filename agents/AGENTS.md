@@ -7,7 +7,8 @@
 
 ## CLI Overrides
 
-- `rm` → `trash`, `mv`(tracked) → `git mv`
+- `rm` → `trash`, `mv`(tracked) → `git mv`. If a cleanup operation using `trash`
+  receives `EROFS`, fail immediately and report the error; never retry indefinitely.
 - `grep` → `rg`，`find` → `fd`，`cat` → `bat`，`ls` → `eza`
 - `sed` → `sd`，`du` → `dust`，`df` → `duf`，`make` → `just`
 - Also available: `jq`, `yq`, `fzf`, `glow`, `tldr`, `watchexec`, `difft`, `tokei`, `hyperfine`
