@@ -1,0 +1,12 @@
+[Unit]
+Description=Run the Codex trash-cli watchdog hourly
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+RandomizedDelaySec=0
+AccuracySec=1min
+Unit=codex-trash-watchdog.service
+
+[Install]
+WantedBy=timers.target
