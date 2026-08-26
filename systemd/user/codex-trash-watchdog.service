@@ -6,18 +6,25 @@ After=network-online.target
 ConditionFileIsExecutable=/home/xdanger/.codex/packages/standalone/current/codex
 ConditionPathExists=/home/xdanger/.codex/trash-watchdog.config.toml
 ConditionPathExists=/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/prompt.md
+ConditionPathExists=/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/decision.schema.json
+ConditionFileIsExecutable=/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/snapshot.sh
+ConditionFileIsExecutable=/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/remediate.sh
 StartLimitIntervalSec=1h
 StartLimitBurst=3
 
 [Service]
 Type=oneshot
-WorkingDirectory=/home/xdanger/.dotfiles
+RuntimeDirectory=codex-trash-watchdog
+RuntimeDirectoryMode=0700
+WorkingDirectory=/run/user/1000/codex-trash-watchdog
 Environment=HOME=/home/xdanger
 Environment=CODEX_HOME=/home/xdanger/.codex
 Environment=PATH=/home/xdanger/.local/bin:/usr/local/bin:/usr/bin:/bin
 Environment=NO_COLOR=1
 StandardInput=file:/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/prompt.md
-ExecStart=/home/xdanger/.codex/packages/standalone/current/codex exec -p trash-watchdog --approve-for-me --ephemeral --color never -
+ExecStartPre=/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/snapshot.sh /run/user/1000/codex-trash-watchdog
+ExecStart=/home/xdanger/.codex/packages/standalone/current/codex exec -p trash-watchdog --sandbox workspace-write --ephemeral --skip-git-repo-check --output-schema /home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/decision.schema.json --output-last-message /run/user/1000/codex-trash-watchdog/decision.json --color never -
+ExecStartPost=/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/remediate.sh /run/user/1000/codex-trash-watchdog
 TimeoutStartSec=10min
 KillMode=control-group
 StandardOutput=journal

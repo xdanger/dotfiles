@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string",
+      "enum": ["noop", "terminate"]
+    },
+    "pids": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 1 }
+    },
+    "reason": {
+      "type": "string"
+    }
+  },
+  "required": ["action", "pids", "reason"],
+  "additionalProperties": false
+}
