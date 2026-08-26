@@ -22,8 +22,7 @@ Environment=CODEX_HOME=/home/xdanger/.codex
 Environment=PATH=/home/xdanger/.local/bin:/usr/local/bin:/usr/bin:/bin
 Environment=NO_COLOR=1
 StandardInput=file:/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/prompt.md
-ExecStartPre=/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/snapshot.sh /run/user/1000/codex-trash-watchdog
-ExecCondition=/usr/bin/jq -e 'any(.candidates[]; .identity_confirmed and .threshold_confirmed and .evidence_confirmed)' /run/user/1000/codex-trash-watchdog/snapshot.json
+ExecCondition=/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/snapshot.sh /run/user/1000/codex-trash-watchdog
 ExecStart=/home/xdanger/.codex/packages/standalone/current/codex exec -p trash-watchdog --sandbox workspace-write --ephemeral --skip-git-repo-check --output-schema /home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/decision.schema.json --output-last-message /run/user/1000/codex-trash-watchdog/decision.json --color never -
 ExecStartPost=/home/xdanger/.dotfiles/ai-agent/linux/trash-watchdog/remediate.sh /run/user/1000/codex-trash-watchdog
 TimeoutStartSec=10min

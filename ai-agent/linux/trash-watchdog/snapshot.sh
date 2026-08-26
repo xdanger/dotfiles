@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+trap 'exit 255' ERR
 
 state_dir=${1:?state directory is required}
 snapshot_path="$state_dir/snapshot.json"
@@ -93,3 +94,17 @@ snapshot_tmp=$(/usr/bin/mktemp "$state_dir/snapshot.XXXXXX")
 /usr/bin/printf '%s\n' "$snapshot" >"$snapshot_tmp"
 /usr/bin/chmod 0600 "$snapshot_tmp"
 /usr/bin/mv -f "$snapshot_tmp" "$snapshot_path"
+
+if /usr/bin/jq -e '
+  any(.candidates[];
+    .identity_confirmed and
+    .threshold_confirmed and
+    .evidence_confirmed
+  )
+' "$snapshot_path" >/dev/null; then
+  /usr/bin/echo 'watchdog: eligible trash-cli candidate detected; requesting Codex decision'
+  exit 0
+fi
+
+/usr/bin/echo 'watchdog: no eligible trash-cli candidate; skipping Codex decision'
+exit 1
