@@ -1,22 +1,17 @@
 ---
 name: audience-aware-comms
 description: >-
-  Apply when writing an artifact whose reader is beyond this conversation —
-  another human, or an AI executor that will act on your words, including
-  subagents you spawn: emails; IM/Slack to other people; PR/issue descriptions;
-  review comments; design/decision docs; customer-facing copy; docs/README;
-  natural-language prompts, specs, or agent mandates. Apply even when the
-  artifact is an incidental sub-step of a larger task (the PR body after a
-  feature, a subagent prompt) — that is where audience-blind writing slips
-  through. It makes you model the reader's real capability and what they will
-  infer or assume, then emit only the calibrated artifact. Do NOT apply to:
-  in-chat replies addressed to the current user (answers, explanations,
-  summaries, status updates — however substantial), unless the user signals
-  the text is destined for someone else ("to send to my manager", "to paste
-  into Slack") — then that recipient is the reader and the skill applies; text
-  the user dictates verbatim; git commit messages; output consumed literally
-  by a deterministic interpreter (executed code, configs, schemas, queries,
-  regexes, test fixtures) — no mind to model.
+  Apply when writing an artifact for a reader beyond the current conversation:
+  another person or an AI executor, including emails, IM/Slack messages,
+  PR/issue descriptions, review comments, design or decision docs,
+  customer-facing copy, docs/README content, and natural-language prompts,
+  specs, or mandates for downstream agents. Also apply when such an artifact is
+  an incidental sub-step of a larger task. Model the reader's actual capability,
+  context, likely inferences, and desired action; emit only the calibrated
+  artifact. Do not apply to ordinary replies to the current user unless the text
+  is meant for someone else; text dictated verbatim; git commit messages; or
+  code, configs, schemas, queries, regexes, test fixtures, and other output
+  consumed literally by a deterministic interpreter.
 ---
 
 # Audience-Aware Communication
