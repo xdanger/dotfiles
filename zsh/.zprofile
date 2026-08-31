@@ -10,18 +10,12 @@ LOGINSHELL_INITED=1
 
 # rvm
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-# virtualenv
-[[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
 # Python installations by [uv](https://github.com/astral-sh/uv)
 [[ -f "$HOME/.local/bin/env" ]] && source "$HOME/.local/bin/env"
 # Deno
 if [[ -d "$HOME/.deno/bin" ]]; then
   export DENO_INSTALL="$HOME/.deno"
   path=("$DENO_INSTALL/bin" $path)
-fi
-# Bun
-if [[ -d "$HOME/.bun" ]]; then
-  export BUN_INSTALL="$HOME/.bun" && path+=("$BUN_INSTALL/bin")
 fi
 # Platform-specific environment variables
 local os_name=${(L)$(uname -s)}

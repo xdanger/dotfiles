@@ -22,6 +22,14 @@ export ZDOTDIR="$DOTFILES/zsh"
 # Set ZSH environment variable
 export ZSH="$ZDOTDIR/oh-my-zsh"
 
+# User-installed executables
+[[ -d "$HOME/.local/bin" ]] && path+=("$HOME/.local/bin")
+# Bun
+if [[ -d "$HOME/.bun" ]]; then
+  export BUN_INSTALL="$HOME/.bun"
+  path+=("$BUN_INSTALL/bin")
+fi
+
 # Language and editor
 export LANG=en_US.UTF-8
 export EDITOR=vim
