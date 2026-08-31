@@ -1,9 +1,13 @@
 [tools]
 awscli = "latest"
 bun = "latest"
+claude = "latest"
+codex = "latest"
+cursor-agent = { version = "latest", bin_path = "dist-package", strip_components = 0, url = 'https://downloads.cursor.com/lab/{{ version }}/{{ os(macos="darwin") }}/{{ arch(x64="x64", arm64="arm64") }}/agent-cli-package.tar.gz', version_list_url = "https://cursor.com/install", version_regex = 'downloads\.cursor\.com/lab/([0-9]{4}\.[0-9]{2}\.[0-9]{2}-[0-9a-f]+)/' }
 deno = "latest"
 gcloud = "latest"
 go = "latest"
+grok = { version = "latest", bin = "grok", platforms = { windows-arm64 = { bin = "grok.exe", url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-{{ version }}-windows-aarch64.exe" }, windows-x64 = { bin = "grok.exe", url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-{{ version }}-windows-x86_64.exe" } }, url = 'https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-{{ version }}-{{ os() }}-{{ arch(x64="x86_64", arm64="aarch64") }}', version_list_url = "https://x.ai/cli/stable" }
 herdr = "latest"
 kubectl = "latest"
 node = "lts"
