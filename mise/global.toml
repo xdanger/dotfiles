@@ -20,6 +20,9 @@ uv = "latest"
 wrangler = "latest"
 yarn = "latest"
 
+[settings]
+auto_update = true
+
 [settings.ruby]
 compile = false
 
