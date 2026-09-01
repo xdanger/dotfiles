@@ -30,25 +30,10 @@ fi
 # Load Apple-keychain-stored keys into the agent (no-op if already present).
 /usr/bin/ssh-add --apple-use-keychain 2>/dev/null
 
-# Google Cloud Platform
-if (( $+commands[gcloud] )); then
-  export CLOUDSDK_PYTHON="$HOMEBREW/bin/python3"
-  export GOOGLE_CLOUD_SDK_HOME="$HOMEBREW/share/google-cloud-sdk"
-  source "$GOOGLE_CLOUD_SDK_HOME/path.zsh.inc"
-fi
-
-# Ruby
-export LDFLAGS="-L$HOMEBREW/opt/ruby/lib"
-export CPPFLAGS="-I$HOMEBREW/opt/ruby/include"
-export PKG_CONFIG_PATH="$HOMEBREW/opt/ruby/lib/pkgconfig"
-for dir in "ruby" "openssl" "gettext" "texinfo" "flutter"; do
+# Homebrew libraries and SDKs
+for dir in "openssl" "gettext" "texinfo" "flutter"; do
   [[ -d "$HOMEBREW/opt/$dir/bin" ]] && path=("$HOMEBREW/opt/$dir/bin" $path)
 done
-if (( $+commands[ruby] )); then
-  for pth in $(ruby -e 'puts Gem.path'); do
-    [[ -d "$pth" ]] && path=("$pth/bin" $path)
-  done
-fi
 
 # Added by OrbStack: command-line tools and integration
 if [[ -d "$HOME/.orbstack" ]]; then
@@ -80,9 +65,6 @@ fi
 if [[ -d "$HOME/Library/Application Support/taobao/cli" ]]; then
   export TBN_CLI_BIN="/Users/xdanger/Library/Application Support/taobao/cli/bin"
 fi
-
-# grok CLI (xAI)
-[[ -d "$HOME/.grok/bin" ]] && path=("$HOME/.grok/bin" $path)
 
 # pnpm — global binaries live in $PNPM_HOME/bin
 export PNPM_HOME="$HOME/Library/pnpm"

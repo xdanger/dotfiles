@@ -46,8 +46,8 @@ export DIRENV_LOG_FORMAT=
 # Herdr
 HERDR_ENV=1
 
-# Go
-(( $+commands[go] )) && export GOBIN="$HOME/.local/bin"
+# Go tools installed with the mise-managed runtime
+export GOBIN="$HOME/.local/bin"
 
 # other envs
 [[ -f "$HOME/.dotlocal/envs.zsh" ]] && source "$HOME/.dotlocal/envs.zsh"

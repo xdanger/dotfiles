@@ -102,6 +102,13 @@ local os_name=${(L)$(uname -s)}
 # Mise — activate in interactive shells (covers non-login shells like tmux splits)
 (( $+commands[mise] )) && eval "$(mise activate zsh)"
 
+# Google Cloud SDK completion from the mise-managed installation
+if (( $+commands[gcloud] )); then
+  _gcloud_home="${commands[gcloud]:h:h}"
+  [[ -r "$_gcloud_home/completion.zsh.inc" ]] && source "$_gcloud_home/completion.zsh.inc"
+  unset _gcloud_home
+fi
+
 # direnv
 (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
