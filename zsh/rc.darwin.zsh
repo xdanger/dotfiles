@@ -19,8 +19,3 @@ EOF
 function cdf() {
   cd "$(pfd)"
 }
-
-# Google Cloud completion
-if [[ -n "$GOOGLE_CLOUD_SDK_HOME" ]]; then
-  source "$GOOGLE_CLOUD_SDK_HOME/completion.zsh.inc"
-fi

@@ -44,23 +44,6 @@ fi
 [[ -d "$HOMEBREW/opt/openjdk" ]] && export JAVA_HOME="$HOMEBREW/opt/openjdk" && path=("$JAVA_HOME/bin" $path)
 [[ -d "/opt/android-sdk" ]] && export ANDROID_SDK_ROOT="/opt/android-sdk" && export ANDROID_HOME="$ANDROID_SDK_ROOT"
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-if [[ -d "$HOMEBREW/anaconda3" ]]; then
-  __conda_setup="$("$HOMEBREW/anaconda3/bin/conda" 'shell.zsh' 'hook' 2>/dev/null)"
-  if [[ $? -eq 0 ]]; then
-    eval "$__conda_setup"
-  else
-    if [[ -f "$HOMEBREW/anaconda3/etc/profile.d/conda.sh" ]]; then
-      source "$HOMEBREW/anaconda3/etc/profile.d/conda.sh"
-    else
-      path=("$HOMEBREW/anaconda3/bin" $path)
-    fi
-  fi
-  unset __conda_setup
-fi
-# <<< conda initialize <<<
-
 # taobao-native CLI
 if [[ -d "$HOME/Library/Application Support/taobao/cli" ]]; then
   export TBN_CLI_BIN="/Users/xdanger/Library/Application Support/taobao/cli/bin"
