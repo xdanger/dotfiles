@@ -68,3 +68,5 @@ typeset -gU path
 
 # device-specific env (not tracked by any repo)
 [[ -f "$HOME/.zshenv.local" ]] && source "$HOME/.zshenv.local"
+
+source "$ZDOTDIR/mise-path.zsh"

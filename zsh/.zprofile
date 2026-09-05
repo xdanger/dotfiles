@@ -5,6 +5,8 @@
 # Put session-level initialization here, such as version managers and agents.
 # This repo intentionally splits responsibilities between .zprofile and .zlogin.
 #
+# /etc/zprofile may reorder PATH even when this session was already initialized.
+source "$ZDOTDIR/mise-path.zsh"
 (( ${+LOGINSHELL_INITED} )) && return
 LOGINSHELL_INITED=1
 
@@ -21,6 +23,7 @@ if [[ -d "$HOME/Library/Android/sdk" ]]; then
 fi
 # Preserve PATH activation order from version managers such as mise/uv.
 typeset -gU path
+source "$ZDOTDIR/mise-path.zsh"
 
 if [[ "$OSTYPE" == linux* ]] && [[ -f ~/.ssh/langley ]] && (( $+commands[keychain] )); then
   # 强制用 keychain 自己的 agent（覆盖 ForwardAgent 注入的转发 socket）
