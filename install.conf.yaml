@@ -12,6 +12,7 @@
 
 - link:
     ~/.agents:
+    ~/.local/bin/agent: "bin/agent"
     ~/.claude/CLAUDE.md: "agents/AGENTS.md"
     ~/.claude/RTK.md: "agents/RTK-claude.md"
     ~/.claude/skills: "agents/skills"
@@ -21,6 +22,9 @@
     ~/.config/AGENTS.md: "agents/AGENTS.md"
     ~/.config/ghostty: "ghostty"
     ~/.config/mise/config.toml: "mise/global.toml"
+    ~/.config/environment.d/zz-mise.conf:
+      path: "systemd/environment.d/zz-mise.conf"
+      if: '[ "$(uname -s)" = Linux ]'
     ~/.config/ranger: "ranger"
     ~/.config/systemd/user/codex-trash-watchdog.service: "systemd/user/codex-trash-watchdog.service"
     ~/.config/systemd/user/codex-trash-watchdog.timer: "systemd/user/codex-trash-watchdog.timer"
