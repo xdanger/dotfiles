@@ -45,6 +45,9 @@
     ~/.zlogout: "zsh/.zlogout"
 
 - shell:
+    - command: 'if [ "$(uname -s)" = Darwin ]; then /bin/zsh -f "$PWD/bin/install-mise-launchd-path.zsh"; fi'
+      stdout: true
+      stderr: true
     - command: bash "$PWD/scripts/post-install.sh"
       stdout: true
       stderr: true
