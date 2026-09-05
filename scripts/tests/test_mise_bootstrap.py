@@ -1,4 +1,5 @@
 from pathlib import Path
+import shutil
 import subprocess
 import tempfile
 import unittest
@@ -41,7 +42,9 @@ INSTALLER
             )
             # Keep host tool installations out of the test's command lookup.
             for name in ("bash", "sh", "dirname", "mkdir", "cat", "chmod"):
-                (commands / name).symlink_to(Path("/bin") / name)
+                executable_path = shutil.which(name)
+                self.assertIsNotNone(executable_path, name)
+                (commands / name).symlink_to(executable_path)
             if existing == "local":
                 executable(home / ".local/bin/mise", MISE_STUB)
             elif existing == "path":
