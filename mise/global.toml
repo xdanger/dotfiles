@@ -20,6 +20,7 @@ uv = "latest"
 wrangler = "latest"
 yarn = "latest"
 yt-dlp = "latest"
+hey-cli = "latest"
 
 [settings]
 auto_update = true
