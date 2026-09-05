@@ -1,6 +1,6 @@
 # 收信规则 Shortcut
 
-管理自动处理收到邮件的规则。优先使用 `mail +rule-*` shortcut，通过稳定英文 alias 编写条件和动作；只有需要当前 shortcut 尚未建模的服务端字段时，才回退到 `mail user_mailbox.rules` 原子 raw 命令。规则写操作需使用真实 `rule_id`，不要猜测 ID。创建、更新、删除规则需要按 SKILL.md 的高风险写规则获得用户确认并传 `--yes`；启停和排序是普通写操作，免 `--yes`。
+管理自动处理收到邮件的规则。优先使用 `mail +rule-*` shortcut，通过稳定英文 alias 编写条件和动作；只有需要当前 shortcut 尚未建模的服务端字段时，才回退到 `mail user_mailbox.rules` 原子 raw 命令。规则写操作需使用真实 `rule_id`，不要猜测 ID。创建、更新、删除规则需要按 SKILL.md 的高风险写规则获得用户确认并传 `--yes`；启停和排序在 CLI 层面免 `--yes`。启用或排序前需确认用户已授权该规则及其效果；没有明确授权时，先展示规则动作、适用邮件范围和顺序变化并取得确认。已有明确授权时无需重复确认。
 
 ## 常用 shortcut
 

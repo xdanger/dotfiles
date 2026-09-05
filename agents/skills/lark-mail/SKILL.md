@@ -66,7 +66,8 @@ metadata:
 | 取消定时 | `*.cancel_scheduled_send` | ✅ 必须 |
 | 删除收信规则 | `rules.delete` | ✅ 必须 |
 | 创建 / 更新收信规则 | `rules.create` / `update` | ✅ 必须 |
-| 启停 / 排序收信规则 | `rules.enable` / `disable` / `reorder` | ❌ 普通写操作，免 `--yes` |
+| 启用 / 排序收信规则 | `rules.enable` / `reorder` | ✅ 需授权；已有明确授权时无需重复确认。CLI 免 `--yes` 不代表免授权 |
+| 停用收信规则 | `rules.disable` | ❌ 普通写操作，免 `--yes` |
 | 标签变更 | `*.add_label`、`*.remove_label` | ❌ 可逆，免确认 |
 | 已读状态 | `*.mark_read` / `mark_unread` | ❌ 可逆，免确认 |
 | 移动文件夹 | `*.move` | ❌ 可逆，免确认 |
