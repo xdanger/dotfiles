@@ -117,3 +117,6 @@ fi
 export CLAUDE_CODE_NO_FLICKER=1
 # 如果你发现 tmux copy-mode / 终端原生选中是肌肉记忆，再加这行：
 # export CLAUDE_CODE_DISABLE_MOUSE=1
+
+# bun completions
+[ -s "/Users/xdanger/.bun/_bun" ] && source "/Users/xdanger/.bun/_bun"
