@@ -14,6 +14,13 @@ git submodule update --init --recursive
 # link ~/.gitconfig to gitconfig.wsl in Windows Subsystem for Linux
 [[ -n ${WSL_DISTRO_NAME:-} ]] && ln -sf "${REPO_ROOT}/git/gitconfig.wsl" "${HOME}/.gitconfig"
 
+if ! command -v mise >/dev/null 2>&1; then
+  if [[ ! -x "$HOME/.local/bin/mise" ]]; then
+    curl -fsSL https://mise.run | MISE_INSTALL_PATH="$HOME/.local/bin/mise" sh
+  fi
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
 is_container() {
   # 1) systemd-detect-virt
   if command -v systemd-detect-virt >/dev/null 2>&1 \
