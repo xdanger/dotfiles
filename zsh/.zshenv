@@ -32,7 +32,7 @@ fi
 
 # Language and editor
 export LANG=en_US.UTF-8
-export EDITOR=vim
+export EDITOR=nvim
 if [[ "$OSTYPE" == darwin* ]] && [[ -z "${ARCHFLAGS:-}" ]]; then
   export ARCHFLAGS="-arch $(uname -m)"
 fi
