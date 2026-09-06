@@ -6,7 +6,7 @@
 "aqua:charmbracelet/glow" = "latest"
 "aqua:chmln/sd" = "latest"
 "aqua:dbrgn/tealdeer" = "latest"
-"aqua:eza-community/eza" = "latest"
+"cargo:eza" = "latest"
 "aqua:jqlang/jq" = "latest"
 "aqua:junegunn/fzf" = "latest"
 "aqua:mikefarah/yq" = "latest"
