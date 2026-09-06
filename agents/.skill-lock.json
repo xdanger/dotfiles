@@ -384,9 +384,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/wrangler/SKILL.md",
-      "skillFolderHash": "45cc198b2aad3f06e8abf91333f55fbe7579f659",
+      "skillFolderHash": "a304132370d555714fea9346d51847d87527272a",
       "installedAt": "2026-08-19T18:08:38.308Z",
-      "updatedAt": "2026-08-19T18:08:38.308Z"
+      "updatedAt": "2026-09-05T20:05:52.684Z"
     },
     "lark-meeting": {
       "source": "open.feishu.cn",
