@@ -16,6 +16,15 @@
 "aqua:sharkdp/hyperfine" = "latest"
 "aqua:watchexec/watchexec" = "latest"
 "npm:mcporter" = "latest"
+"pipx:csvkit" = { version = "latest", depends = ["python", "uv"] }
+"pipx:trash-cli" = { version = "latest", depends = ["python", "uv"] }
+"github:gitkraken/gk-cli" = "latest"
+"github:so-fancy/diff-so-fancy" = "latest"
+"aqua:variadico/noti" = { version = "latest", os = ["macos", "linux/x64"] }
+delta = "latest"
+direnv = "latest"
+glab = "latest"
+tokei = "latest"
 awscli = "latest"
 bun = "latest"
 claude = "latest"
