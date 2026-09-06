@@ -48,6 +48,7 @@ yarn = "latest"
 yt-dlp = "latest"
 hey-cli = "latest"
 neovim = "latest"
+"github:xdevplatform/xurl" = "latest"
 
 [settings]
 auto_update = true
