@@ -52,7 +52,7 @@ neovim = "latest"
 
 [settings]
 auto_update = true
-minimum_release_age_excludes = ["codex", "claude", "grok"]
+minimum_release_age_excludes = ["codex", "claude", "grok", "herdr"]
 
 [settings.ruby]
 compile = false
