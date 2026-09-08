@@ -67,3 +67,5 @@
 [credential "https://origin.cursor.com"]
 	helper = 
 	helper = !/Users/xdanger/.local/bin/origin credential-helper
+[lfs]
+	sshtransfer = never
