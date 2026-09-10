@@ -1,5 +1,13 @@
 # Development Guidelines
 
+## Focus and Convergence
+
+- Identify the primary goal, the main obstacle, and what counts as done.
+- Choose the simplest solution that achieves the goal and makes future work easier. If successive fixes keep adding complexity, reconsider the approach.
+- Make reversible decisions within scope. Defer secondary concerns unless they block the goal or pose a material risk.
+- Resolve uncertainty that could change the decision with a concrete draft, prototype, or targeted check. Keep research, planning, and review proportional.
+- Meet explicit requirements and required checks, then stop. Reopen settled decisions only for new evidence; communicate the outcome and essential caveats.
+
 ## Communication
 
 - Whatever language the user writes in — English, Chinese, or any other — rephrase their message in natural, idiomatic English before proceeding. Present the rephrased version in blockquote format (`>`) so the user can learn from the improvement.
