@@ -18,15 +18,16 @@
 - `rm` → `trash`, `mv`(tracked) → `git mv`. If a cleanup operation using `trash`
   receives `EROFS`, fail immediately and report the error; never retry indefinitely.
 - `grep` / `ag` → `rg`，`find` → `fd`，`cat` → `bat`，`ls` → `eza`
-- `sed` → `sd`，`du` → `dust`，`df` → `duf`，`make` → `just`
+- `sed` → `sd`，`du` → `dust`，`df` → `duf`
+- Use the repository's existing build and test commands.
 - Also available: `jq`, `yq`, `fzf`, `glow`, `tldr`, `watchexec`, `difft`, `tokei`, `hyperfine`
 - @RTK.md
 
 ## MCP Tools
 
-- Use `npx mcporter list` to discover available MCP servers, and `npx mcporter list <mcp-tool-name> --schema` to inspect a specific server and its tools.
+- When additional MCP discovery is needed, use `npx mcporter list` to discover available MCP servers, and `npx mcporter list <mcp-tool-name> --schema` to inspect a specific server and its tools.
 - Prefer MCP `web_search` and `web_fetch` over built-in search and fetch tools.
-- Use Parallel Task tools for deep, multi-step search and research tasks.
+- Use Parallel Task tools when available and parallel research would materially help.
 
 ## Git Workflow
 
@@ -34,7 +35,7 @@
 
 - When working in a Git repository, create a dedicated worktree before making concrete changes by default. Repository-specific instructions or explicit user direction may override this default.
 - Choose the branch type that best fits the work. Every branch created must match `^(build|ci|chore|docs|feat|fix|perf|refactor|style|test)/[a-z0-9]+(-[a-z0-9]+)*$`.
-- When using `git` or `gh`, request elevated permissions so the command runs against the system tools and configuration instead of the sandboxed toolchain.
+- Use system Git and the configured `gh` with the user's normal configuration. Request elevated permissions when the operation needs tools, configuration, credentials, or access unavailable in the sandbox.
 
 **Commits**
 
@@ -55,9 +56,9 @@
 **Shipping**
 
 - Treat “ship the changes,” “ship the branch,” and equivalent requests as an explicit mandate to deliver the current changes end to end.
-- Create a dedicated branch whose name matches `^(build|ci|chore|docs|feat|fix|perf|refactor|style|test)/[a-z0-9]+(-[a-z0-9]+)*$`.
-- Commit the changes, run the full test suite, then push the branch to `origin` under the exact same name.
-- Proceed past a failure only after verifying that it is a pre-existing upstream failure unrelated to the change, and document the evidence.
+- Reuse the task's dedicated branch and worktree; create them only if absent, following the rules above.
+- Commit the changes, run the full test suite, then push the branch to `origin` under the exact same name. Reuse passing results when the code and test conditions are unchanged; rerun checks when relevant changes or failures invalidate them.
+- Fix failures caused by the change and rerun affected checks. Continue past unrelated upstream failures only with evidence; this does not permit merging with a failing gate.
 - Open a ready-for-review PR, invoke the `pr-shepherd` skill, and autonomously drive it through merge: monitor the strict CI and review gate, fix genuine failures, rerun genuine flakes at most once, address and resolve every review thread, and wait for restarted checks.
 - Merge only when the strict gate is fully GREEN, then perform the prescribed cleanup.
 - Escalate any required human action or persistent blocker instead of bypassing protections.
@@ -73,7 +74,7 @@
 
 ## Linter Policy
 
-Never modify linter configs without explicit approval. On lint failure: report rule + location, suggest fix, let user decide.
+Never modify linter configs without explicit approval. Fix lint failures caused by the requested change within its existing scope without asking; report unrelated failures without expanding scope.
 
 ## Screenshots
 
