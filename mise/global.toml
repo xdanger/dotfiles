@@ -19,6 +19,7 @@
 "pipx:csvkit" = { version = "latest", depends = ["python", "uv"] }
 "pipx:trash-cli" = { version = "latest", depends = ["python", "uv"] }
 "github:gitkraken/gk-cli" = "latest"
+basecamp = "latest"
 "github:so-fancy/diff-so-fancy" = "latest"
 "aqua:variadico/noti" = { version = "latest", os = ["macos", "linux/x64"] }
 delta = "latest"
