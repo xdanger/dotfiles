@@ -4,7 +4,7 @@
 
 ## Rule
 
-Always prefix shell commands with `rtk`.
+Use RTK for supported commands when its filtered output is sufficient; otherwise run the command directly.
 
 Examples:
 
