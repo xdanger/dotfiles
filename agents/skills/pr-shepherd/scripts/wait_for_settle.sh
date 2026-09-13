@@ -1,42 +1,18 @@
 #!/usr/bin/env bash
-# wait_for_settle.sh — block until pr_status.sh's verdict *leaves* WAITING_CI,
-# then print that settled verdict JSON and exit with its code.
-#
-# Why this exists: `pr_status.sh` reports WAITING_CI when EITHER checks are still
-# pending OR mergeability is still UNKNOWN. The old wait (`gh pr checks --watch`)
-# only handles the first case — when WAITING_CI is driven by mergeability still
-# computing (no pending checks), `--watch` returns immediately and the caller
-# re-reads, re-gets WAITING_CI, and spins. `--watch` is also blind to review /
-# thread state changing mid-wait. This wrapper closes that gap:
-#   - checks pending  -> block on `gh pr checks --watch` (efficient, no polling)
-#   - otherwise       -> short, bounded poll of the full gate (catches
-#                        mergeability finishing AND review/thread changes)
-# It never invents a verdict; pr_status.sh stays the single source of truth.
-#
-# Usage (same arg forms as pr_status.sh, plus two knobs):
-#   wait_for_settle.sh <pr-number>
-#   wait_for_settle.sh <owner/repo> <pr-number>
-#   wait_for_settle.sh <pr-url>
-#   wait_for_settle.sh --interval 10 --max-wait 1800 <pr-number>
-#
-# Requires: gh (authenticated), jq, bash. No new hard dependency over
-# pr_status.sh. `timeout`/`gtimeout` is used if present to bound reads and block
-# efficiently on the checks-watch; without it, reads are bounded by a background
-# watchdog and the checks-wait falls back to interval polling — so --max-wait is
-# honored on every platform.
-# Output: the settled verdict JSON on stdout (same shape pr_status.sh emits).
-# Exit code mirrors the settled verdict (0 GREEN / 20 NEEDS_WORK / 30
-# BLOCKED_HUMAN / 40 NOT_ELIGIBLE / 50 ERROR). Exit 10 only on --max-wait
-# timeout while still WAITING_CI — re-run to resume the wait.
+# Wait for actionable work or a terminal PR verdict by polling the full gate.
+# Every read and sleep is clipped to --max-wait (default 1800 seconds).
+# Exit 10 means this call exhausted its wait budget, not that human approval is needed.
+# Resume from the saved PR state only within the caller's ongoing authorization.
+# Requires gh, jq, bash; uses timeout/gtimeout or a background watchdog.
 set -euo pipefail
 
-INTERVAL=10      # seconds between polls / --watch refresh interval
+INTERVAL=10      # seconds between full-gate polls
 MAX_WAIT=1800    # cap on total wall-clock wait; resumable on timeout
-READ_TIMEOUT=60  # cap on a single gate read, so a hung gh/GraphQL call retries
+READ_TIMEOUT=60  # maximum per-read time, further clipped to the remaining budget
 
 usage() {
   cat >&2 <<'EOF'
-wait_for_settle.sh — block until pr_status.sh's verdict leaves WAITING_CI, then
+wait_for_settle.sh — poll the full PR gate until its verdict leaves WAITING_CI, then
 print that settled verdict JSON and exit with its code.
 
 Usage (same arg forms as pr_status.sh, plus two knobs):
@@ -46,7 +22,7 @@ Usage (same arg forms as pr_status.sh, plus two knobs):
   wait_for_settle.sh [--interval SECONDS] [--max-wait SECONDS] <pr...>
 
 Defaults: --interval 10, --max-wait 1800. Exit code mirrors the settled verdict
-(0/20/30/40/50); exit 10 only on --max-wait timeout (re-run to resume).
+(0/20/30/40/50); exit 10 on wait-budget exhaustion (retain state before resuming).
 EOF
   exit "${1:-0}"
 }
@@ -70,16 +46,14 @@ done
 case "$INTERVAL" in ''|*[!0-9]*) echo "wait_for_settle: --interval must be a non-negative integer (got '$INTERVAL')" >&2; exit 50 ;; esac
 case "$MAX_WAIT" in ''|*[!0-9]*) echo "wait_for_settle: --max-wait must be a non-negative integer (got '$MAX_WAIT')" >&2; exit 50 ;; esac
 [ "$INTERVAL" -ge 1 ] || { echo "wait_for_settle: --interval must be >= 1" >&2; exit 50; }
+[ "$MAX_WAIT" -ge 1 ] || { echo "wait_for_settle: --max-wait must be >= 1; use pr_status.sh for a single state read" >&2; exit 50; }
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STATUS="$SCRIPT_DIR/pr_status.sh"
 [ -x "$STATUS" ] || { echo "wait_for_settle: cannot run $STATUS" >&2; exit 50; }
 
-# Resolve a timeout binary once (GNU coreutils `timeout`, or `gtimeout` on
-# macOS/Homebrew). It is preferred but not required: with it, each gate read is
-# bounded and the checks-watch is blocked efficiently; without it, reads are
-# bounded by a background+watchdog fallback (see read_gate) and the checks-wait
-# falls back to interval polling — never an unbounded watch or read.
+# GNU timeout or its macOS name bounds a gate read. The watchdog below
+# provides the same budget when neither is installed (up to 1s cleanup grace).
 TIMEOUT_BIN=""
 if command -v timeout >/dev/null 2>&1; then TIMEOUT_BIN=timeout
 elif command -v gtimeout >/dev/null 2>&1; then TIMEOUT_BIN=gtimeout; fi
@@ -93,14 +67,10 @@ if [ -z "$TIMEOUT_BIN" ] && [ -z "$PKILL_BIN" ]; then
   echo "wait_for_settle: no timeout/gtimeout or pkill found — a hung gate read stays bounded, but its gh child may orphan. Install coreutils (timeout) or procps (pkill) to avoid leaks." >&2
 fi
 
-# Read the gate, bounding it by READ_TIMEOUT so a hung gh call surfaces as exit
-# 124 (treated as a transient, retryable error) instead of blocking --max-wait
-# forever. With a timeout binary that bound is one exec; without one, a
-# background job + watchdog kill enforces it portably — so the resumable
-# --max-wait promise holds on every platform, not just where `timeout` exists.
+# Bound reads by the smaller of READ_TIMEOUT and the remaining call budget.
 read_gate() {
   if [ -n "$TIMEOUT_BIN" ]; then
-    "$TIMEOUT_BIN" "$READ_TIMEOUT" "$STATUS" "$@"
+    "$TIMEOUT_BIN" -k 1 "$read_budget" "$STATUS" "$@"
     return $?
   fi
   local out err waited=0 pid rc
@@ -112,9 +82,9 @@ read_gate() {
   "$STATUS" "$@" >"$out" 2>"$err" &
   pid=$!
   while kill -0 "$pid" 2>/dev/null; do
-    if [ "$waited" -ge "$READ_TIMEOUT" ]; then
-      [ -n "$PKILL_BIN" ] && "$PKILL_BIN" -P "$pid" 2>/dev/null || true  # reap the hung child (e.g. gh)
-      kill "$pid" 2>/dev/null || true
+    if [ "$waited" -ge "$read_budget" ]; then
+      [ -n "$PKILL_BIN" ] && "$PKILL_BIN" -KILL -P "$pid" 2>/dev/null || true  # reap the hung child (e.g. gh)
+      kill -KILL "$pid" 2>/dev/null || true
       wait "$pid" 2>/dev/null || true
       cat "$out"; cat "$err" >&2; rm -f "$out" "$err"
       return 124
@@ -131,84 +101,50 @@ seen_ok=0
 errors=0
 last_json=""
 
-while true; do
+while [ "$SECONDS" -lt "$MAX_WAIT" ]; do
+  remaining=$((MAX_WAIT - SECONDS))
+  read_budget=$READ_TIMEOUT
+  [ "$remaining" -lt "$read_budget" ] && read_budget=$remaining
   set +e
   json="$(read_gate "${ARGS[@]}")"
   code=$?
   set -e
   [ -n "$json" ] && last_json="$json"
 
-  if [ "$code" = 124 ]; then
-    # gate read hit READ_TIMEOUT (gh/GraphQL hung) — always transient, even on
-    # the first read. back off and retry; give up only after several in a row.
-    errors=$((errors + 1))
-    if [ "$errors" -ge 5 ]; then
-      echo "wait_for_settle: gate read timed out ${errors}x in a row (gh/GraphQL hung); giving up." >&2
-      exit 50
-    fi
-  elif [ "$code" = 50 ]; then
-    if [ "$seen_ok" != 1 ]; then
-      # first read failed: almost always a usage / access error, not a blip.
-      # don't spend the retry budget on it — surface and exit.
-      [ -n "$json" ] && printf '%s\n' "$json"
-      exit 50
-    fi
-    errors=$((errors + 1))
-    if [ "$errors" -ge 5 ]; then
-      [ -n "$json" ] && printf '%s\n' "$json"
-      echo "wait_for_settle: pr_status.sh failed ${errors}x in a row; giving up." >&2
-      exit 50
-    fi
-  elif [ "$code" != 10 ]; then
-    # settled verdict (GREEN / NEEDS_WORK / BLOCKED_HUMAN / NOT_ELIGIBLE):
-    # emit it as a valid gate read and mirror the exit code.
-    printf '%s\n' "$json"
-    exit "$code"
-  else
-    seen_ok=1
-    errors=0
-  fi
-
-  # still WAITING_CI (or backing off a transient error). honor the cap first so
-  # a long wait stays resumable rather than running unbounded.
-  if [ "$SECONDS" -ge "$MAX_WAIT" ]; then
+  case "$code" in
+    0|20|30|40)
+      printf '%s\n' "$json"
+      exit "$code"
+      ;;
+    10)
+      seen_ok=1
+      errors=0
+      ;;
+    124|137)
+      # A budget-clipped read is not a new PR verdict.
+      errors=$((errors + 1))
+      ;;
+    *)
+      if [ "$seen_ok" != 1 ]; then
+        [ -n "$json" ] && printf '%s\n' "$json"
+        exit 50
+      fi
+      errors=$((errors + 1))
+      ;;
+  esac
+  if [ "$errors" -ge 5 ]; then
     [ -n "$last_json" ] && printf '%s\n' "$last_json"
-    # include the effective knobs so resuming keeps custom --interval/--max-wait
-    # (ARGS holds only the positional pr args; the flags were parsed out).
-    echo "wait_for_settle: still WAITING_CI after ${MAX_WAIT}s. Re-run to resume: $(basename "$0") --interval $INTERVAL --max-wait $MAX_WAIT ${ARGS[*]}" >&2
-    exit 10
+    echo "wait_for_settle: five consecutive gate-read errors; retain PR state and diagnose access or transport." >&2
+    exit 50
   fi
 
-  pending=0
-  pr=""
-  repo=""
-  if [ "$code" = 10 ] && [ -n "$json" ]; then
-    pending="$(printf '%s' "$json" | jq -r '.checks.pending // 0' 2>/dev/null || echo 0)"
-    pending="${pending//[^0-9]/}"; pending="${pending:-0}"
-    pr="$(printf '%s' "$json" | jq -r '.pr // empty' 2>/dev/null || true)"
-    repo="$(printf '%s' "$json" | jq -r '.repo // empty' 2>/dev/null || true)"
-  fi
-
-  if [ "$pending" -gt 0 ] && [ -n "$pr" ] && [ -n "$TIMEOUT_BIN" ]; then
-    # checks are the holdup AND we can bound the watch: block on it (efficient,
-    # no polling churn). the gate, not --watch, decides green, so ignore its exit
-    # code. --repo pins the watch to the repo pr_status.sh queried (not the cwd
-    # repo), so the owner/repo and url arg forms watch the right PR. the timeout
-    # wrap keeps --max-wait honored even if CI hangs. (without a timeout binary
-    # we fall through to the polling branch below instead — never an unbounded
-    # watch, so --max-wait holds on every platform.)
-    remaining=$((MAX_WAIT - SECONDS)); [ "$remaining" -lt 1 ] && remaining=1
-    watch=("$TIMEOUT_BIN" "$remaining" gh pr checks "$pr" --watch --fail-fast=false --interval "$INTERVAL")
-    [ -n "$repo" ] && watch+=(--repo "$repo")
-    t0=$SECONDS
-    "${watch[@]}" >/dev/null 2>&1 || true
-    # guard against a fast-returning/erroring --watch spinning the loop hot
-    [ $((SECONDS - t0)) -lt "$INTERVAL" ] && [ "$SECONDS" -lt "$MAX_WAIT" ] && sleep "$INTERVAL"
-  else
-    # interval-poll the gate: nothing pending (mergeability/review wait, which
-    # --watch can't see), no timeout binary to bound a --watch, or backing off a
-    # transient error. re-reading the full verdict keeps --max-wait honored via
-    # the top-of-loop cap, so this stays bounded and resumable on every platform.
-    sleep "$INTERVAL"
-  fi
+  remaining=$((MAX_WAIT - SECONDS))
+  [ "$remaining" -gt 0 ] || break
+  delay=$INTERVAL
+  [ "$remaining" -lt "$delay" ] && delay=$remaining
+  sleep "$delay"
 done
+
+[ -n "$last_json" ] && printf '%s\n' "$last_json"
+echo "wait_for_settle: call budget exhausted (${MAX_WAIT}s); last output is a snapshot, not a fresh merge authorization. Retain PR state before continuing." >&2
+exit 10

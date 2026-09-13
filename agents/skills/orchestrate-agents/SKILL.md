@@ -1,19 +1,24 @@
 ---
 name: orchestrate-agents
-description: >-
-  Orchestrate codex and grok CLIs as parallel workers from a supervising agent session.
-  Use when work should be delegated across isolated worktrees, run concurrently, or
-  cross-reviewed by another model. Drives codex workers through per-profile app-server
-  threads by default, with one-shot exec as the fallback lane; grok always runs as
-  processes. Covers usage-aware routing, lane selection, decomposition, durable state,
-  budgets, cleanup, verification, and serialized integration. Do not use for
-  in-process subagents or a single sequential task.
+description: Supervise codex or grok CLI workers for concurrent implementation or independent review. Use for external CLI orchestration across isolated tasks, not in-process subagents or a single sequential task.
 ---
 
 # Orchestrate agents: codex + grok
 
 Act as the supervisor: decompose, delegate, monitor, verify, and integrate. Keep architecture,
-merge order, and final judgment; delegate bounded implementation.
+merge order, and final judgment; delegate bounded implementation or read-only review.
+
+## Task contracts
+
+- **Implementation:** isolate concurrent changes in worktrees and branches, specify
+  whether commits and integration are authorized, and independently review every diff.
+- **Read-only investigation or review:** give the target snapshot and evidence
+  requirements. Do not require a commit, changed files, or integration. Reuse a stable
+  read-only checkout, or an isolated snapshot when concurrent edits would invalidate
+  the review. Experiments belong in scratch space.
+
+A request to delegate does not by itself authorize publishing or merging. Apply the
+user's established scope and repository rules throughout.
 
 Fan out only as wide as you can review and land. Leave lanes idle when the host is saturated,
 file scopes collide, or no independent work remains.
@@ -27,7 +32,8 @@ file scopes collide, or no independent work remains.
 | Mid-run control | kill and restart                              | steer, interrupt, fork, per-action approvals               |
 | Context cost    | paid again for every process                  | amortized across turns in a thread                         |
 
-Default codex workers to Lane B. `codex exec` is itself an app-server client, so Lane A runs
+Default codex workers to Lane B. Read [Lane B](references/lane-b.md) only when
+using that lane; read [Lane A](references/lane-a.md) for one-shot workers. `codex exec` is itself an app-server client, so Lane A runs
 the same runtime behind a downsampling layer that discards the control channel; Lane B removes
 that layer rather than adding a dependency. Its controls turn chronic failure modes from
 brief-level requests into harness-level enforcement: corrective rounds (steer without repaying
@@ -78,13 +84,13 @@ Route work from the normalized snapshot and in-flight reservations:
 1. **Preflight.** Read repository instructions, resolve the upstream base, check host capacity,
    identify runtime and dependency collisions, and verify the credential and quota each worker
    will actually spend. Use login status only to establish auth mode; obtain capacity as above.
-2. **Decompose.** Give each concurrent task one worker, one worktree, one branch, one brief, and
-   a non-overlapping file scope. Serialize dependency changes, migrations, protocol changes, and
+2. **Decompose.** Give each concurrent implementation task one worker, one worktree, one branch,
+   one brief, and a non-overlapping file scope. Use the read-only contract for reviewers. Serialize dependency changes, migrations, protocol changes, and
    any other shared boundary; land those before dependent work.
-3. **Brief.** State the goal, constraints, acceptance criteria, file scope, required commit, and
+3. **Brief.** State the goal, constraints, acceptance criteria, file scope, commit requirements if applicable, and
    verification. Specify durable invariants rather than preferred code paths. Treat the
    supervisor's previous instruction as a possible source of the defect.
-4. **Launch.** In Lane B, start one thread per task with the worktree as its `cwd` and apply a
+4. **Launch.** In Lane B, start one thread per task with the contract-selected directory as its `cwd` and apply a
    supervisor-owned wall-clock budget per turn. In Lane A, apply both wall-clock and tool-level
    budgets where available. Keep workers as visible background tasks unless they must outlive
    the supervisor session. Close inherited stdin and keep structured output, final output, and
@@ -129,6 +135,8 @@ unsafe or insufficient.
 
 In Lane B, read the accumulated `turn/diff/updated` stream before believing a completion claim:
 what the worker actually changed is evidence; what it says it changed is not.
+For read-only tasks, verify the findings against the target snapshot and confirm
+that the reviewer did not modify it.
 
 A suite that always bootstraps from scratch cannot expose defects that occur only on an
 already-migrated system. Inspect or test upgrade state explicitly.
@@ -149,11 +157,13 @@ request, so a worker can touch out-of-scope files without asking. Enforce file s
 mechanically by validating the worktree's actual Git diff against the declared scope before
 integration, and reject the round when it strays.
 
-On every worker exit (Lane A) or turn completion (Lane B), reap processes whose resolved current
-working directory is the worker's resolved worktree or a descendant; the app-server does not reap
-agent-spawned background processes. Escalate from graceful termination when necessary. After the
-fleet drains, inspect parent PID directly for remaining processes under worker worktrees; command
-text searches miss bare busy loops.
+On worker exit or turn completion, clean up only processes positively identified
+as owned by that worker. A cwd match alone is insufficient in a shared read-only
+checkout: another reviewer, user shell, or service may use the same directory.
+Cwd-wide cleanup is appropriate only inside an exclusive disposable worker
+worktree. Track ownership in the harness, terminate gracefully before escalating,
+and inspect child processes after the fleet drains; command text searches can
+miss bare busy loops. The app-server does not reap agent-spawned processes.
 
 Do not rely on worker-authored traps or process-group capture for cleanup. A background subshell
 may hide the real child PID, a session launcher may exit before its process group is captured, and
@@ -164,11 +174,14 @@ sandbox-helper paths. Kill and relaunch workers attached to the old path.
 
 ## Result contract
 
-Use the same strict structured contract for every worker. Require:
+Use a strict structured contract appropriate to the task. For implementation require:
 
 - `summary`: what changed and the resulting behavior;
-- `committed`: whether the worker created the required commit;
+- `committed`: whether a commit was created within the authorized scope;
 - `files_changed`: the complete changed-file list.
+
+For read-only workers, require findings, evidence, verification performed, and a
+nullable `blocked_reason`; no commit or changed-file requirement applies.
 
 Carry the schema via `turn/start.outputSchema` in Lane B and `--output-schema` in Lane A; both
 enforce it at the model boundary, and steering does not lift the contract.
@@ -183,67 +196,9 @@ result, even when partial edits remain — `interrupted` is terminal without bei
 budget-interrupted turn has no schema-conforming answer. Distinguish advisory error items from a
 failed terminal state.
 
-## Lane-specific rules
-
-### Lane B (codex default)
-
-- Spawn a dedicated `codex app-server --listen stdio://` child per `CODEX_HOME` and own its
-  lifetime; never
-  attach orchestration to an operator's already-running daemon or its control socket, where a
-  supervisor bug can disturb interactive sessions. One process is one credential profile; a
-  multi-account fleet is N processes. If a socket listener is unavoidable, prefer a private Unix
-  socket, authenticate WebSocket listeners, protect token files, and tunnel non-loopback traffic.
-- Treat stdio as newline-delimited JSON-RPC and Unix or TCP listeners as WebSocket transports. Do
-  not reuse stdio framing on sockets.
-- Generate protocol bindings from the installed binary (`codex app-server generate-ts` /
-  `codex app-server generate-json-schema`); they are version-locked to that binary by construction. Regenerate on
-  every codex upgrade and treat a resulting compile break as the upgrade signal. Do not build the
-  supervisor on experimental-marked methods or fields.
-- Complete the `initialize`/`initialized` handshake and assert that the returned `codexHome`
-  equals the intended profile before dispatching work. The home assertion does not establish
-  which credential the process will spend: launch the server with a sanitized environment,
-  removing API-key and custom-provider overrides exactly as Lane A requires, because such keys
-  outrank the profile's stored login and `codex login status` does not report them.
-- Start one thread per task via `thread/start` with the worktree as `cwd` and per-thread sandbox,
-  approval policy, and config overrides. Start threads non-ephemeral so they persist, and record
-  each thread ID in fleet state. Thread creation can restart the configured MCP server set and is
-  not free: reuse threads for serialized follow-up work, and measure contention before assuming
-  parallel threads produce linear throughput.
-- `turn/start` returns an in-progress handle immediately; the turn's only completion signal is
-  the `turn/completed` notification carrying terminal status. `turn/steer` requires the
-  `expectedTurnId` from that handle — an intended guard against steering the wrong turn.
-  Budgets are supervisor-owned: bound each turn by wall clock, escalate `turn/interrupt`, and
-  only as a last resort kill the process, which takes every thread in it.
-- A server crash takes down all its threads. On restart or reconnection, resume from persisted
-  thread IDs via `thread/resume`. A lost connection is not a dead server: when the process
-  survived, the original turn may still be running, so read the resumed thread's status and
-  `turn/interrupt` any live turn before dispatching anything — otherwise two turns race the same
-  worktree. Then reconcile before retrying: a turn that performed side effects before the
-  crash — commits, file mutations, spawned processes — repeats them if replayed verbatim, and
-  replayed thread history is lossy (not every command execution is persisted), so treat the
-  worktree and external state as the authority on what already happened. Continue from that
-  reconciled checkpoint with a brief scoped to the remainder, retrying only operations known to
-  be idempotent, rather than re-issuing the original turn.
-
-### Lane A (grok always; codex fallback)
-
-- Use headless one-shot execution in an isolated worktree. Bound codex with an external wall-clock
-  timeout; bound grok by both turns and wall clock.
-- Select codex credentials through the intended `CODEX_HOME`, remove unintended API-key overrides,
-  and inspect the resolved auth mode in the worker's environment before a wide fan-out. Custom
-  provider environment keys can outrank both stored login and standard overrides.
-- Keep machine-readable output and diagnostics separate. Store final-output files outside the
-  worktree so orchestration artifacts do not dirty it.
-- Use headless codex review when codex is the reviewer. A review target and a free-form prompt are
-  mutually exclusive, so carry the specification in the prompt and tell the reviewer which diff
-  to resolve. Validate the base independently; an invalid base can yield a plausible review of the
-  wrong range.
-- Set grok permissions deliberately. Prefer targeted allowances; pair any broad unattended
-  permission mode with a sandbox boundary.
-
 ## Non-negotiables
 
-1. Use one worktree and one worker per concurrent task.
+1. Use one worktree and one worker per concurrent implementation task; keep reviews read-only.
 2. Keep worktrees, logs, and orchestration state outside the supervised repository.
 3. Use explicit branch names that satisfy repository rules.
 4. Give concurrent workers non-overlapping file ownership; never change dependencies in parallel.
@@ -252,4 +207,5 @@ failed terminal state.
 7. Have someone other than the implementer review every diff.
 8. Never weaken security controls merely to pass a test.
 9. Report blockers, omitted work, and verification truthfully.
-10. Never let an agent author `AGENTS.md`; surface the gap for a human to fix.
+10. Do not change `AGENTS.md` to relax constraints on the current task. Explicitly
+    authorized instruction maintenance may edit it within the requested scope.

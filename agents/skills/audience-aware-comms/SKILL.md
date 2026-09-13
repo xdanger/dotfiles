@@ -1,17 +1,6 @@
 ---
 name: audience-aware-comms
-description: >-
-  Apply when writing an artifact for a reader beyond the current conversation:
-  another person or an AI executor, including emails, IM/Slack messages,
-  PR/issue descriptions, review comments, design or decision docs,
-  customer-facing copy, docs/README content, and natural-language prompts,
-  specs, or mandates for downstream agents. Also apply when such an artifact is
-  an incidental sub-step of a larger task. Model the reader's actual capability,
-  context, likely inferences, and desired action; emit only the calibrated
-  artifact. Do not apply to ordinary replies to the current user unless the text
-  is meant for someone else; text dictated verbatim; git commit messages; or
-  code, configs, schemas, queries, regexes, test fixtures, and other output
-  consumed literally by a deterministic interpreter.
+description: Calibrate writing for a reader beyond the current conversation, including messages, docs, PR descriptions, and downstream agent prompts. Exclude ordinary chat replies, verbatim text, commit messages, and code or other deterministic output.
 ---
 
 # Audience-Aware Communication
@@ -79,7 +68,9 @@ you are authoring), keep the ladder but change _what_ you model:
 
 ## 2. Output rules
 
-- Emit **only the finished artifact.** Don't show the reader-analysis, the L1/L2/L3
+- Within the deliverable, emit **only the finished artifact.** This does not suppress
+  task progress, verification results, or limitations reported to the current user.
+  Don't show the reader-analysis, the L1/L2/L3
   ladder, or meta-phrases like "considering what they think I think." The reasoning
   stays backstage; surfacing it breaks the effect and reads as odd.
 - Ship the **leanest version that achieves the goal.** Cut what the reader can infer;
@@ -102,8 +93,10 @@ Either way, revise once, then stop.
 
 ## 4. When to ask instead of guessing
 
-If you lack the context to model the reader (unknown recipient, unclear stakes), ask for
-a one-line reader card rather than fabricating one:
+Infer a conventional audience from the task and context when that is sufficient
+(for example, a repository contributor reading a PR description). Do not invent
+personal facts. Ask only when missing reader information would materially change
+a commitment, important wording, or the desired action. An optional reader card is:
 
 ```
 Audience · reads how (skim / close / executes literally) · capability ·

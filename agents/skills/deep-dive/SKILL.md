@@ -1,6 +1,6 @@
 ---
 name: deep-dive
-description: Structured pedagogical deep-dive for new substantive topics across STEM, technical/engineering practice, and humanities/business/history. Use this skill whenever the user asks to learn, understand, deep-dive, explore, or be taught a new concept they don't already have a working model of — including phrasings like "what is X", "how does Y work", "why does Z happen", "explain W", "带我入门 X", "讲讲 X", "教我 X", "我想搞懂 X", even when they don't use the word "teach" or "learn". Trigger especially when the topic is a named concept, framework, theorem, mechanism, technology, historical event, or intellectual movement. Do NOT trigger for quick factual lookups ("when did X happen"), tool/syntax questions ("how do I curl with auth"), conversational chitchat, or mid-flow technical discussion where the user is already engaged on the topic.
+description: Explain unfamiliar concepts through structured teaching when the user wants a working understanding. Match the requested depth; brief explanations do not require a full lesson. Exclude factual lookups, syntax help, and routine coding or writing tasks.
 ---
 
 # Deep-Dive Skill
@@ -15,29 +15,29 @@ A learner usually can't name their own blind spots — "you don't know what you 
 
 Three principles run underneath everything below:
 
-1. **Map before walk.** A learner who can see the territory recovers faster from confusion than one who can only see the next step. Always sketch the landscape first.
+1. **Map before walk.** A learner who can see the territory recovers faster from confusion than one who can only see the next step. Sketch the landscape when it helps orient the learner.
 2. **Mechanism > surface similarity.** An analogy that _looks_ like the target but uses a different mechanism teaches a false model. If you reach for an analogy, verify it shares the actual causal mechanism, not just the visual outcome. (Example: lift, thrust, and buoyancy all "make things go up" but are entirely different mechanisms; don't pool them.)
-3. **Leave a trail, not a destination.** End every deep-dive with concrete next steps so the learning compounds instead of ending in a cul-de-sac.
+3. **Leave a trail, not a destination.** Offer next steps when the user wants to continue learning.
 
 ## The workflow
 
-Treat the following as **elements that must appear somewhere** in your response, not as a rigid template. Order and weight depend on the topic. A history question might foreground the timeline; a physics derivation might foreground the mechanism; a CS framework might foreground hands-on use. Use judgment.
+Choose the following elements according to the learning goal and requested depth; none is a mandatory section. A short explanation can be complete with a clear mechanism and one useful example. Order and weight depend on the topic. A history question might foreground the timeline; a physics derivation might foreground the mechanism; a CS framework might foreground hands-on use. Use judgment.
 
 ### 1. The big picture (where does this sit?)
 
-Before diving into the concept itself, situate it. Two or three sentences answering:
+When orientation is useful, briefly situate the concept. Possible questions include:
 
 - **What family does it belong to?** ("Diffusion models are a class of generative models, alongside GANs and VAEs.")
 - **What problem was it invented to solve?** ("Diffusion models came from modeling generation as the reverse of a gradual noising process — an idea rooted in nonequilibrium thermodynamics, Sohl-Dickstein et al. 2015 — not as a fix for GANs.")
-- **Who and when?** Name the key people and the era — historical context and the human story (人物故事) make a concept stick. Don't manufacture drama; do mention the actual humans and the actual moment.
+- **Who and when?** Name the key people and the era — historical context and the human story (人物故事) make a concept stick. Include historical detail only when it helps explain the concept.
 
 If the topic is purely procedural ("how do I use Polars"), the big-picture can be one sentence on what makes Polars distinct from pandas and why someone built it that way.
 
 ### 2. Prerequisite check (knowledge map)
 
-List the 2–5 concepts whose comfort level meaningfully changes how you'd explain this one. Then **ask** which of them need filling in first. This isn't Socratic quizzing (don't quiz unless the user asked for it); it's a quick calibration so you don't waste paragraphs on what they already know or skip over what they don't.
+Infer the learner's background from context and proceed at a reasonable level, briefly filling essential gaps inline. Ask about prerequisites only when the answer would materially change the explanation and cannot be inferred. Do not block a useful first explanation on a knowledge questionnaire.
 
-Format example:
+Example when calibration is necessary:
 
 > 要把这块讲清楚，最好你已经熟悉：
 >
@@ -51,7 +51,7 @@ If the topic genuinely has no prerequisites, skip this step — don't manufactur
 
 ### 3. Main exposition (layered)
 
-Walk through the concept in **three layers**, in this order:
+For a deeper explanation, these layers often help; adapt their order and depth:
 
 - **Intuition** — the cleanest mental model. Use one sentence, then unpack it. No formalism yet. ("Backpropagation is just the chain rule applied to a computation graph, working right-to-left.")
 - **Mechanism** — _how_ it actually works, with enough detail to predict its behavior in a new situation. This is where the formalism, equations, code, or step-by-step process lives.
@@ -61,7 +61,7 @@ If the user is learning in a second language, apply the bilingual convention thr
 
 ### 4. Memory hooks
 
-At least one analogy, mnemonic, or story that makes the core mechanism stick. **Verify it shares the actual mechanism** — if you have to caveat the analogy in three places to make it correct, find a better one.
+Use an analogy, mnemonic, or story when it makes the core mechanism easier to understand. **Verify it shares the actual mechanism** — if you have to caveat the analogy in three places to make it correct, find a better one.
 
 Memory hooks come in flavors; pick the one that fits the concept's shape:
 
@@ -86,15 +86,15 @@ Pick the right visual for the content. A visual must carry information you _can'
 - **`web-artifacts-builder`** _(if available)_ — complex multi-panel interactive demo with state (overkill for single widgets)
 - **`create_artifact`** _(if available)_ — when the artifact should outlive the chat turn
 
-For products / physical objects, include a real image — reach for image search or generation rather than describing in words.
+For products or physical objects, use an image only when visual appearance or spatial structure matters to the explanation.
 
 These rules cover the vast majority of cases. Only consult [references/visualization-playbook.md](references/visualization-playbook.md) when you're on the boundary between two tools — it has the full decision matrix, a 9-step triage, and worked decisions for edge cases.
 
 ### 6. Connect the dots
 
-One short paragraph at the end: what _adjacent_ concepts does this unlock or relate to? Where does this fit in the broader map? This is the "I don't know what I don't know" remedy — surface 2–4 neighbors so the user sees what's nearby even if they don't pursue them now.
+When useful, briefly explain what _adjacent_ concepts this unlocks or relates to. Where does this fit in the broader map? This is the "I don't know what I don't know" remedy — surface 2–4 neighbors so the user sees what's nearby even if they don't pursue them now.
 
-Format example:
+Example when calibration is necessary:
 
 > 这块往外延伸有几条线：
 >
@@ -104,7 +104,7 @@ Format example:
 
 ### 7. Trailhead (next steps)
 
-End with concrete next steps the user can actually take:
+For a learner seeking further study, offer concrete next steps they can actually take:
 
 - **Read** — a specific paper, chapter, blog post, or textbook section (use real, verifiable references; if you're not sure, say so)
 - **Try** — a small experiment, code snippet, calculation, or thought experiment that tests understanding
@@ -114,9 +114,9 @@ Two to four items is plenty. Don't pad. If you cite something, the citation must
 
 ## What to skip
 
-A response using this skill is going to be **long**. To keep it from sprawling, ruthlessly skip:
+Stop when the requested explanation is complete. Do not lengthen it to fill this workflow. Skip:
 
-- Recap of what the user just asked
+- Redundant recaps beyond any user-requested rephrase
 - Hedging like "this is a great question" or "as you may know"
 - Restating the same thing in two different ways for emphasis
 - "Hopefully this helps! Let me know if you have any questions!" closers — they add nothing; cut them

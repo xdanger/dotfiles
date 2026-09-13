@@ -170,7 +170,7 @@ verdict that the PR merged, so the force delete is safe.
 
 ## 11. Optional: webhook-driven waiting (advanced — repo admin + local host)
 
-The default wait (`scripts/wait_for_settle.sh`, §1) polls and needs only an
+The default wait (`scripts/wait_for_settle.sh`, §1) polls the full gate and needs only an
 authenticated `gh`. If you want **push-latency wakes** on review/branch events —
 not just CI — and you can satisfy all three conditions below, you can have GitHub
 forward webhooks to you instead. Most of the time the default is the better

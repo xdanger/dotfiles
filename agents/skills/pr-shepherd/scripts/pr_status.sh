@@ -89,7 +89,7 @@ GQL
 raw="$(gh api graphql -f owner="$owner" -f repo="$repo" -F pr="$pr" -f query="$QUERY" 2>/dev/null)" \
   || die "graphql query failed (check PR number / access)"
 
-echo "$raw" | jq --arg owner "$owner" --arg repo "$repo" '
+result="$(echo "$raw" | jq --arg owner "$owner" --arg repo "$repo" '
   .data.repository.pullRequest as $pr
   | ($pr.commits.nodes[0].commit.statusCheckRollup.contexts.nodes // []) as $ctx
   | ($pr.reviewThreads.nodes // []) as $threads
@@ -147,12 +147,14 @@ echo "$raw" | jq --arg owner "$owner" --arg repo "$repo" '
   | .verdict = (
       if ($pr.isDraft==true) then "NOT_ELIGIBLE"
       elif ($pr.state!="OPEN") then "NOT_ELIGIBLE"
-      elif (._e.pending>0 or ._e.mergeable_unknown) then "WAITING_CI"
       elif (._e.failing>0 or ._e.unresolved>0 or ._e.conflict or ._e.behind or ._e.truncated) then "NEEDS_WORK"
-      elif (._e.approval_outstanding or ._e.action_required>0 or ._e.protection_blocked) then "BLOCKED_HUMAN"
+      elif (._e.approval_outstanding or ._e.action_required>0) then "BLOCKED_HUMAN"
+      elif (._e.pending>0 or ._e.mergeable_unknown) then "WAITING_CI"
+      elif ._e.protection_blocked then "BLOCKED_HUMAN"
       else "GREEN" end )
   | del(._e)
-'
+')" || die "could not evaluate PR state"
+printf '%s\n' "$result"
 
 # loud, not silent: if either connection hit the 100 cap, GREEN can't be trusted
 if echo "$raw" | jq -e '
@@ -162,23 +164,8 @@ if echo "$raw" | jq -e '
   echo "warning: PR has >100 review threads or >100 checks; results truncated and verdict held back from GREEN. Add pagination for full coverage." >&2
 fi
 
-v="$(echo "$raw" | jq -r '
-  .data.repository.pullRequest as $pr
-  | ($pr.commits.nodes[0].commit.statusCheckRollup.contexts.nodes // []) as $ctx
-  | ($pr.reviewThreads.nodes // []) as $t
-  | (($pr.reviewThreads.pageInfo.hasNextPage // false)
-     or ($pr.commits.nodes[0].commit.statusCheckRollup.contexts.pageInfo.hasNextPage // false)) as $trunc
-  | (($ctx|map(select((.__typename=="CheckRun" and (.status=="QUEUED" or .status=="IN_PROGRESS")) or (.__typename=="StatusContext" and (.state=="PENDING" or .state=="EXPECTED")))))|length) as $pend
-  | (($ctx|map(select((.__typename=="CheckRun" and (.conclusion | IN("FAILURE","TIMED_OUT","CANCELLED","STALE","STARTUP_FAILURE"))) or (.__typename=="StatusContext" and (.state | IN("FAILURE","ERROR"))))))|length) as $fail
-  | (($ctx|map(select(.__typename=="CheckRun" and .conclusion=="ACTION_REQUIRED")))|length) as $act
-  | (($t|map(select(.isResolved==false and .isOutdated==false)))|length) as $un
-  | ($pr.mergeStateStatus // "UNKNOWN") as $mss
-  | ($pr.reviewDecision // null) as $rd
-  | if ($pr.isDraft==true or $pr.state!="OPEN") then "NOT_ELIGIBLE"
-    elif ($pend>0 or $pr.mergeable=="UNKNOWN") then "WAITING_CI"
-    elif ($fail>0 or $un>0 or $pr.mergeable=="CONFLICTING" or $mss=="BEHIND" or $trunc) then "NEEDS_WORK"
-    elif (($rd=="REVIEW_REQUIRED") or ($rd=="CHANGES_REQUESTED") or ($act>0) or ($mss=="BLOCKED")) then "BLOCKED_HUMAN"
-    else "GREEN" end')"
+# Derive the exit code from the emitted verdict, never a second gate calculation.
+v="$(printf '%s\n' "$result" | jq -r '.verdict')"
 case "$v" in
   GREEN) exit 0;; WAITING_CI) exit 10;; NEEDS_WORK) exit 20;;
   BLOCKED_HUMAN) exit 30;; NOT_ELIGIBLE) exit 40;; *) exit 50;;

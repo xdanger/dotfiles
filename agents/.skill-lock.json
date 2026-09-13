@@ -283,27 +283,27 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/audience-aware-comms/SKILL.md",
-      "skillFolderHash": "4076e88825baf923d1602a37e3ab0e29703f6474",
+      "skillFolderHash": "7d4ba6f321421c281cc10beae28d8a03b0e4905b",
       "installedAt": "2026-06-13T02:38:45.786Z",
-      "updatedAt": "2026-08-28T23:03:20.777Z"
+      "updatedAt": "2026-09-13T05:37:24.044Z"
     },
     "deep-dive": {
       "source": "krosdai/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/deep-dive/SKILL.md",
-      "skillFolderHash": "50ea99cdc029b475d9236e2ae35289520c94abfa",
+      "skillFolderHash": "3550c12318b8660265281a1d414e0566f942fef8",
       "installedAt": "2026-06-13T03:00:27.799Z",
-      "updatedAt": "2026-06-13T03:00:27.799Z"
+      "updatedAt": "2026-09-13T05:37:25.416Z"
     },
     "pr-shepherd": {
       "source": "krosdai/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/pr-shepherd/SKILL.md",
-      "skillFolderHash": "f733e4ccc7e63bd53f504fbe9f835cee12085fb9",
+      "skillFolderHash": "529b8e2da34f3f081fa7b9a5862db5ea4fe65abd",
       "installedAt": "2026-06-13T17:01:51.890Z",
-      "updatedAt": "2026-06-26T14:54:22.111Z"
+      "updatedAt": "2026-09-13T05:37:26.738Z"
     },
     "lark-apps": {
       "source": "open.feishu.cn",
@@ -311,9 +311,9 @@
       "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-apps/SKILL.md",
       "skillFolderHash": "",
       "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:c4988ac5271d0d378ad56cb1c99c959019c6f1bb4710ffa31e9a4d3ace215c4e",
+      "wellKnownDigest": "sha256:76fa22672eec171f0411a9c8a7a46a38b740100c7d1474373582cd30bec3c99d",
       "installedAt": "2026-06-25T16:46:17.631Z",
-      "updatedAt": "2026-09-12T06:14:34.088Z"
+      "updatedAt": "2026-09-13T05:37:20.515Z"
     },
     "lark-note": {
       "source": "open.feishu.cn",
@@ -366,9 +366,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/orchestrate-agents/SKILL.md",
-      "skillFolderHash": "a2c01ecbbde5abc0ef9c2e2b2c6f7f08bb41a9a3",
+      "skillFolderHash": "9ae7268888de20e86c269bc63e35a2f06a0720e9",
       "installedAt": "2026-08-04T00:27:55.795Z",
-      "updatedAt": "2026-08-18T00:41:38.079Z"
+      "updatedAt": "2026-09-13T05:37:28.021Z"
     },
     "herdr": {
       "source": "herdrdev/herdr",
