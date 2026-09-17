@@ -28,6 +28,7 @@ glab = "latest"
 tokei = "latest"
 awscli = "latest"
 bun = "latest"
+amp = { version = "0.0.1789654249-g3f5df6", backend = "npm:@ampcode/cli" }
 claude = "latest"
 codex = "latest"
 node = "lts"
