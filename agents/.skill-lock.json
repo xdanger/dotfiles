@@ -6,9 +6,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/microsoft/playwright-cli.git",
       "skillPath": "skills/playwright-cli/SKILL.md",
-      "skillFolderHash": "10104bd92881e5ca5688f0a2cd1372e3c0e413a9",
+      "skillFolderHash": "4b040465accc10048d4b16479bb54d6d1d3bdeb6",
       "installedAt": "2026-02-16T03:32:31.689Z",
-      "updatedAt": "2026-09-15T06:02:26.825Z"
+      "updatedAt": "2026-09-19T06:03:47.178Z"
     },
     "git-commit": {
       "source": "krosdai/skills",
@@ -36,7 +36,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:30d0f21745654de06159411ea6da9f2b85ba670d78b3caf3acf69d5623104c9d",
       "installedAt": "2026-04-01T15:50:08.850Z",
-      "updatedAt": "2026-09-16T18:37:09.501Z"
+      "updatedAt": "2026-09-19T06:03:58.219Z"
     },
     "lark-calendar": {
       "source": "open.feishu.cn",
@@ -46,7 +46,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:922215decc326da69ba34b29515375419f6a35ef456f09759842ddacae84c16c",
       "installedAt": "2026-04-01T15:50:10.125Z",
-      "updatedAt": "2026-09-16T06:02:55.478Z"
+      "updatedAt": "2026-09-19T06:03:58.219Z"
     },
     "lark-contact": {
       "source": "open.feishu.cn",
@@ -56,7 +56,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:2d38d33ae1d9a31e328b9f873d07dbc34ae72731ffe5c05c42d882379f076838",
       "installedAt": "2026-04-01T15:50:11.228Z",
-      "updatedAt": "2026-09-16T06:02:55.479Z"
+      "updatedAt": "2026-09-19T06:03:58.220Z"
     },
     "lark-doc": {
       "source": "open.feishu.cn",
@@ -66,7 +66,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:59bbe080ea02a1a1e95fb0fbaa0f6b4d36ef1764e40a0f1cfa26d6c842ba880d",
       "installedAt": "2026-04-01T15:50:12.644Z",
-      "updatedAt": "2026-09-16T18:37:15.952Z"
+      "updatedAt": "2026-09-19T06:03:58.220Z"
     },
     "lark-drive": {
       "source": "open.feishu.cn",
@@ -76,7 +76,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:e3f5f585c4f5684799da4106d664320d6c3df6103e476fb56a39afc5ff7d5295",
       "installedAt": "2026-04-01T15:50:13.472Z",
-      "updatedAt": "2026-09-16T18:37:22.717Z"
+      "updatedAt": "2026-09-19T06:03:58.221Z"
     },
     "lark-event": {
       "source": "open.feishu.cn",
@@ -86,7 +86,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:0cba8588b83b7d4845b4cc6feb60df729af95c0f818924acd38d22211f1ba3f6",
       "installedAt": "2026-04-01T15:50:14.386Z",
-      "updatedAt": "2026-09-16T06:02:55.481Z"
+      "updatedAt": "2026-09-19T06:03:58.222Z"
     },
     "lark-im": {
       "source": "open.feishu.cn",
@@ -96,7 +96,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:5f3d5885437c2b75043b77ac8d984210eaf8d651b9ee970ecd30cd53d35b4084",
       "installedAt": "2026-04-01T15:50:15.279Z",
-      "updatedAt": "2026-09-16T18:37:29.936Z"
+      "updatedAt": "2026-09-19T06:03:58.222Z"
     },
     "lark-mail": {
       "source": "open.feishu.cn",
@@ -106,7 +106,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:b779bdea485fbcec5f09b5477ed190a3cbc451a6a360f10a079d288b6c815015",
       "installedAt": "2026-04-01T15:50:16.722Z",
-      "updatedAt": "2026-09-16T18:37:37.100Z"
+      "updatedAt": "2026-09-19T06:03:58.223Z"
     },
     "lark-minutes": {
       "source": "open.feishu.cn",
@@ -116,7 +116,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:811a26032539233b6a38d1673a8fe720112cf107dbbaeeac7ef7aa2eaec52d23",
       "installedAt": "2026-04-01T15:50:17.630Z",
-      "updatedAt": "2026-09-16T06:02:55.483Z"
+      "updatedAt": "2026-09-19T06:03:58.224Z"
     },
     "lark-openapi-explorer": {
       "source": "open.feishu.cn",
@@ -126,7 +126,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:7a7e3382f75dd66b9fb0fe443c1dfcf7858d818b2076cab21b1133878cdb34bd",
       "installedAt": "2026-04-01T15:50:19.016Z",
-      "updatedAt": "2026-09-16T06:02:55.484Z"
+      "updatedAt": "2026-09-19T06:03:58.226Z"
     },
     "lark-shared": {
       "source": "open.feishu.cn",
@@ -136,7 +136,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:d881dd0e17903b57aaa79375e6e69c70c3400dc31da75c4f5523be128701aa72",
       "installedAt": "2026-04-01T15:50:20.533Z",
-      "updatedAt": "2026-09-16T06:02:55.485Z"
+      "updatedAt": "2026-09-19T06:03:58.226Z"
     },
     "lark-sheets": {
       "source": "open.feishu.cn",
@@ -146,7 +146,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:eb8a3db33e33c1c380f75b77b4690bb90825ffdc7f664606870be0c44b5ffba1",
       "installedAt": "2026-04-01T15:50:21.514Z",
-      "updatedAt": "2026-09-16T18:37:45.641Z"
+      "updatedAt": "2026-09-19T06:03:58.227Z"
     },
     "lark-skill-maker": {
       "source": "open.feishu.cn",
@@ -156,7 +156,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:472abd5fc153f15dc8f4c31da3d4b38022564f114d9442e3022f7bbfbc0fd470",
       "installedAt": "2026-04-01T15:50:22.416Z",
-      "updatedAt": "2026-09-16T06:02:55.486Z"
+      "updatedAt": "2026-09-19T06:03:58.227Z"
     },
     "lark-task": {
       "source": "open.feishu.cn",
@@ -166,7 +166,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:8e0c9814d6b1cc863f051d74811d22054a03fcac9c1dba10b2cea286885d6398",
       "installedAt": "2026-04-01T15:50:23.342Z",
-      "updatedAt": "2026-09-16T18:37:54.012Z"
+      "updatedAt": "2026-09-19T06:03:58.228Z"
     },
     "lark-vc": {
       "source": "open.feishu.cn",
@@ -176,7 +176,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:579e01d6cb8a5c2f98677f794f05e0fa7f8be1b792505913446c900eabf29408",
       "installedAt": "2026-04-01T15:50:24.784Z",
-      "updatedAt": "2026-09-16T06:02:55.488Z"
+      "updatedAt": "2026-09-19T06:03:58.229Z"
     },
     "lark-whiteboard": {
       "source": "open.feishu.cn",
@@ -186,7 +186,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:0f67128d20e972d8b7f4370351bb491b5caff60f9192fba72978f513c9c0c8de",
       "installedAt": "2026-04-01T15:50:25.690Z",
-      "updatedAt": "2026-09-16T06:02:55.488Z"
+      "updatedAt": "2026-09-19T06:03:58.230Z"
     },
     "lark-wiki": {
       "source": "open.feishu.cn",
@@ -196,7 +196,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:42b33625cba4cc290dca16e47c8e2019577c8d33177f9e7500497d60388e2d41",
       "installedAt": "2026-04-01T15:50:26.570Z",
-      "updatedAt": "2026-09-16T18:38:01.320Z"
+      "updatedAt": "2026-09-19T06:03:58.230Z"
     },
     "lark-workflow-meeting-summary": {
       "source": "open.feishu.cn",
@@ -206,7 +206,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:b069215723c53f82b000bfdc7bd79d1fb269f87324a5a9783502b086aeef5d3a",
       "installedAt": "2026-04-01T15:50:27.293Z",
-      "updatedAt": "2026-09-16T06:02:55.489Z"
+      "updatedAt": "2026-09-19T06:03:58.231Z"
     },
     "lark-workflow-standup-report": {
       "source": "open.feishu.cn",
@@ -216,7 +216,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:6f0c8cfb9e45f8c9ebc89946d4d02f816ced1d53fb0de4a08ecd8efd4f1cdefa",
       "installedAt": "2026-04-01T15:50:28.173Z",
-      "updatedAt": "2026-09-16T06:02:55.489Z"
+      "updatedAt": "2026-09-19T06:03:58.231Z"
     },
     "lark-approval": {
       "source": "open.feishu.cn",
@@ -226,7 +226,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:c29890a558d1ac2a296ab0cfcebb703db42fb569612f7ad8720aaea7c801cbbf",
       "installedAt": "2026-05-18T04:34:00.070Z",
-      "updatedAt": "2026-09-16T06:02:55.474Z"
+      "updatedAt": "2026-09-19T06:03:58.216Z"
     },
     "lark-attendance": {
       "source": "open.feishu.cn",
@@ -236,7 +236,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:9a26445884b99d67312b09a1ad73343115c7be338a1bccca5df8cd84f5c117a3",
       "installedAt": "2026-05-18T04:34:00.074Z",
-      "updatedAt": "2026-09-16T06:02:55.477Z"
+      "updatedAt": "2026-09-19T06:03:58.218Z"
     },
     "lark-markdown": {
       "source": "open.feishu.cn",
@@ -246,7 +246,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:a915d63d8e3172eb85f662feab6fc3577242499818992eb92450ba3124ac58db",
       "installedAt": "2026-05-18T04:34:00.079Z",
-      "updatedAt": "2026-09-16T18:38:07.923Z"
+      "updatedAt": "2026-09-19T06:03:58.224Z"
     },
     "lark-okr": {
       "source": "open.feishu.cn",
@@ -256,7 +256,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:fb4a35df9694b83eb9a9f3cf3cd6be4745d760abac8e93fb3e98b938d34ea3dc",
       "installedAt": "2026-05-18T04:34:00.079Z",
-      "updatedAt": "2026-09-16T06:02:55.484Z"
+      "updatedAt": "2026-09-19T06:03:58.225Z"
     },
     "lark-slides": {
       "source": "open.feishu.cn",
@@ -266,7 +266,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:b42132be7643f3d26e8c34ed9c66f626aea6581a89957a6770a5a876043784ad",
       "installedAt": "2026-05-18T04:34:00.082Z",
-      "updatedAt": "2026-09-16T18:38:15.022Z"
+      "updatedAt": "2026-09-19T06:03:58.228Z"
     },
     "lark-vc-agent": {
       "source": "open.feishu.cn",
@@ -276,7 +276,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:519d621fa5e7c9f7d80af14a9e9c76faf9380e58a3580acdc174fdadbdc3c8c9",
       "installedAt": "2026-05-18T04:34:00.083Z",
-      "updatedAt": "2026-09-16T06:02:55.488Z"
+      "updatedAt": "2026-09-19T06:03:58.230Z"
     },
     "audience-aware-comms": {
       "source": "krosdai/skills",
@@ -311,9 +311,9 @@
       "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-apps/SKILL.md",
       "skillFolderHash": "",
       "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:1391e222ea72a74ff4e841831aadd8d6579f5ba43ea78ecefa97bad73426212a",
+      "wellKnownDigest": "sha256:8028a051a3792dd30e57ce2b367480bb0b857c4fbc3d2ec88329ace970b80d3e",
       "installedAt": "2026-06-25T16:46:17.631Z",
-      "updatedAt": "2026-09-16T18:38:22.360Z"
+      "updatedAt": "2026-09-19T06:03:58.218Z"
     },
     "lark-note": {
       "source": "open.feishu.cn",
@@ -323,7 +323,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:ee0a75a1b65be2770e0f5266a3c3f7b2cf42b572a632af88492d0c3466577521",
       "installedAt": "2026-06-25T16:46:17.635Z",
-      "updatedAt": "2026-09-16T06:02:55.483Z"
+      "updatedAt": "2026-09-19T06:03:58.225Z"
     },
     "steel-browser": {
       "source": "steel-dev/skills",
@@ -375,9 +375,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/herdrdev/herdr.git",
       "skillPath": "skills/herdr/SKILL.md",
-      "skillFolderHash": "b9dcfddcfa7ce43e2e4cf60e724c519be553f149",
+      "skillFolderHash": "6985a5e8418d43171c45c2a9e04b02de7308e1d8",
       "installedAt": "2026-08-14T10:00:06.267Z",
-      "updatedAt": "2026-09-08T09:38:04.281Z"
+      "updatedAt": "2026-09-19T06:03:49.778Z"
     },
     "wrangler": {
       "source": "cloudflare/skills",
@@ -396,7 +396,7 @@
       "sourceBaseUrl": "https://open.feishu.cn",
       "wellKnownDigest": "sha256:603ebd952d95b11dc3836e9334835b12595ca3b89910e3a14245a6ed0c319719",
       "installedAt": "2026-09-02T06:04:27.406Z",
-      "updatedAt": "2026-09-16T06:02:55.483Z"
+      "updatedAt": "2026-09-19T06:03:58.224Z"
     }
   },
   "dismissed": {
