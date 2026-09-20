@@ -22,6 +22,7 @@
     ~/.config/AGENTS.md: "agents/AGENTS.md"
     ~/.config/ghostty: "ghostty"
     ~/.config/mise/config.toml: "mise/global.toml"
+    ~/.config/nvim: "nvim"
     ~/.config/environment.d/zz-mise.conf:
       path: "systemd/environment.d/zz-mise.conf"
       if: '[ "$(uname -s)" = Linux ]'
