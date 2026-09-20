@@ -13,6 +13,7 @@
 - link:
     ~/.agents:
     ~/.local/bin/agent: "bin/agent"
+    ~/.config/amp/RTK.md: "agents/RTK-codex.md"
     ~/.claude/CLAUDE.md: "agents/AGENTS.md"
     ~/.claude/RTK.md: "agents/RTK-claude.md"
     ~/.claude/skills: "agents/skills"
