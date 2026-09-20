@@ -24,6 +24,7 @@ basecamp = "latest"
 "aqua:variadico/noti" = { version = "latest", os = ["macos", "linux/x64"] }
 delta = "latest"
 direnv = "latest"
+gh = "latest"
 glab = "latest"
 tokei = "latest"
 awscli = "latest"
