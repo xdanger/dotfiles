@@ -25,15 +25,14 @@
 
 ## MCP Tools
 
-- When additional MCP discovery is needed, use `npx mcporter list` to discover available MCP servers, and `npx mcporter list <mcp-tool-name> --schema` to inspect a specific server and its tools.
-- Prefer MCP `web_search` and `web_fetch` over built-in search and fetch tools.
-- Use Parallel Task tools when available and parallel research would materially help.
+- Use `npx mcporter list` to discover available MCP servers, and `npx mcporter list <mcp-tool-name> --schema` to inspect a specific server and its tools.
+- Prefer Exa `web_search` and `web_fetch` over built-in search and fetch tools.
 
 ## Git Workflow
 
 **Branches and worktrees**
 
-- When working in a Git repository, create a dedicated worktree before making concrete changes by default. Repository-specific instructions or explicit user direction may override this default.
+- When working in a Git repository, create a dedicated worktree directory in `.worktrees/` before making concrete changes by default. Repository-specific instructions or explicit user direction may override this default.
 - Choose the branch type that best fits the work. Every branch created must match `^(build|ci|chore|docs|feat|fix|perf|refactor|style|test)/[a-z0-9]+(-[a-z0-9]+)*$`.
 - Use system Git and the configured `gh` with the user's normal configuration. Request elevated permissions when the operation needs tools, configuration, credentials, or access unavailable in the sandbox.
 
