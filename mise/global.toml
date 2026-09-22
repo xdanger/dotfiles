@@ -52,6 +52,7 @@ yt-dlp = "latest"
 hey-cli = "latest"
 neovim = "latest"
 "github:xdevplatform/xurl" = "latest"
+btop = "1.4.7-gpu"
 
 [settings]
 auto_update = true
