@@ -1,4 +1,6 @@
 [tools]
+amp = { version = "latest", backend = "npm:@ampcode/cli" }
+"aqua:AGWA/git-crypt" = "latest"
 "aqua:BurntSushi/ripgrep" = "latest"
 "aqua:Wilfred/difftastic" = "latest"
 "aqua:bootandy/dust" = "latest"
@@ -6,7 +8,6 @@
 "aqua:charmbracelet/glow" = "latest"
 "aqua:chmln/sd" = "latest"
 "aqua:dbrgn/tealdeer" = "latest"
-"cargo:eza" = "latest"
 "aqua:jqlang/jq" = "latest"
 "aqua:junegunn/fzf" = "latest"
 "aqua:mikefarah/yq" = "latest"
@@ -14,53 +15,52 @@
 "aqua:sharkdp/bat" = "latest"
 "aqua:sharkdp/fd" = "latest"
 "aqua:sharkdp/hyperfine" = "latest"
-"aqua:watchexec/watchexec" = "latest"
-"npm:mcporter" = "latest"
-"pipx:csvkit" = { version = "latest", depends = ["python", "uv"] }
-"pipx:trash-cli" = { version = "latest", depends = ["python", "uv"] }
-"github:gitkraken/gk-cli" = "latest"
-basecamp = "latest"
-"github:so-fancy/diff-so-fancy" = "latest"
 "aqua:variadico/noti" = { version = "latest", os = ["macos", "linux/x64"] }
-delta = "latest"
-direnv = "latest"
-gh = "latest"
-glab = "latest"
-tokei = "latest"
+"aqua:watchexec/watchexec" = "latest"
 awscli = "latest"
+basecamp = "latest"
+btop = "latest"
 bun = "latest"
-amp = { version = "latest", backend = "npm:@ampcode/cli" }
+"cargo:eza" = "latest"
 claude = "latest"
 codex = "latest"
-node = "lts"
 cursor-agent = { version = "latest", bin_path = "dist-package", strip_components = 0, url = 'https://downloads.cursor.com/lab/{{ version }}/{{ os(macos="darwin") }}/{{ arch(x64="x64", arm64="arm64") }}/agent-cli-package.tar.gz', version_list_url = "https://cursor.com/install", version_regex = 'downloads\.cursor\.com/lab/([0-9]{4}\.[0-9]{2}\.[0-9]{2}-[0-9a-f]+)/' }
+delta = "latest"
 deno = "latest"
+direnv = "latest"
 gcloud = "latest"
+gh = "latest"
+"github:gitkraken/gk-cli" = "latest"
+"github:so-fancy/diff-so-fancy" = "latest"
+"github:xdevplatform/xurl" = "latest"
+glab = "latest"
 go = "latest"
 grok = { version = "latest", bin = "grok", platforms = { windows-arm64 = { bin = "grok.exe", url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-{{ version }}-windows-aarch64.exe" }, windows-x64 = { bin = "grok.exe", url = "https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-{{ version }}-windows-x86_64.exe" } }, url = 'https://storage.googleapis.com/grok-build-public-artifacts/cli/grok-{{ version }}-{{ os() }}-{{ arch(x64="x86_64", arm64="aarch64") }}', version_list_url = "https://x.ai/cli/stable" }
 herdr = "latest"
+hey-cli = "latest"
 kubectl = "latest"
+neovim = "latest"
+node = "lts"
+"npm:mcporter" = "latest"
+"pipx:csvkit" = { version = "latest", depends = ["python", "uv"] }
+"pipx:trash-cli" = { version = "latest", depends = ["python", "uv"] }
 pnpm = "latest"
 python = "latest"
 ruby = "latest"
 rust = "latest"
 terraform = "latest"
+tokei = "latest"
 uv = "latest"
 wrangler = "latest"
 yarn = "latest"
 yt-dlp = "latest"
-hey-cli = "latest"
-neovim = "latest"
-"github:xdevplatform/xurl" = "latest"
-btop = "latest"
-"aqua:AGWA/git-crypt" = "latest"
 
 [settings]
 auto_update = true
 minimum_release_age_excludes = ["codex", "claude", "grok", "herdr"]
 
-[settings.ruby]
+[settings.python]
 compile = false
 
-[settings.python]
+[settings.ruby]
 compile = false
