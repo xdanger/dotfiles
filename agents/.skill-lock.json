@@ -31,252 +31,252 @@
     "lark-base": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-base/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-base.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:30d0f21745654de06159411ea6da9f2b85ba670d78b3caf3acf69d5623104c9d",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:49f66d4cbb29400b7ccbdec19924dd6c4501e92a1d220a4f7bc3934e46735753",
       "installedAt": "2026-04-01T15:50:08.850Z",
-      "updatedAt": "2026-09-19T06:03:58.219Z"
+      "updatedAt": "2026-09-22T17:42:53.245Z"
     },
     "lark-calendar": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-calendar/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-calendar.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:922215decc326da69ba34b29515375419f6a35ef456f09759842ddacae84c16c",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:32671648a2d9588bd6c398944b2c6375a2595e3fd6cc0ed9497bcb5d9e3df8ed",
       "installedAt": "2026-04-01T15:50:10.125Z",
-      "updatedAt": "2026-09-19T06:03:58.219Z"
+      "updatedAt": "2026-09-22T17:42:53.247Z"
     },
     "lark-contact": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-contact/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-contact.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:2d38d33ae1d9a31e328b9f873d07dbc34ae72731ffe5c05c42d882379f076838",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:9aa8a6133b9daf8575a6b78e4fb2b8382268231ec12004362362ce56cb1f9c08",
       "installedAt": "2026-04-01T15:50:11.228Z",
-      "updatedAt": "2026-09-19T06:03:58.220Z"
+      "updatedAt": "2026-09-22T17:42:53.248Z"
     },
     "lark-doc": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-doc/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-doc.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:59bbe080ea02a1a1e95fb0fbaa0f6b4d36ef1764e40a0f1cfa26d6c842ba880d",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:cd2706da60c4c593f340d94019facff53cc6f18fc8828b3fed2217ebd1d5ca74",
       "installedAt": "2026-04-01T15:50:12.644Z",
-      "updatedAt": "2026-09-19T06:03:58.220Z"
+      "updatedAt": "2026-09-22T17:42:53.249Z"
     },
     "lark-drive": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-drive/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-drive.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:e3f5f585c4f5684799da4106d664320d6c3df6103e476fb56a39afc5ff7d5295",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:9b38b81e22e17533b6497ff4ba5f022997377e0daf66227b824d81cffd7bca0d",
       "installedAt": "2026-04-01T15:50:13.472Z",
-      "updatedAt": "2026-09-19T06:03:58.221Z"
+      "updatedAt": "2026-09-22T17:42:53.250Z"
     },
     "lark-event": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-event/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-event.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:0cba8588b83b7d4845b4cc6feb60df729af95c0f818924acd38d22211f1ba3f6",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:af9e37240f6f6aea266d7b931d9a4fd78430363f6f22544dcf12237f34c3d539",
       "installedAt": "2026-04-01T15:50:14.386Z",
-      "updatedAt": "2026-09-19T06:03:58.222Z"
+      "updatedAt": "2026-09-22T17:42:53.250Z"
     },
     "lark-im": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-im/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-im.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:5f3d5885437c2b75043b77ac8d984210eaf8d651b9ee970ecd30cd53d35b4084",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:28ec08f87c6b8eaf70110cc11a5cece906a51523b0f78fb96eed3b3a605d1235",
       "installedAt": "2026-04-01T15:50:15.279Z",
-      "updatedAt": "2026-09-19T06:03:58.222Z"
+      "updatedAt": "2026-09-22T17:42:53.251Z"
     },
     "lark-mail": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-mail/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-mail.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:b779bdea485fbcec5f09b5477ed190a3cbc451a6a360f10a079d288b6c815015",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:86a984a317f0acfec6558542f46e05feca001b210c2d090096d84cc6590ca14d",
       "installedAt": "2026-04-01T15:50:16.722Z",
-      "updatedAt": "2026-09-19T06:03:58.223Z"
+      "updatedAt": "2026-09-22T17:42:53.252Z"
     },
     "lark-minutes": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-minutes/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-minutes.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:811a26032539233b6a38d1673a8fe720112cf107dbbaeeac7ef7aa2eaec52d23",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:b31909b345c4b9ad62793efa3d78407b183d9b1f3052820ea5298a99c3e85605",
       "installedAt": "2026-04-01T15:50:17.630Z",
-      "updatedAt": "2026-09-19T06:03:58.224Z"
+      "updatedAt": "2026-09-22T17:42:53.253Z"
     },
     "lark-openapi-explorer": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-openapi-explorer/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-openapi-explorer.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:7a7e3382f75dd66b9fb0fe443c1dfcf7858d818b2076cab21b1133878cdb34bd",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:4a9065cd3c4443bbdf9ccafd80e422ce6a0fc5f680b8bff40c56b39df52268db",
       "installedAt": "2026-04-01T15:50:19.016Z",
-      "updatedAt": "2026-09-19T06:03:58.226Z"
+      "updatedAt": "2026-09-22T17:42:53.254Z"
     },
     "lark-shared": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-shared/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-shared.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:d881dd0e17903b57aaa79375e6e69c70c3400dc31da75c4f5523be128701aa72",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:4aafd0fb352d35c9b39823fc4b75fee12072d2c58ed54d256d5d75d86159ec4d",
       "installedAt": "2026-04-01T15:50:20.533Z",
-      "updatedAt": "2026-09-19T06:03:58.226Z"
+      "updatedAt": "2026-09-22T17:42:53.255Z"
     },
     "lark-sheets": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-sheets/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-sheets.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:eb8a3db33e33c1c380f75b77b4690bb90825ffdc7f664606870be0c44b5ffba1",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:5edf638a0e78b3ba8a5bb3e0bfc3104a4ecdd170ba2b5360b9bcc145ba050eec",
       "installedAt": "2026-04-01T15:50:21.514Z",
-      "updatedAt": "2026-09-19T06:03:58.227Z"
+      "updatedAt": "2026-09-22T17:42:53.255Z"
     },
     "lark-skill-maker": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-skill-maker/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-skill-maker.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:472abd5fc153f15dc8f4c31da3d4b38022564f114d9442e3022f7bbfbc0fd470",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:22201788abe9ab03344d9205b5a7ebbef823fb498bc8f2b18493be109c3a3d64",
       "installedAt": "2026-04-01T15:50:22.416Z",
-      "updatedAt": "2026-09-19T06:03:58.227Z"
+      "updatedAt": "2026-09-22T17:42:53.255Z"
     },
     "lark-task": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-task/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-task.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:8e0c9814d6b1cc863f051d74811d22054a03fcac9c1dba10b2cea286885d6398",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:905c71a6b20914b94cd66c0c91a0b4d28498ef4390d7ccac5b9eb3acf7975e44",
       "installedAt": "2026-04-01T15:50:23.342Z",
-      "updatedAt": "2026-09-19T06:03:58.228Z"
+      "updatedAt": "2026-09-22T17:42:53.256Z"
     },
     "lark-vc": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-vc/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-vc.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:579e01d6cb8a5c2f98677f794f05e0fa7f8be1b792505913446c900eabf29408",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:9acc6c96051d2fc18c2a7da35567bc08932826c32488922d1990adfe5576dfb4",
       "installedAt": "2026-04-01T15:50:24.784Z",
-      "updatedAt": "2026-09-19T06:03:58.229Z"
+      "updatedAt": "2026-09-22T17:42:53.256Z"
     },
     "lark-whiteboard": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-whiteboard/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-whiteboard.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:0f67128d20e972d8b7f4370351bb491b5caff60f9192fba72978f513c9c0c8de",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:694dfdd72dec5ff27f31796cb195d5df53dbef70f8649399b0a5f7f4377c295c",
       "installedAt": "2026-04-01T15:50:25.690Z",
-      "updatedAt": "2026-09-19T06:03:58.230Z"
+      "updatedAt": "2026-09-22T17:42:53.257Z"
     },
     "lark-wiki": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-wiki/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-wiki.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:42b33625cba4cc290dca16e47c8e2019577c8d33177f9e7500497d60388e2d41",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:89d44abe2339e4f6f845e0b36c1faad0e61e0690242b92100745a176c605857d",
       "installedAt": "2026-04-01T15:50:26.570Z",
-      "updatedAt": "2026-09-19T06:03:58.230Z"
+      "updatedAt": "2026-09-22T17:42:53.258Z"
     },
     "lark-workflow-meeting-summary": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-workflow-meeting-summary/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-workflow-meeting-summary.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:b069215723c53f82b000bfdc7bd79d1fb269f87324a5a9783502b086aeef5d3a",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:b2e211a010320fec545c6398bf8ece7c031cdbcf69008eba57ca9c4f84526def",
       "installedAt": "2026-04-01T15:50:27.293Z",
-      "updatedAt": "2026-09-19T06:03:58.231Z"
+      "updatedAt": "2026-09-22T17:42:53.258Z"
     },
     "lark-workflow-standup-report": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-workflow-standup-report/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-workflow-standup-report.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:6f0c8cfb9e45f8c9ebc89946d4d02f816ced1d53fb0de4a08ecd8efd4f1cdefa",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:0c527bc364ce511c6749bae39e87f593daa42ba2bf386914e5647732dfff5ec8",
       "installedAt": "2026-04-01T15:50:28.173Z",
-      "updatedAt": "2026-09-19T06:03:58.231Z"
+      "updatedAt": "2026-09-22T17:42:53.259Z"
     },
     "lark-approval": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-approval/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-approval.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:c29890a558d1ac2a296ab0cfcebb703db42fb569612f7ad8720aaea7c801cbbf",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:62d1cae7676d1f19ed4c7068812f8a43ea74a4df29ce07da46940f91d79462fe",
       "installedAt": "2026-05-18T04:34:00.070Z",
-      "updatedAt": "2026-09-19T06:03:58.216Z"
+      "updatedAt": "2026-09-22T17:42:53.233Z"
     },
     "lark-attendance": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-attendance/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-attendance.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:9a26445884b99d67312b09a1ad73343115c7be338a1bccca5df8cd84f5c117a3",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:179569b30918de496720db6d04ae0436ef0432939eb54fe4949af869062e82f2",
       "installedAt": "2026-05-18T04:34:00.074Z",
-      "updatedAt": "2026-09-19T06:03:58.218Z"
+      "updatedAt": "2026-09-22T17:42:53.244Z"
     },
     "lark-markdown": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-markdown/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-markdown.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:a915d63d8e3172eb85f662feab6fc3577242499818992eb92450ba3124ac58db",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:30f3471861afdf173d53d5d9c7194ea927b269c93a5c6f07aef1e7c94f27df5d",
       "installedAt": "2026-05-18T04:34:00.079Z",
-      "updatedAt": "2026-09-19T06:03:58.224Z"
+      "updatedAt": "2026-09-22T17:42:53.252Z"
     },
     "lark-okr": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-okr/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-okr.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:fb4a35df9694b83eb9a9f3cf3cd6be4745d760abac8e93fb3e98b938d34ea3dc",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:42dfd091ae5ca8cc294f6ec92319e250c465b885055519da7581575a703964c6",
       "installedAt": "2026-05-18T04:34:00.079Z",
-      "updatedAt": "2026-09-19T06:03:58.225Z"
+      "updatedAt": "2026-09-22T17:42:53.254Z"
     },
     "lark-slides": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-slides/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-slides.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:b42132be7643f3d26e8c34ed9c66f626aea6581a89957a6770a5a876043784ad",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:3138b5d00271bdb3e089aa7aab666ca568ff23d54e93d997ff4f67a6eb582ad3",
       "installedAt": "2026-05-18T04:34:00.082Z",
-      "updatedAt": "2026-09-19T06:03:58.228Z"
+      "updatedAt": "2026-09-22T17:42:53.256Z"
     },
     "lark-vc-agent": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-vc-agent/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-vc-agent.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:519d621fa5e7c9f7d80af14a9e9c76faf9380e58a3580acdc174fdadbdc3c8c9",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:3dbc03c35cba77f87db5e497f2052bc71fd91ac80c82bace0ba6c8ea96909912",
       "installedAt": "2026-05-18T04:34:00.083Z",
-      "updatedAt": "2026-09-19T06:03:58.230Z"
+      "updatedAt": "2026-09-22T17:42:53.257Z"
     },
     "audience-aware-comms": {
       "source": "krosdai/skills",
@@ -308,22 +308,22 @@
     "lark-apps": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-apps/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-apps.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:1391e222ea72a74ff4e841831aadd8d6579f5ba43ea78ecefa97bad73426212a",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:4c76d608923f25a0c8619b0af6d85794814244102877082e5b02d5333ef916e6",
       "installedAt": "2026-06-25T16:46:17.631Z",
-      "updatedAt": "2026-09-21T06:01:51.771Z"
+      "updatedAt": "2026-09-22T17:42:53.234Z"
     },
     "lark-note": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-note/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-note.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:ee0a75a1b65be2770e0f5266a3c3f7b2cf42b572a632af88492d0c3466577521",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:0a83b1ffbe3aef644a30fd345d25b04f4a94238fadb168db0d26cc98292de28e",
       "installedAt": "2026-06-25T16:46:17.635Z",
-      "updatedAt": "2026-09-19T06:03:58.225Z"
+      "updatedAt": "2026-09-22T17:42:53.254Z"
     },
     "steel-browser": {
       "source": "steel-dev/skills",
@@ -391,12 +391,12 @@
     "lark-meeting": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
-      "sourceUrl": "https://open.feishu.cn/.well-known/skills/lark-meeting/SKILL.md",
+      "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-meeting.tar.gz",
       "skillFolderHash": "",
-      "sourceBaseUrl": "https://open.feishu.cn",
-      "wellKnownDigest": "sha256:603ebd952d95b11dc3836e9334835b12595ca3b89910e3a14245a6ed0c319719",
+      "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
+      "wellKnownDigest": "sha256:a1d4959c0621a67860f00bc511dbbb2a71eefcaa7142a5d6c93428f3b472552f",
       "installedAt": "2026-09-02T06:04:27.406Z",
-      "updatedAt": "2026-09-19T06:03:58.224Z"
+      "updatedAt": "2026-09-22T17:42:53.253Z"
     }
   },
   "dismissed": {
