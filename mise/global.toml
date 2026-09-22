@@ -29,7 +29,7 @@ glab = "latest"
 tokei = "latest"
 awscli = "latest"
 bun = "latest"
-amp = { version = "0.0.1789654249-g3f5df6", backend = "npm:@ampcode/cli" }
+amp = { version = "latest", backend = "npm:@ampcode/cli" }
 claude = "latest"
 codex = "latest"
 node = "lts"
@@ -52,7 +52,8 @@ yt-dlp = "latest"
 hey-cli = "latest"
 neovim = "latest"
 "github:xdevplatform/xurl" = "latest"
-btop = "1.4.7-gpu"
+btop = "latest"
+"aqua:AGWA/git-crypt" = "latest"
 
 [settings]
 auto_update = true
