@@ -58,13 +58,6 @@
       "updatedAt": "2026-09-14T19:41:01.654356Z"
     },
     {
-      "skillId": "skill_01556gyx4YJkTZbeauYZLL4w",
-      "name": "deep-dive",
-      "description": "Structured pedagogical deep-dive for new substantive topics across STEM, technical/engineering practice, and humanities/business/history. Use this skill whenever the user asks to learn, understand, deep-dive, explore, or be taught a new concept they don't already have a working model of — including phrasings like \"what is X\", \"how does Y work\", \"why does Z happen\", \"explain W\", \"带我入门 X\", \"讲讲 X\", \"教我 X\", \"我想搞懂 X\", even when they don't use the word \"teach\" or \"learn\". Trigger especially when the topic is a named concept, framework, theorem, mechanism, technology, historical event, or intellectual movement. Do NOT trigger for quick factual lookups (\"when did X happen\"), tool/syntax questions (\"how do I curl with auth\"), conversational chitchat, or mid-flow technical discussion where the user is already engaged on the topic.",
-      "source": "custom",
-      "updatedAt": "2026-05-19T02:37:40.337814Z"
-    },
-    {
       "skillId": "xlsx",
       "name": "xlsx",
       "description": "Use this skill any time a spreadsheet file is the primary input or output. This means any task where the user wants to: open, read, edit, or fix an existing .xlsx, .xlsm, .xltx, .csv, or .tsv file (e.g., adding columns, computing formulas, formatting, charting, cleaning messy data); create a new spreadsheet from scratch or from other data sources; or convert between tabular file formats. Trigger especially when the user references a spreadsheet file by name or path — even casually (like \"the xlsx in my downloads\") — and wants something done to it or produced from it. Also trigger for cleaning or restructuring messy tabular data files (malformed rows, misplaced headers, junk data) into proper spreadsheets. The deliverable must be a spreadsheet file. Do NOT trigger when the primary deliverable is a Word document, HTML report, standalone Python script, database pipeline, or Google Sheets API integration, even if tabular data is involved.",
@@ -77,13 +70,6 @@
       "description": "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx) or Word templates (.dotx). Triggers include: any mention of 'Word doc', 'word document', '.docx', '.dotx', or requests to produce professional documents with formatting like tables of contents, page numbers, or letterheads. Also use when extracting or reorganizing content from .docx or .dotx files, inserting or replacing images in documents, find-and-replace in Word files, working with tracked changes or comments, or converting content into a polished Word document. If the user asks for a 'report', 'memo', 'letter', 'template', or similar deliverable as a Word or .docx file (to download, email or print), use this skill. However, if they ask for a document, page, report, memo, or notes WITHOUT naming a file format and the session offers Claude's own dedicated document or page skill or connector, use that instead. Do NOT use for PDFs, spreadsheets, Google Docs, or coding unrelated to document generation.",
       "source": "anthropic",
       "updatedAt": "2026-09-14T21:00:33.279708Z"
-    },
-    {
-      "skillId": "skill_01YQxpKtRg84Xi5i65sMGT1S",
-      "name": "audience-aware-comms",
-      "description": "Apply whenever you are about to produce written output that an INTERPRETING READER — a human, or another AI agent that will act on your words — will read and act on: emails, IM/Slack, PR or issue descriptions, review comments, design or decision docs, customer-facing copy, AND natural-language task specs, prompts, or agent mandates whose executor is a person or an LLM. Use it even when the user did not ask for \"communication\" and the message is only a sub-step of a larger task (e.g. the PR body after a feature, or a prompt you are writing for a downstream agent) — those incidental cases are where audience-blind writing slips through, so reach for this proactively. It makes you model the reader's actual capability and what they will infer or assume, then emit only the calibrated artifact. Do NOT use only for output consumed literally by a deterministic interpreter — executed code, configs, schemas, queries, regexes, test fixtures — where correctness is binary and there is no mind to model.",
-      "source": "custom",
-      "updatedAt": "2026-06-13T00:33:20.472488Z"
     },
     {
       "skillId": "skill-creator",
