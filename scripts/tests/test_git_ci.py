@@ -56,6 +56,7 @@ class GitCiTest(unittest.TestCase):
         payload = json.loads(request.data)
         self.assertEqual(request.full_url, "https://api.cerebras.ai/v1/chat/completions")
         self.assertEqual(request.get_header("Authorization"), "Bearer test-key")
+        self.assertEqual(request.get_header("User-agent"), "git-ci/1.0")
         self.assertEqual(payload["model"], "test-model")
         diff = payload["messages"][1]["content"]
         self.assertIn("+staged version", diff)
