@@ -25,8 +25,9 @@
 
 ## MCP Tools
 
-- Use `npx mcporter list` to discover available MCP servers, and `npx mcporter list <mcp-tool-name> --schema` to inspect a specific server and its tools.
+- Use `hindsight` tools to save and recall my memory.
 - Prefer Exa `web_search` and `web_fetch` over built-in search and fetch tools.
+- Use `npx mcporter list` to discover more available MCP servers, and `npx mcporter list <mcp-tool-name> --schema` to inspect a specific server and its tools.
 
 ## Git Workflow
 
