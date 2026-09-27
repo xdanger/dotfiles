@@ -1,4 +1,5 @@
 .pnpm-store/
+/agents/skills/synced/
 /agents/skills/taptap-data-analysis
 /ghostty/config.*.bak
 /vim/viminfo
