@@ -7,6 +7,7 @@ amp = { version = "latest", backend = "npm:@ampcode/cli" }
 "aqua:charmbracelet/glow" = "latest"
 "aqua:chmln/sd" = "latest"
 "aqua:dbrgn/tealdeer" = "latest"
+"aqua:git-lfs/git-lfs" = "3.8.0"
 "aqua:jqlang/jq" = "latest"
 "aqua:junegunn/fzf" = "latest"
 "aqua:mikefarah/yq" = "latest"
