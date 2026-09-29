@@ -38,6 +38,13 @@ fi
 
 source "$ZSH/oh-my-zsh.sh"
 
+# Prefer case-sensitive matches; fall back to case-insensitive completion.
+zstyle ':completion:*' matcher-list \
+  '' \
+  'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' \
+  'r:|=*' \
+  'l:|=* r:|=*'
+
 (( $+commands[rsync] ))         && alias rsync="rsync --exclude '.DS_Store'"
 (( $+commands[rclone] ))        && alias rclone="rclone --exclude-from $DOTFILES/rclone/exclude-list.txt"
 #(( $+commands[bat] ))           && alias cat='bat --paging never'
