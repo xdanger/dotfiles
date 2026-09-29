@@ -6,9 +6,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/microsoft/playwright-cli.git",
       "skillPath": "skills/playwright-cli/SKILL.md",
-      "skillFolderHash": "4b040465accc10048d4b16479bb54d6d1d3bdeb6",
+      "skillFolderHash": "6b746b43751be277378e0ee04fe0db69f24da045",
       "installedAt": "2026-02-16T03:32:31.689Z",
-      "updatedAt": "2026-09-19T06:03:47.178Z"
+      "updatedAt": "2026-09-29T12:53:37.309Z"
     },
     "git-commit": {
       "source": "krosdai/skills",
