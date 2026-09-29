@@ -397,6 +397,15 @@
       "wellKnownDigest": "sha256:a1d4959c0621a67860f00bc511dbbb2a71eefcaa7142a5d6c93428f3b472552f",
       "installedAt": "2026-09-02T06:04:27.406Z",
       "updatedAt": "2026-09-22T17:42:53.253Z"
+    },
+    "gui-automation": {
+      "source": "trycua/cua",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/trycua/cua.git",
+      "skillPath": "skills/gui-automation/SKILL.md",
+      "skillFolderHash": "671ab74beb7d6c03378338820a52d09adee382a8",
+      "installedAt": "2026-09-29T20:13:19.259Z",
+      "updatedAt": "2026-09-29T20:13:19.259Z"
     }
   },
   "dismissed": {
