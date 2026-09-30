@@ -1,5 +1,7 @@
 .pnpm-store/
+/agents/skills/cindy-skill-creator
 /agents/skills/cua-driver
+/agents/skills/learn
 /agents/skills/synced
 /agents/skills/taptap-data-analysis
 /ghostty/config.*.bak
