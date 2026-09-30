@@ -57,7 +57,7 @@ if [[ $(uname) == "Darwin" ]]; then
   # macOS
   # clang -framework Carbon util/reset-input.m -o bin/reset-input
   brew update && brew upgrade
-  brew install --quiet aria2 entr fortune ncdu netcat prettyping socat font-geist-mono-nerd-font font-im-writing-nerd-font font-jetbrains-maple-mono-nf font-maple-mono-nf-cn
+  brew install --quiet aria2 entr fortune ncdu netcat prettyping socat font-geist-mono-nerd-font font-im-writing-nerd-font font-mona-sans font-jetbrains-maple-mono-nf font-maple-mono font-maple-mono-nf font-maple-mono-nf-cn
 elif [[ $(uname) == "Linux" ]]; then
   # Other Linux distributions
   sudo apt update && sudo apt upgrade -y
