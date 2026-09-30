@@ -406,6 +406,105 @@
       "skillFolderHash": "671ab74beb7d6c03378338820a52d09adee382a8",
       "installedAt": "2026-09-29T20:13:19.259Z",
       "updatedAt": "2026-09-29T20:13:19.259Z"
+    },
+    "agents": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": "agents/SKILL.md",
+      "skillFolderHash": "3efab42ffd180468cfcc10a81ba23598a6071ab3",
+      "installedAt": "2026-09-30T01:04:06.997Z",
+      "updatedAt": "2026-09-30T01:04:06.997Z"
+    },
+    "dubbing": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": "dubbing/SKILL.md",
+      "skillFolderHash": "e5af27fec73d9024c7ab68b012c4feb2b413029e",
+      "installedAt": "2026-09-30T01:04:06.999Z",
+      "updatedAt": "2026-09-30T01:04:06.999Z"
+    },
+    "music": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": "music/SKILL.md",
+      "skillFolderHash": "59c3d468daa78722b26b4da51c39f67ee115f534",
+      "installedAt": "2026-09-30T01:04:07.000Z",
+      "updatedAt": "2026-09-30T01:04:07.000Z"
+    },
+    "setup-api-key": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": "setup-api-key/SKILL.md",
+      "skillFolderHash": "89e3d1bac6cd7ef25f6325b9012310ea31e1b218",
+      "installedAt": "2026-09-30T01:04:07.000Z",
+      "updatedAt": "2026-09-30T01:04:07.000Z"
+    },
+    "sound-effects": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": "sound-effects/SKILL.md",
+      "skillFolderHash": "78f528a80bcf9656f175c1f676260d2a687e499b",
+      "installedAt": "2026-09-30T01:04:07.001Z",
+      "updatedAt": "2026-09-30T01:04:07.001Z"
+    },
+    "speech-engine": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": "speech-engine/SKILL.md",
+      "skillFolderHash": "2599ae605452a1c56a7963b5a955e261d1f3083f",
+      "installedAt": "2026-09-30T01:04:07.001Z",
+      "updatedAt": "2026-09-30T01:04:07.001Z"
+    },
+    "speech-to-text": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": "speech-to-text/SKILL.md",
+      "skillFolderHash": "1214d6de682f7e5290762434809ab56fd2bfec8a",
+      "installedAt": "2026-09-30T01:04:07.002Z",
+      "updatedAt": "2026-09-30T01:04:07.002Z"
+    },
+    "text-to-speech": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": "text-to-speech/SKILL.md",
+      "skillFolderHash": "6656701430a9fa5a114600a4e2c22c87d360d7c0",
+      "installedAt": "2026-09-30T01:04:07.002Z",
+      "updatedAt": "2026-09-30T01:04:07.002Z"
+    },
+    "voice-changer": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": "voice-changer/SKILL.md",
+      "skillFolderHash": "6339303bae89453dc51633071e45281edd048365",
+      "installedAt": "2026-09-30T01:04:07.003Z",
+      "updatedAt": "2026-09-30T01:04:07.003Z"
+    },
+    "voice-isolator": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": "voice-isolator/SKILL.md",
+      "skillFolderHash": "72a9e22514e6ee564a0a39ac14e35a4c0c155d9e",
+      "installedAt": "2026-09-30T01:04:07.003Z",
+      "updatedAt": "2026-09-30T01:04:07.003Z"
+    },
+    "update-skills-from-changelog": {
+      "source": "elevenlabs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/elevenlabs/skills.git",
+      "skillPath": ".agents/skills/update-skills-from-changelog/SKILL.md",
+      "skillFolderHash": "d7a4dfe61410f4f7ff6205f69ec564e87e4b0e14",
+      "installedAt": "2026-09-30T01:04:07.004Z",
+      "updatedAt": "2026-09-30T01:04:07.004Z"
     }
   },
   "dismissed": {
