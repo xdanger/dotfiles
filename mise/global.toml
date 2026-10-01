@@ -63,3 +63,6 @@ compile = false
 
 [settings.ruby]
 compile = false
+
+[settings.upgrade]
+prune_after = "72h"
