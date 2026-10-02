@@ -25,10 +25,3 @@ fi
 typeset -gU path
 source "$ZDOTDIR/mise-path.zsh"
 
-if [[ "$OSTYPE" == linux* ]] && (( $+commands[keychain] )); then
-  # SSH 登录且 ForwardAgent 注入的 agent 可连通（ssh-add rc 0/1）时直接复用；
-  # 否则（本地会话或未转发，rc 2）交给 keychain 启动/复用本机 agent
-  if [[ -z "$SSH_CONNECTION" ]] || { ssh-add -l &>/dev/null; (( $? == 2 )) }; then
-    eval "$(keychain --eval --quiet)"
-  fi
-fi
