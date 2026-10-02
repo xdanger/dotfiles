@@ -39,9 +39,11 @@ is_container() {
     return 0
   fi
 
-  # 4) PID namespace 差异
-  if [ "$(stat -c %d /proc/1/ns/pid 2>/dev/null)" != \
-       "$(stat -c %d /proc/self/ns/pid 2>/dev/null)" ]; then
+  # 4) PID namespace 差异（非 root 在宿主机上读不到 /proc/1/ns/pid，此时跳过）
+  local init_ns self_ns
+  if init_ns=$(readlink /proc/1/ns/pid 2>/dev/null) \
+     && self_ns=$(readlink /proc/self/ns/pid 2>/dev/null) \
+     && [ "$init_ns" != "$self_ns" ]; then
     return 0
   fi
 
