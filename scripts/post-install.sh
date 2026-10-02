@@ -58,8 +58,11 @@ if [[ $(uname) == "Darwin" ]]; then
   # clang -framework Carbon util/reset-input.m -o bin/reset-input
   brew update && brew upgrade
   brew install --quiet aria2 entr fortune ncdu netcat prettyping socat font-geist-mono-nerd-font font-im-writing-nerd-font font-mona-sans font-jetbrains-maple-mono-nf font-maple-mono font-maple-mono-nf font-maple-mono-nf-cn
-elif [[ $(uname) == "Linux" ]]; then
-  # Other Linux distributions
+elif command -v pacman >/dev/null 2>&1; then
+  # Arch-based Linux (e.g. Omarchy); partial upgrades are unsupported, so always -Syu
+  sudo pacman -Syu --needed --noconfirm aria2 entr fortune-mod ncdu openbsd-netcat prettyping socat
+elif command -v apt >/dev/null 2>&1; then
+  # Debian-based Linux
   sudo apt update && sudo apt upgrade -y
   sudo apt install -y aria2 entr fortune-mod ncdu netcat-openbsd prettyping socat
 fi
