@@ -12,7 +12,6 @@
 
 - link:
     ~/.agents:
-    ~/.local/bin/agent: "bin/agent"
     ~/.config/amp/RTK.md: "agents/RTK-codex.md"
     ~/.claude/CLAUDE.md: "agents/AGENTS.md"
     ~/.claude/RTK.md: "agents/RTK-claude.md"
@@ -33,6 +32,7 @@
     ~/.config/zed/AGENTS.md: "agents/AGENTS.md"
     ~/.gemrc: "ruby/gemrc"
     ~/.gitconfig: "git/gitconfig"
+    ~/.config/git/verified_signers: "git/verified_signers"
     ~/.htoprc: "utils/htoprc"
     ~/.tmux:
     ~/.tmux.conf: "tmux/tmux.conf"

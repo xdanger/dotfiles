@@ -1,2 +1,8 @@
-xdanger@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQTzEIrjphfjlF5f/vWKaKBNPXN2WafTjyYBIWp6fbZ Langley-2023@Montreal.lan
-xdanger@gmail.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHLnUzZqJVw3K6774Y0n9Nfrzq08X/Q7vZoLvOp/pyuP ssh.singapore@thedai.com
+# langley
+xdanger@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINQTzEIrjphfjlF5f/vWKaKBNPXN2WafTjyYBIWp6fbZ
+# singapore
+xdanger@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHLnUzZqJVw3K6774Y0n9Nfrzq08X/Q7vZoLvOp/pyuP
+# AmpCode - yunjie@hey.com
+xdanger@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICt0UNRXRsobKgPvZ91TCXV1YLv7acj6pGXz3PUxl/5X
+# AmpCode - kros@xd.com
+xdanger@gmail.com namespaces="git" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICZ4tDCae7mrjGqbGPFLEndNvhGZC9li0cFYKK8VN9O4
