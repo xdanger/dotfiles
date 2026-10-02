@@ -339,9 +339,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/wrangler/SKILL.md",
-      "skillFolderHash": "2cef5beb18fd736ee300a08fc87fca16522f14d6",
+      "skillFolderHash": "2dab1373cf45bcde6db84354711b7406127a239a",
       "installedAt": "2026-08-19T18:08:38.308Z",
-      "updatedAt": "2026-09-23T03:30:03.238Z"
+      "updatedAt": "2026-10-02T15:44:04.264Z"
     },
     "lark-meeting": {
       "source": "open.feishu.cn",
@@ -353,23 +353,14 @@
       "installedAt": "2026-09-02T06:04:27.406Z",
       "updatedAt": "2026-09-30T23:22:35.365Z"
     },
-    "gui-automation": {
-      "source": "trycua/cua",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/trycua/cua.git",
-      "skillPath": "skills/gui-automation/SKILL.md",
-      "skillFolderHash": "671ab74beb7d6c03378338820a52d09adee382a8",
-      "installedAt": "2026-09-29T20:13:19.259Z",
-      "updatedAt": "2026-09-29T20:13:19.259Z"
-    },
     "agents": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "agents/SKILL.md",
-      "skillFolderHash": "3efab42ffd180468cfcc10a81ba23598a6071ab3",
+      "skillFolderHash": "224edeb8785f4222e884a0f3897fdec6052f82a1",
       "installedAt": "2026-09-30T01:04:06.997Z",
-      "updatedAt": "2026-09-30T01:04:06.997Z"
+      "updatedAt": "2026-10-02T15:44:13.378Z"
     },
     "dubbing": {
       "source": "elevenlabs/skills",
@@ -457,9 +448,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": ".agents/skills/update-skills-from-changelog/SKILL.md",
-      "skillFolderHash": "d7a4dfe61410f4f7ff6205f69ec564e87e4b0e14",
+      "skillFolderHash": "12a4f255b95906143921ad9e6aa084c07aa6dc58",
       "installedAt": "2026-09-30T01:04:07.004Z",
-      "updatedAt": "2026-09-30T01:04:07.004Z"
+      "updatedAt": "2026-10-02T15:44:14.445Z"
     },
     "cloudflare": {
       "source": "cloudflare/skills",
