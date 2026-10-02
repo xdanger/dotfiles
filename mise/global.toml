@@ -41,6 +41,8 @@ kubectl = "latest"
 neovim = "latest"
 node = "lts"
 "npm:mcporter" = "latest"
+oh-my-pi = { version = "latest", rename_exe = "omp" }
+pi = "latest"
 "pipx:csvkit" = { version = "latest", depends = ["python", "uv"] }
 "pipx:trash-cli" = { version = "latest", depends = ["python", "uv"] }
 pnpm = "latest"
