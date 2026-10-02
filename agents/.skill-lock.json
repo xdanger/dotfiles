@@ -19,15 +19,6 @@
       "installedAt": "2026-02-16T05:02:46.175Z",
       "updatedAt": "2026-03-13T12:55:31.332Z"
     },
-    "mcporter": {
-      "source": "steipete/clawdis",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/steipete/clawdis.git",
-      "skillPath": "skills/mcporter/SKILL.md",
-      "skillFolderHash": "f8b951fadb4db6fd6f7b2cc287ca69e155ea4be4",
-      "installedAt": "2026-02-28T19:07:45.593Z",
-      "updatedAt": "2026-05-18T07:00:54.549Z"
-    },
     "lark-base": {
       "source": "open.feishu.cn",
       "sourceType": "well-known",
@@ -324,42 +315,6 @@
       "wellKnownDigest": "sha256:7758573be8928d64e77588d119c634c4f774683cf61287f93c5d753a308aef4c",
       "installedAt": "2026-06-25T16:46:17.635Z",
       "updatedAt": "2026-09-30T23:22:35.366Z"
-    },
-    "steel-browser": {
-      "source": "steel-dev/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/steel-dev/skills.git",
-      "skillPath": "steel-browser/SKILL.md",
-      "skillFolderHash": "65826ed7c7ab03c9701c9492ccdf53625cf3b898",
-      "installedAt": "2026-07-24T13:48:04.152Z",
-      "updatedAt": "2026-07-24T13:48:04.152Z"
-    },
-    "steel-developer": {
-      "source": "steel-dev/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/steel-dev/skills.git",
-      "skillPath": "steel-developer/SKILL.md",
-      "skillFolderHash": "feccd0d0273a2bcc5c8993f5bc819163d75dddbb",
-      "installedAt": "2026-07-24T13:48:04.153Z",
-      "updatedAt": "2026-07-24T13:48:04.153Z"
-    },
-    "steel-reliability": {
-      "source": "steel-dev/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/steel-dev/skills.git",
-      "skillPath": "steel-reliability/SKILL.md",
-      "skillFolderHash": "7defbdefa13a857a6f6fa305273d389fc141d143",
-      "installedAt": "2026-07-24T13:48:36.037Z",
-      "updatedAt": "2026-07-24T13:48:36.037Z"
-    },
-    "steel-session-debugging": {
-      "source": "steel-dev/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/steel-dev/skills.git",
-      "skillPath": "steel-session-debugging/SKILL.md",
-      "skillFolderHash": "f6b3cb414a786ba72cf9f2ca1eb5d049a3233964",
-      "installedAt": "2026-07-24T13:48:36.039Z",
-      "updatedAt": "2026-07-24T13:48:36.039Z"
     },
     "orchestrate-agents": {
       "source": "krosdai/skills",
