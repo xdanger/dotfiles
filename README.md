@@ -36,7 +36,7 @@ cd ~/.dotfiles
 ### 平台说明
 
 - macOS：通过 Homebrew 安装依赖
-- Linux：Arch 系发行版通过 `pacman -Syu` 安装基础工具，Debian 系通过 `apt` 安装；其他发行版跳过系统包安装
+- Linux：Arch 系发行版通过 `pacman -Syu` 安装基础工具（Omarchy 上系统升级交给 `omarchy update`，这里只用 `pacman -S` 补装缺失的包），Debian 系通过 `apt` 安装；其他发行版跳过系统包安装
 - WSL / Codespaces：安装脚本会自动切换到对应的 Git 配置
 - 容器环境：安装脚本会检测容器并跳过宿主机依赖安装
 

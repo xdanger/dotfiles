@@ -61,8 +61,26 @@ if [[ $(uname) == "Darwin" ]]; then
   brew update && brew upgrade
   brew install --quiet aria2 entr fortune ncdu netcat prettyping socat font-geist-mono-nerd-font font-im-writing-nerd-font font-mona-sans font-jetbrains-maple-mono-nf font-maple-mono font-maple-mono-nf font-maple-mono-nf-cn
 elif command -v pacman >/dev/null 2>&1; then
-  # Arch-based Linux (e.g. Omarchy); partial upgrades are unsupported, so always -Syu
-  sudo pacman -Syu --needed --noconfirm aria2 entr fortune-mod ncdu openbsd-netcat prettyping socat
+  # Arch-based Linux
+  pacman_pkgs=(aria2 entr fortune-mod ncdu openbsd-netcat prettyping socat)
+  if command -v omarchy-update >/dev/null 2>&1; then
+    # Omarchy's pacman hook aborts direct upgrades; system upgrades belong to
+    # `omarchy update`, so only install what is missing, without -Sy, to avoid
+    # a partial upgrade
+    missing_status=0
+    missing_output=$(pacman -T "${pacman_pkgs[@]}") || missing_status=$?
+    # `pacman -T` exits 127 when some packages are missing; any other failure
+    # means the query itself failed
+    if ((missing_status == 127)); then
+      mapfile -t missing_pkgs <<<"$missing_output"
+      sudo pacman -S --needed --noconfirm "${missing_pkgs[@]}"
+    elif ((missing_status != 0)); then
+      exit "$missing_status"
+    fi
+  else
+    # partial upgrades are unsupported, so always -Syu
+    sudo pacman -Syu --needed --noconfirm "${pacman_pkgs[@]}"
+  fi
 elif command -v apt >/dev/null 2>&1; then
   # Debian-based Linux
   sudo apt update && sudo apt upgrade -y
