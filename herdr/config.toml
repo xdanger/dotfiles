@@ -1,0 +1,85 @@
+onboarding = false
+
+[theme]
+# tmux ran on the terminal's own palette (bg=default, fg=default, ANSI blue accents)
+name = "terminal"
+
+[theme.custom]
+# The active tab is drawn as panel_bg text on an accent background, so panel_bg
+# has to be dark for it to read - same colors as status-left's "#[fg=black,bg=blue]"
+panel_bg = "black"
+
+[terminal]
+# Matches -c "#{pane_current_path}" on every split, window, and session
+new_cwd = "follow"
+
+[keys]
+prefix = "ctrl+space"
+
+# config and help
+reload_config = "prefix+,"
+help = "prefix+?"
+detach = "prefix+q"
+
+# copy mode
+copy_mode = "prefix+["
+
+previous_workspace = ["alt+up", "ctrl+alt+k"]
+next_workspace = ["alt+down", "ctrl+alt+j"]
+previous_tab = ["alt+left", "ctrl+alt+h"]
+next_tab = ["alt+right", "ctrl+alt+l"]
+new_workspace = ["prefix+shift+n", "ctrl+alt+n"]
+
+move_tab_previous = "alt+shift+left"
+move_tab_next = "alt+shift+right"
+
+focus_pane_left = ["prefix+h", "ctrl+shift+h"]
+focus_pane_down = ["prefix+j", "ctrl+shift+j"]
+focus_pane_up = ["prefix+k", "ctrl+shift+k"]
+focus_pane_right = ["prefix+l", "ctrl+shift+l"]
+new_tab = ["prefix+c", "ctrl+alt+t"]
+switch_tab = ["prefix+1..9", "alt+1..9"]
+split_vertical = ["prefix+d", "alt+shift+d"]
+split_horizontal = ["prefix+e", "alt+shift+e"]
+edit_scrollback = "prefix+shift+e"
+zoom = ["prefix+z", "ctrl+shift+z"]
+toggle_sidebar = ["prefix+b", "ctrl+b"]
+
+[[keys.command]]
+key = "alt+shift+up"
+type = "shell"
+command = "~/.local/bin/herdr-workspace-move up"
+description = "move workspace up"
+
+[[keys.command]]
+key = "alt+shift+down"
+type = "shell"
+command = "~/.local/bin/herdr-workspace-move down"
+description = "move workspace down"
+
+[ui]
+accent = "blue"
+
+# tmux drew single-line dividers between adjacent panes and no outer frame
+pane_gaps = false
+pane_outer_borders = false
+
+# tmux had no scrollbar column beside its panes
+pane_scrollbars = false
+
+# kill-window and kill-session never asked
+confirm_close = false
+
+# automatic-rename gave windows a name without prompting
+prompt_new_tab_name = false
+
+# set -g mouse on
+mouse_capture = true
+
+# status-right had the zoom flag followed by #h
+tab_bar_right = [{ type = "zoom" }, { type = "hostname" }]
+
+# set -g set-titles on / set -g set-titles-string '#h:#W', where tmux's #W was
+# the basename of the pane cwd. This is what Hyprland shows in the group bar,
+# and it resolves on the server so remote sessions name the remote host.
+window_title = "{hostname}: {workspace}"

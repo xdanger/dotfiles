@@ -30,6 +30,7 @@
     ~/.config/systemd/user/codex-trash-watchdog.service: "systemd/user/codex-trash-watchdog.service"
     ~/.config/systemd/user/codex-trash-watchdog.timer: "systemd/user/codex-trash-watchdog.timer"
     ~/.config/zed/AGENTS.md: "agents/AGENTS.md"
+    ~/.config/herdr/config.toml: "herdr/config.toml"
     ~/.gemrc: "ruby/gemrc"
     ~/.gitconfig: "git/gitconfig"
     ~/.config/git/verified_signers: "git/verified_signers"
