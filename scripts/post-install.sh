@@ -67,9 +67,15 @@ elif command -v pacman >/dev/null 2>&1; then
     # Omarchy's pacman hook aborts direct upgrades; system upgrades belong to
     # `omarchy update`, so only install what is missing, without -Sy, to avoid
     # a partial upgrade
-    mapfile -t missing_pkgs < <(pacman -T "${pacman_pkgs[@]}" || true)
-    if ((${#missing_pkgs[@]})); then
+    missing_status=0
+    missing_output=$(pacman -T "${pacman_pkgs[@]}") || missing_status=$?
+    # `pacman -T` exits 127 when some packages are missing; any other failure
+    # means the query itself failed
+    if ((missing_status == 127)); then
+      mapfile -t missing_pkgs <<<"$missing_output"
       sudo pacman -S --needed --noconfirm "${missing_pkgs[@]}"
+    elif ((missing_status != 0)); then
+      exit "$missing_status"
     fi
   else
     # partial upgrades are unsupported, so always -Syu
