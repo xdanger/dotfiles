@@ -1,0 +1,7 @@
+# Linux: Ghostty uses 96 DPI as the 1x baseline, so 1pt = 4/3 logical px.
+# 13pt on macOS × 72/96 = 9.75; rounded up to 10 by preference.
+font-size = 10
+
+# window-padding is also in points: 8pt on macOS × 72/96 = 6.
+window-padding-x = 6
+window-padding-y = 6

@@ -5,6 +5,7 @@
 /agents/skills/synced
 /agents/skills/taptap-data-analysis
 /ghostty/config.*.bak
+/ghostty/platform.ghostty
 /vim/viminfo
 /vim/.netrwhist
 /zsh/.zcompdump*

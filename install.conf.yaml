@@ -55,6 +55,9 @@
     ~/.zlogout: "zsh/.zlogout"
 
 - shell:
+    - command: 'ln -sfn "platform/$(uname -s | tr "[:upper:]" "[:lower:]").ghostty" ghostty/platform.ghostty'
+      stdout: true
+      stderr: true
     - command: 'if [ "$(uname -s)" = Darwin ]; then /bin/zsh -f "$PWD/bin/install-mise-launchd-path.zsh"; fi'
       stdout: true
       stderr: true

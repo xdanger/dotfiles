@@ -31,8 +31,7 @@ background-opacity = 0.97
 background-blur = true
 # cursor-style = bar
 font-family = iMWritingMono Nerd Font
-#font-family = Geist Mono
-font-size = 13
+#font-family = JetBrains Mono
 font-thicken = true
 font-thicken-strength = 128
 font-feature = +liga
@@ -48,6 +47,10 @@ window-padding-y = 8
 window-padding-balance = true
 window-title-font-family = Geist
 window-decoration = true
+
+# 平台相关设置（如 font-size）：由 ./install 链接到 platform/<os>.ghostty
+# 注意：config-file 在本文件全部解析完之后才加载，会覆盖上面的同名项
+config-file = ?platform.ghostty
 
 #
 # # Spacing around the equals sign does not matter.
