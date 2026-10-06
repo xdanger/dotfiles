@@ -1,18 +1,17 @@
 [Unit]
 Description=Amp --no-tui runner
 Documentation=https://ampcode.com/manual
-ConditionFileIsExecutable=/home/xdanger/.dotfiles/bin/amp-runner
-ConditionFileIsExecutable=/home/xdanger/.local/share/mise/shims/amp
+ConditionFileIsExecutable=%h/.dotfiles/bin/amp-runner
+ConditionFileIsExecutable=%h/.local/share/mise/shims/amp
 # Retry forever; RestartSteps backs off so a persistent failure doesn't spin
 StartLimitIntervalSec=0
 
 [Service]
 Type=simple
-Environment=HOME=/home/xdanger
 # Let threads served by this runner drive herdr panes over its socket
 Environment=HERDR_ENV=1
-Environment=HERDR_SOCKET_PATH=/home/xdanger/.config/herdr/herdr.sock
-ExecStart=/home/xdanger/.dotfiles/bin/amp-runner
+Environment=HERDR_SOCKET_PATH=%h/.config/herdr/herdr.sock
+ExecStart=%h/.dotfiles/bin/amp-runner
 Restart=on-failure
 # amp-runner exits 78 when none of its directories exist on this machine
 RestartPreventExitStatus=78
