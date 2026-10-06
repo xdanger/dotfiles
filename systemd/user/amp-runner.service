@@ -1,6 +1,7 @@
 [Unit]
-Description=Amp --no-tui runner (lucca)
+Description=Amp --no-tui runner
 Documentation=https://ampcode.com/manual
+ConditionFileIsExecutable=/home/xdanger/.dotfiles/bin/amp-runner
 ConditionFileIsExecutable=/home/xdanger/.local/share/mise/shims/amp
 # Retry forever; RestartSteps backs off so a persistent failure doesn't spin
 StartLimitIntervalSec=0
@@ -12,7 +13,7 @@ Environment=HOME=/home/xdanger
 # Let threads served by this runner drive herdr panes over its socket
 Environment=HERDR_ENV=1
 Environment=HERDR_SOCKET_PATH=/home/xdanger/.config/herdr/herdr.sock
-ExecStart=/home/xdanger/.local/share/mise/shims/amp --no-tui --runner-id lucca --dir /home/xdanger/.dotfiles --dir /home/xdanger/.dotlocal --dir /home/xdanger/Dropbox/@xdanger --dir /home/xdanger/Dropbox/@veronica --dir /home/xdanger/Dropbox/@taptap --discover-dirs --remote-control-terminal --amp-env
+ExecStart=/home/xdanger/.dotfiles/bin/amp-runner
 Restart=on-failure
 RestartSec=5s
 RestartSteps=6

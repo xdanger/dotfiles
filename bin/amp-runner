@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+# Start the amp --no-tui runner, serving only the candidate directories that
+# exist on this machine. Bash 3.2 compatible so it also runs on macOS.
+set -euo pipefail
+
+candidates=(
+  "$HOME/repos"
+  "$HOME/.dotfiles"
+  "$HOME/.dotlocal"
+  "$HOME/.hermes"
+  "$HOME/.llm"
+  "$HOME/Dropbox/@xdanger"
+  "$HOME/Dropbox/@veronica"
+  "$HOME/Dropbox/@taptap"
+  "$HOME/dropbox/@xdanger"
+  "$HOME/dropbox/@veronica"
+  "$HOME/dropbox/@taptap"
+)
+
+dirs=()
+seen=$'\n'
+for dir in "${candidates[@]}"; do
+  if [[ ! -d $dir ]]; then
+    echo "amp-runner: skipping missing directory $dir" >&2
+    continue
+  fi
+  # External pwd uses getcwd(), which resolves symlinks and, on
+  # case-insensitive filesystems, the on-disk case (Dropbox vs dropbox)
+  real=$(cd "$dir" && env pwd -P)
+  if [[ $seen == *$'\n'"$real"$'\n'* ]]; then
+    echo "amp-runner: skipping duplicate directory $dir" >&2
+    continue
+  fi
+  seen+="$real"$'\n'
+  dirs+=("$dir")
+done
+
+if ((${#dirs[@]} == 0)); then
+  echo "amp-runner: none of the candidate directories exist" >&2
+  exit 78 # EX_CONFIG; the systemd unit won't restart on it
+fi
+
+# amp also serves its working directory, so start in the first one present
+cd "${dirs[0]}"
+dir_args=()
+for dir in "${dirs[@]:1}"; do
+  dir_args+=(--dir "$dir")
+done
+
+runner_id=${AMP_RUNNER_ID:-$(uname -n)}
+exec "${MISE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/mise}/shims/amp" \
+  --no-tui --runner-id "${runner_id%%.*}" \
+  ${dir_args[@]+"${dir_args[@]}"} \
+  --discover-dirs --remote-control-terminal --amp-env "$@"
