@@ -8,13 +8,14 @@ StartLimitIntervalSec=0
 
 [Service]
 Type=simple
-WorkingDirectory=/home/xdanger/repos
 Environment=HOME=/home/xdanger
 # Let threads served by this runner drive herdr panes over its socket
 Environment=HERDR_ENV=1
 Environment=HERDR_SOCKET_PATH=/home/xdanger/.config/herdr/herdr.sock
 ExecStart=/home/xdanger/.dotfiles/bin/amp-runner
 Restart=on-failure
+# amp-runner exits 78 when none of its directories exist on this machine
+RestartPreventExitStatus=78
 RestartSec=5s
 RestartSteps=6
 RestartMaxDelaySec=5min

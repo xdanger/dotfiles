@@ -5,6 +5,7 @@ import unittest
 
 
 AMP_RUNNER = Path(__file__).resolve().parents[2] / "bin" / "amp-runner"
+UNIT = Path(__file__).resolve().parents[2] / "systemd" / "user" / "amp-runner.service"
 
 
 class AmpRunnerTest(unittest.TestCase):
@@ -84,6 +85,14 @@ class AmpRunnerTest(unittest.TestCase):
         result, calls = self.run_runner([])
         self.assertEqual(result.returncode, 78)
         self.assertEqual(calls, [])
+
+
+class AmpRunnerUnitTest(unittest.TestCase):
+    def test_unit_leaves_start_directory_and_empty_exit_to_wrapper(self):
+        lines = UNIT.read_text().splitlines()
+        # systemd would fail before the wrapper runs if this directory is missing
+        self.assertFalse([l for l in lines if l.startswith("WorkingDirectory=")])
+        self.assertIn("RestartPreventExitStatus=78", lines)
 
 
 if __name__ == "__main__":
