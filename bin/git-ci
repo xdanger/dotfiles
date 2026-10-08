@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Commit staged changes using Cerebras. Requires Python 3 and CEREBRAS_API_KEY."""
+"""Commit staged changes using an LLM. Requires Python 3 and ANTHROPIC_API_KEY or OPENAI_API_KEY."""
 
 import argparse
 import json
@@ -24,65 +24,135 @@ with no trailing period. Use backticks for code references. Explain why the chan
 matters when supported by the diff, and keep the body concise.
 """
 
+# Each provider reads its SDK-standard key and base URL variables, so OPENAI_BASE_URL
+# can point the openai provider at any Chat Completions-compatible endpoint.
+PROVIDERS = {
+    "anthropic": {
+        "name": "Anthropic",
+        "key_env": "ANTHROPIC_API_KEY",
+        "base_env": "ANTHROPIC_BASE_URL",
+        "base_url": "https://api.anthropic.com",
+        "path": "/v1/messages",
+        "model": "claude-haiku-5-5",
+    },
+    "openai": {
+        "name": "OpenAI",
+        "key_env": "OPENAI_API_KEY",
+        "base_env": "OPENAI_BASE_URL",
+        "base_url": "https://api.openai.com/v1",
+        "path": "/chat/completions",
+        "model": "gpt-6-luna",
+    },
+}
+DEFAULT_EFFORT = "medium"
+
 
 def git(*args):
     return subprocess.check_output(["git", *args]).decode("utf-8", errors="replace")
 
 
-def generate_message(diff, api_key):
+def anthropic_request(diff, model, effort, api_key):
+    # Haiku 5.5 thinks by default and thinking tokens count toward max_tokens.
+    body = {
+        "model": model,
+        "max_tokens": 16000,
+        "output_config": {"effort": effort},
+        "system": PROMPT,
+        "messages": [{"role": "user", "content": diff}],
+    }
+    return body, {"x-api-key": api_key, "anthropic-version": "2023-06-01"}
+
+
+def anthropic_message(result):
+    if result["stop_reason"] != "end_turn":
+        return None
+    # Skip thinking blocks that precede the text.
+    texts = [block["text"] for block in result["content"] if block["type"] == "text"]
+    return "".join(texts) if texts else None
+
+
+def openai_request(diff, model, effort, api_key):
+    body = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": PROMPT},
+            {"role": "user", "content": diff},
+        ],
+        "max_completion_tokens": 16000,
+        "reasoning_effort": effort,
+    }
+    return body, {"Authorization": f"Bearer {api_key}"}
+
+
+def openai_message(result):
+    choice = result["choices"][0]
+    return choice["message"]["content"] if choice["finish_reason"] == "stop" else None
+
+
+ADAPTERS = {
+    "anthropic": (anthropic_request, anthropic_message),
+    "openai": (openai_request, openai_message),
+}
+
+
+def generate_message(diff, provider, api_key):
+    config = PROVIDERS[provider]
+    name = config["name"]
+    build, parse = ADAPTERS[provider]
+    model = os.environ.get("GIT_CI_MODEL") or config["model"]
+    effort = os.environ.get("GIT_CI_EFFORT") or DEFAULT_EFFORT
+    body, headers = build(diff, model, effort, api_key)
+    base_url = (os.environ.get(config["base_env"]) or config["base_url"]).rstrip("/")
     request = urllib.request.Request(
-        "https://api.cerebras.ai/v1/chat/completions",
-        data=json.dumps({
-            "model": os.environ.get("CEREBRAS_MODEL", "gpt-oss-120b"),
-            "messages": [
-                {"role": "system", "content": PROMPT},
-                {"role": "user", "content": diff},
-            ],
-            "max_completion_tokens": 4096,
-        }).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-            "User-Agent": "git-ci/1.0",
-        },
+        base_url + config["path"],
+        data=json.dumps(body).encode("utf-8"),
+        headers={**headers, "Content-Type": "application/json", "User-Agent": "git-ci/1.0"},
         method="POST",
     )
     try:
         with urllib.request.urlopen(request, timeout=60) as response:
             result = json.load(response)
     except urllib.error.HTTPError as error:
-        raise ValueError(f"Cerebras API returned HTTP {error.code}; no commit created.") from error
+        raise ValueError(f"{name} API returned HTTP {error.code}; no commit created.") from error
     try:
-        choice = result["choices"][0]
-        message = choice["message"]["content"]
-        if choice["finish_reason"] != "stop" or not isinstance(message, str):
-            raise ValueError("Cerebras returned an incomplete commit message.")
-        message = message.strip()
-        if not message or "\x00" in message or message.startswith("```"):
-            raise ValueError("Cerebras returned an empty or invalid commit message.")
-        return message
+        message = parse(result)
     except (KeyError, IndexError, TypeError) as error:
-        raise ValueError("Cerebras returned an unexpected response.") from error
+        raise ValueError(f"{name} returned an unexpected response.") from error
+    if not isinstance(message, str):
+        raise ValueError(f"{name} returned an incomplete commit message.")
+    message = message.strip()
+    if not message or "\x00" in message or message.startswith("```"):
+        raise ValueError(f"{name} returned an empty or invalid commit message.")
+    return message
 
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Send the staged diff to Cerebras and commit its generated message. "
+        description="Send the staged diff to an LLM and commit its generated message. "
         "Never stages files. Honors Git hooks and signing configuration. "
-        "Set CEREBRAS_MODEL to override gpt-oss-120b."
+        "Set GIT_CI_PROVIDER to choose the default provider, GIT_CI_MODEL to override "
+        "its model (anthropic: claude-haiku-5-5, openai: gpt-6-luna), and GIT_CI_EFFORT "
+        "to override the medium reasoning effort."
     )
     parser.add_argument("--dry-run", action="store_true", help="generate a message without committing")
+    parser.add_argument(
+        "--provider", choices=PROVIDERS, default=os.environ.get("GIT_CI_PROVIDER", "anthropic"),
+        help="API to call (default: $GIT_CI_PROVIDER or anthropic)",
+    )
     args = parser.parse_args()
-    api_key = os.environ.get("CEREBRAS_API_KEY")
+    if args.provider not in PROVIDERS:
+        raise ValueError(f"Unknown provider {args.provider!r}; use one of: {', '.join(PROVIDERS)}.")
+    key_env = PROVIDERS[args.provider]["key_env"]
+    api_key = os.environ.get(key_env)
     if not api_key:
-        raise ValueError("CEREBRAS_API_KEY is not set.")
+        raise ValueError(f"{key_env} is not set.")
     tree = git("write-tree")
     diff = git("diff", "--cached", "--no-ext-diff", "--no-textconv", "--no-color", "--submodule=short")
     if not diff:
         raise ValueError("No staged changes. Stage the intended files with git add first.")
     if len(diff.encode("utf-8")) > 120_000:
         raise ValueError("Staged diff exceeds 120 KB; split the commit before trying again.")
-    message = generate_message(diff, api_key)
+    message = generate_message(diff, args.provider, api_key)
     if git("write-tree") != tree:
         raise ValueError("Staged changes changed during generation; rerun git ci.")
     if args.dry_run:
