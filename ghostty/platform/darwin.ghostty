@@ -1,2 +1,7 @@
 # macOS: Ghostty uses 72 DPI as the 1x baseline, so 1pt = 1 logical px.
 font-size = 14
+
+# Ghostty's macOS-only defaults map alt+←/→ to esc:b/esc:f (word jump),
+# which hides alt+left/right from herdr (previous_tab/next_tab).
+keybind = alt+arrow_left=unbind
+keybind = alt+arrow_right=unbind
