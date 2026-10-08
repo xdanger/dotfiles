@@ -128,6 +128,13 @@ class GitCiTest(unittest.TestCase):
             with patch("sys.argv", ["git-ci", "--dry-run"]), contextlib.redirect_stdout(io.StringIO()):
                 self.assertEqual(ci.main(), 0)
         self.assertEqual(api.call_args.args[0].full_url, "https://api.cerebras.ai/v1/chat/completions")
+        with patch.object(ci.urllib.request, "urlopen", return_value=self.response("anthropic")) as api:
+            argv = ["git-ci", "--dry-run", "--provider", "anthropic"]
+            with patch("sys.argv", argv), contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(ci.main(), 0)
+        request = api.call_args.args[0]
+        self.assertEqual(request.full_url, "https://api.anthropic.com/v1/messages")
+        self.assertEqual(request.get_header("X-api-key"), "anthropic-key")
         os.environ["GIT_CI_PROVIDER"] = "bogus"
         with patch("sys.argv", ["git-ci"]), self.assertRaisesRegex(ValueError, "Unknown provider"):
             ci.main()
