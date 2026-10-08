@@ -56,10 +56,11 @@ def anthropic_request(diff, model, effort, api_key):
     body = {
         "model": model,
         "max_tokens": 16000,
-        "output_config": {"effort": effort},
         "system": PROMPT,
         "messages": [{"role": "user", "content": diff}],
     }
+    if effort:
+        body["output_config"] = {"effort": effort}
     return body, {"x-api-key": api_key, "anthropic-version": "2023-06-01"}
 
 
@@ -79,8 +80,9 @@ def openai_request(diff, model, effort, api_key):
             {"role": "user", "content": diff},
         ],
         "max_completion_tokens": 16000,
-        "reasoning_effort": effort,
     }
+    if effort:
+        body["reasoning_effort"] = effort
     return body, {"Authorization": f"Bearer {api_key}"}
 
 
@@ -100,7 +102,9 @@ def generate_message(diff, provider, api_key):
     name = config["name"]
     build, parse = ADAPTERS[provider]
     model = os.environ.get("GIT_CI_MODEL") or config["model"]
-    effort = os.environ.get("GIT_CI_EFFORT") or DEFAULT_EFFORT
+    # Overridden models may not support effort, so only send it when asked to.
+    default_effort = DEFAULT_EFFORT if model == config["model"] else None
+    effort = os.environ.get("GIT_CI_EFFORT") or default_effort
     body, headers = build(diff, model, effort, api_key)
     base_url = (os.environ.get(config["base_env"]) or config["base_url"]).rstrip("/")
     request = urllib.request.Request(
@@ -132,7 +136,8 @@ def main():
         "Never stages files. Honors Git hooks and signing configuration. "
         "Set GIT_CI_PROVIDER to choose the default provider, GIT_CI_MODEL to override "
         "its model (anthropic: claude-haiku-5-5, openai: gpt-6-luna), and GIT_CI_EFFORT "
-        "to override the medium reasoning effort."
+        "to override the medium reasoning effort (sent with an overridden model only "
+        "when GIT_CI_EFFORT is set)."
     )
     parser.add_argument("--dry-run", action="store_true", help="generate a message without committing")
     parser.add_argument(

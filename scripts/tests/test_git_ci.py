@@ -105,6 +105,22 @@ class GitCiTest(unittest.TestCase):
                 self.assertEqual(payload["model"], "gpt-6-luna")
                 self.assertEqual(payload["reasoning_effort"], expected)
 
+    def test_overridden_model_omits_effort_unless_set(self):
+        for provider, field in [("anthropic", "output_config"), ("openai", "reasoning_effort")]:
+            for effort in [None, "low"]:
+                with self.subTest(provider=provider, effort=effort):
+                    if effort:
+                        os.environ["GIT_CI_EFFORT"] = effort
+                    else:
+                        os.environ.pop("GIT_CI_EFFORT", None)
+                    with patch.object(ci.urllib.request, "urlopen", return_value=self.response(provider)) as api:
+                        ci.generate_message("diff", provider, "test-key")
+                    payload = json.loads(api.call_args.args[0].data)
+                    if effort:
+                        self.assertIn(effort, json.dumps(payload[field]))
+                    else:
+                        self.assertNotIn(field, payload)
+
     def test_provider_selection_and_base_url_override(self):
         os.environ["GIT_CI_PROVIDER"] = "openai"
         os.environ["OPENAI_BASE_URL"] = "https://api.cerebras.ai/v1/"
