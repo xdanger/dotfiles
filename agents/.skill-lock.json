@@ -316,15 +316,6 @@
       "installedAt": "2026-06-25T16:46:17.635Z",
       "updatedAt": "2026-09-30T23:22:35.366Z"
     },
-    "orchestrate-agents": {
-      "source": "krosdai/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/krosdai/skills.git",
-      "skillPath": "skills/orchestrate-agents/SKILL.md",
-      "skillFolderHash": "9ae7268888de20e86c269bc63e35a2f06a0720e9",
-      "installedAt": "2026-08-04T00:27:55.795Z",
-      "updatedAt": "2026-09-13T05:37:28.021Z"
-    },
     "herdr": {
       "source": "herdrdev/herdr",
       "sourceType": "github",
