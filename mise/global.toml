@@ -48,6 +48,7 @@ pi = "latest"
 playwright = "latest"
 pnpm = "latest"
 python = "latest"
+rclone = "latest"
 ruby = "latest"
 rust = "latest"
 terraform = "latest"
@@ -69,3 +70,4 @@ compile = false
 
 [settings.upgrade]
 prune_after = "72h"
+auto_prune = false
