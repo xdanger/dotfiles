@@ -29,6 +29,7 @@ class GitCiTest(unittest.TestCase):
         self.key_file = Path(config.name, "git-ci", "anthropic-api-key")
         self.key_file.parent.mkdir()
         self.key_file.write_text("anthropic-key\n")
+        self.key_file.chmod(0o600)
         cwd = os.getcwd()
         os.chdir(self.directory.name)
         self.addCleanup(os.chdir, cwd)
@@ -155,6 +156,10 @@ class GitCiTest(unittest.TestCase):
                     self.key_file.write_text(content)
                 with patch("sys.argv", ["git-ci"]), self.assertRaisesRegex(ValueError, str(self.key_file)):
                     ci.main()
+        self.key_file.write_text("anthropic-key\n")
+        self.key_file.chmod(0o640)
+        with patch("sys.argv", ["git-ci"]), self.assertRaisesRegex(ValueError, "chmod 600"):
+            ci.main()
         os.environ.pop("OPENAI_API_KEY")
         argv = ["git-ci", "--provider", "openai"]
         with patch("sys.argv", argv), self.assertRaisesRegex(ValueError, "OPENAI_API_KEY"):
