@@ -24,11 +24,17 @@ class GitCiTest(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)
+        config = tempfile.TemporaryDirectory()
+        self.addCleanup(config.cleanup)
+        self.key_file = Path(config.name, "git-ci", "anthropic-api-key")
+        self.key_file.parent.mkdir()
+        self.key_file.write_text("anthropic-key\n")
         cwd = os.getcwd()
         os.chdir(self.directory.name)
         self.addCleanup(os.chdir, cwd)
         self.env = patch.dict(os.environ, {
-            "ANTHROPIC_API_KEY": "anthropic-key",
+            "XDG_CONFIG_HOME": config.name,
+            "ANTHROPIC_API_KEY": "env-key",
             "OPENAI_API_KEY": "openai-key",
             "GIT_CI_MODEL": "test-model",
             "GIT_CONFIG_GLOBAL": os.devnull,
@@ -139,9 +145,19 @@ class GitCiTest(unittest.TestCase):
         with patch("sys.argv", ["git-ci"]), self.assertRaisesRegex(ValueError, "Unknown provider"):
             ci.main()
 
-    def test_missing_key_names_provider_variable(self):
-        os.environ.pop("ANTHROPIC_API_KEY")
-        with patch("sys.argv", ["git-ci"]), self.assertRaisesRegex(ValueError, "ANTHROPIC_API_KEY"):
+    def test_missing_key_names_key_source(self):
+        # ANTHROPIC_API_KEY stays set to prove the environment is never consulted.
+        for content in [None, "\n"]:
+            with self.subTest(content=content):
+                if content is None:
+                    self.key_file.unlink()
+                else:
+                    self.key_file.write_text(content)
+                with patch("sys.argv", ["git-ci"]), self.assertRaisesRegex(ValueError, str(self.key_file)):
+                    ci.main()
+        os.environ.pop("OPENAI_API_KEY")
+        argv = ["git-ci", "--provider", "openai"]
+        with patch("sys.argv", argv), self.assertRaisesRegex(ValueError, "OPENAI_API_KEY"):
             ci.main()
 
     def test_commit_passes_message_literally_and_propagates_failure(self):

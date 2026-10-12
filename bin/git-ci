@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Commit staged changes using an LLM. Requires Python 3 and ANTHROPIC_API_KEY or OPENAI_API_KEY."""
+"""Commit staged changes using an LLM. Requires Python 3 and an Anthropic key file or OPENAI_API_KEY."""
 
 import argparse
 import json
@@ -24,12 +24,14 @@ with no trailing period. Use backticks for code references. Explain why the chan
 matters when supported by the diff, and keep the body concise.
 """
 
-# Each provider reads its SDK-standard key and base URL variables, so OPENAI_BASE_URL
-# can point the openai provider at any Chat Completions-compatible endpoint.
+# Each provider reads its SDK-standard base URL variable, so OPENAI_BASE_URL can point
+# the openai provider at any Chat Completions-compatible endpoint. The Anthropic key
+# lives in a config file rather than ANTHROPIC_API_KEY, which other tools pick up
+# from the environment.
 PROVIDERS = {
     "anthropic": {
         "name": "Anthropic",
-        "key_env": "ANTHROPIC_API_KEY",
+        "key_file": "anthropic-api-key",
         "base_env": "ANTHROPIC_BASE_URL",
         "base_url": "https://api.anthropic.com",
         "path": "/v1/messages",
@@ -49,6 +51,25 @@ DEFAULT_EFFORT = "medium"
 
 def git(*args):
     return subprocess.check_output(["git", *args]).decode("utf-8", errors="replace")
+
+
+def read_api_key(provider):
+    config = PROVIDERS[provider]
+    if "key_env" in config:
+        api_key = os.environ.get(config["key_env"])
+        if not api_key:
+            raise ValueError(f"{config['key_env']} is not set.")
+        return api_key
+    config_home = os.environ.get("XDG_CONFIG_HOME") or os.path.expanduser("~/.config")
+    path = os.path.join(config_home, "git-ci", config["key_file"])
+    try:
+        with open(path, encoding="utf-8") as file:
+            api_key = file.read().strip()
+    except FileNotFoundError:
+        api_key = None
+    if not api_key:
+        raise ValueError(f"{config['name']} API key not found; write it to {path}.")
+    return api_key
 
 
 def anthropic_request(diff, model, effort, api_key):
@@ -137,7 +158,9 @@ def main():
         "Set GIT_CI_PROVIDER to choose the default provider, GIT_CI_MODEL to override "
         "its model (anthropic: claude-haiku-5-5, openai: gpt-6-luna), and GIT_CI_EFFORT "
         "to override the medium reasoning effort (sent with an overridden model only "
-        "when GIT_CI_EFFORT is set)."
+        "when GIT_CI_EFFORT is set). The anthropic provider reads its key from "
+        "$XDG_CONFIG_HOME/git-ci/anthropic-api-key (default ~/.config); openai reads "
+        "OPENAI_API_KEY."
     )
     parser.add_argument("--dry-run", action="store_true", help="generate a message without committing")
     parser.add_argument(
@@ -147,10 +170,7 @@ def main():
     args = parser.parse_args()
     if args.provider not in PROVIDERS:
         raise ValueError(f"Unknown provider {args.provider!r}; use one of: {', '.join(PROVIDERS)}.")
-    key_env = PROVIDERS[args.provider]["key_env"]
-    api_key = os.environ.get(key_env)
-    if not api_key:
-        raise ValueError(f"{key_env} is not set.")
+    api_key = read_api_key(args.provider)
     tree = git("write-tree")
     diff = git("diff", "--cached", "--no-ext-diff", "--no-textconv", "--no-color", "--submodule=short")
     if not diff:
