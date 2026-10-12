@@ -24,11 +24,19 @@ class GitCiTest(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)
+        home = tempfile.TemporaryDirectory()
+        self.addCleanup(home.cleanup)
+        self.key_file = Path(home.name, ".config", "git-ci", "anthropic-api-key")
+        self.key_file.parent.mkdir(parents=True)
+        self.key_file.write_text("anthropic-key\n")
+        self.key_file.chmod(0o600)
         cwd = os.getcwd()
         os.chdir(self.directory.name)
         self.addCleanup(os.chdir, cwd)
         self.env = patch.dict(os.environ, {
-            "ANTHROPIC_API_KEY": "anthropic-key",
+            "HOME": home.name,
+            "XDG_CONFIG_HOME": str(self.key_file.parents[1]),
+            "ANTHROPIC_API_KEY": "env-key",
             "OPENAI_API_KEY": "openai-key",
             "GIT_CI_MODEL": "test-model",
             "GIT_CONFIG_GLOBAL": os.devnull,
@@ -139,10 +147,33 @@ class GitCiTest(unittest.TestCase):
         with patch("sys.argv", ["git-ci"]), self.assertRaisesRegex(ValueError, "Unknown provider"):
             ci.main()
 
-    def test_missing_key_names_provider_variable(self):
-        os.environ.pop("ANTHROPIC_API_KEY")
-        with patch("sys.argv", ["git-ci"]), self.assertRaisesRegex(ValueError, "ANTHROPIC_API_KEY"):
+    def test_missing_key_names_key_source(self):
+        # ANTHROPIC_API_KEY stays set to prove the environment is never consulted.
+        for content in [None, "\n"]:
+            with self.subTest(content=content):
+                if content is None:
+                    self.key_file.unlink()
+                else:
+                    self.key_file.write_text(content)
+                with patch("sys.argv", ["git-ci"]), self.assertRaisesRegex(ValueError, str(self.key_file)):
+                    ci.main()
+        self.key_file.write_text("anthropic-key\n")
+        self.key_file.chmod(0o640)
+        with patch("sys.argv", ["git-ci"]), self.assertRaisesRegex(ValueError, "chmod 600"):
             ci.main()
+        os.environ.pop("OPENAI_API_KEY")
+        argv = ["git-ci", "--provider", "openai"]
+        with patch("sys.argv", argv), self.assertRaisesRegex(ValueError, "OPENAI_API_KEY"):
+            ci.main()
+
+    def test_key_file_defaults_to_home_config(self):
+        for xdg in [None, ""]:
+            with self.subTest(xdg=xdg):
+                if xdg is None:
+                    os.environ.pop("XDG_CONFIG_HOME")
+                else:
+                    os.environ["XDG_CONFIG_HOME"] = xdg
+                self.assertEqual(ci.read_api_key("anthropic"), "anthropic-key")
 
     def test_commit_passes_message_literally_and_propagates_failure(self):
         message = MESSAGE + "\n- :memo: `code` $(touch unsafe)"
