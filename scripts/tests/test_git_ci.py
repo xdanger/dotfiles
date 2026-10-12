@@ -24,17 +24,18 @@ class GitCiTest(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.TemporaryDirectory()
         self.addCleanup(self.directory.cleanup)
-        config = tempfile.TemporaryDirectory()
-        self.addCleanup(config.cleanup)
-        self.key_file = Path(config.name, "git-ci", "anthropic-api-key")
-        self.key_file.parent.mkdir()
+        home = tempfile.TemporaryDirectory()
+        self.addCleanup(home.cleanup)
+        self.key_file = Path(home.name, ".config", "git-ci", "anthropic-api-key")
+        self.key_file.parent.mkdir(parents=True)
         self.key_file.write_text("anthropic-key\n")
         self.key_file.chmod(0o600)
         cwd = os.getcwd()
         os.chdir(self.directory.name)
         self.addCleanup(os.chdir, cwd)
         self.env = patch.dict(os.environ, {
-            "XDG_CONFIG_HOME": config.name,
+            "HOME": home.name,
+            "XDG_CONFIG_HOME": str(self.key_file.parents[1]),
             "ANTHROPIC_API_KEY": "env-key",
             "OPENAI_API_KEY": "openai-key",
             "GIT_CI_MODEL": "test-model",
@@ -164,6 +165,15 @@ class GitCiTest(unittest.TestCase):
         argv = ["git-ci", "--provider", "openai"]
         with patch("sys.argv", argv), self.assertRaisesRegex(ValueError, "OPENAI_API_KEY"):
             ci.main()
+
+    def test_key_file_defaults_to_home_config(self):
+        for xdg in [None, ""]:
+            with self.subTest(xdg=xdg):
+                if xdg is None:
+                    os.environ.pop("XDG_CONFIG_HOME")
+                else:
+                    os.environ["XDG_CONFIG_HOME"] = xdg
+                self.assertEqual(ci.read_api_key("anthropic"), "anthropic-key")
 
     def test_commit_passes_message_literally_and_propagates_failure(self):
         message = MESSAGE + "\n- :memo: `code` $(touch unsafe)"
