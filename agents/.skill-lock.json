@@ -514,6 +514,15 @@
       "skillFolderHash": "60b76163741cb3464f710138ee2023e06403aaa5",
       "installedAt": "2026-10-02T15:34:33.704Z",
       "updatedAt": "2026-10-17T02:52:40.780Z"
+    },
+    "cf-cli": {
+      "source": "cloudflare/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/cloudflare/skills.git",
+      "skillPath": "skills/cf-cli/SKILL.md",
+      "skillFolderHash": "1ca024bb576e6b43e7c10b3fb5b71a6fb39de7af",
+      "installedAt": "2026-10-17T02:56:32.528Z",
+      "updatedAt": "2026-10-17T02:56:32.528Z"
     }
   },
   "dismissed": {
