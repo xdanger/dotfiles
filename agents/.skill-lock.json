@@ -15,9 +15,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/git-commit/SKILL.md",
-      "skillFolderHash": "da10dc16fe152affcb9e4b8e00cf3fdc43a1e81b",
+      "skillFolderHash": "b2e7602c908c7bbd9b970362df4b48a744f5dc2e",
       "installedAt": "2026-02-16T05:02:46.175Z",
-      "updatedAt": "2026-03-13T12:55:31.332Z"
+      "updatedAt": "2026-10-09T06:04:05.149Z"
     },
     "lark-base": {
       "source": "open.feishu.cn",
@@ -274,9 +274,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/audience-aware-comms/SKILL.md",
-      "skillFolderHash": "7d4ba6f321421c281cc10beae28d8a03b0e4905b",
+      "skillFolderHash": "4ff10e249680ab8120e564bf00b6a97071eef315",
       "installedAt": "2026-06-13T02:38:45.786Z",
-      "updatedAt": "2026-09-13T05:37:24.044Z"
+      "updatedAt": "2026-10-09T06:04:06.273Z"
     },
     "deep-dive": {
       "source": "krosdai/skills",
@@ -292,9 +292,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/krosdai/skills.git",
       "skillPath": "skills/pr-shepherd/SKILL.md",
-      "skillFolderHash": "529b8e2da34f3f081fa7b9a5862db5ea4fe65abd",
+      "skillFolderHash": "69053e922eeb9071982f8045b362b1c805772836",
       "installedAt": "2026-06-13T17:01:51.890Z",
-      "updatedAt": "2026-09-13T05:37:26.738Z"
+      "updatedAt": "2026-10-09T06:04:07.311Z"
     },
     "lark-apps": {
       "source": "open.feishu.cn",

@@ -5,136 +5,87 @@ description: Calibrate writing for a reader beyond the current conversation, inc
 
 # Audience-Aware Communication
 
-The "when to use" lives entirely in the `description` above — that is the trigger.
-By the time you are reading this body, assume you are writing an artifact for a
-reader beyond this conversation and it is consequential. (If on reflection the text
-falls under one of the description's exclusions — an in-chat reply to the current
-user, dictated-verbatim text, a git commit message, or output consumed literally by
-a deterministic interpreter — exit quietly and respond normally; those cases are out
-of scope.)
+The description is the trigger. If the text turns out to be one of its exclusions — an
+in-chat reply to the current user, dictated-verbatim text, a commit message, or output a
+deterministic interpreter consumes — drop this skill and respond normally.
 
-## Why this skill exists
+Writing lands only when it fits the reader's real capability. The two usual misses mirror
+each other:
 
-Writing lands well only when it fits the reader. There are two failure modes, mirror
-images of each other, and both come from ignoring the reader's actual level:
+- **Human reader → under-modeling.** Writing for a literal token-absorber: too blunt,
+  spelling out what they would infer, airing what is better left unsaid.
+- **AI executor → over-specifying.** Treating a capable reasoner as a level-0 machine:
+  rote steps that bury the goal, waste context, and suppress its judgment.
 
-- **To a human**, the default slip is _under_-modeling — writing for a literal
-  token-absorber: too blunt, missing what they will infer, ignoring what is better
-  left unsaid.
-- **To an AI executor**, the default slip is the opposite, _over_-specifying —
-  treating a capable reasoner like a level-0 machine, spelling out every mechanical
-  step. That buries the intent, wastes context, and actively suppresses the model's
-  judgment. (Write to it like it's an idiot and it will execute like one.)
+## 1. Model the reader — in your thinking, never in the output
 
-Same root error both times: not modeling the reader's real capability. A deterministic
-interpreter genuinely is literal, so you skip it. (You also skip the current user in
-live chat — not because they are literal, but because ordinary conversational judgment
-already covers them. The description above carries the full exclusion list.) Every
-reader outside those exclusions, human or LLM, infers and fills gaps, so model it.
+1. **Who:** capability, what they know and don't, what they care about, and the one
+   action or decision you want. Use context already in hand; if it is thin, see §4.
+2. **Climb the ladder** as far as the stakes justify:
+   - **L1:** what a literal read gives them.
+   - **L2:** what they infer about your intent and situation from how it is written and
+     what is missing.
+   - **L3** (high stakes): they expect you to anticipate their reaction — does that change
+     the move?
+3. **Choose omissions.** Don't state what they can infer, over-justify, or raise
+   obligations and anxieties without purpose. Know which omissions are load-bearing.
+4. **Set register and grain** for the reader and channel.
 
-## 1. Run this in your thinking — never in the output
+### When the reader is an AI agent
 
-1. **Model the reader** (human or AI): who they are · their actual capability /
-   expertise · what they know vs. don't · what they care about · the one action or
-   decision you want. Use only context already in hand. If it is thin, see section 4.
-2. **Climb the ladder** (this is k-level reasoning; do as many layers as the stakes
-   justify):
-   - **L1** — what they take from a literal read.
-   - **L2** — what they _infer_ about your intent, the situation, or the task from
-     _how_ it is written and from what you leave out.
-   - **L3** (high stakes only) — they expect you to be anticipating their reaction
-     or their gaps; does that recursion change the move?
-3. **Decide what to leave unsaid.** Omission is a tool, not a gap. Don't state what
-   they can infer; don't over-justify; don't surface what creates obligation, anxiety,
-   or constraint without purpose. Note which omissions are load-bearing.
-4. **Calibrate register and grain** to the reader and channel.
+- **Model capability, not feelings.** Frontier agents need a clear target, not rote
+  steps; omission here grants latitude rather than tact.
+- **Specify the WHAT, trust the HOW.** Pin down the goal, hard constraints, interfaces,
+  acceptance criteria, and any ambiguity where a wrong guess is costly. Leave the method
+  and obvious sub-steps to the executor, as you would with a senior engineer.
+- **Find where it will guess wrong.** A context-free executor fills blanks with
+  assumptions; spend words on those blanks, not on steps it already knows.
 
-## 1a. If the reader is an AI agent
+## 2. Output
 
-When the executor is another LLM (a downstream agent, a subagent, a prompt or mandate
-you are authoring), keep the ladder but change _what_ you model:
-
-- **Capability, not feelings.** Estimate its real level. Frontier agents reason well;
-  they need a clear target, not rote steps. There is no face to protect, so omission
-  here is about granting latitude, not tact.
-- **Specify the WHAT, trust the HOW.** Pin down precisely the things that are genuinely
-  underdetermined and costly to get wrong — the goal, hard constraints, interfaces and
-  contracts, acceptance criteria, and any ambiguity where a wrong guess is expensive.
-  Leave the method, the obvious sub-steps, and anything a capable reasoner infers from
-  the goal to the executor. This is delegating to a senior engineer, not micromanaging.
-- **Model where it will guess wrong.** Under-specifying is not a virtue either — a
-  context-free executor fills blanks with assumptions. Spend your words exactly on the
-  blanks that matter, not on the steps it already knows.
-
-## 2. Output rules
-
-- Within the deliverable, emit **only the finished artifact.** This does not suppress
-  task progress, verification results, or limitations reported to the current user.
-  Don't show the reader-analysis, the L1/L2/L3
-  ladder, or meta-phrases like "considering what they think I think." The reasoning
-  stays backstage; surfacing it breaks the effect and reads as odd.
-- Ship the **leanest version that achieves the goal.** Cut what the reader can infer;
-  for an AI executor, cut the mechanical steps it does not need spelled out.
-- **No manipulation, no false claims.** Audience-modeling is for clarity, tact, and
-  calibration — not for steering a reader against their own interest. Copy that schemes
-  reads as oily; this also keeps the prose clean and trustworthy.
+- The deliverable is **only the finished artifact**: no reader analysis, ladder, or
+  "considering what they think I think" meta. Progress, verification results, and
+  limitations reported to the current user are unaffected.
+- Ship the **leanest version that achieves the goal.**
+- **No manipulation or false claims.** Modeling the reader serves clarity, tact, and
+  calibration, never steering them against their own interest.
 
 ## 3. Self-check — high stakes only
 
-If the reader is **human**: cold-read the draft as the recipient seeing it for the first
-time — first reaction? unintended subtext? anywhere they'd bristle, feel condescended to,
-or feel rushed?
+- **Human:** cold-read it as the recipient. First reaction? Unintended subtext? Anywhere
+  they would bristle, feel condescended to, or feel rushed?
+- **AI executor:** where would a capable but context-free agent guess wrong, over-comply,
+  or lose the goal under the detail? Cut over-specification; sharpen real ambiguity.
 
-If the reader is an **AI executor**: ask instead — where would a capable but context-free
-agent guess wrong, over-comply, or lose the goal under all this detail? Cut the
-over-specification; sharpen the genuinely ambiguous parts.
+Revise once, then stop.
 
-Either way, revise once, then stop.
+## 4. Infer or ask
 
-## 4. When to ask instead of guessing
-
-Infer a conventional audience from the task and context when that is sufficient
-(for example, a repository contributor reading a PR description). Do not invent
-personal facts. Ask only when missing reader information would materially change
-a commitment, important wording, or the desired action. An optional reader card is:
+Infer a conventional audience when that suffices (e.g., repository contributors reading
+a PR description). Don't invent personal facts. Ask only when missing reader information
+would materially change a commitment, key wording, or the desired action. Optional reader
+card:
 
 ```
 Audience · reads how (skim / close / executes literally) · capability ·
 knows · doesn't · cares about · desired action · leave unsaid
 ```
 
-For recurring recipients, keep profiles in `references/audience-profiles.md` and read
-that file only when a matching recipient comes up — it costs no context until then.
+For recurring recipients, read `references/audience-profiles.md` only when one matches.
 
-## 5. What good looks like
+## 5. Examples
 
-**Example 1 — PR description (embedded case, written after a hotfix).**
-The fix also quietly works around a flaky upstream API.
-
-- Weak (literal dump): "Fixed the crash. Not sure why the upstream API keeps timing out,
-  maybe their load balancer?" — broadcasts live doubt, invites bikeshedding, makes a fast
-  merge feel risky.
-- Strong (audience-aware): states what changed and why it's safe to merge now; the
-  flakiness becomes a linked follow-up issue, not aired uncertainty. Backstage: the
-  reviewer's only real question is "can I approve this quickly?"
-
-**Example 2 — message to a senior advisor billed by the hour; you need a decision Friday.**
-
-- Weak: "Can you confirm by Friday? We're waiting on you." — reads as chasing someone you
-  can't actually rush.
-- Strong: frame Friday as _your_ downstream constraint, give an easy path to respond, and
-  leave "we've already consulted another firm" unsaid — that omission is load-bearing.
-
-**Example 3 — a task prompt you are writing for a downstream coding agent.**
-
-- Weak (over-specified, treats it as level-0): a 20-step checklist — "open the file, find
-  the function, add a parameter, save, run the tests, if they fail read the error..." —
-  buries the goal and boxes in a capable model.
-- Strong (WHAT + constraints + acceptance, trust the HOW): "Add optional rate-limiting to
-  the `/charge` client. Constraint: do not change the public signature. Done when: existing
-  tests pass and a new test covers the limit being hit. Method is your call." Judgment is
-  invited, not replaced.
-
-The common thread: model the reader's real level, spend words where they change the
-outcome, and let the reasoning stay backstage. The reader — person or agent — sees only a
-clean artifact that happens to land right.
+- **PR description for a hotfix that also works around a flaky upstream API.** Weak:
+  "Fixed the crash. Not sure why upstream keeps timing out, maybe their load balancer?" —
+  airs doubt and makes a fast merge feel risky. Strong: what changed and why it is safe
+  to merge now, with the flakiness as a linked follow-up issue. The reviewer's real
+  question is "can I approve this quickly?"
+- **Message to an hourly-billed senior advisor; you need a decision by Friday.** Weak:
+  "Can you confirm by Friday? We're waiting on you." — chases someone you can't rush.
+  Strong: frame Friday as your downstream constraint, make replying easy, and leave "we've
+  consulted another firm" unsaid; that omission is load-bearing.
+- **Task prompt for a downstream coding agent.** Weak: a 20-step checklist ("open the
+  file, find the function, add a parameter, run the tests…") that buries the goal. Strong:
+  "Add optional rate-limiting to the `/charge` client. Don't change the public signature.
+  Done when existing tests pass and a new test covers hitting the limit. Method is your
+  call."

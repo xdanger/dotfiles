@@ -5,194 +5,144 @@ description: Shepherd a pull request through CI, review, merge, and cleanup when
 
 # PR Shepherd
 
-Drive a `ready-for-review` pull request from "submitted" to "merged and cleaned
-up", autonomously but safely. The hard part is not the individual git/gh
-commands — it is (a) refusing to call a PR "green" until it genuinely is, and
-(b) never gaming that definition to finish faster. Hold the line on both.
+Drive a pull request from ready-for-review to merged and cleaned up. The hard part is not
+the `gh`/`git` commands: it is refusing to call a PR green until it genuinely is, and never
+gaming that definition to finish faster.
 
-This skill assumes a Claude Code-style environment with `gh` (authenticated),
-`git`, `jq`, and a bash shell. The local-cleanup steps (worktree, branch, main)
-require real filesystem access, so they only apply when running locally; if you
-are operating purely through an API/MCP surface, do the GitHub-side work and tell
-the user the local cleanup must run on their machine.
+Requires `gh` (authenticated), `git`, `jq`, and bash. Local cleanup needs filesystem
+access; on an API/MCP-only surface, do the GitHub-side work and tell the user to run the
+local cleanup on their machine.
 
-## When this runs
+## Scope and authorization
 
-Start with a `ready-for-review` PR. For a draft, continue preparation only when the
-user authorized taking it through readiness and delivery. Mark it ready after the
-required readiness checks pass, then re-read the gate. Otherwise report what is
-missing; do not mark arbitrary drafts ready. The user may invoke this directly ("shepherd PR #123 home") or it may be
-handed to you as a task mandate. Either way you own the PR until it reaches a
-terminal state: merged, or escalated to a human with a clear reason.
+- **Drafts:** continue only if the user authorized taking the PR through readiness and
+  delivery. Mark it ready once the required readiness checks pass, then re-read the gate.
+  Otherwise report what is missing; never mark arbitrary drafts ready.
+- **Ownership:** you own the PR until it is merged, or escalated to a human with a clear
+  reason.
+- **Merging:** an explicit request to merge or land the PR, or an established mandate that
+  clearly includes merging, authorizes merging after a strict GREEN with no further
+  confirmation. Requests to inspect, review, watch, or repair do not. "Deliver the PR"
+  alone may mean opening or handing off a ready PR, so it is not sufficient either. Ask
+  only when merging is outside the established scope. Required GitHub approvals stay
+  mandatory.
 
 ## The loop
 
-Track **repair rounds**, waiting, and task authorization separately. Cap repair
-rounds at **5**; pure waiting does not consume a repair round. Preserve the PR,
-head SHA, last state, repair count, and time of the last meaningful progress
-across wait calls. A timeout returns control; it does not revoke an authorized
-long-running shepherd task or itself require human approval.
+Track repair rounds (cap **5**), waiting, and task authorization separately; waiting
+consumes no repair round. Carry the PR, head SHA, last verdict, repair count, and time of
+last meaningful progress across wait calls. A wait timeout returns control; it neither
+revokes an authorized shepherd task nor by itself requires human approval. Continue only
+while the task remains authorized and work or CI is progressing; if the user cancels or
+narrows the task, stop or reconfirm before acting on a later GREEN. Judge stalled checks
+against the expected CI duration and any task deadline instead of blindly restarting wait
+budgets, and escalate an actionable human blocker or persistent lack of progress with the
+saved state.
 
-Continue while the task remains authorized and work or CI is progressing. Do not
-restart wait budgets blindly: diagnose stalled checks against the expected CI
-duration and the task deadline, if one was specified. Escalate an actionable
-human blocker or persistent lack of progress with the saved state.
+1. **Read the gate:** `scripts/pr_status.sh <PR>`. Its JSON and exit code are the single
+   source of truth; never infer green from `gh pr checks` or the web UI.
+2. **Act on the verdict:**
+   - `NOT_ELIGIBLE` — a draft follows the draft rule above; a closed PR is reported, never
+     reopened implicitly.
+   - `WAITING_CI` — checks are queued/running or mergeability is computing. Don't
+     poll-spin; run `scripts/wait_for_settle.sh <PR>`. It re-reads the full gate on an
+     interval and returns once the verdict leaves `WAITING_CI`, so new failures, comments,
+     and human gates surface while other checks still run. Choose a `--max-wait` that keeps
+     you responsive to the user. A settled result is the next gate read. Exit `10` only
+     means this call's budget ran out: the output is the last snapshot, so reconcile saved
+     state before continuing.
+   - `NEEDS_WORK` — fix the `blockers[]` (next section), push if needed, and loop. Act even
+     while other checks are still running, but partial results never permit merging.
+   - `BLOCKED_HUMAN` — only a person can clear it (required approval, `ACTION_REQUIRED`
+     deployment gate, branch protection). Do everything you can — fixes, replies,
+     resolutions — then tell the human exactly what is outstanding.
+   - `GREEN` — go to **Merge & cleanup**.
+3. A push changes the head SHA and restarts CI; return to step 1.
 
-1. **Read the truth.** Run `scripts/pr_status.sh <PR>` and read its JSON +
-   exit code. This is the single source of truth for the gate; do not infer
-   green from `gh pr checks` alone or from a glance at the web UI. The verdict is
-   one of `GREEN`, `WAITING_CI`, `NEEDS_WORK`, `BLOCKED_HUMAN`, `NOT_ELIGIBLE`.
+## Fixing NEEDS_WORK
 
-2. **Branch on the verdict:**
-   - `NOT_ELIGIBLE` — for a draft, apply the readiness authorization above. For a
-     closed PR, report and stop; do not reopen it implicitly.
-   - `WAITING_CI` — checks are still QUEUED/IN_PROGRESS or mergeability is still
-     computing. Wait, don't poll-spin:
-     ```bash
-     scripts/wait_for_settle.sh <PR>   # blocks until the verdict leaves WAITING_CI
-     ```
-     It polls the full gate at a bounded interval, so new failures, comments, and
-     explicit human gates can return control while other checks are still running.
-     Reads and sleeps are clipped to the remaining call budget (with up to one
-     second of process cleanup grace). Use a call budget compatible with the host
-     so user messages remain responsive. A settled result is the next gate read.
-     Exit `10` means this call exhausted its budget; its output is only the last
-     snapshot. Reconcile the saved state before continuing, and always read a
-     fresh GREEN immediately before merging.
-   - `NEEDS_WORK` — address the specific `blockers[]` (next section), push when
-     needed, and loop. Other checks may still be running; diagnose or respond now
-     without treating partial CI results as permission to merge.
-   - `BLOCKED_HUMAN` — something only a person can clear (a required approval, an
-     `ACTION_REQUIRED` deployment gate, a branch-protection block). Do every
-     thing you _can_ (address comments, resolve threads, push fixes), then stop
-     and tell the human precisely what is outstanding. Do not self-approve or
-     attempt to bypass protections.
-   - `GREEN` — proceed to **Merge & cleanup**.
+Fix the real problem, not the symptom.
 
-3. After any push, the head SHA changes and CI restarts. Return to step 1; the
-   gate will report `WAITING_CI` until the new run settles.
+**`ci_failing`** — open each `checks.failing_runs[]` entry (`references/github-api.md` §2)
+and diagnose before editing:
 
-## Handling NEEDS_WORK
+- **Real bug:** fix it, add or adjust a test if the failure exposed a gap, commit saying
+  what broke and why, push.
+- **Genuine flake** (known-nondeterministic test, transient runner or network error):
+  `gh run rerun <id> --failed` **once**. If it fails the same way again, treat it as real
+  or escalate.
+- **Lint/format/type:** fix within the repository's authorization rules. If policy
+  requires a decision first, report the rule, location, and proposed fix while continuing
+  unaffected work. Never change linter configuration implicitly.
+- **Outside this PR's scope** (already-broken `main`, secrets a fork can't see): don't
+  fabricate a fix; note it, and escalate if it blocks merging.
 
-The verdict's `blockers[]` tells you what to fix. Work the real problem, not the
-symptom.
+Disabling a test, weakening an assertion, or suppressing a real warning turns the gate
+green while keeping the bug. Don't.
 
-### Failing checks (`ci_failing`)
+**`unresolved_review_threads`** — for each `reviewThreads.open_threads[]`, address first,
+then resolve:
 
-For each entry in `checks.failing_runs[]`, open the failure (`references/github-api.md`
-§2) and diagnose before touching code:
+- **Actionable suggestion:** make the change, reply citing the commit (§3), resolve (§4).
+- **Question:** answer it; resolve only once it is actually answered.
+- **Disagreement:** reply with your reasoning and an alternative. If the reviewer should
+  weigh in, leave it open and flag it to the human.
+- **Outdated** (`isOutdated`) threads already satisfy the gate; resolving them is
+  optional.
 
-- **Real bug** — your code is wrong: fix it, add/adjust a test if the failure
-  exposed a gap, commit with a message that says what broke and why, push.
-- **Genuine flake** — a known-nondeterministic test, a transient network/runner
-  error, an unrelated infra blip: re-run it **once** (`gh run rerun <id> --failed`).
-  If it fails again the same way, treat it as real or escalate; do not re-run on
-  a loop hoping for green.
-- **Lint/format/type** — fix within the calling repository's authorization rules.
-  If its policy requires a decision first, report the rule, location, and proposed
-  fix while continuing unaffected work. Do not change linter configuration implicitly.
-- **A check that is failing for reasons outside this PR's scope** (e.g. a
-  pre-existing broken `main`, a check that requires secrets a fork can't see):
-  don't fabricate a fix. Note it and, if it blocks merge, escalate.
+**`merge_conflict` / `branch_behind_base`** — prefer `gh pr update-branch <PR>` (§6).
+Resolve true conflicts in the head branch, but confirm the approach with the human first
+if it is non-trivial or could clobber someone's work.
 
-The instinct to make a check pass "somehow" is the thing to resist. Disabling a
-test, weakening an assertion, or `# noqa`-ing a real warning makes the gate green
-while leaving the bug — that defeats the entire purpose of the strict definition.
+## Merge & cleanup — only after a fresh GREEN
 
-### Unresolved review threads (`unresolved_review_threads`)
+Re-read the gate immediately before merging; a new review or teammate push can land
+between iterations.
 
-For each thread in `reviewThreads.open_threads[]`, **address then resolve** — in
-that order, never the reverse:
+1. **Method:** the user's preference; otherwise the first allowed of merge → squash →
+   rebase (§7).
+2. **Merge:** `gh pr merge <PR> --merge` (or the chosen method). A merge queue may only
+   enqueue the PR, so confirm its state is `MERGED` and note the merge commit before any
+   cleanup.
+3. **Remote branch:** delete it (§8) unless it is long-lived: the default branch or any
+   integration branch (e.g. `main`, `master`, `develop`, `dev`, `staging`, `production`),
+   `release/*`, `hotfix/*`, `support/*`, any protected branch, or one on the user's
+   keep-list. If unsure, ask.
+4. **Local cleanup** (local runs only), from the primary worktree, never the one being
+   removed (§9): remove the head's worktree if it has one, `git branch -D` the head branch
+   (squash and rebase merges look unmerged to git), switch to the base branch,
+   `git pull --ff-only`, and `git worktree prune`.
+5. **Report:** the merge commit, what happened to each branch, and anything deliberately
+   left (a kept long-lived branch, a thread left open for the reviewer).
 
-- A correct nitpick or actionable suggestion → make the change, then reply
-  pointing at the commit (`references/github-api.md` §3), then resolve the thread
-  (§4).
-- A question → answer it in a reply. Resolve only once it is actually answered.
-- A suggestion you disagree with → reply with your reasoning and propose the
-  alternative. If it's a judgment call the reviewer should weigh in on, leave it
-  open and flag it to the human rather than resolving unilaterally.
-- Outdated threads (`isOutdated`) already count as satisfied for the gate; you
-  may resolve them for tidiness but needn't.
+## Safety rails
 
-Resolving a thread you haven't actually addressed is gaming the gate. Don't.
+- GREEN is strict on purpose: every check finished and passed, every thread is resolved
+  or outdated, the PR is mergeable, and no required approval is outstanding. "All problems
+  addressed" is not green; never substitute a looser judgment.
+- Never bypass human gates: no self-approval, no editing branch protection, no merging
+  while `BLOCKED_HUMAN`.
+- Operate only on the PR's own head branch; never force-push a shared or long-lived
+  branch.
+- Never delete a branch you can't confirm is disposable, and never `--force` a worktree
+  removal without checking for uncommitted changes.
+- Never weaken tests, suppress warnings, or resolve unaddressed threads to reach green. If
+  you can't get there legitimately, escalating is the correct outcome.
+- If the same blocker survives two fix attempts, bring in the human.
 
-### Merge conflict (`merge_conflict`) / behind base (`branch_behind_base`)
+## Tunable defaults
 
-Prefer `gh pr update-branch <PR>` to bring the head up to date in the repo's
-configured style (`references/github-api.md` §6). For a true content conflict
-that needs hand-resolution, resolve it carefully in the head branch and push —
-but if the resolution is non-trivial or risks clobbering someone's work, pause
-and confirm the approach with the human first. Never force-push a shared branch.
+Mention these if the user wants to tune behavior:
 
-## Merge & cleanup (only after a verified GREEN)
-
-Re-confirm GREEN immediately before merging — state can change between iterations
-(a new review, a fresh push from a teammate). Then:
-
-1. **Choose the merge method.** Use the user's stated preference; otherwise
-   detect allowed methods and prefer merge → squash → rebase
-   (`references/github-api.md` §7).
-
-2. **Apply the existing authorization.** An explicit request to merge or land
-   the PR, or an established mandate that clearly includes merging, authorizes
-   merging after strict GREEN; no extra "hands-off" wording or
-   repeated confirmation is needed. A request only to inspect, review, watch, or
-   repair does not authorize merging. "Deliver the PR" alone may mean opening or
-   handing off a ready-for-review PR; it is not sufficient merge authorization. Ask only when the merge action is outside
-   the established scope. Required GitHub approvals remain mandatory.
-
-3. **Merge.** `gh pr merge <PR> --merge` (or chosen method).
-
-4. **Delete the remote branch — unless it is long-lived.** Treat as long-lived
-   (do NOT delete) any branch that is: a default/integration branch
-   (`main`, `master`, `develop`, `dev`, `staging`, `production`), matches a
-   release/hotfix pattern (`release/*`, `hotfix/*`, `support/*`), is protected by
-   a branch-protection rule, or matches a user-provided keep-list. Otherwise
-   delete it (`references/github-api.md` §8). When unsure whether a branch is
-   meant to persist, ask rather than delete.
-
-5. **Local cleanup** (local runs only), from the primary worktree — never from
-   the worktree you're about to remove (`references/github-api.md` §9):
-   `git worktree remove` the head's worktree if it had one, `git branch -D` the
-   head branch (capital `-D` because a squash/rebase merge leaves it "unmerged"
-   to git), switch to the base branch, `git pull --ff-only`, and
-   `git worktree prune`.
-
-6. **Report** the final state: merged commit, branch dispositions
-   (remote deleted? local cleaned?), and anything you deliberately left (e.g. a
-   long-lived branch kept, a thread left open for the reviewer).
-
-## Safety rails (these protect the user, not bureaucracy)
-
-- The GREEN gate is strict on purpose. "All problems addressed" ≠ green; green is
-  the script's positive verdict that every check _finished_ and passed, every
-  thread is resolved/outdated, the PR is mergeable, and no required approval is
-  outstanding. Never substitute your own looser judgment for it.
-- Never bypass human gates: no self-approving to clear a required review, no
-  editing branch-protection rules, no merging while `BLOCKED_HUMAN`.
-- Never force-push to a shared or long-lived branch. Only operate on the PR's own
-  head branch.
-- Never delete a branch you cannot confirm is disposable, and never `--force` a
-  worktree removal without first checking for uncommitted changes.
-- Don't weaken tests, suppress warnings, or resolve unaddressed threads to reach
-  green faster. If you can't legitimately get to green, escalate — that's the
-  correct outcome, not a failure.
-- If the same blocker survives two fix attempts, stop and bring in the human.
-
-## Configurable knobs (mention these if the user wants to tune behavior)
-
-- **Merge method**: merge commit (default if allowed) / squash / rebase.
-- **Merge authorization**: follow the user's established scope; do not infer merge
-  permission from a status or review request.
-- **Long-lived branch keep-list**: extra patterns beyond the built-in set.
-- **Repair-round cap**: default 5; waiting is tracked separately.
-- **Flake re-run policy**: default one re-run per failing check, then escalate.
-- **Wait tuning**: `wait_for_settle.sh --interval` (default 10s) and `--max-wait`
-  (default 1800s per call, with state retained across resumptions). Both values
-  must be positive; use `pr_status.sh` for a single state read.
-- **Required-only checks**: by default _all_ checks must pass (the user's strict
-  definition); optionally relax to "only branch-protection-required checks".
-- **Wait transport**: bounded full-gate polling by default. For repo-admin users on a
-  local host who want push-latency wakes on review/branch events, an optional
-  webhook mode is documented in `references/github-api.md` §11 — it is a wake
-  signal only; `pr_status.sh` stays the gate.
+- **Merge method:** merge commit if allowed, then squash, then rebase.
+- **Merge authorization:** the user's established scope; never inferred from a status or
+  review request.
+- **Long-lived branches:** extra keep-list patterns beyond the built-in set.
+- **Repair rounds:** 5; waiting is tracked separately.
+- **Flake reruns:** one per failing check, then escalate.
+- **Waiting:** `wait_for_settle.sh --interval` (default 10s) and `--max-wait` (default
+  1800s per call); both must be positive. Use `pr_status.sh` for a single read.
+- **Required checks:** all checks by default; optionally only branch-protection-required
+  ones.
+- **Wait transport:** bounded polling by default. Repo admins on a local host can add
+  webhook wakes (`references/github-api.md` §11); `pr_status.sh` remains the gate.

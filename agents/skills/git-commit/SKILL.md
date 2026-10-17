@@ -5,7 +5,7 @@ description: Create atomic git commits with Conventional Commits and Gitmoji. Us
 
 # Git Commit
 
-Follow repo-local commit instructions first. If none exist, use:
+Repository-local commit conventions take precedence. Otherwise use:
 
 ```text
 <Gitmoji> <type>(<scope>)[!]: <subject>
@@ -17,65 +17,23 @@ Follow repo-local commit instructions first. If none exist, use:
 
 ## Workflow
 
-### 1. Inspect the worktree
-
-Check both staged and unstaged changes before committing:
-
-```bash
-git status --porcelain
-git diff --staged --stat
-git diff --stat
-git diff --staged -- <file>
-git diff -- <file>
-```
-
-### 2. Plan atomic commit groups
-
-Prefer the fewest commits that still keep concerns isolated.
-
-- One logical change per commit
-- Keep tests with the code they validate
-- Keep lockfiles with the dependency change that produced them
-- Separate behavioral changes from formatting, renames, docs, and other mechanical edits
-- If one file mixes concerns, use `git add -p`
-
-Quick check:
-
-1. Can this commit be described without "and"?
-2. Would reverting it undo only one intent?
-3. Would `git bisect` or `git cherry-pick` still be clear?
-
-### 3. Stage one group at a time
-
-```bash
-git add path/to/file1 path/to/file2
-git add -p path/to/file
-```
-
-Avoid broad staging unless the entire worktree is one logical change. Never stage secrets.
-
-### 4. Write the commit message
-
-Choose the closest matching type and Gitmoji. Common pairs:
-
-- `✨ feat` for user-facing additions
-- `🐛 fix` for bug fixes
-- `♻️ refactor` for internal restructuring without behavior change
-- `✅ test` for test-only work
-- `📝 docs` for documentation
-- `🔧 chore` for maintenance, config, or repo upkeep
-
-Message checklist:
-
-- imperative, lowercase subject
-- no trailing period
-- keep the subject short, ideally within 50 characters
-- add scope when it helps
-- use `!` and a `BREAKING CHANGE:` footer for breaking changes
-- add body bullets only when they improve reviewability
-- add issue refs or `Co-Authored-By:` footers when applicable
-
-Example:
+1. **Inspect** both staged and unstaged changes (`git status`, `git diff --staged`,
+   `git diff`).
+2. **Group** into the fewest commits that each carry one intent: describable without
+   "and", revertible on its own. Keep tests with the code they cover and lockfiles with
+   their dependency change; separate behavior changes from formatting, renames, and docs.
+3. **Stage** one group at a time by path, or with `git add -p` when a file mixes concerns.
+   Stage everything at once only when it is a single change. Never stage secrets.
+4. **Write** the message:
+   - Closest type and Gitmoji: `✨ feat`, `🐛 fix`, `♻️ refactor` (no behavior change),
+     `✅ test`, `📝 docs`, `🔧 chore`.
+   - Subject: imperative, lowercase, no trailing period, ideally ≤50 characters; add a
+     scope when it helps.
+   - Breaking change: `!` plus a `BREAKING CHANGE:` footer.
+   - Body bullets only when they aid review; issue refs and `Co-Authored-By:` go in
+     footers.
+5. **Order** multiple commits: preparatory refactors → config/infra → feature or fix →
+   docs/formatting. Each commit leaves the tree coherent.
 
 ```text
 ✨ feat(auth): add OAuth2 login flow
@@ -86,20 +44,9 @@ Example:
 Closes #42
 ```
 
-### 5. Commit in a useful order
+## Safety
 
-When multiple commits are needed, prefer:
-
-1. preparatory refactors
-2. infrastructure or config
-3. feature or fix
-4. docs or formatting
-
-Each commit should leave the tree in a coherent state.
-
-## Git Safety
-
-- do not change git config
-- do not use destructive commands unless explicitly requested
-- do not bypass hooks unless explicitly requested
-- if hooks fail, fix the issue and create a new commit instead of amending by default
+Don't change git config, run destructive commands, or bypass hooks unless asked. When a
+`pre-commit` or `commit-msg` hook rejects the commit, nothing was committed: fix the cause
+and commit again rather than `--amend`, which would rewrite the previous commit. A
+`post-commit` hook runs after the commit exists, so check `git log -1` before retrying.

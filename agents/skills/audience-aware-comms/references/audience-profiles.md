@@ -1,11 +1,8 @@
 # Audience Profiles
 
-Reusable reader cards for recipients you write to often. The skill reads this
-file only when a recipient here matches the task, so it costs no context the rest
-of the time. One profile per recipient; keep each to the card format.
-
-> Keep this list to roles and durable communication preferences. Do not store
-> sensitive personal data here.
+Reader cards for recurring recipients, read only when one matches the task. One card per
+recipient, limited to roles and durable communication preferences — never sensitive
+personal data.
 
 ## Template
 
