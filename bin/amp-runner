@@ -4,7 +4,7 @@
 set -euo pipefail
 
 candidates=(
-  "$HOME/repos"
+  "$HOME/Work"
   "$HOME/.dotfiles"
   "$HOME/.dotlocal"
   "$HOME/.hermes"
