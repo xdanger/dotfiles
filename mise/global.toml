@@ -1,5 +1,5 @@
 [tools]
-amp = { version = "latest", backend = "npm:@ampcode/cli" }
+amp = "latest"
 "aqua:BurntSushi/ripgrep" = "latest"
 "aqua:Wilfred/difftastic" = "latest"
 "aqua:bootandy/dust" = "latest"
