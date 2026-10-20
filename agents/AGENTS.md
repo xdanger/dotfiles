@@ -53,6 +53,10 @@
 - Focus on WHY, not WHAT
 - Keep commits reasonably split: when you can separate changes by logic or file group, avoid committing them together.
 
+**Pushing**
+
+- Before every `git push`, review the outgoing changes with Claude Code's `/code-review` and Codex's `/review`, whichever are available, and fix genuine findings before pushing.
+
 **Shipping**
 
 - Treat “ship the changes,” “ship the branch,” and equivalent requests as an explicit mandate to deliver the current changes end to end.
