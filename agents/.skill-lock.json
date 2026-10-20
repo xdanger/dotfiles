@@ -185,9 +185,9 @@
       "sourceUrl": "https://open.feishu.cn/lark-cli/skills/regular/.well-known/agent-skills/lark-wiki.tar.gz",
       "skillFolderHash": "",
       "sourceBaseUrl": "https://open.feishu.cn/lark-cli/skills/regular",
-      "wellKnownDigest": "sha256:826d17b3bf91ac3fd686e607e3b06b77b37630338a96816eaf2cd2a740844b25",
+      "wellKnownDigest": "sha256:27a0021292fa21a4c75182d27c16d1cbed6cf6d7f6e78750872e913596db78ce",
       "installedAt": "2026-04-01T15:50:26.570Z",
-      "updatedAt": "2026-09-30T23:22:35.368Z"
+      "updatedAt": "2026-10-20T18:05:18.089Z"
     },
     "lark-workflow-meeting-summary": {
       "source": "open.feishu.cn",
@@ -349,99 +349,99 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "agents/SKILL.md",
-      "skillFolderHash": "9ca9428f27551bbb3139824fea4dfe9d9a2bfecb",
+      "skillFolderHash": "f72eac65e717bb89ede739bc59de5e423d65eb52",
       "installedAt": "2026-09-30T01:04:06.997Z",
-      "updatedAt": "2026-10-18T02:26:41.259Z"
+      "updatedAt": "2026-10-20T18:05:27.352Z"
     },
     "dubbing": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "dubbing/SKILL.md",
-      "skillFolderHash": "e5af27fec73d9024c7ab68b012c4feb2b413029e",
+      "skillFolderHash": "0419394c41ea710a6796101269751ea28509bde3",
       "installedAt": "2026-09-30T01:04:06.999Z",
-      "updatedAt": "2026-09-30T01:04:06.999Z"
+      "updatedAt": "2026-10-20T18:05:30.965Z"
     },
     "music": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "music/SKILL.md",
-      "skillFolderHash": "59c3d468daa78722b26b4da51c39f67ee115f534",
+      "skillFolderHash": "d6bcf00c87fc4a51afae6c235a0e0be3ea9df33b",
       "installedAt": "2026-09-30T01:04:07.000Z",
-      "updatedAt": "2026-09-30T01:04:07.000Z"
+      "updatedAt": "2026-10-20T18:05:35.147Z"
     },
     "setup-api-key": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "setup-api-key/SKILL.md",
-      "skillFolderHash": "89e3d1bac6cd7ef25f6325b9012310ea31e1b218",
+      "skillFolderHash": "4bc571f2d788b83e76c736394e29a8a5831068a0",
       "installedAt": "2026-09-30T01:04:07.000Z",
-      "updatedAt": "2026-09-30T01:04:07.000Z"
+      "updatedAt": "2026-10-20T18:05:38.544Z"
     },
     "sound-effects": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "sound-effects/SKILL.md",
-      "skillFolderHash": "78f528a80bcf9656f175c1f676260d2a687e499b",
+      "skillFolderHash": "8b9a067b1c315d6fb8280d7970a6fafe77047faa",
       "installedAt": "2026-09-30T01:04:07.001Z",
-      "updatedAt": "2026-09-30T01:04:07.001Z"
+      "updatedAt": "2026-10-20T18:05:44.169Z"
     },
     "speech-engine": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "speech-engine/SKILL.md",
-      "skillFolderHash": "52bc6cbcfc9eaac1c5348c2c3cc281b278ca8ffa",
+      "skillFolderHash": "69599b0f4306f50e4b4deaab874c994a251a3ba2",
       "installedAt": "2026-09-30T01:04:07.001Z",
-      "updatedAt": "2026-10-06T06:02:15.570Z"
+      "updatedAt": "2026-10-20T18:05:47.301Z"
     },
     "speech-to-text": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "speech-to-text/SKILL.md",
-      "skillFolderHash": "261d8ccb79514d77ce4a04750c990c566458a127",
+      "skillFolderHash": "877352a44c80b5f137d39037ca827a95e00b2cf6",
       "installedAt": "2026-09-30T01:04:07.002Z",
-      "updatedAt": "2026-10-18T02:26:44.455Z"
+      "updatedAt": "2026-10-20T18:05:50.886Z"
     },
     "text-to-speech": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "text-to-speech/SKILL.md",
-      "skillFolderHash": "fd02dbd5375e0ddcaa05cccd491f3897a8e59719",
+      "skillFolderHash": "2e48d8845efb3e2a29a3c6684af7a1bf358884ec",
       "installedAt": "2026-09-30T01:04:07.002Z",
-      "updatedAt": "2026-10-18T02:26:50.530Z"
+      "updatedAt": "2026-10-20T18:05:53.977Z"
     },
     "voice-changer": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "voice-changer/SKILL.md",
-      "skillFolderHash": "6339303bae89453dc51633071e45281edd048365",
+      "skillFolderHash": "87d748ef23c64fe31ad6a7f2b93c6e13965539a5",
       "installedAt": "2026-09-30T01:04:07.003Z",
-      "updatedAt": "2026-09-30T01:04:07.003Z"
+      "updatedAt": "2026-10-20T18:05:56.951Z"
     },
     "voice-isolator": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "voice-isolator/SKILL.md",
-      "skillFolderHash": "72a9e22514e6ee564a0a39ac14e35a4c0c155d9e",
+      "skillFolderHash": "0a5d0be73fa781765aeec56913fff9b0e181aef9",
       "installedAt": "2026-09-30T01:04:07.003Z",
-      "updatedAt": "2026-09-30T01:04:07.003Z"
+      "updatedAt": "2026-10-20T18:06:01.998Z"
     },
     "update-skills-from-changelog": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": ".agents/skills/update-skills-from-changelog/SKILL.md",
-      "skillFolderHash": "12a4f255b95906143921ad9e6aa084c07aa6dc58",
+      "skillFolderHash": "63189d3135c30880e77a69288942651310f16fef",
       "installedAt": "2026-09-30T01:04:07.004Z",
-      "updatedAt": "2026-10-02T15:44:14.445Z"
+      "updatedAt": "2026-10-20T18:06:05.461Z"
     },
     "cloudflare": {
       "source": "cloudflare/skills",
