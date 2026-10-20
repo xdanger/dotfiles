@@ -81,6 +81,12 @@ elif command -v pacman >/dev/null 2>&1; then
     # partial upgrades are unsupported, so always -Syu
     sudo pacman -Syu --needed --noconfirm "${pacman_pkgs[@]}"
   fi
+  # AUR packages need an AUR helper (Omarchy ships `yay`); plain `-S` keeps
+  # the repo database untouched, so this never causes a partial upgrade
+  aur_pkgs=(otf-geist)
+  if command -v yay >/dev/null 2>&1; then
+    yay -S --needed --noconfirm "${aur_pkgs[@]}"
+  fi
 elif command -v apt >/dev/null 2>&1; then
   # Debian-based Linux
   sudo apt update && sudo apt upgrade -y
