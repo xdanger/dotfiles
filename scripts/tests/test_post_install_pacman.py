@@ -7,10 +7,11 @@ import unittest
 
 POST_INSTALL = Path(__file__).resolve().parents[1] / "post-install.sh"
 PACKAGES = "aria2 entr fortune-mod ncdu openbsd-netcat prettyping socat"
+AUR_PACKAGES = "otf-geist"
 
 
 class PacmanInstallTest(unittest.TestCase):
-    def run_install(self, omarchy, query_output="", query_status=0):
+    def run_install(self, omarchy, query_output="", query_status=0, yay=False):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             home = root / "home"
@@ -41,6 +42,8 @@ fi
             )
             if omarchy:
                 executable("omarchy-update", "#!/bin/sh\nexit 0\n")
+            if yay:
+                executable("yay", '#!/bin/sh\nprintf "yay %s\\n" "$*" >> "$TEST_LOG"\n')
             # Keep host tool installations out of the test's command lookup.
             for name in ("bash", "sh", "dirname"):
                 executable_path = shutil.which(name)
@@ -82,6 +85,31 @@ fi
         self.assertEqual(status, 0)
         self.assertEqual(
             calls, [f"pacman -Syu --needed --noconfirm {PACKAGES}", "mise install"]
+        )
+
+
+    def test_omarchy_installs_aur_packages_with_yay(self):
+        status, calls = self.run_install(True, yay=True)
+        self.assertEqual(status, 0)
+        self.assertEqual(
+            calls,
+            [
+                f"pacman -T {PACKAGES}",
+                f"yay -S --needed --noconfirm {AUR_PACKAGES}",
+                "mise install",
+            ],
+        )
+
+    def test_other_arch_hosts_install_aur_packages_with_yay(self):
+        status, calls = self.run_install(False, yay=True)
+        self.assertEqual(status, 0)
+        self.assertEqual(
+            calls,
+            [
+                f"pacman -Syu --needed --noconfirm {PACKAGES}",
+                f"yay -S --needed --noconfirm {AUR_PACKAGES}",
+                "mise install",
+            ],
         )
 
 
