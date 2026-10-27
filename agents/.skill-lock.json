@@ -349,27 +349,27 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "agents/SKILL.md",
-      "skillFolderHash": "f72eac65e717bb89ede739bc59de5e423d65eb52",
+      "skillFolderHash": "dcc79896c1c3082e972621f8fb72338626a14a24",
       "installedAt": "2026-09-30T01:04:06.997Z",
-      "updatedAt": "2026-10-20T18:05:27.352Z"
+      "updatedAt": "2026-10-23T09:02:13.566Z"
     },
     "dubbing": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "dubbing/SKILL.md",
-      "skillFolderHash": "0419394c41ea710a6796101269751ea28509bde3",
+      "skillFolderHash": "adf0768273be39de6a8d1ce6d7d56654e92ad777",
       "installedAt": "2026-09-30T01:04:06.999Z",
-      "updatedAt": "2026-10-20T18:05:30.965Z"
+      "updatedAt": "2026-10-23T09:02:21.170Z"
     },
     "music": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "music/SKILL.md",
-      "skillFolderHash": "d6bcf00c87fc4a51afae6c235a0e0be3ea9df33b",
+      "skillFolderHash": "d781a92a35ef506bf1e6cdeb0b50c3df40c6a100",
       "installedAt": "2026-09-30T01:04:07.000Z",
-      "updatedAt": "2026-10-20T18:05:35.147Z"
+      "updatedAt": "2026-10-23T09:02:27.356Z"
     },
     "setup-api-key": {
       "source": "elevenlabs/skills",
@@ -385,9 +385,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "sound-effects/SKILL.md",
-      "skillFolderHash": "8b9a067b1c315d6fb8280d7970a6fafe77047faa",
+      "skillFolderHash": "cb120156a89666d0e58fbc2583d89063ad5c1adb",
       "installedAt": "2026-09-30T01:04:07.001Z",
-      "updatedAt": "2026-10-20T18:05:44.169Z"
+      "updatedAt": "2026-10-23T09:02:31.327Z"
     },
     "speech-engine": {
       "source": "elevenlabs/skills",
@@ -403,9 +403,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "speech-to-text/SKILL.md",
-      "skillFolderHash": "877352a44c80b5f137d39037ca827a95e00b2cf6",
+      "skillFolderHash": "c26b2288495f7fe7bf1aa544970637c3ec2c95fe",
       "installedAt": "2026-09-30T01:04:07.002Z",
-      "updatedAt": "2026-10-20T18:05:50.886Z"
+      "updatedAt": "2026-10-23T09:02:34.894Z"
     },
     "text-to-speech": {
       "source": "elevenlabs/skills",
