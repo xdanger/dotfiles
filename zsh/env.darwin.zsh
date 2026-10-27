@@ -28,7 +28,9 @@ if [[ -z "$SSH_AUTH_SOCK" ]] || ! /usr/bin/ssh-add -l >/dev/null 2>&1; then
   unset _agent_sock
 fi
 # Load Apple-keychain-stored keys into the agent (no-op if already present).
-/usr/bin/ssh-add --apple-use-keychain 2>/dev/null
+# `--apple-use-keychain` alone only tries the default `~/.ssh/id_*` names;
+# `--apple-load-keychain` loads every key whose passphrase is in the keychain.
+/usr/bin/ssh-add --apple-load-keychain 2>/dev/null
 
 # Homebrew libraries and SDKs
 for dir in "openssl" "gettext" "texinfo" "flutter"; do
