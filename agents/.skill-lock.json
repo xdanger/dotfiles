@@ -330,9 +330,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/wrangler/SKILL.md",
-      "skillFolderHash": "a6f70b001b36794b778ed888fc372df40d59e6ca",
+      "skillFolderHash": "a008bb54eab6653272b18ee0f74ba656bb19ac8d",
       "installedAt": "2026-08-19T18:08:38.308Z",
-      "updatedAt": "2026-10-17T02:52:19.429Z"
+      "updatedAt": "2026-10-28T18:01:24.243Z"
     },
     "lark-meeting": {
       "source": "open.feishu.cn",
@@ -349,9 +349,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "agents/SKILL.md",
-      "skillFolderHash": "dcc79896c1c3082e972621f8fb72338626a14a24",
+      "skillFolderHash": "9f36f13ca4bff618e5412fa37b886a197c29aacb",
       "installedAt": "2026-09-30T01:04:06.997Z",
-      "updatedAt": "2026-10-23T09:02:13.566Z"
+      "updatedAt": "2026-10-28T18:01:39.575Z"
     },
     "dubbing": {
       "source": "elevenlabs/skills",
@@ -412,18 +412,18 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "text-to-speech/SKILL.md",
-      "skillFolderHash": "2e48d8845efb3e2a29a3c6684af7a1bf358884ec",
+      "skillFolderHash": "0e8540f85acf6b13b20b3a93dec1b7077db49f20",
       "installedAt": "2026-09-30T01:04:07.002Z",
-      "updatedAt": "2026-10-20T18:05:53.977Z"
+      "updatedAt": "2026-10-28T18:01:40.643Z"
     },
     "voice-changer": {
       "source": "elevenlabs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "voice-changer/SKILL.md",
-      "skillFolderHash": "87d748ef23c64fe31ad6a7f2b93c6e13965539a5",
+      "skillFolderHash": "772b9d2f694513b580ed78a1b7effd069cffad0f",
       "installedAt": "2026-09-30T01:04:07.003Z",
-      "updatedAt": "2026-10-20T18:05:56.951Z"
+      "updatedAt": "2026-10-28T18:01:43.006Z"
     },
     "voice-isolator": {
       "source": "elevenlabs/skills",
@@ -448,81 +448,81 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/cloudflare/SKILL.md",
-      "skillFolderHash": "d964e627e14032b05351d06d7f06fed14362350e",
+      "skillFolderHash": "247b16e8204e273902b0997b903b9a1ff768520a",
       "installedAt": "2026-10-02T15:34:33.687Z",
-      "updatedAt": "2026-10-17T02:52:24.186Z"
+      "updatedAt": "2026-10-28T18:01:26.237Z"
     },
     "cloudflare-email-service": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/cloudflare-email-service/SKILL.md",
-      "skillFolderHash": "71a7107b1e2046e1d6a3c9998997bd51c93872bb",
+      "skillFolderHash": "1ac66e9f133725e72cd1bef2bc2b5e75e802fc91",
       "installedAt": "2026-10-02T15:34:33.689Z",
-      "updatedAt": "2026-10-17T02:52:27.813Z"
+      "updatedAt": "2026-10-28T18:01:27.494Z"
     },
     "cloudflare-one": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/cloudflare-one/SKILL.md",
-      "skillFolderHash": "d74021a79642a4594ee116249cefd1a04b3ad5a1",
+      "skillFolderHash": "741462be7b2c10fbe8ab1f36f508d5294843d06d",
       "installedAt": "2026-10-02T15:34:33.698Z",
-      "updatedAt": "2026-10-17T02:52:31.161Z"
+      "updatedAt": "2026-10-28T18:01:28.651Z"
     },
     "cloudflare-one-migrations": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/cloudflare-one-migrations/SKILL.md",
-      "skillFolderHash": "631ae2d9945516f5ebe5cf6bd9a84b7e6c6bae2d",
+      "skillFolderHash": "c273db61b4290755f6a4c31b01c63d8e0a991a86",
       "installedAt": "2026-10-02T15:34:33.699Z",
-      "updatedAt": "2026-10-08T22:36:17.672Z"
+      "updatedAt": "2026-10-28T18:01:30.735Z"
     },
     "durable-objects": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/durable-objects/SKILL.md",
-      "skillFolderHash": "d0fcb442473e60f8dba76e023412de50d70b41aa",
+      "skillFolderHash": "ddedd0d5b2669854ddee5ab16f50d7ffe58c48a3",
       "installedAt": "2026-10-02T15:34:33.700Z",
-      "updatedAt": "2026-10-02T15:34:33.700Z"
+      "updatedAt": "2026-10-28T18:01:33.164Z"
     },
     "turnstile-spin": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/turnstile-spin/SKILL.md",
-      "skillFolderHash": "92bdf038738947cddf27e3edf14a81a09f3ba188",
+      "skillFolderHash": "9f5565017c4cecc4067c0dd60567655e87a30ca6",
       "installedAt": "2026-10-02T15:34:33.701Z",
-      "updatedAt": "2026-10-17T02:52:37.411Z"
+      "updatedAt": "2026-10-28T18:01:34.607Z"
     },
     "web-perf": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/web-perf/SKILL.md",
-      "skillFolderHash": "c4c15a909ae86c00d4fbf841238bbf56eb505ac8",
+      "skillFolderHash": "f50f5e7f34021937059dbda12e8f990006ab0fd1",
       "installedAt": "2026-10-02T15:34:33.703Z",
-      "updatedAt": "2026-10-02T15:34:33.703Z"
+      "updatedAt": "2026-10-28T18:01:35.628Z"
     },
     "workers-best-practices": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/workers-best-practices/SKILL.md",
-      "skillFolderHash": "60b76163741cb3464f710138ee2023e06403aaa5",
+      "skillFolderHash": "302f7f55037fe9396dfcd961d8877d020391104c",
       "installedAt": "2026-10-02T15:34:33.704Z",
-      "updatedAt": "2026-10-17T02:52:40.780Z"
+      "updatedAt": "2026-10-28T18:01:37.162Z"
     },
     "cf-cli": {
       "source": "cloudflare/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/cf-cli/SKILL.md",
-      "skillFolderHash": "1ca024bb576e6b43e7c10b3fb5b71a6fb39de7af",
+      "skillFolderHash": "2cd4bf81b34ff50a99f0577ad299ac160d39dab9",
       "installedAt": "2026-10-17T02:56:32.528Z",
-      "updatedAt": "2026-10-17T02:56:32.528Z"
+      "updatedAt": "2026-10-28T18:01:38.203Z"
     }
   },
   "dismissed": {
