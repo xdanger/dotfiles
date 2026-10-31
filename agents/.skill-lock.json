@@ -6,9 +6,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/microsoft/playwright-cli.git",
       "skillPath": "skills/playwright-cli/SKILL.md",
-      "skillFolderHash": "6b746b43751be277378e0ee04fe0db69f24da045",
+      "skillFolderHash": "003ec8747c78ceb8e9da5d83f12523a06830093c",
       "installedAt": "2026-02-16T03:32:31.689Z",
-      "updatedAt": "2026-09-29T12:53:37.309Z"
+      "updatedAt": "2026-10-31T06:00:06.070Z"
     },
     "git-commit": {
       "source": "xdanger/skills",
@@ -448,9 +448,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/cloudflare/SKILL.md",
-      "skillFolderHash": "247b16e8204e273902b0997b903b9a1ff768520a",
+      "skillFolderHash": "3eb560a41f50d50415cac69334742f70384246cd",
       "installedAt": "2026-10-02T15:34:33.687Z",
-      "updatedAt": "2026-10-28T18:01:26.237Z"
+      "updatedAt": "2026-10-31T06:00:07.493Z"
     },
     "cloudflare-email-service": {
       "source": "cloudflare/skills",
@@ -484,9 +484,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/durable-objects/SKILL.md",
-      "skillFolderHash": "ddedd0d5b2669854ddee5ab16f50d7ffe58c48a3",
+      "skillFolderHash": "d6a4d7ccb05288d44da0cfc27ce13976bdf44df9",
       "installedAt": "2026-10-02T15:34:33.700Z",
-      "updatedAt": "2026-10-28T18:01:33.164Z"
+      "updatedAt": "2026-10-31T06:00:10.523Z"
     },
     "turnstile-spin": {
       "source": "cloudflare/skills",
@@ -520,9 +520,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/cloudflare/skills.git",
       "skillPath": "skills/cf-cli/SKILL.md",
-      "skillFolderHash": "2cd4bf81b34ff50a99f0577ad299ac160d39dab9",
+      "skillFolderHash": "8fc54810c8299bd9926eb86b7ba08f95ad7f1202",
       "installedAt": "2026-10-17T02:56:32.528Z",
-      "updatedAt": "2026-10-28T18:01:38.203Z"
+      "updatedAt": "2026-10-31T06:00:11.310Z"
     }
   },
   "dismissed": {
