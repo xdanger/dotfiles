@@ -43,6 +43,9 @@ node = "lts"
 "npm:mcporter" = "latest"
 oh-my-pi = { version = "latest", rename_exe = "omp" }
 pi = "latest"
+# Upstream asks for an exact pin; after a bump, refresh the committed skill:
+# browser-use skill install --path ~/.dotfiles/agents/skills/browser-use
+"pipx:browser-use" = { version = "1.0.1", depends = ["python", "uv"] }
 "pipx:csvkit" = { version = "latest", depends = ["python", "uv"] }
 "pipx:trash-cli" = { version = "latest", depends = ["python", "uv"] }
 playwright = "latest"
@@ -57,6 +60,10 @@ uv = "latest"
 wrangler = "latest"
 yarn = "latest"
 yt-dlp = "latest"
+
+[env]
+# Opt out of browser-use's anonymous PostHog telemetry
+ANONYMIZED_TELEMETRY = "false"
 
 [settings]
 auto_update = true
