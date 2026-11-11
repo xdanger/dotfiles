@@ -68,3 +68,6 @@
 	helper = !/Users/xdanger/.local/bin/origin credential-helper
 [lfs]
 	sshtransfer = never
+[credential "https://ampcode.com/"]
+	helper = 
+	helper = !amp git-credential-helper
