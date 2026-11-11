@@ -1,4 +1,5 @@
 .pnpm-store/
+/agents/skills/.trash
 /agents/skills/cindy-skill-creator
 /agents/skills/cua-driver
 /agents/skills/learn
