@@ -14,6 +14,10 @@ Type=simple
 # Let threads served by this runner drive herdr panes over its socket
 Environment=HERDR_ENV=1
 Environment=HERDR_SOCKET_PATH=%h/.config/herdr/herdr.sock
+# Wait up to 30s for DNS, so the first start after boot doesn't fail and retry.
+# network-online.target can't do this: it doesn't exist in the user manager.
+# The "-" prefix starts the runner anyway when the wait times out.
+ExecStartPre=-/usr/bin/timeout 30 /bin/sh -c 'until getent ahosts ampcode.com >/dev/null 2>&1; do sleep 1; done'
 ExecStart=%h/.dotfiles/bin/amp-runner
 Restart=on-failure
 # amp-runner exits 78 when none of its directories exist on this machine

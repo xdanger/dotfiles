@@ -107,6 +107,12 @@ class AmpRunnerUnitTest(unittest.TestCase):
                 "herdr-server.service", unit["Unit"].get(dependency, "").split()
             )
 
+    def test_dns_wait_cannot_block_startup(self):
+        lines = UNIT.read_text().splitlines()
+        waits = [l for l in lines if l.startswith("ExecStartPre=")]
+        self.assertEqual(len(waits), 1)
+        self.assertTrue(waits[0].startswith("ExecStartPre=-/usr/bin/timeout 30 "))
+
 
 if __name__ == "__main__":
     unittest.main()
