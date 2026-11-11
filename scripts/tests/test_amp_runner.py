@@ -41,22 +41,24 @@ class AmpRunnerTest(unittest.TestCase):
             return result, [c.replace(str(home), "~") for c in calls]
 
     def test_serves_only_present_directories(self):
-        result, calls = self.run_runner(["repos", ".dotfiles", "Dropbox/@taptap"])
+        result, calls = self.run_runner(["Work", ".dotfiles", "Dropbox/@taptap"])
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(
             calls,
             [
-                "~/repos",
+                "~/Work",
                 "--no-tui",
-                "--runner-id",
-                "box",
+                "--remote-control-terminal",
+                "--desktop",
+                "--share-network",
+                "--amp-env",
                 "--dir",
                 "~/.dotfiles",
                 "--dir",
                 "~/Dropbox/@taptap",
                 "--discover-dirs",
-                "--remote-control-terminal",
-                "--amp-env",
+                "--runner-id",
+                "box",
             ],
         )
         self.assertIn("skipping missing directory", result.stderr)
@@ -68,9 +70,9 @@ class AmpRunnerTest(unittest.TestCase):
         self.assertNotIn("--dir", calls)
 
     def test_serves_lowercase_dropbox(self):
-        result, calls = self.run_runner(["repos", "dropbox/@veronica"])
+        result, calls = self.run_runner(["Work", "dropbox/@veronica"])
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(calls[4:6], ["--dir", "~/dropbox/@veronica"])
+        self.assertEqual(calls[6:8], ["--dir", "~/dropbox/@veronica"])
 
     def test_skips_directories_resolving_to_one_already_served(self):
         result, calls = self.run_runner(
