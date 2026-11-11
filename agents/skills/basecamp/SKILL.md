@@ -34,6 +34,7 @@ triggers:
   - log time
   - basecamp template
   - basecamp webhook
+  - external link
   - basecamp gauge
   - basecamp hill chart
   - hill chart progress
@@ -88,7 +89,7 @@ argument-hint: "[action] [args...]"
 # Basecamp CLI
 
 Use the installed CLI as the command reference. This skill defines the operating
-rules; it intentionally does not duplicate the CLI's command catalog.
+rules; it does not duplicate the CLI's command catalog.
 
 ## Discovery-first workflow
 
@@ -117,7 +118,7 @@ For each task:
    breadcrumbs before deciding what to do next.
 
 Targeted leaf help is cheap and local; root help returns the full command catalog
-and is not token-cheap. Do not load root help merely to confirm global flags
+and is not token-cheap. Do not load root help to confirm global flags
 already documented by this skill. For obvious Docs & Files requests, route
 straight to `files list`, `files download`, or `files uploads create` before
 trying parent or root help. A subcommand's `inherited_flags` is intentionally
@@ -144,15 +145,16 @@ apply where supported.
 - Use non-interactive output for agent work. Do not allow an ambiguous picker to
   block execution.
 - When a result reports content or description attachments, download and inspect
-  them. Images often contain the essential task context.
+  them; images often hold the task's context.
 - A move into another container prints the item's new ID; use it afterwards,
-  since the old ID stops taking writes. A copy prints the copy's ID and leaves
-  the original as it was. Never repeat a copy: Basecamp files it in the
-  background, so a copy that is still running or lost its answer may already
-  exist. Check it with the `basecamp filings show <id>` command or the hint it
-  printed, never by copying again.
+  since the old ID stops taking writes. A copy prints its own ID. Never repeat a
+  copy: Basecamp files it in the background, so a copy that is still running or
+  lost its answer may already exist. Check with `basecamp filings show <id>`
+  or the hint it printed.
 - Follow the installed command's help over examples remembered from earlier CLI
   versions.
+- Before writing to Basecamp, run `basecamp instructions` and follow what it
+  prints.
 
 ## Output modes
 
@@ -274,8 +276,7 @@ basecamp projects wallpaper remove --in "<project>" --json
   or `tile`, and leaving it out keeps the current mode.
 - Each command returns the project. `.data.wallpaper` is `{url, mode}`, and is
   absent when the project has none; `projects show` carries the same field.
-  The URL requires authentication and redirects to the image; it is not a
-  public image link.
+  The URL needs authentication and redirects to the image.
 
 ## Project logo
 
@@ -295,9 +296,8 @@ basecamp projects logo remove --in "<project>" --json
   names the limits. Server image validations still apply. Removing a logo from
   a project that has none succeeds.
 - Each command returns the project. `.data.logo` is `{url}`, and is absent when
-  the project has none; `projects show` carries the same field. The URL
-  requires authentication and redirects to the image; it is not a public image
-  link.
+  the project has none; `projects show` carries the same field. Like the
+  wallpaper's, the URL needs authentication.
 
 ## Timesheet entries
 
@@ -338,12 +338,17 @@ A pipe is never consumed implicitly. Only one input may read stdin in an
 invocation. Do not use shell-specific ANSI-C quoting such as `$'line 1\nline 2'`
 in portable commands.
 
-Rich-text fields support [Mermaid](https://mermaid.js.org) diagrams. Put the
-source in a fenced code block with the language `mermaid`, and Basecamp shows
-the diagram to people reading the post. Previews, emails, and exports show the
-source, and so does a post whose source does not parse. Use a diagram for a
-flow, sequence, timeline, or structure that is easier to follow as a picture
-than as prose. Diagram source spans several lines, so pass it on stdin:
+Basecamp shows blocks flush together unless a blank line in the Markdown
+separates them. Leave one between every two blocks, headings and lists
+included; in prose, a single newline joins lines into one paragraph. Don't
+hand-write HTML: `--format html` is stored as written, so touching blocks and
+`<br>`-stacked lines read as a wall of text.
+
+Rich-text fields support Mermaid diagrams. Put the source in a fenced code block
+with the language `mermaid`, and Basecamp shows the diagram to people reading
+the post. Previews, emails, and exports show the source, and so does a post
+whose source does not parse. Use one where a picture beats prose. Diagram source
+spans several lines, so pass it on stdin:
 
 ````bash
 basecamp messages create "Release flow" - --in "<project>" --json <<'EOF'
@@ -373,9 +378,9 @@ EOF
 With `--format html` nothing is embedded for you: run
 `basecamp embeds create <url> --json` and put its `attachment` tag in the HTML.
 
-For deterministic mentions, prefer the machine-provided mention syntax from
-people or comment results, for example `[@Name](mention:SGID)`. Mention support
-varies by field; leaf help is authoritative.
+Mentions need no HTML. For deterministic ones, use the syntax people and
+comment results print, such as `[@Name](mention:SGID)`; leaf help says where
+mentions work.
 
 ## Errors and recovery
 
