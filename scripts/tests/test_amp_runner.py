@@ -1,3 +1,4 @@
+import configparser
 from pathlib import Path
 import subprocess
 import tempfile
@@ -95,6 +96,16 @@ class AmpRunnerUnitTest(unittest.TestCase):
         # systemd would fail before the wrapper runs if this directory is missing
         self.assertFalse([l for l in lines if l.startswith("WorkingDirectory=")])
         self.assertIn("RestartPreventExitStatus=78", lines)
+
+    def test_herdr_startup_is_ordered_but_not_required(self):
+        unit = configparser.ConfigParser(interpolation=None, strict=False)
+        unit.read(UNIT)
+        self.assertIn("herdr-server.service", unit["Unit"]["Wants"].split())
+        self.assertIn("herdr-server.service", unit["Unit"]["After"].split())
+        for dependency in ("Requires", "Requisite", "BindsTo", "PartOf"):
+            self.assertNotIn(
+                "herdr-server.service", unit["Unit"].get(dependency, "").split()
+            )
 
 
 if __name__ == "__main__":

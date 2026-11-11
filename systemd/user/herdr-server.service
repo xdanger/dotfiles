@@ -1,0 +1,21 @@
+[Unit]
+Description=Herdr default-session server
+Documentation=https://herdr.dev/docs/cli-reference/
+ConditionFileIsExecutable=%h/.local/share/mise/shims/herdr
+StartLimitIntervalSec=0
+
+[Service]
+Type=exec
+WorkingDirectory=%h
+ExecStart=%h/.local/share/mise/shims/herdr --session default server
+# After= waits for this API check, not just for the server process to spawn
+ExecStartPost=/bin/sh -c 'until "%h/.local/share/mise/shims/herdr" --session default api snapshot >/dev/null 2>&1; do sleep 1; done'
+TimeoutStartSec=30s
+Restart=on-failure
+RestartSec=5s
+RestartSteps=6
+RestartMaxDelaySec=5min
+KillMode=control-group
+TimeoutStopSec=30s
+StandardOutput=journal
+StandardError=journal

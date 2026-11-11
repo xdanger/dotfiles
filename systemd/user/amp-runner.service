@@ -1,6 +1,9 @@
 [Unit]
 Description=Amp --no-tui runner
 Documentation=https://ampcode.com/manual
+# Start Herdr first, but keep the runner available if Herdr fails
+Wants=herdr-server.service
+After=herdr-server.service
 ConditionFileIsExecutable=%h/.dotfiles/bin/amp-runner
 ConditionFileIsExecutable=%h/.local/share/mise/shims/amp
 # Retry forever; RestartSteps backs off so a persistent failure doesn't spin

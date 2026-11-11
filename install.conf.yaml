@@ -30,6 +30,9 @@
     ~/.config/systemd/user/amp-runner.service:
       path: "systemd/user/amp-runner.service"
       if: '[ "$(uname -s)" = Linux ]'
+    ~/.config/systemd/user/herdr-server.service:
+      path: "systemd/user/herdr-server.service"
+      if: '[ "$(uname -s)" = Linux ]'
     ~/.config/systemd/user/codex-trash-watchdog.service: "systemd/user/codex-trash-watchdog.service"
     ~/.config/systemd/user/codex-trash-watchdog.timer: "systemd/user/codex-trash-watchdog.timer"
     ~/.config/zed/AGENTS.md: "agents/AGENTS.md"
