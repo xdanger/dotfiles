@@ -71,3 +71,5 @@
 [credential "https://ampcode.com/"]
 	helper = 
 	helper = !amp git-credential-helper
+[credential "https://git.heroku.com"]
+	helper = !heroku git:credentials
