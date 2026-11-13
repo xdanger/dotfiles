@@ -13,6 +13,12 @@
 - Whatever language the user writes in — English, Chinese, or any other — rephrase their message in natural, idiomatic English before proceeding. Present the rephrased version in blockquote format (`>`) so the user can learn from the improvement.
 - Before producing a written artifact whose reader is beyond the current conversation — another human, OR an AI executor that will act on it, including subagents you spawn (emails, IM to others, PR/issue descriptions, review comments, docs, AND prompts / specs / mandates for a downstream agent), even as a sub-step, apply the `audience-aware-comms` skill. Calibrate grain to the reader's real capability: for a capable agent, give the goal + constraints + acceptance criteria and trust the method — don't write a mechanical step-by-step. Exemptions: conversational replies to the current user, text the user dictates verbatim, git commit messages, and content run literally by a deterministic interpreter (executed code, configs, schemas, queries, test fixtures) — no reader to model.
 
+## Instructions, Skills, and Docs
+
+- Keep only what changes behavior. Cut what the reader would do anyway, or would not miss or get wrong without it, including reasons, background, sources, and decision dates.
+- Give each rule one home and link to it elsewhere instead of copying it. Rules every reader shares go in the shared doc; steps only one agent uses go in its skills; a goal holds only the goal.
+- Organize by when it is used: one piece per situation, neither split into fragments nor mixed with unrelated situations.
+
 ## CLI Overrides
 
 - `rm` → `trash`, `mv`(tracked) → `git mv`. If a cleanup operation using `trash`
@@ -27,7 +33,6 @@
 
 - Use `hindsight` tools to save and recall my memory.
 - Prefer Exa `web_search` and `web_fetch` over built-in search and fetch tools.
-- Use `npx mcporter list` to discover more available MCP servers, and `npx mcporter list <mcp-tool-name> --schema` to inspect a specific server and its tools.
 
 ## Git Workflow
 
@@ -53,10 +58,6 @@
 - Focus on WHY, not WHAT
 - Keep commits reasonably split: when you can separate changes by logic or file group, avoid committing them together.
 
-**Pushing**
-
-- Before every `git push`, review the outgoing changes with Claude Code's `/code-review` and Codex's `/review`, whichever are available, and fix genuine findings before pushing.
-
 **Shipping**
 
 - Treat “ship the changes,” “ship the branch,” and equivalent requests as an explicit mandate to deliver the current changes end to end.
@@ -73,7 +74,7 @@
 - When creating a ready-to-review PR directly, or when marking a draft PR ready for review, request review from `apps/copilot-pull-request-reviewer`.
 - Reply to every code review inline comment after applying the fix or deciding on the response — even if the comment doesn't reflect a real bug.
 - Mark resolved inline comments by calling the `resolveReviewThread` mutation via `gh api graphql`.
-- Merge PRs with "create a merge commit" by default.
+- Merge PRs with 'create a merge commit' by default.
 - After a PR is merged, if the branch is not long-lived, leave and remove the associated worktree from its owning repository, then fast-forward the repository's default branch to the corresponding `origin` branch.
 
 ## Linter Policy
@@ -86,5 +87,6 @@ Never modify linter configs without explicit approval. Fix lint failures caused 
 
 ## Typography
 
-- Add space between CJK and ASCII/numbers (e.g., "使用 Python 3.11"), except °%
+- Add space between CJK and ASCII/numbers (e.g., '使用 Python 3.11'), except °%
 - CJK text: full-width punctuation; English text: half-width punctuation
+
