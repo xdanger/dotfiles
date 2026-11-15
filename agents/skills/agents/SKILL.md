@@ -10,26 +10,29 @@ metadata: {"openclaw": {"requires": {"env": ["ELEVENLABS_API_KEY"]}, "primaryEnv
 
 Build voice AI agents with natural conversations, multiple LLM providers, custom tools, and easy web embedding.
 
-> **Setup, before writing any code:** if `ELEVENLABS_API_KEY` isn't set for this project, run `npx -y @elevenlabs/cli@latest onboard init` from the app's folder first and follow what it prints: it signs the user in and stores a key for the project, so nobody copies one by hand. Otherwise see the [Installation Guide](references/installation.md) for CLI and SDK setup.
+> **Setup, before writing any code:** if `ELEVENLABS_API_KEY` isn't set for this project, run `npx -y @elevenlabs/cli@latest onboard init` from the app's folder first and follow what it prints: it signs the user in and stores a key for the project, so nobody copies one by hand. When the user approved in the browser, that also signed the ElevenLabs CLI in, so don't run `elevenlabs auth login` after it. When they added the key by hand (on a remote machine), or a CLI command answers 401, load the env file into the command instead, for example `(set -a && . ./.env.local && set +a && npx -y @elevenlabs/cli@latest agents list)`; the CLI reads a `.env` on its own. Otherwise see the [Installation Guide](references/installation.md) for CLI and SDK setup.
 
 ## Quick Start with CLI
 
 The ElevenLabs CLI is the recommended way to create and manage agents:
 
 ```bash
-# Install CLI and authenticate
+# Install CLI and authenticate. After onboarding, skip these two lines and run each
+# command below through npx instead, e.g. `npx -y @elevenlabs/cli@latest agents init`
 npm install -g @elevenlabs/cli
 elevenlabs auth login
 
 # Initialize project and create an agent
 elevenlabs agents init
-elevenlabs agents add "My Assistant" --template complete
+elevenlabs agents add "My Assistant" --template default
 
 # Push to ElevenLabs platform
 elevenlabs agents push
 ```
 
-**Available templates:** `complete`, `minimal`, `voice-only`, `text-only`, `customer-service`, `assistant`
+**Available templates:** `default`, `minimal`, `voice-only`, `text-only`, `customer-service`, `assistant`
+
+Once the agent exists, give the user its links: they can talk to it at `https://elevenlabs.io/app/talk-to?agent_id=<agent-id>` and edit it at `https://elevenlabs.io/app/agents/agents/<agent-id>`. On a data residency account, use its region's host instead of `elevenlabs.io`, such as `eu.residency.elevenlabs.io`. The talk-to page only opens public agents, which is the default; for an agent with authentication enabled, give only the dashboard link.
 
 ### Python
 
@@ -178,7 +181,7 @@ Use `GET /v1/convai/llm/list` to inspect the current model catalog, including de
 
 To run an agent on an ElevenLabs Realtime model instead of a separate LLM and TTS model (`conversation_config.realtime_model`), use the `realtime` skill.
 
-**Popular voices:** `JBFqnCBsd6RMkjVDRZzb` (George), `EXAVITQu4vr4xnSDxMaL` (Sarah), `onwK4e9ZLuTAKqWW03F9` (Daniel), `XB0fDUnXU5powFXDhCwa` (Charlotte)
+**Popular voices:** `JBFqnCBsd6RMkjVDRZzb` (George), `EXAVITQu4vr4xnSDxMaL` (Sarah), `onwK4e9ZLuTAKqWW03F9` (Daniel)
 
 **Turn eagerness:** `patient` (waits longer for user to finish), `normal`, or `eager` (responds quickly)
 
@@ -323,6 +326,47 @@ Use `entry_behavior` on `override_agent` nodes to choose whether a sub-agent spe
 
 For nested agent transfers, set `enable_nesting` on a `standalone_agent` node and
 `return_when_nested` on an `end` node that should return control to the parent workflow.
+
+### Build Workflows in Code
+
+The Python and JavaScript SDKs include a `Workflow` builder that produces the `workflow` value for `agents.create()` and `agents.update()`. Chain `converse`, `tool`, `transfer`, and `end` steps, and route between them with `when` (a string is an LLM condition; an `Expr` is an expression on dynamic variables), `on_success` / `on_failure`, and `go_to`. `build()` assigns `start_node`, edge IDs, `edge_order`, and editor positions, and raises one `WorkflowValidationError` listing every graph problem. Reference: [Workflows as code](https://elevenlabs.io/docs/eleven-agents/customization/agent-workflows-as-code).
+
+```python
+from elevenlabs import ElevenLabs
+from elevenlabs.agent_workflows import Destination, Workflow
+
+client = ElevenLabs()
+
+wf = Workflow()
+triage = wf.converse("triage", "Greet the caller and find out why they're calling")
+lookup = triage.when("Caller gave an order number").tool("lookup_order", ["tool_get_order"])
+lookup.on_result(
+    success=lambda ok: ok.converse("resolve", "Explain the order status").when("Caller is satisfied").end(),
+    failure=lambda failed: failed.go_to(triage),
+)
+triage.when("Caller wants a human").transfer("human", Destination.phone("+15551234567"))
+
+client.conversational_ai.agents.update("agent_id", workflow=wf.build())
+```
+
+```javascript
+import { Destination, ElevenLabsClient, Workflow } from "@elevenlabs/elevenlabs-js";
+
+const client = new ElevenLabsClient();
+
+const wf = new Workflow();
+const triage = wf.converse("triage", "Greet the caller and find out why they're calling");
+const lookup = triage.when("Caller gave an order number").tool("lookup_order", ["tool_get_order"]);
+lookup.onResult({
+  success: (ok) => ok.converse("resolve", "Explain the order status").when("Caller is satisfied").end(),
+  failure: (failed) => failed.goTo(triage),
+});
+triage.when("Caller wants a human").transfer("human", Destination.phone("+15551234567"));
+
+await client.conversationalAi.agents.update("agent_id", { workflow: wf.build() });
+```
+
+To edit an existing workflow, load it with `Workflow.from_agent(agent)` / `Workflow.fromAgent(agent)`, then change nodes with `wf.node(id).update(...)`, `insert_between` / `insertBetween`, or `remove`; IDs and positions are kept. `to_json_string()` / `toJSONString()` and `Workflow.from_json()` / `Workflow.fromJSON()` store workflows as JSON in version control, and `elevenlabs agents workflow diagram <file>` draws a workflow file as a flowchart (`--format mermaid` for Mermaid output).
 
 ## Procedures
 
@@ -498,9 +542,9 @@ elevenlabs agents pull --agent <agent-id>   # Import specific agent
 elevenlabs agents push              # Upload configurations
 elevenlabs agents push --dry-run    # Preview changes first
 
-# Add tools
-elevenlabs tools add-webhook "Weather API"
-elevenlabs tools add-client "UI Tool"
+# Add tools (names use letters, numbers, - and _)
+elevenlabs tools add weather-api --type webhook
+elevenlabs tools add ui-tool --type client
 ```
 
 ### Project Structure
