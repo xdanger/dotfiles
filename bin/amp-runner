@@ -47,6 +47,12 @@ for dir in "${dirs[@]:1}"; do
   dir_args+=(--dir "$dir")
 done
 
+# systemd hands the runner gpg-agent's empty SSH socket, and its bash shells never read
+# .zshenv, so load keychain's agent here for every thread's git and ssh
+if [[ $(uname -s) == Linux ]] && command -v keychain >/dev/null; then
+  eval "$(keychain --eval --quiet --noask)"
+fi
+
 runner_id=${AMP_RUNNER_ID:-$(uname -n)}
 exec "${MISE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/mise}/shims/amp" \
   --no-tui --remote-control-terminal --desktop --share-network --amp-env \
