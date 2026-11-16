@@ -349,9 +349,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/elevenlabs/skills.git",
       "skillPath": "agents/SKILL.md",
-      "skillFolderHash": "68adf00b4c4a351da38d496091dbb3a5a49dab01",
+      "skillFolderHash": "adaa7e2f56de8c0419a808ecc3465d4753a01fb6",
       "installedAt": "2026-09-30T01:04:06.997Z",
-      "updatedAt": "2026-11-15T02:56:42.534Z"
+      "updatedAt": "2026-11-16T07:10:37.492Z"
     },
     "dubbing": {
       "source": "elevenlabs/skills",
