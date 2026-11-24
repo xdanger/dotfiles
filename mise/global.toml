@@ -66,8 +66,10 @@ yt-dlp = "latest"
 ANONYMIZED_TELEMETRY = "false"
 
 [settings]
-auto_update = true
 minimum_release_age = "0s"
+
+[settings.self_update]
+auto = true
 
 [settings.python]
 compile = false
