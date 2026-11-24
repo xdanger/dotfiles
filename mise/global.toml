@@ -43,7 +43,7 @@ node = "lts"
 "npm:mcporter" = "latest"
 oh-my-pi = { version = "latest", rename_exe = "omp" }
 pi = "latest"
-# Upstream asks for an exact pin; after a bump, refresh the committed skill:
+# After an upgrade, refresh the committed skill:
 # browser-use skill install --path ~/.dotfiles/agents/skills/browser-use
 "pipx:browser-use" = { version = "latest", depends = ["python", "uv"] }
 "pipx:csvkit" = { version = "latest", depends = ["python", "uv"] }
