@@ -45,7 +45,7 @@ oh-my-pi = { version = "latest", rename_exe = "omp" }
 pi = "latest"
 # Upstream asks for an exact pin; after a bump, refresh the committed skill:
 # browser-use skill install --path ~/.dotfiles/agents/skills/browser-use
-"pipx:browser-use" = { version = "1.0.1", depends = ["python", "uv"] }
+"pipx:browser-use" = { version = "latest", depends = ["python", "uv"] }
 "pipx:csvkit" = { version = "latest", depends = ["python", "uv"] }
 "pipx:trash-cli" = { version = "latest", depends = ["python", "uv"] }
 playwright = "latest"
