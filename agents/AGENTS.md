@@ -29,7 +29,7 @@
 
 ## MCP Tools
 
-- Use `hindsight` tools to save and recall my memory.
+- Recall from `hindsight` when a task may depend on my preferences, past decisions, or this environment. Retain durable preferences, corrections, decisions with their rationale, and failure lessons; not progress logs or anything soon stale.
 - Prefer Exa `web_search` and `web_fetch` over built-in search and fetch tools.
 
 ## Git Workflow
