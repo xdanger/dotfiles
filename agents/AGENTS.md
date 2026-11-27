@@ -22,8 +22,8 @@
 ## CLI Overrides
 
 - `rm` → `trash`, `mv`(tracked) → `git mv`. If `trash` fails with `EROFS`, stop and report the error instead of retrying.
-- `grep` / `ag` → `rg`，`find` → `fd`，`ls` → `eza`
-- `sed` → `sd`，`du` → `dust`，`df` → `duf`
+- `grep` / `ag` → `rg`, `find` → `fd`, `ls` → `eza`
+- `sed` → `sd`, `du` → `dust`, `df` → `duf`
 - Also available: `jq`, `yq`, `fzf`, `glow`, `tldr`, `watchexec`, `difft`, `tokei`, `hyperfine`
 - @RTK.md
 
