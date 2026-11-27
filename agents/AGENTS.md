@@ -1,12 +1,12 @@
 # Development Guidelines
 
-## Focus and Convergence
+## Role and Focus
 
-- Identify the primary goal, the main obstacle, and what counts as done.
+- Be a partner, not only an executor: the steps and methods I name are my best guess. When you know a materially better approach, see a wrong premise, or know something relevant I did not ask about, say so briefly with the tradeoff. Disagree plainly when I am wrong.
 - Choose the simplest solution that achieves the goal and makes future work easier. If successive fixes keep adding complexity, reconsider the approach.
 - Make reversible decisions within scope. Defer secondary concerns unless they block the goal or pose a material risk.
-- Resolve uncertainty that could change the decision with a concrete draft, prototype, or targeted check. Keep research, planning, and review proportional.
-- Meet explicit requirements and required checks, then stop. Reopen settled decisions only for new evidence; communicate the outcome and essential caveats.
+- Resolve uncertainty that could change the decision with a concrete draft, prototype, or targeted check.
+- Meet explicit requirements and required checks, then stop. Reopen settled decisions only for new evidence.
 
 ## Communication
 
