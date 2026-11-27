@@ -1,18 +1,17 @@
 - defaults:
-    link:
-      create: true
-      relink: true
-      relative: true
-      force: true
     clean:
       force: false
+    link:
+      create: true
+      force: true
+      relative: true
+      relink: true
 
 - create:
     - ~/.vim/undo-history
 
 - link:
     ~/.agents:
-    ~/.config/amp/RTK.md: "agents/RTK-codex.md"
     ~/.claude/CLAUDE.md: "agents/AGENTS.md"
     ~/.claude/RTK.md: "agents/RTK-claude.md"
     ~/.claude/skills: "agents/skills"
@@ -20,26 +19,29 @@
     ~/.codex/RTK.md: "agents/RTK-codex.md"
     ~/.codex/trash-watchdog.config.toml: "ai-agent/linux/trash-watchdog/trash-watchdog.config.toml"
     ~/.config/AGENTS.md: "agents/AGENTS.md"
+    ~/.config/RTK.md: "agents/RTK-codex.md"
+    ~/.config/environment.d/zz-mise.conf:
+      if: '[ "$(uname -s)" = Linux ]'
+      path: "systemd/environment.d/zz-mise.conf"
     ~/.config/ghostty: "ghostty"
+    ~/.config/git/verified_signers: "git/verified_signers"
+    ~/.config/herdr/config.toml: "herdr/config.toml"
     ~/.config/mise/config.toml: "mise/global.toml"
     ~/.config/nvim: "nvim"
-    ~/.config/environment.d/zz-mise.conf:
-      path: "systemd/environment.d/zz-mise.conf"
-      if: '[ "$(uname -s)" = Linux ]'
     ~/.config/ranger: "ranger"
     ~/.config/systemd/user/amp-runner.service:
+      if: '[ "$(uname -s)" = Linux ]'
       path: "systemd/user/amp-runner.service"
-      if: '[ "$(uname -s)" = Linux ]'
-    ~/.config/systemd/user/herdr-server.service:
-      path: "systemd/user/herdr-server.service"
-      if: '[ "$(uname -s)" = Linux ]'
     ~/.config/systemd/user/codex-trash-watchdog.service: "systemd/user/codex-trash-watchdog.service"
     ~/.config/systemd/user/codex-trash-watchdog.timer: "systemd/user/codex-trash-watchdog.timer"
+    ~/.config/systemd/user/herdr-server.service:
+      if: '[ "$(uname -s)" = Linux ]'
+      path: "systemd/user/herdr-server.service"
     ~/.config/zed/AGENTS.md: "agents/AGENTS.md"
-    ~/.config/herdr/config.toml: "herdr/config.toml"
+    ~/.gemini/AGENTS.md: "agents/AGENTS.md"
     ~/.gemrc: "ruby/gemrc"
     ~/.gitconfig: "git/gitconfig"
-    ~/.config/git/verified_signers: "git/verified_signers"
+    ~/.grok/AGENTS.md: "agents/AGENTS.md"
     ~/.htoprc: "utils/htoprc"
     ~/.tmux:
     ~/.tmux.conf: "tmux/tmux.conf"
@@ -51,19 +53,19 @@
     # ③ .zshrc     — 交互式 shell（$- 含 i）。Prompt/主题/alias/函数/补全/键绑定，所有交互体验相关内容。
     # ④ .zlogin    — 登录 shell，在 .zshrc 之后。不应改变 shell 环境，仅运行外部命令：欢迎横幅、fortune、启动 tmux 等。
     # ⑤ .zlogout   — 登录 shell 退出时。清理：kill agent、umount、临时文件/history 收尾等。
-    ~/.zshenv: "zsh/.zshenv"
-    ~/.zprofile: "zsh/.zprofile"
-    ~/.zshrc: "zsh/.zshrc"
     ~/.zlogin: "zsh/.zlogin"
     ~/.zlogout: "zsh/.zlogout"
+    ~/.zprofile: "zsh/.zprofile"
+    ~/.zshenv: "zsh/.zshenv"
+    ~/.zshrc: "zsh/.zshrc"
 
 - shell:
     - command: 'ln -sfn "platform/$(uname -s | tr "[:upper:]" "[:lower:]").ghostty" ghostty/platform.ghostty'
-      stdout: true
       stderr: true
+      stdout: true
     - command: 'if [ "$(uname -s)" = Darwin ]; then /bin/zsh -f "$PWD/bin/install-mise-launchd-path.zsh"; fi'
-      stdout: true
       stderr: true
+      stdout: true
     - command: bash "$PWD/scripts/post-install.sh"
-      stdout: true
       stderr: true
+      stdout: true

@@ -1,5 +1,6 @@
 [tools]
 amp = "latest"
+antigravity-cli = "latest"
 "aqua:BurntSushi/ripgrep" = "latest"
 "aqua:Wilfred/difftastic" = "latest"
 "aqua:bootandy/dust" = "latest"
