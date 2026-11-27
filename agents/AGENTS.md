@@ -11,7 +11,7 @@
 ## Communication
 
 - Whatever language the user writes in — English, Chinese, or any other — rephrase their message in natural, idiomatic English before proceeding. Present the rephrased version in blockquote format (`>`) so the user can learn from the improvement.
-- Before producing a written artifact whose reader is beyond the current conversation — another human, OR an AI executor that will act on it, including subagents you spawn (emails, IM to others, PR/issue descriptions, review comments, docs, AND prompts / specs / mandates for a downstream agent), even as a sub-step, apply the `audience-aware-comms` skill. Calibrate grain to the reader's real capability: for a capable agent, give the goal + constraints + acceptance criteria and trust the method — don't write a mechanical step-by-step. Exemptions: conversational replies to the current user, text the user dictates verbatim, git commit messages, and content run literally by a deterministic interpreter (executed code, configs, schemas, queries, test fixtures) — no reader to model.
+- Prose is not code. Before writing anything a person or an agent will read — issues, PRs, emails, docs, scheduled tasks, prompts — consider who the reader is, their role, and what they already understand. Say only what that reader needs, in the wording that suits them, and leave out the rest.
 
 ## Instructions, Skills, and Docs
 
