@@ -10,8 +10,8 @@
 
 ## Communication
 
-- Whatever language the user writes in — English, Chinese, or any other — rephrase their message in natural, idiomatic English before proceeding. Present the rephrased version in blockquote format (`>`) so the user can learn from the improvement.
-- Prose is not code. Before writing anything a person or an agent will read — issues, PRs, emails, docs, scheduled tasks, prompts — consider who the reader is, their role, and what they already understand. Say only what that reader needs, in the wording that suits them, and leave out the rest.
+- Before proceeding, rephrase my message in natural, idiomatic English in a blockquote (`>`), whatever language I wrote it in, so I can learn from the improvement.
+- Prose is not code. Before writing anything a person or an agent will read — issues, PRs, emails, docs, scheduled tasks, prompts — consider who the reader is, their role, and what they already understand. Say only what that reader needs, in the wording that suits them.
 
 ## Instructions, Skills, and Docs
 
@@ -21,11 +21,9 @@
 
 ## CLI Overrides
 
-- `rm` → `trash`, `mv`(tracked) → `git mv`. If a cleanup operation using `trash`
-  receives `EROFS`, fail immediately and report the error; never retry indefinitely.
-- `grep` / `ag` → `rg`，`find` → `fd`，`cat` → `bat`，`ls` → `eza`
+- `rm` → `trash`, `mv`(tracked) → `git mv`. If `trash` fails with `EROFS`, stop and report the error instead of retrying.
+- `grep` / `ag` → `rg`，`find` → `fd`，`ls` → `eza`
 - `sed` → `sd`，`du` → `dust`，`df` → `duf`
-- Use the repository's existing build and test commands.
 - Also available: `jq`, `yq`, `fzf`, `glow`, `tldr`, `watchexec`, `difft`, `tokei`, `hyperfine`
 - @RTK.md
 
@@ -38,13 +36,13 @@
 
 **Branches and worktrees**
 
-- When working in a Git repository, create a dedicated worktree directory in `.worktrees/` before making concrete changes by default. Repository-specific instructions or explicit user direction may override this default.
-- Choose the branch type that best fits the work. Every branch created must match `^(build|ci|chore|docs|feat|fix|perf|refactor|style|test)/[a-z0-9]+(-[a-z0-9]+)*$`.
-- Use system Git and the configured `gh` with the user's normal configuration. Request elevated permissions when the operation needs tools, configuration, credentials, or access unavailable in the sandbox.
+- Before changing files in a Git repository, create a dedicated worktree under `.worktrees/`, unless the repository's instructions or I say otherwise.
+- Branch names must match `^(build|ci|chore|docs|feat|fix|perf|refactor|style|test)/[a-z0-9]+(-[a-z0-9]+)*$`.
+- Use system `git` and the configured `gh`. When the sandbox lacks the tools, configuration, credentials, or access an operation needs, request elevated permissions.
 
 **Commits**
 
-- Use system `git` to create commits so the local signing configuration is applied. The system configuration signs commits with an SSH token; ensure every created commit is signed and verify its signature after committing.
+- Create commits with system `git` so my SSH signing configuration applies, and verify each commit's signature.
 - Follow this format for every commit:
 
   ```
@@ -56,26 +54,23 @@
 - Gitmoji: ✨feat 🐛fix 📝docs ♻️refactor ✅test 🔧chore
 - Subject: ≤50 chars, lowercase imperative, no period, backtick code refs
 - Focus on WHY, not WHAT
-- Keep commits reasonably split: when you can separate changes by logic or file group, avoid committing them together.
+- Split changes that separate by logic or file group into separate commits.
 
 **Shipping**
 
 - Treat “ship the changes,” “ship the branch,” and equivalent requests as an explicit mandate to deliver the current changes end to end.
-- Reuse the task's dedicated branch and worktree; create them only if absent, following the rules above.
-- Commit the changes, run the full test suite, then push the branch to `origin` under the exact same name. Reuse passing results when the code and test conditions are unchanged; rerun checks when relevant changes or failures invalidate them.
-- Fix failures caused by the change and rerun affected checks. Continue past unrelated upstream failures only with evidence; this does not permit merging with a failing gate.
-- Open a ready-for-review PR, invoke the `pr-shepherd` skill, and autonomously drive it through merge: monitor the strict CI and review gate, fix genuine failures, rerun genuine flakes at most once, address and resolve every review thread, and wait for restarted checks.
-- Merge only when the strict gate is fully GREEN, then perform the prescribed cleanup.
-- Escalate any required human action or persistent blocker instead of bypassing protections.
+- Reuse the task's branch and worktree; create them only if absent.
+- Commit, run the full test suite unless a passing run already covers the same code, then push the branch to `origin` under the same name.
+- Continue past unrelated upstream failures only with evidence; never merge with a failing gate.
+- Open a ready-for-review PR, then invoke the `pr-shepherd` skill and drive the PR through merge and cleanup without asking.
 
 **Pull requests, merge, and cleanup**
 
 - When creating a PR, add `xdanger` (GitHub user ID `7087`) as an assignee.
-- When creating a ready-to-review PR directly, or when marking a draft PR ready for review, request review from `apps/copilot-pull-request-reviewer`.
-- Reply to every code review inline comment after applying the fix or deciding on the response — even if the comment doesn't reflect a real bug.
-- Mark resolved inline comments by calling the `resolveReviewThread` mutation via `gh api graphql`.
-- Merge PRs with 'create a merge commit' by default.
-- After a PR is merged, if the branch is not long-lived, leave and remove the associated worktree from its owning repository, then fast-forward the repository's default branch to the corresponding `origin` branch.
+- When opening a ready-for-review PR or marking a draft ready, request review from `apps/copilot-pull-request-reviewer`.
+- Reply to every inline review comment, even one that is not a real bug. Resolve addressed threads with the `resolveReviewThread` mutation via `gh api graphql`.
+- Merge with a merge commit by default.
+- After a merge, unless the branch is long-lived, remove its worktree and fast-forward the local default branch to `origin`.
 
 ## Linter Policy
 
@@ -83,10 +78,9 @@ Never modify linter configs without explicit approval. Fix lint failures caused 
 
 ## Screenshots
 
-- Links like `https://share.cleanshot.com/...` are user-pasted screenshots. Fetch the image (via WebFetch or `curl -sL`) and view it — the user may be on a remote SSH session where direct image paste is unavailable.
+- Links like `https://share.cleanshot.com/...` are screenshots I pasted. Fetch the image (WebFetch or `curl -sL`) and view it.
 
 ## Typography
 
 - Add space between CJK and ASCII/numbers (e.g., '使用 Python 3.11'), except °%
 - CJK text: full-width punctuation; English text: half-width punctuation
-
